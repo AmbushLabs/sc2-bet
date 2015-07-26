@@ -1,33 +1,41 @@
-FROM ubuntu:14.04
+FROM tifayuki/java:7
+MAINTAINER Feng Honglin <hfeng@tutum.co>
 
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends wget pwgen ca-certificates && \
+    apt-get install -yq --no-install-recommends unzip byobu man curl git openssh-client build-essential software-properties-common && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN \
-  sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
-  apt-get update && \
-  apt-get -y upgrade && \
-  apt-get install -y build-essential && \
-  apt-get install -y software-properties-common && \
-  apt-get install -y byobu curl git htop man unzip vim wget && \
-  apt-get install -y openjdk-7-jdk && \
-  apt-get install -y tomcat7 && \
-  rm -rf /var/lib/tomcat7/webapps/* && \
-  rm -rf /var/lib/apt/lists/*
+ENV TOMCAT_MAJOR_VERSION 7
+ENV TOMCAT_MINOR_VERSION 7.0.55
+ENV CATALINA_HOME /tomcat
 
-# Install application requirements
-RUN curl -s get.gvmtool.net | bash
+# INSTALL TOMCAT
+RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz && \
+    wget -qO- https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz.md5 | md5sum -c - && \
+    tar zxf apache-tomcat-*.tar.gz && \
+    rm apache-tomcat-*.tar.gz && \
+    mv apache-tomcat* tomcat
 
+ADD create_tomcat_admin_user.sh /create_tomcat_admin_user.sh
+ADD run.sh /run.sh
+RUN chmod +x /*.sh
+
+############
+### SSH KEYS
+############
 # Retrieve the code
 RUN mkdir /opt/sc2-bet
 
 # Make ssh dir
 RUN mkdir /root/.ssh/
 
-
 # Copy over private key, and set permissions
 ADD github_rsa /root/.ssh/id_rsa
 ADD github_rsa.pub /root/.ssh/id_rsa.pub
-RUN echo "IdentityFile /root/.ssh/id_rsa" >> /etc/ssh/ssh_config 
-RUN ssh-keygen -lf ~/.ssh/id_rsa
+RUN echo "IdentityFile /root/.ssh/id_rsa" >> /etc/ssh/ssh_config
+RUN ssh-keygen -lf /root/.ssh/id_rsa
 
 RUN chmod 600 /root/.ssh/id_rsa
 
@@ -36,26 +44,18 @@ RUN touch /root/.ssh/known_hosts
 # Add bitbuckets key
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
+# Install application requirements
+RUN curl -s get.gvmtool.net | bash
 
-#RUN ssh -T git@github.com
+RUN chmod 777 ${CATALINA_HOME}
 
-RUN chmod 777 /var/lib/tomcat7
+RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app #change
 
-# Clone the conf files into the docker container
-RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app
+RUN bash -c "source //.gvm/bin/gvm-init.sh && gvm install grails 3.0.3; cd /opt/sc2-bet/app; grails war; exit 0;"
+
+RUN rm -rf ${CATALINA_HOME}/webapps/*
+RUN mv /opt/sc2-bet/app/build/libs/app-0.1.war ${CATALINA_HOME}/webapps/ROOT.war
 
 
-ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64/
-# Ready the grails installation
-RUN bash -c "source /root/.gvm/bin/gvm-init.sh && gvm install grails 3.0.3; cd /opt/sc2-bet/app; grails war; exit 0;"
-
-WORKDIR /opt/sc2-bet/app/build/libs
-RUN ls -lna
-
-RUN mv /opt/sc2-bet/app/build/libs/app-0.1.war /var/lib/tomcat7/webapps/ROOT.war
-
-# Expose the grails web-app port
 EXPOSE 8080
-
-
-CMD service tomcat7 start && tail -f /var/lib/tomcat7/logs/catalina.out
+CMD ["/run.sh"]
