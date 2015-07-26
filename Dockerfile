@@ -39,6 +39,8 @@ RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
 #RUN ssh -T git@github.com
 
+RUN chmod 777 /var/lib/tomcat7
+
 # Clone the conf files into the docker container
 RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app
 
