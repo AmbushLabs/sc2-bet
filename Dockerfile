@@ -42,7 +42,7 @@ RUN ls -lna /opt/sc2-bet/app/build/libs/
 ### COPY TO TOMCAT START SERVER
 ###############################
 RUN rm -rf ${CATALINA_HOME}/webapps/*
-RUN mv /opt/sc2-bet/app/build/libs/app-0.1.war ${CATALINA_HOME}/webapps/.war
+RUN mv /opt/sc2-bet/app/build/libs/app-0.1.war ${CATALINA_HOME}/webapps/ROOT.war
 
 EXPOSE 8080
 CMD ["/run.sh"]
