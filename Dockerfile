@@ -1,6 +1,8 @@
 FROM tifayuki/java:7
 MAINTAINER Feng Honglin <hfeng@tutum.co>
 
+ENV HOME /root
+
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends wget pwgen ca-certificates && \
     apt-get install -yq --no-install-recommends unzip byobu man curl git openssh-client build-essential software-properties-common && \
@@ -49,9 +51,11 @@ RUN curl -s get.gvmtool.net | bash
 
 RUN chmod 777 ${CATALINA_HOME}
 
+ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app #change
+RUN bash -c "source /root/.gvm/bin/gvm-init.sh && gvm install grails 3.0.3; cd /opt/sc2-bet/app; grails war; exit 0;"
 
-RUN bash -c "source //.gvm/bin/gvm-init.sh && gvm install grails 3.0.3; cd /opt/sc2-bet/app; grails war; exit 0;"
+RUN ls -lna /opt/sc2-bet/app/build/libs/
 
 RUN rm -rf ${CATALINA_HOME}/webapps/*
 RUN mv /opt/sc2-bet/app/build/libs/app-0.1.war ${CATALINA_HOME}/webapps/ROOT.war
