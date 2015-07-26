@@ -34,7 +34,7 @@ RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app #change
 #############
 
 WORKDIR /opt/sc2-bet/app/
-RUN grails prod war -Xverify:none
+RUN grails war -Xverify:none
 
 RUN ls -lna /opt/sc2-bet/app/build/libs/
 
