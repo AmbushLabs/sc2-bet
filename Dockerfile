@@ -1,14 +1,15 @@
-FROM tifayuki/java:7
-MAINTAINER Feng Honglin <hfeng@tutum.co>
+FROM ubuntu:14.04
 
 ENV HOME /root
 
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends wget pwgen ca-certificates && \
+    apt-get install -yq --no-install-recommends htop openjdk-7-jdk && \
     apt-get install -yq --no-install-recommends unzip byobu man curl git openssh-client build-essential software-properties-common && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64/
 ENV TOMCAT_MAJOR_VERSION 7
 ENV TOMCAT_MINOR_VERSION 7.0.55
 ENV CATALINA_HOME /tomcat
@@ -51,9 +52,8 @@ RUN curl -s get.gvmtool.net | bash
 
 RUN chmod 777 ${CATALINA_HOME}
 
-ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app #change
-RUN bash -c "source /root/.gvm/bin/gvm-init.sh && gvm install grails 3.0.3; cd /opt/sc2-bet/app; grails war; exit 0;"
+RUN bash -c "source /root/.gvm/bin/gvm-init.sh && gvm install grails 3.0.3; cd /opt/sc2-bet/app; grails -Xverify:none war; exit 0;"
 
 RUN ls -lna /opt/sc2-bet/app/build/libs/
 
