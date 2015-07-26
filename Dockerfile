@@ -54,7 +54,6 @@ RUN mv /opt/sc2-bet/app/build/libs/app-0.1.war /var/lib/tomcat7/webapps/ROOT.war
 
 # Expose the grails web-app port
 EXPOSE 8080
-# Run the application when running the container with no params
-CMD touch /var/lib/tomcat7/logs/catalina.out
-CMD tail -f /var/lib/tomcat7/logs/catalina.out &
-CMD service tomcat7 start
+
+
+CMD service tomcat7 start && tail -f /var/lib/tomcat7/logs/catalina.out

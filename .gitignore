@@ -33,3 +33,6 @@
 
 # "temporary" build files
 /target
+
+/.idea
+/gradle
