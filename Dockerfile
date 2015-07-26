@@ -29,6 +29,8 @@ ADD github_rsa.pub /root/.ssh/id_rsa.pub
 RUN echo "IdentityFile /root/.ssh/id_rsa" >> /etc/ssh/ssh_config 
 RUN ssh-keygen -lf ~/.ssh/id_rsa
 
+RUN chmod 600 /root/.ssh/id_rsa
+
 # Create known_hosts
 RUN touch /root/.ssh/known_hosts
 # Add bitbuckets key
