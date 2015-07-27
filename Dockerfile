@@ -4,7 +4,6 @@ MAINTAINER Aaron Henshaw <aaronhenshaw@gmail.com>
 #TODO: figure out how to get rid of this line
 RUN chmod 777 ${CATALINA_HOME}
 
-
 #######################
 ### SSH KEYS FOR GITHUB
 #######################
@@ -22,20 +21,18 @@ RUN chmod 600 /root/.ssh/id_rsa
 RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
-
 #############
 ### PULL REPO
 #############
 RUN mkdir /opt/sc2-bet
-RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app #change
+RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app
 
 #############
 ### RUN BUILD
 #############
-
 WORKDIR /opt/sc2-bet/app/
-RUN grails war -Xverify:none
-
+RUN grails clean
+RUN grails -Xverify:none war
 RUN ls -lna /opt/sc2-bet/app/build/libs/
 
 ###############################
