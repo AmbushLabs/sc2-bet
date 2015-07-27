@@ -32,7 +32,7 @@ RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app #change
 #############
 WORKDIR /opt/sc2-bet/app/
 RUN grails clean
-RUN grails dev war
+RUN grails prod war --verbose
 RUN ls -lna /opt/sc2-bet/app/build/libs/
 
 RUN echo ${JAVA_HOME}
@@ -42,7 +42,12 @@ RUN echo ${GRAILS_HOME}
 ### COPY TO TOMCAT START SERVER
 ###############################
 RUN rm -rf ${CATALINA_HOME}/webapps/*
-RUN mv /opt/sc2-bet/app/build/libs/app-0.1.war ${CATALINA_HOME}/webapps/ROOT.war
+RUN ls -lna ${CATALINA_HOME}
+RUN ls -lna ${CATALINA_HOME}/webapps
+RUN cp /opt/sc2-bet/app/build/libs/app-0.1.war ${CATALINA_HOME}/webapps/ROOT.war
+RUN ls -lna ${CATALINA_HOME}/webapps
+
+RUN ls -lna
 
 EXPOSE 8080
 CMD ["/run.sh"]
