@@ -25,15 +25,18 @@ RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 ### PULL REPO
 #############
 RUN mkdir /opt/sc2-bet
-RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app
+RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app #change
 
 #############
 ### RUN BUILD
 #############
 WORKDIR /opt/sc2-bet/app/
 RUN grails clean
-RUN grails -Xverify:none war
+RUN grails dev war
 RUN ls -lna /opt/sc2-bet/app/build/libs/
+
+RUN echo ${JAVA_HOME}
+RUN echo ${GRAILS_HOME}
 
 ###############################
 ### COPY TO TOMCAT START SERVER
