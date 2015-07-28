@@ -2,7 +2,7 @@ FROM aaronhenshaw/grails3-tomcat7
 MAINTAINER Aaron Henshaw <aaronhenshaw@gmail.com>
 
 #TODO: figure out how to get rid of this line
-RUN chmod 777 ${CATALINA_HOME}
+#RUN chmod -R 777 ${CATALINA_HOME}
 
 #######################
 ### SSH KEYS FOR GITHUB
@@ -24,30 +24,15 @@ RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 #############
 ### PULL REPO
 #############
-RUN mkdir /opt/sc2-bet
-RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app #change
+#RUN mkdir /opt/sc2-bet
+#RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app #change2
 
 #############
 ### RUN BUILD
 #############
-WORKDIR /opt/sc2-bet/app/
+ENV PROJECT_HOME /opt/sc2-bet/app/
+WORKDIR ${PROJECT_HOME}
 RUN grails clean
-RUN grails prod war --verbose
-RUN ls -lna /opt/sc2-bet/app/build/libs/
-
-RUN echo ${JAVA_HOME}
-RUN echo ${GRAILS_HOME}
-
-###############################
-### COPY TO TOMCAT START SERVER
-###############################
-RUN rm -rf ${CATALINA_HOME}/webapps/*
-RUN ls -lna ${CATALINA_HOME}
-RUN ls -lna ${CATALINA_HOME}/webapps
-RUN cp /opt/sc2-bet/app/build/libs/app-0.1.war ${CATALINA_HOME}/webapps/ROOT.war
-RUN ls -lna ${CATALINA_HOME}/webapps
-
-RUN ls -lna
 
 EXPOSE 8080
-CMD ["/run.sh"]
+CMD ["grails", "prod", "run-app"]
