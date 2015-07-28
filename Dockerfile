@@ -24,14 +24,14 @@ RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 #############
 ### PULL REPO
 #############
-#RUN mkdir /opt/sc2-bet
-#RUN git clone git@github.com:AmbushLabs/sc2-bet.git /opt/sc2-bet/app #change2
+ENV PROJECT_HOME /opt/sc2-bet
+RUN mkdir ${PROJECT_HOME}
+RUN git clone git@github.com:AmbushLabs/sc2-bet.git ${PROJECT_HOME}/app #change2
 
 #############
 ### RUN BUILD
 #############
-ENV PROJECT_HOME /opt/sc2-bet/app/
-WORKDIR ${PROJECT_HOME}
+WORKDIR ${PROJECT_HOME}/app
 RUN grails clean
 
 EXPOSE 8080
