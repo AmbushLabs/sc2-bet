@@ -30,7 +30,41 @@ class BattleNetApiService {
                 JsonArray characters = jobject.getAsJsonArray('characters')
                 characters.each { JsonElement je ->
                     def charJson = je.getAsJsonObject();
-                    println charJson.get('displayName');
+                    character.characterId = charJson.get('id').getAsLong();
+                    character.realm = charJson.get('realm').getAsInt();
+                    character.name = charJson.get('name').getAsString();
+                    character.displayName = charJson.get('displayName').getAsString();
+                    character.clanName = charJson.get('clanName').getAsString();
+                    character.clanTag = charJson.get('clanTag').getAsString();
+                    character.profilePath = charJson.get('profilePath').getAsString();
+
+                    def portrait = charJson.getAsJsonObject('portrait');
+                    character.portraitUrl = portrait.get('url').getAsString();
+                    character.portraitHeight = portrait.get('h').getAsInt();
+                    character.portraitWidth = portrait.get('w').getAsInt();
+                    character.portraitX = portrait.get('x').getAsInt();
+                    character.portraitY = portrait.get('y').getAsInt();
+                    character.portraitOffset = portrait.get('offset').getAsInt();
+
+                    def avatar = charJson.getAsJsonObject('avatar');
+                    character.avatarUrl = avatar.get('url').getAsString();
+                    character.avatarHeight = avatar.get('h').getAsInt();
+                    character.avatarWidth = avatar.get('w').getAsInt();
+                    character.avatarX = avatar.get('x').getAsInt();
+                    character.avatarY = avatar.get('y').getAsInt();
+                    character.avatarOffset = avatar.get('offset').getAsInt();
+
+                    def career = charJson.getAsJsonObject('career');
+                    character.primaryRace = career.get('primaryRace').getAsString();
+                    character.protossWins = career.get('protossWins').getAsInt();
+                    character.terranWins = career.get('terranWins').getAsInt();
+                    character.zergWins = career.get('zergWins').getAsInt();
+                    character.highest1v1Rank = career.get('highest1v1Rank').getAsString();
+                    character.highestTeamRank = career.get('highestTeamRank').getAsString();
+                    character.seasonTotalGames = career.get('seasonTotalGames').getAsInt();
+                    character.careerTotalGames = career.get('careerTotalGames').getAsInt();
+
+                    character.save();
                 }
             }
 

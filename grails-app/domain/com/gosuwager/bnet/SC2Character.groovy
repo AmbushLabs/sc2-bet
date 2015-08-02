@@ -15,12 +15,14 @@ class SC2Character {
     Integer portraitWidth;
     Integer portraitX;
     Integer portraitY;
+    Integer portraitOffset;
 
     String avatarUrl;
     Integer avatarHeight;
     Integer avatarWidth;
     Integer avatarX;
     Integer avatarY;
+    Integer avatarOffset;
 
     String primaryRace;
     Integer protossWins;
