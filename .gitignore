@@ -36,3 +36,7 @@
 
 /.idea
 /gradle
+.gradle
+/.gradle
+
+/classes
