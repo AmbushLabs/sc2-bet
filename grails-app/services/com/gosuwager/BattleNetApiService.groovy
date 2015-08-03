@@ -13,12 +13,40 @@ import groovyx.net.http.Method
 @Transactional
 class BattleNetApiService {
 
+    def getAccountForToken(BattleNetToken bnetToken) {
+        BattleNetAccount bnetAccount = null;
+        def http = new HTTPBuilder('https://us.api.battle.net/account/user');
+        http.request(Method.GET, ContentType.URLENC) {
+            uri.query = [
+                access_token: bnetToken.accessToken
+            ]
+            headers.'User-Agent' = "GosuWager 0.1"
+            headers.Accept = 'application/json'
+
+            response.success = { resp, reader ->
+                JsonElement jelement = new JsonParser().parse(reader.keySet()[0]);
+                JsonObject jobject = jelement.getAsJsonObject();
+
+                def bnetId = new BigInteger(jobject.get('id').getAsString())
+                bnetAccount = BattleNetAccount.findByBattleNetId(bnetId)
+                if (bnetAccount == null) {
+                    bnetAccount = new BattleNetAccount();
+                    bnetAccount.battleNetId = bnetId;
+                    bnetAccount.battleTag = jobject.get('battletag').getAsString();
+                    bnetAccount.save();
+                }
+            }
+        }
+
+        return bnetAccount;
+    }
+
     def getCharacterForToken(BattleNetToken bnetToken) {
         def character = new SC2Character();
         def http = new HTTPBuilder('https://us.api.battle.net/sc2/profile/user');
         http.request(Method.GET, ContentType.URLENC) {
             uri.query = [
-                    access_token: bnetToken.accessToken
+                access_token: bnetToken.accessToken
             ]
             headers.'User-Agent' = "GosuWager 0.1"
             headers.Accept = 'application/json'

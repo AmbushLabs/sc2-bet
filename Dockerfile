@@ -35,4 +35,4 @@ WORKDIR ${PROJECT_HOME}/app
 RUN grails clean
 
 EXPOSE 8080
-CMD ["grails", "prod", "run-app"]
+CMD ["grails", "prod", "run-app", "--https"]

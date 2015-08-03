@@ -6,7 +6,11 @@ class BattleNetToken {
     String scope;
     Long expiresIn;
 
+    Boolean active;
+
     Date createDate;
+
+
 
     def beforeInsert() {
         if (createDate == null) {

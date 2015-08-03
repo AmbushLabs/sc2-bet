@@ -11,6 +11,8 @@ import groovyx.net.http.Method
 @Transactional
 class BattleNetAuthService {
 
+    def grailsApplication;
+
     def getAuthUrl() {
         return 'https://us.battle.net/oauth/authorize' +
                 '?client_id=' + grailsApplication.config.getProperty('battlenet.key') + '&' +
@@ -24,12 +26,12 @@ class BattleNetAuthService {
         def http = new HTTPBuilder('https://us.battle.net/oauth/token');
         http.request(Method.POST, ContentType.URLENC) {
             uri.query = [
-                    redirect_uri: grailsApplication.config.getProperty('battlenet.redirect_uri'),
-                    scope: 'sc2.profile',
-                    grant_type: 'authorization_code',
-                    code: code,
-                    client_id: grailsApplication.config.getProperty('battlenet.key'),
-                    client_secret: grailsApplication.config.getProperty('battlenet.secret')
+                redirect_uri: grailsApplication.config.getProperty('battlenet.redirect_uri'),
+                scope: 'sc2.profile',
+                grant_type: 'authorization_code',
+                code: code,
+                client_id: grailsApplication.config.getProperty('battlenet.key'),
+                client_secret: grailsApplication.config.getProperty('battlenet.secret')
             ];
 
             headers.'User-Agent' = "GosuWager 0.1"
@@ -41,6 +43,7 @@ class BattleNetAuthService {
                 bnetToken.accessToken = jobject.get('access_token').getAsString();
                 bnetToken.scope = jobject.get('scope').getAsString();
                 bnetToken.expiresIn = jobject.get('expires_in').getAsLong();
+                bnetToken.active = true;
                 bnetToken.save();
             }
         }

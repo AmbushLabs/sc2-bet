@@ -6,6 +6,8 @@
         <title><g:layoutTitle default="Gosu Wager"/></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <asset:stylesheet src="basscss.css"/>
+        <asset:javascript src="lib/jquery-2.1.4.min.js"/>
+        <asset:javascript src="require.js"/>
         <asset:javascript src="application.js"/>
         <g:layoutHead/>
     </head>
