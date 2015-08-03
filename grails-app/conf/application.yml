@@ -94,6 +94,10 @@ environments:
             dbCreate: update
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     production:
+        battlenet:
+            key: c7cv6t5g27zz2au6frn74xz88kxgz9fp
+            secret: E4cMG9wbQMqEm3ZcZpb3DhNtNRAGVaR5
+            redirect_uri: "https://sc2-bet-6a1b1094-1.aaronhenshaw.cont.tutum.io:8444/auth/battlenet"
         dataSource:
             dbCreate: update
             url: jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE

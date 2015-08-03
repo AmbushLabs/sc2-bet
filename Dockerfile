@@ -34,5 +34,5 @@ RUN git clone git@github.com:AmbushLabs/sc2-bet.git ${PROJECT_HOME}/app #change2
 WORKDIR ${PROJECT_HOME}/app
 RUN grails clean
 
-EXPOSE 8080
+EXPOSE 8443
 CMD ["grails", "prod", "run-app", "--https"]
