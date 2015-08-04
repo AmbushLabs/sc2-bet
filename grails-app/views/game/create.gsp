@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: aaronhenshaw
-  Date: 8/2/15
-  Time: 10:03 PM
+  Date: 8/3/15
+  Time: 11:30 PM
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -10,7 +10,8 @@
 <head>
     <title></title>
 </head>
+
 <body>
-    <g:render template="/main/logged_out" />
+    <div>create game yay</div>
 </body>
 </html>

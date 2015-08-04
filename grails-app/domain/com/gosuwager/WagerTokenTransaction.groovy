@@ -1,18 +1,19 @@
 package com.gosuwager
 
-class WagerTokens {
+class WagerTokenTransaction {
 
     Date createDate;
 
-    static hasMany = [
-        wagerTokenTransactions:WagerTokenTransaction
-    ];
+    User originalOwner;
+    User newOwner;
+    Game relatedGame;
 
     def beforeInsert() {
         if (createDate == null) {
             createDate = new Date();
         }
     }
+
 
     static constraints = {
     }
