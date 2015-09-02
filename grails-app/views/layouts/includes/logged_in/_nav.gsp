@@ -86,24 +86,24 @@
             return {showModal: false};
         },
         render: function() {
-            if (this.state.showModal) {
+         
                 return (
                     <div>
                         <HomeButton />
                         <FindGameButton  />
                         <CreateGameButton onClick={this.showModal} />
-                        <CreateGameModal hideModal={this.hideModal} />
+                        {this.buildModal()}
                     </div>
                 );
-            } else {
-                return (
-                    <div>
-                        <HomeButton />
-                        <FindGameButton  />
-                        <CreateGameButton onClick={this.showModal} />
-                    </div>
-                );
+          
+        },
+        buildModal: function () {
+            if (!this.state.showModal) {
+                return;
             }
+            return (
+                <CreateGameModal hideModal={this.hideModal} />
+            );
         },
         showModal: function() {
             this.setState({showModal:true});
