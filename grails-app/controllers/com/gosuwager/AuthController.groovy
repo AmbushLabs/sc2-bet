@@ -23,17 +23,27 @@ class AuthController {
             }
             account.addToTokens(bnetToken);
 
-            def character = battleNetApiService.getCharacterForToken(bnetToken);
-            println character;
-            if (account.characters == null || account.characters.size() == 0) {
-                println "adding character thing";
-                account.addToCharacters(character);
+            if (account.user != null) {
+                session.user_id = account.user.id;
+            } else {
+                //TODO: handle multiple characters, if thats a thing
+                def character = battleNetApiService.getCharacterForToken(bnetToken);
+                if (account.characters == null || account.characters.size() == 0) {
+                    account.addToCharacters(character);
+                }
+
+                User u = new User();
+                u.setBattleNetAccount(account);
+                u.addToWagerTokens(new WagerToken());
+
+                if (u.save(flush:true)) {
+                    session.user_id = u.id;
+                    println 'new user_id is ' + u.id;
+                    println 'session user_id is ' + session.user_id;
+                } else {
+                    println account.errors
+                }
             }
-            println account.characters;
-
-            account.save(flush:true);
-            session.account_id = account.id;
-
             [
                 loggedin:true
             ]

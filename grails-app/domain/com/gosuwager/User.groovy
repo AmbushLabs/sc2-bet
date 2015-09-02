@@ -2,18 +2,20 @@ package com.gosuwager
 
 class User {
 
-    Date createDate;
+    private static final Date NULL_DATE = new Date(0)
+
+    Date createDate = NULL_DATE;
 
     static hasOne = [
         battleNetAccount:BattleNetAccount
     ];
 
     static hasMany = [
-        wagerTokens:WagerTokens
+        wagerTokens:WagerToken
     ];
 
     def beforeInsert() {
-        if (createDate == null) {
+        if (createDate == NULL_DATE) {
             createDate = new Date();
         }
     }

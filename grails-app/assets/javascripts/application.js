@@ -1,4 +1,4 @@
-require(['assets/lib/underscore'], function(_) {
+require(['/assets/lib/underscore'], function(_) {
     var loginWindow = null;
     var windowChecker = null;
     $('*[data-ui-element="sign-up"]').click(function() {

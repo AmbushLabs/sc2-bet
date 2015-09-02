@@ -22,7 +22,13 @@ class GameController {
             }
         } else if (request.method == 'POST') {
             //create a game
-
+            def u = User.findById(session.user_id);
+            Game g = new Game([
+                creator: u,
+                tokenWager: params.wager
+            ]);
+            g.save(flush:true);
+            render Game.findAll([max:10]) as JSON;
         } else if (request.method == 'PUT') {
             //update a game
             //lets leave this not implemented
@@ -37,6 +43,6 @@ class GameController {
     }
 
     def list() {
-
+        render Game.findAll([max:10]) as JSON;
     }
 }

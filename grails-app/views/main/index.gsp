@@ -9,6 +9,7 @@
 <html>
 <head>
     <title></title>
+    <asset:javascript src="application.js"/>
 </head>
 <body>
     <g:render template="/main/logged_out" />
