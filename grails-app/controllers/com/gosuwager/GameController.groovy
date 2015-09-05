@@ -28,7 +28,7 @@ class GameController {
                 tokenWager: params.wager
             ]);
             g.save(flush:true);
-            render Game.findAll([max:10]) as JSON;
+            render Game.findAll([max:10, sort:"createDate", order:"desc"]) as JSON;
         } else if (request.method == 'PUT') {
             //update a game
             //lets leave this not implemented
@@ -43,6 +43,6 @@ class GameController {
     }
 
     def list() {
-        render Game.findAll([max:10]) as JSON;
+        render Game.findAll([max:10, sort:"createDate", order:"desc"]) as JSON;
     }
 }

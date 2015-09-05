@@ -11,7 +11,7 @@ class UrlMappings {
         "/login"(controller:"main", action:"login")
 
         "/game/create"(controller:"game", action:"create")
-        "/game/$game_id"(controller:"game", action:"index")
+        "/game/g/$game_id"(controller:"game", action:"index")
 
 
         "500"(view:'/error')

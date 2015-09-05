@@ -31,6 +31,27 @@
         }
     });
 
+    var AccountButton = React.createClass({
+        render: function() {
+            return (
+                <div className="right center h2 py1 px2">
+                    <a className="ss-icon ss-user" href="#"></a>
+                </div>
+            );
+        }
+    });
+
+    var Coins = React.createClass({
+        render: function() {
+            return (
+                <div className="right center h2 py1 px2">
+                    {this.props.wagerTokens}
+                    <a className="ss-icon ss-coins" href="#"></a>
+                </div>
+            );
+        }
+    });
+
 
     var CreateGameForm = React.createClass({
         handleSubmit: function(e) {
@@ -110,11 +131,13 @@
         },
         render: function() {
             return (
-                <div>
+                <div className="clearfix">
                     <HomeButton />
                     <FindGameButton  />
                     <CreateGameButton onClick={this.showModal} />
                     {this.buildModal()}
+                    <AccountButton />
+                    <Coins wagerTokens={this.props.wagerTokens} />
                 </div>
             );
         },
@@ -131,6 +154,14 @@
         },
         hideModal: function() {
             this.setState({showModal:false});
+        },
+        componentDidMount: function() {
+            $.ajax({
+                url:'/game/list',
+                success: $.proxy(function(resp) {
+                    this.setProps({games:resp});
+                },this)
+            });
         }
     });
     React.render(
