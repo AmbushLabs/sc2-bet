@@ -25,5 +25,6 @@
     </g:else>
     <g:layoutBody/>
     <script src="//cdn.symbolset.com/f3558125ac7afa92f7c800679e8c8ab19e3d003c/symbolset.js"></script>
+    <asset:javascript src="dist/app.js"/>
 </body>
 </html>

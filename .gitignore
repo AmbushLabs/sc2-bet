@@ -40,3 +40,5 @@
 /.gradle
 
 /classes
+
+/node_modules
