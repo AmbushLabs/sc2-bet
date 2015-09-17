@@ -13,6 +13,8 @@ class UrlMappings {
         "/game/create"(controller:"game", action:"create")
         "/game/g/$game_id"(controller:"game", action:"index")
 
+        "/player/$player_id"(controller:"player", action:"index")
+
 
         "500"(view:'/error')
         "404"(view:'/notFound')
