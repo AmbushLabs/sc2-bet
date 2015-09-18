@@ -5,14 +5,12 @@ import NavBar from './modules/nav/nav-bar';
 import GameList from './modules/games/game-list';
 
 var gameDispatcher = new Dispatcher();
+var games = {};
 
 React.render(
     <NavBar gameDispatcher={gameDispatcher} />,
     document.getElementById('logged_in_nav')
 );
-
-var games = {};
-
 
 React.render(
     <GameList games={[]} gameDispatcher={gameDispatcher} />,

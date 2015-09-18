@@ -1,3 +1,4 @@
+import React from './../../lib/react';
 import HomeButton from './home-button';
 import CreateGameButton from './create-game-button';
 import Coins from './coins';

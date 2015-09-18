@@ -1,3 +1,5 @@
+import React from './../../lib/react';
+
 var Coins = React.createClass({
     render: function() {
         return (

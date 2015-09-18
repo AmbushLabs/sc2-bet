@@ -1,3 +1,5 @@
+import React from './../../lib/react';
+
 var CreateGameForm = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();

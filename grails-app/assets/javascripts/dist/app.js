@@ -22,10 +22,9 @@ var _modulesGamesGameList = require('./modules/games/game-list');
 var _modulesGamesGameList2 = _interopRequireDefault(_modulesGamesGameList);
 
 var gameDispatcher = new _libDispatcher2['default']();
+var games = {};
 
 _libReact2['default'].render(_libReact2['default'].createElement(_modulesNavNavBar2['default'], { gameDispatcher: gameDispatcher }), document.getElementById('logged_in_nav'));
-
-var games = {};
 
 _libReact2['default'].render(_libReact2['default'].createElement(_modulesGamesGameList2['default'], { games: [], gameDispatcher: gameDispatcher }), document.getElementById('game_list'));
 
@@ -7961,99 +7960,110 @@ throw new Error(message);}catch(x) {}}};}module.exports = warning;},{"114":114}]
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
 },{}],6:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
-var CreateGameForm = React.createClass({
-    displayName: "CreateGameForm",
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _libReact = require('./../../lib/react');
+
+var _libReact2 = _interopRequireDefault(_libReact);
+
+var CreateGameForm = _libReact2['default'].createClass({
+    displayName: 'CreateGameForm',
 
     handleSubmit: function handleSubmit(e) {
         e.preventDefault();
-        var wagerAmount = React.findDOMNode(this.refs.wager_amount).value.trim();
+        var wagerAmount = _libReact2['default'].findDOMNode(this.refs.wager_amount).value.trim();
         if (!wagerAmount) {
             return;
         }
         // TODO: send request to the server
-        React.findDOMNode(this.refs.wager_amount).value = '';
+        _libReact2['default'].findDOMNode(this.refs.wager_amount).value = '';
         return;
     },
     render: function render() {
-        return React.createElement(
-            "div",
+        return _libReact2['default'].createElement(
+            'div',
             null,
-            React.createElement(
-                "h3",
+            _libReact2['default'].createElement(
+                'h3',
                 null,
-                "Set the number of tokens to wager"
+                'Set the number of tokens to wager'
             ),
-            React.createElement(
-                "label",
+            _libReact2['default'].createElement(
+                'label',
                 null,
-                "Wager Amount"
+                'Wager Amount'
             ),
-            React.createElement("input", { type: "number", className: "block col-12 mb1 field", ref: "wagerAmount" })
+            _libReact2['default'].createElement('input', { type: 'number', className: 'block col-12 mb1 field', ref: 'wagerAmount' })
         );
     }
 });
 
-exports["default"] = CreateGameForm;
-module.exports = exports["default"];
+exports['default'] = CreateGameForm;
+module.exports = exports['default'];
 
-},{}],7:[function(require,module,exports){
-"use strict";
+},{"./../../lib/react":5}],7:[function(require,module,exports){
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _libReact = require('./../../lib/react');
+
+var _libReact2 = _interopRequireDefault(_libReact);
 
 var _form = require('./form');
 
 var _form2 = _interopRequireDefault(_form);
 
-var CreateGameModal = React.createClass({
-    displayName: "CreateGameModal",
+var CreateGameModal = _libReact2['default'].createClass({
+    displayName: 'CreateGameModal',
 
     render: function render() {
-        return React.createElement(
-            "div",
-            { className: "modal", id: "create-game-modal", onClick: this.props.hideModal },
-            React.createElement(
-                "div",
-                { className: "modal-dialog col col-6", onClick: this.preventBubble },
-                React.createElement(
-                    "form",
-                    { className: "" },
-                    React.createElement(
-                        "div",
-                        { className: "modal-header clearfix" },
-                        React.createElement(
-                            "h2",
-                            { className: "col col-11 mt1 mb1" },
-                            "Create a Game"
+        return _libReact2['default'].createElement(
+            'div',
+            { className: 'modal', id: 'create-game-modal', onClick: this.props.hideModal },
+            _libReact2['default'].createElement(
+                'div',
+                { className: 'modal-dialog col col-6', onClick: this.preventBubble },
+                _libReact2['default'].createElement(
+                    'form',
+                    { className: '' },
+                    _libReact2['default'].createElement(
+                        'div',
+                        { className: 'modal-header clearfix' },
+                        _libReact2['default'].createElement(
+                            'h2',
+                            { className: 'col col-11 mt1 mb1' },
+                            'Create a Game'
                         ),
-                        React.createElement(
-                            "a",
-                            { href: "#", className: "btn-close col col-1 center mt1", onClick: this.props.hideModal },
-                            "×"
+                        _libReact2['default'].createElement(
+                            'a',
+                            { href: '#', className: 'btn-close col col-1 center mt1', onClick: this.props.hideModal },
+                            '×'
                         )
                     ),
-                    React.createElement(
-                        "div",
-                        { className: "modal-body" },
-                        React.createElement(_form2["default"], null)
+                    _libReact2['default'].createElement(
+                        'div',
+                        { className: 'modal-body' },
+                        _libReact2['default'].createElement(_form2['default'], { ref: 'gameForm' })
                     ),
-                    React.createElement(
-                        "div",
-                        { className: "modal-footer" },
-                        React.createElement("input", { type: "submit", className: "btn btn-primary mr2", onClick: this.onSubmit, value: "Create Game" }),
-                        React.createElement(
-                            "button",
-                            { type: "reset", className: "btn btn-primary black bg-gray", onClick: this.props.hideModal },
-                            "Cancel"
+                    _libReact2['default'].createElement(
+                        'div',
+                        { className: 'modal-footer' },
+                        _libReact2['default'].createElement('input', { type: 'submit', className: 'btn btn-primary mr2', onClick: this.onSubmit, value: 'Create Game' }),
+                        _libReact2['default'].createElement(
+                            'button',
+                            { type: 'reset', className: 'btn btn-primary black bg-gray', onClick: this.props.hideModal },
+                            'Cancel'
                         )
                     )
                 )
@@ -8064,7 +8074,6 @@ var CreateGameModal = React.createClass({
         ev.stopPropagation();
     },
     onSubmit: function onSubmit(ev) {
-        debugger;
         var wagerAmount = $(this.refs.gameForm.refs.wagerAmount.getDOMNode()).val();
         if (_.isEmpty(wagerAmount)) {
             console.log(wagerAmount + _.isEmpty(wagerAmount));
@@ -8079,6 +8088,7 @@ var CreateGameModal = React.createClass({
             },
             success: $.proxy(function (resp) {
                 this.props.gameDispatcher.dispatch(resp);
+                this.props.hideModal();
             }, this)
         });
         ev.stopPropagation();
@@ -8089,32 +8099,39 @@ var CreateGameModal = React.createClass({
     }
 });
 
-exports["default"] = CreateGameModal;
-module.exports = exports["default"];
+exports['default'] = CreateGameModal;
+module.exports = exports['default'];
 
-},{"./form":6}],8:[function(require,module,exports){
+},{"./../../lib/react":5,"./form":6}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var GameCard = React.createClass({
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _libReact = require('./../../lib/react');
+
+var _libReact2 = _interopRequireDefault(_libReact);
+
+var GameCard = _libReact2["default"].createClass({
     displayName: "GameCard",
 
     render: function render() {
-        return React.createElement(
+        return _libReact2["default"].createElement(
             "div",
             { className: "col col-4" },
-            React.createElement(
+            _libReact2["default"].createElement(
                 "div",
                 { className: "border m2 p2" },
                 "Wager: ",
                 this.props.wager,
-                React.createElement("br", null),
+                _libReact2["default"].createElement("br", null),
                 this.props.characterName,
-                React.createElement("br", null),
+                _libReact2["default"].createElement("br", null),
                 this.props.primaryRace,
-                React.createElement("br", null),
+                _libReact2["default"].createElement("br", null),
                 this.props.highest1v1Rank
             )
         );
@@ -8124,7 +8141,7 @@ var GameCard = React.createClass({
 exports["default"] = GameCard;
 module.exports = exports["default"];
 
-},{}],9:[function(require,module,exports){
+},{"./../../lib/react":5}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8133,21 +8150,25 @@ Object.defineProperty(exports, "__esModule", {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+var _libReact = require('./../../lib/react');
+
+var _libReact2 = _interopRequireDefault(_libReact);
+
 var _gameCard = require("./game-card");
 
 var _gameCard2 = _interopRequireDefault(_gameCard);
 
-var GameList = React.createClass({
+var GameList = _libReact2["default"].createClass({
     displayName: "GameList",
 
     render: function render() {
         var gameNodes = this.props.games.map(function (game) {
-            return React.createElement(_gameCard2["default"], { characterName: game.creator.display_name,
+            return _libReact2["default"].createElement(_gameCard2["default"], { characterName: game.creator.display_name,
                 primaryRace: game.creator.primary_race,
                 highest1v1Rank: game.creator.highest_1v1_rank,
                 wager: game.wager });
         });
-        return React.createElement(
+        return _libReact2["default"].createElement(
             "div",
             { className: "clearfix" },
             gameNodes
@@ -8169,21 +8190,28 @@ var GameList = React.createClass({
 exports["default"] = GameList;
 module.exports = exports["default"];
 
-},{"./game-card":8}],10:[function(require,module,exports){
+},{"./../../lib/react":5,"./game-card":8}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var Coins = React.createClass({
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _libReact = require('./../../lib/react');
+
+var _libReact2 = _interopRequireDefault(_libReact);
+
+var Coins = _libReact2["default"].createClass({
     displayName: "Coins",
 
     render: function render() {
-        return React.createElement(
+        return _libReact2["default"].createElement(
             "div",
             { className: "right center h2 py1 px2" },
             this.props.wagerTokens,
-            React.createElement("a", { className: "ss-icon ss-coins", href: "#" })
+            _libReact2["default"].createElement("a", { className: "ss-icon ss-coins", href: "#" })
         );
     }
 });
@@ -8191,20 +8219,27 @@ var Coins = React.createClass({
 exports["default"] = Coins;
 module.exports = exports["default"];
 
-},{}],11:[function(require,module,exports){
+},{"./../../lib/react":5}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var CreateGameButton = React.createClass({
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _libReact = require('./../../lib/react');
+
+var _libReact2 = _interopRequireDefault(_libReact);
+
+var CreateGameButton = _libReact2["default"].createClass({
     displayName: "CreateGameButton",
 
     render: function render() {
-        return React.createElement(
+        return _libReact2["default"].createElement(
             "div",
             { className: "sm-col", onClick: this.props.onClick },
-            React.createElement(
+            _libReact2["default"].createElement(
                 "a",
                 { href: "#", className: "btn py2" },
                 "Create Game"
@@ -8216,20 +8251,27 @@ var CreateGameButton = React.createClass({
 exports["default"] = CreateGameButton;
 module.exports = exports["default"];
 
-},{}],12:[function(require,module,exports){
+},{"./../../lib/react":5}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var HomeButton = React.createClass({
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _libReact = require('./../../lib/react');
+
+var _libReact2 = _interopRequireDefault(_libReact);
+
+var HomeButton = _libReact2["default"].createClass({
     displayName: "HomeButton",
 
     render: function render() {
-        return React.createElement(
+        return _libReact2["default"].createElement(
             "div",
             { className: "sm-col" },
-            React.createElement(
+            _libReact2["default"].createElement(
                 "a",
                 { href: "#", className: "btn py2" },
                 "Home"
@@ -8241,7 +8283,7 @@ var HomeButton = React.createClass({
 exports["default"] = HomeButton;
 module.exports = exports["default"];
 
-},{}],13:[function(require,module,exports){
+},{"./../../lib/react":5}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -8249,6 +8291,10 @@ Object.defineProperty(exports, '__esModule', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _libReact = require('./../../lib/react');
+
+var _libReact2 = _interopRequireDefault(_libReact);
 
 var _homeButton = require('./home-button');
 
@@ -8266,27 +8312,27 @@ var _createGameModal = require('./../create-game/modal');
 
 var _createGameModal2 = _interopRequireDefault(_createGameModal);
 
-var NavBar = React.createClass({
+var NavBar = _libReact2['default'].createClass({
     displayName: 'NavBar',
 
     getInitialState: function getInitialState() {
         return { showModal: false };
     },
     render: function render() {
-        return React.createElement(
+        return _libReact2['default'].createElement(
             'div',
             { className: 'clearfix' },
-            React.createElement(_homeButton2['default'], null),
-            React.createElement(_createGameButton2['default'], { onClick: this.showModal }),
+            _libReact2['default'].createElement(_homeButton2['default'], null),
+            _libReact2['default'].createElement(_createGameButton2['default'], { onClick: this.showModal }),
             this.buildModal(),
-            React.createElement(_coins2['default'], { wagerTokens: this.props.wagerTokens })
+            _libReact2['default'].createElement(_coins2['default'], { wagerTokens: this.props.wagerTokens })
         );
     },
     buildModal: function buildModal() {
         if (!this.state.showModal) {
             return;
         }
-        return React.createElement(_createGameModal2['default'], { hideModal: this.hideModal, gameDispatcher: this.props.gameDispatcher });
+        return _libReact2['default'].createElement(_createGameModal2['default'], { hideModal: this.hideModal, gameDispatcher: this.props.gameDispatcher });
     },
     showModal: function showModal() {
         this.setState({ showModal: true });
@@ -8307,7 +8353,7 @@ var NavBar = React.createClass({
 exports['default'] = NavBar;
 module.exports = exports['default'];
 
-},{"./../create-game/modal":7,"./coins":10,"./create-game-button":11,"./home-button":12}],14:[function(require,module,exports){
+},{"./../../lib/react":5,"./../create-game/modal":7,"./coins":10,"./create-game-button":11,"./home-button":12}],14:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};

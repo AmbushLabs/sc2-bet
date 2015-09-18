@@ -1,3 +1,4 @@
+import React from './../../lib/react';
 import GameCard from "./game-card";
 
 var GameList = React.createClass({

@@ -1,3 +1,5 @@
+import React from './../../lib/react';
+
 var HomeButton = React.createClass ({
     render: function() {
         return (

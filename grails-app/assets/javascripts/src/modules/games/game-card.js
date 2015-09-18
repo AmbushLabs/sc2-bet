@@ -1,3 +1,5 @@
+import React from './../../lib/react';
+
 var GameCard = React.createClass({
     render: function() {
         return (
