@@ -12,7 +12,7 @@ var CreateGameModal = React.createClass({
                             <a href="#" className="btn-close col col-1 center mt1" onClick={this.props.hideModal}>×</a>
                         </div>
                         <div className="modal-body">
-                            <CreateGameForm ref="gameForm" />
+                            <CreateGameForm />
                         </div>
                         <div className="modal-footer">
                             <input type="submit" className="btn btn-primary mr2" onClick={this.onSubmit} value="Create Game" />
@@ -27,6 +27,7 @@ var CreateGameModal = React.createClass({
         ev.stopPropagation();
     },
     onSubmit: function(ev) {
+        debugger;
         var wagerAmount = $(this.refs.gameForm.refs.wagerAmount.getDOMNode()).val();
         if (_.isEmpty(wagerAmount)) {
             console.log(wagerAmount + _.isEmpty(wagerAmount));
@@ -39,9 +40,9 @@ var CreateGameModal = React.createClass({
             data: {
                 wager:wagerAmount
             },
-            success:function(resp) {
-                gameEventEmitter.emit('games_load', resp);
-            }
+            success:$.proxy(function(resp) {
+                this.props.gameDispatcher.dispatch(resp);
+            }, this)
         });
         ev.stopPropagation();
         ev.preventDefault();

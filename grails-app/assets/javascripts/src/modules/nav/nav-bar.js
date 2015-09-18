@@ -22,7 +22,7 @@ var NavBar = React.createClass ({
             return;
         }
         return (
-            <CreateGameModal hideModal={this.hideModal} />
+            <CreateGameModal hideModal={this.hideModal} gameDispatcher={this.props.gameDispatcher} />
         );
     },
     showModal: function() {

@@ -5,7 +5,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 require('./lib/jquery');
 
-require('./lib/dispatcher');
+var _libDispatcher = require('./lib/dispatcher');
+
+var _libDispatcher2 = _interopRequireDefault(_libDispatcher);
 
 var _libReact = require('./lib/react');
 
@@ -15,9 +17,19 @@ var _modulesNavNavBar = require('./modules/nav/nav-bar');
 
 var _modulesNavNavBar2 = _interopRequireDefault(_modulesNavNavBar);
 
-_libReact2['default'].render(_libReact2['default'].createElement(_modulesNavNavBar2['default'], null), document.getElementById('logged_in_nav'));
+var _modulesGamesGameList = require('./modules/games/game-list');
 
-},{"./lib/dispatcher":2,"./lib/jquery":4,"./lib/react":5,"./modules/nav/nav-bar":11}],2:[function(require,module,exports){
+var _modulesGamesGameList2 = _interopRequireDefault(_modulesGamesGameList);
+
+var gameDispatcher = new _libDispatcher2['default']();
+
+_libReact2['default'].render(_libReact2['default'].createElement(_modulesNavNavBar2['default'], { gameDispatcher: gameDispatcher }), document.getElementById('logged_in_nav'));
+
+var games = {};
+
+_libReact2['default'].render(_libReact2['default'].createElement(_modulesGamesGameList2['default'], { games: [], gameDispatcher: gameDispatcher }), document.getElementById('game_list'));
+
+},{"./lib/dispatcher":2,"./lib/jquery":4,"./lib/react":5,"./modules/games/game-list":9,"./modules/nav/nav-bar":13}],2:[function(require,module,exports){
 /**
  * Copyright (c) 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -320,7 +332,7 @@ module.exports = invariant;
 
 }).call(this,require('_process'))
 
-},{"_process":12}],4:[function(require,module,exports){
+},{"_process":14}],4:[function(require,module,exports){
 /*! jQuery v2.1.4 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
 "use strict";
 
@@ -8032,7 +8044,7 @@ var CreateGameModal = React.createClass({
                     React.createElement(
                         "div",
                         { className: "modal-body" },
-                        React.createElement(_form2["default"], { ref: "gameForm" })
+                        React.createElement(_form2["default"], null)
                     ),
                     React.createElement(
                         "div",
@@ -8052,6 +8064,7 @@ var CreateGameModal = React.createClass({
         ev.stopPropagation();
     },
     onSubmit: function onSubmit(ev) {
+        debugger;
         var wagerAmount = $(this.refs.gameForm.refs.wagerAmount.getDOMNode()).val();
         if (_.isEmpty(wagerAmount)) {
             console.log(wagerAmount + _.isEmpty(wagerAmount));
@@ -8064,9 +8077,9 @@ var CreateGameModal = React.createClass({
             data: {
                 wager: wagerAmount
             },
-            success: function success(resp) {
-                gameEventEmitter.emit('games_load', resp);
-            }
+            success: $.proxy(function (resp) {
+                this.props.gameDispatcher.dispatch(resp);
+            }, this)
         });
         ev.stopPropagation();
         ev.preventDefault();
@@ -8080,6 +8093,83 @@ exports["default"] = CreateGameModal;
 module.exports = exports["default"];
 
 },{"./form":6}],8:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var GameCard = React.createClass({
+    displayName: "GameCard",
+
+    render: function render() {
+        return React.createElement(
+            "div",
+            { className: "col col-4" },
+            React.createElement(
+                "div",
+                { className: "border m2 p2" },
+                "Wager: ",
+                this.props.wager,
+                React.createElement("br", null),
+                this.props.characterName,
+                React.createElement("br", null),
+                this.props.primaryRace,
+                React.createElement("br", null),
+                this.props.highest1v1Rank
+            )
+        );
+    }
+});
+
+exports["default"] = GameCard;
+module.exports = exports["default"];
+
+},{}],9:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _gameCard = require("./game-card");
+
+var _gameCard2 = _interopRequireDefault(_gameCard);
+
+var GameList = React.createClass({
+    displayName: "GameList",
+
+    render: function render() {
+        var gameNodes = this.props.games.map(function (game) {
+            return React.createElement(_gameCard2["default"], { characterName: game.creator.display_name,
+                primaryRace: game.creator.primary_race,
+                highest1v1Rank: game.creator.highest_1v1_rank,
+                wager: game.wager });
+        });
+        return React.createElement(
+            "div",
+            { className: "clearfix" },
+            gameNodes
+        );
+    },
+    componentDidMount: function componentDidMount() {
+        this.props.gameDispatcher.register($.proxy(function (games) {
+            this.setProps({ games: games });
+        }, this));
+        $.ajax({
+            url: '/game/list',
+            success: $.proxy(function (resp) {
+                this.setProps({ games: resp });
+            }, this)
+        });
+    }
+});
+
+exports["default"] = GameList;
+module.exports = exports["default"];
+
+},{"./game-card":8}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8101,7 +8191,7 @@ var Coins = React.createClass({
 exports["default"] = Coins;
 module.exports = exports["default"];
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8126,7 +8216,7 @@ var CreateGameButton = React.createClass({
 exports["default"] = CreateGameButton;
 module.exports = exports["default"];
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8151,7 +8241,7 @@ var HomeButton = React.createClass({
 exports["default"] = HomeButton;
 module.exports = exports["default"];
 
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -8196,7 +8286,7 @@ var NavBar = React.createClass({
         if (!this.state.showModal) {
             return;
         }
-        return React.createElement(_createGameModal2['default'], { hideModal: this.hideModal });
+        return React.createElement(_createGameModal2['default'], { hideModal: this.hideModal, gameDispatcher: this.props.gameDispatcher });
     },
     showModal: function showModal() {
         this.setState({ showModal: true });
@@ -8217,7 +8307,7 @@ var NavBar = React.createClass({
 exports['default'] = NavBar;
 module.exports = exports['default'];
 
-},{"./../create-game/modal":7,"./coins":8,"./create-game-button":9,"./home-button":10}],12:[function(require,module,exports){
+},{"./../create-game/modal":7,"./coins":10,"./create-game-button":11,"./home-button":12}],14:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
