@@ -1,17 +1,201 @@
 import React from './../../lib/react';
 
 var GameCard = React.createClass({
+    getInitialState: function() {
+        return {
+            isLoading: false,
+            isJoining: false,
+            isCancelling: false,
+            isAccepting: false,
+            isRejecting: false
+        };
+    },
     render: function() {
         return (
             <div className="col col-4">
-                <div className="border m2 p2">
-                    Wager: {this.props.wager}<br />
-                    {this.props.characterName}<br />
-                    {this.props.primaryRace}<br />
-                    {this.props.highest1v1Rank}
+                <div className="m1 p1 clearfix bg-black white">
+                    <div className="bg-lighten-3">
+                        <div className="col col-4 left-align">
+                            <h6>Creator</h6>
+                            {this.getUserDisplay(this.props.game.creator)}
+                        </div>
+                        <div className="col col-4 center">
+                            <h6>Wager</h6>
+                            <h1 className="mt1">{this.props.game.wager} <span className="ss-icon ss-coins h2"></span></h1>
+                        </div>
+                        <div className="col col-4 right-align">
+                            <h6>Challenger</h6>
+                            {this.getUserDisplay(this.props.game.challenger)}
+                        </div>
+                        <div className="col col-12">
+                            {this.getControls()}
+                        </div>
+                    </div>
                 </div>
             </div>
         );
+    },
+    getUserDisplay: function(user) {
+        if (_.isUndefined(user) || _.isNull(user)) {
+            return;
+        }
+        return (
+            <div className="h4 mt1">
+                {user.display_name}<br />
+                {user.primary_race}<br />
+                {user.highest_1v1_rank}
+            </div>
+        );
+    },
+    getControls: function() {
+        if (!this.props.game.is_active) {
+            return this.getDisabledButton('Wager cancelled');
+        }
+        if (this.props.game.is_creator) {
+            if (this.props.game.has_challenger) {
+                if (this.props.game.has_creator_accepted) {
+                    return this.getDisabledButton('Play time!')
+                } else {
+                    return (
+                        <div>
+                            <div className="col col-4">
+                                <button className="btn btn-primary mb1 mt1 bg-red mr1 col-11" onClick={this.cancelGame}>
+                                    {this.getTextOrLoader('Cancel', 'cancel')}
+                                </button>
+                            </div>
+                            <div className="col col-4">
+                                <button className="btn btn-primary mb1 mt1 bg-maroon mr1 col-11" onClick={this.rejectChallenger}>
+                                    {this.getTextOrLoader('Reject', 'reject')}
+                                </button>
+                            </div>
+                            <div className="col col-4">
+                                <button className="btn btn-primary mb1 mt1 bg-blue ml1 col-11" onClick={this.acceptChallenger}>
+                                    {this.getTextOrLoader('Accept', 'accept')}
+                                </button>
+                            </div>
+                        </div>
+                    );
+                }
+            } else {
+                return (
+                    <button className="btn btn-primary mb1 mt1 bg-red col-12" onClick={this.cancelGame}>
+                        {this.getTextOrLoader('Cancel', 'cancel')}
+                    </button>
+                );
+            }
+        } else {
+            if (this.props.game.is_challenger) {
+                if (this.props.game.has_creator_accepted) {
+                    //ok this game is a go for you
+                    return this.getDisabledButton('Play time!')
+                } else {
+                    //waiting on them to say cool
+                    return this.getDisabledButton('Waiting on player to accept...');
+                }
+            } else if (this.props.game.has_challenger) {
+                //already has a challenger
+                return this.getDisabledButton('Already matched up sorry!');
+            } else {
+                //there is no challenger, show join
+                return (
+                    <button className="btn btn-primary mb1 mt1 bg-blue col col-12" onClick={this.joinGame}>
+                        {this.getTextOrLoader('Join', 'join')}
+                    </button>
+                );
+            }
+        }
+    },
+    getDisabledButton: function(text) {
+        return (
+            <button className="btn btn-primary mb1 mt1 col col-12 bg-blue is-disabled">{text}</button>
+        );
+    },
+    getTextOrLoader: function(text, type) {
+        if (this.state.isLoading) {
+            if ((type == 'join' && this.state.isJoining) ||
+                (type == 'cancel' && this.state.isCancelling) ||
+                (type == 'reject' && this.state.isRejecting) ||
+                (type == 'accept' && this.state.isAccepting)) {
+                return (
+                    <div className="loader">&nbsp;</div>
+                );
+            }
+        }
+        return (
+            <div>{text}</div>
+        );
+    },
+    joinGame: function() {
+        if (this.state.isLoading) {
+            return;
+        }
+        this.setState({isJoining:true, isLoading:true});
+        $.ajax({
+            url:'/game/' + this.props.game.id + '/join',
+            type: 'POST',
+            success: $.proxy(function(resp) {
+                if (_.has('error')) {
+                    //TODO: handle error
+                } else {
+                    this.props.game = resp.game;
+                }
+                this.setState({isJoining:false, isLoading:false});
+            }, this)
+        })
+    },
+    cancelGame: function() {
+        if (this.state.isLoading) {
+            return;
+        }
+        this.setState({isCancelling:true, isLoading:true});
+        $.ajax({
+            url:'/game/g/' + this.props.game.id,
+            type: 'DELETE',
+            success: $.proxy(function(resp) {
+                if (_.has('error')) {
+                    //TODO: handle error
+                } else {
+                    this.props.game = resp.game;
+                }
+                this.setState({isCancelling:false, isLoading:false});
+            }, this)
+        })
+    },
+    acceptChallenger: function() {
+        if (this.state.isLoading) {
+            return;
+        }
+        this.setState({isAccepting:true, isLoading:true});
+        $.ajax({
+            url:'/game/' + this.props.game.id + '/accept',
+            type: 'POST',
+            success: $.proxy(function(resp) {
+                if (_.has('error')) {
+                    //TODO: handle error
+                } else {
+                    this.props.game = resp.game;
+                }
+                this.setState({isAccepting:false, isLoading:false});
+            },this)
+        });
+    },
+    rejectChallenger: function() {
+        if (this.state.isLoading) {
+            return;
+        }
+        this.setState({isRejecting:true, isLoading:true});
+        $.ajax({
+            url:'/game/' + this.props.game.id + '/reject',
+            type: 'POST',
+            success: $.proxy(function(resp) {
+                if (_.has('error')) {
+                    //TODO: handle error
+                } else {
+                    this.props.game = resp.game;
+                }
+                this.setState({isRejecting:false, isLoading:false});
+            },this)
+        })
     }
 });
 

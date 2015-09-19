@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <asset:stylesheet src="basscss.css"/>
     <asset:stylesheet src="modal.css"/>
+    <asset:stylesheet src="utility.css"/>
     <asset:javascript src="lib/underscore.js" />
     <asset:javascript src="lib/jquery-2.1.4.min.js"/>
     <asset:javascript src="require.js"/>

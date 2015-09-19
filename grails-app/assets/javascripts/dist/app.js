@@ -21,12 +21,30 @@ var _modulesGamesGameList = require('./modules/games/game-list');
 
 var _modulesGamesGameList2 = _interopRequireDefault(_modulesGamesGameList);
 
-var gameDispatcher = new _libDispatcher2['default']();
-var games = {};
+var $logged_in_nav = $('#logged_in_nav');
+if ($logged_in_nav.length > 0) {
 
-_libReact2['default'].render(_libReact2['default'].createElement(_modulesNavNavBar2['default'], { gameDispatcher: gameDispatcher }), document.getElementById('logged_in_nav'));
+    var searchGameDispatcher = new _libDispatcher2['default']();
+    var myGameDispatcher = new _libDispatcher2['default']();
+    var searchGames = {};
+    var myGames = {};
 
-_libReact2['default'].render(_libReact2['default'].createElement(_modulesGamesGameList2['default'], { games: [], gameDispatcher: gameDispatcher }), document.getElementById('game_list'));
+    //Render the logged in navigation
+    _libReact2['default'].render(_libReact2['default'].createElement(_modulesNavNavBar2['default'], { gameDispatcher: myGameDispatcher }), $logged_in_nav[0]);
+
+    //TODO: seperate things into page components.
+    var $game_list = $('#dashboard_find_games');
+    if ($game_list.length > 0) {
+        //render games list on dashboard.
+        _libReact2['default'].render(_libReact2['default'].createElement(_modulesGamesGameList2['default'], { games: searchGames, gameDispatcher: searchGameDispatcher, listType: 'search' }), $game_list[0]);
+    }
+
+    var $my_game_list = $('#dashboard_my_games');
+    if ($my_game_list.length > 0) {
+        //render games list on dashboard.
+        _libReact2['default'].render(_libReact2['default'].createElement(_modulesGamesGameList2['default'], { games: myGames, gameDispatcher: myGameDispatcher, listType: 'created_or_joined' }), $my_game_list[0]);
+    }
+}
 
 },{"./lib/dispatcher":2,"./lib/jquery":4,"./lib/react":5,"./modules/games/game-list":9,"./modules/nav/nav-bar":13}],2:[function(require,module,exports){
 /**
@@ -8118,23 +8136,248 @@ var _libReact2 = _interopRequireDefault(_libReact);
 var GameCard = _libReact2["default"].createClass({
     displayName: "GameCard",
 
+    getInitialState: function getInitialState() {
+        return {
+            isLoading: false,
+            isJoining: false,
+            isCancelling: false,
+            isAccepting: false,
+            isRejecting: false
+        };
+    },
     render: function render() {
         return _libReact2["default"].createElement(
             "div",
             { className: "col col-4" },
             _libReact2["default"].createElement(
                 "div",
-                { className: "border m2 p2" },
-                "Wager: ",
-                this.props.wager,
-                _libReact2["default"].createElement("br", null),
-                this.props.characterName,
-                _libReact2["default"].createElement("br", null),
-                this.props.primaryRace,
-                _libReact2["default"].createElement("br", null),
-                this.props.highest1v1Rank
+                { className: "m1 p1 clearfix bg-black white" },
+                _libReact2["default"].createElement(
+                    "div",
+                    { className: "bg-lighten-3" },
+                    _libReact2["default"].createElement(
+                        "div",
+                        { className: "col col-4 left-align" },
+                        _libReact2["default"].createElement(
+                            "h6",
+                            null,
+                            "Creator"
+                        ),
+                        this.getUserDisplay(this.props.game.creator)
+                    ),
+                    _libReact2["default"].createElement(
+                        "div",
+                        { className: "col col-4 center" },
+                        _libReact2["default"].createElement(
+                            "h6",
+                            null,
+                            "Wager"
+                        ),
+                        _libReact2["default"].createElement(
+                            "h1",
+                            { className: "mt1" },
+                            this.props.game.wager,
+                            " ",
+                            _libReact2["default"].createElement("span", { className: "ss-icon ss-coins h2" })
+                        )
+                    ),
+                    _libReact2["default"].createElement(
+                        "div",
+                        { className: "col col-4 right-align" },
+                        _libReact2["default"].createElement(
+                            "h6",
+                            null,
+                            "Challenger"
+                        ),
+                        this.getUserDisplay(this.props.game.challenger)
+                    ),
+                    _libReact2["default"].createElement(
+                        "div",
+                        { className: "col col-12" },
+                        this.getControls()
+                    )
+                )
             )
         );
+    },
+    getUserDisplay: function getUserDisplay(user) {
+        if (_.isUndefined(user) || _.isNull(user)) {
+            return;
+        }
+        return _libReact2["default"].createElement(
+            "div",
+            { className: "h4 mt1" },
+            user.display_name,
+            _libReact2["default"].createElement("br", null),
+            user.primary_race,
+            _libReact2["default"].createElement("br", null),
+            user.highest_1v1_rank
+        );
+    },
+    getControls: function getControls() {
+        if (!this.props.game.is_active) {
+            return this.getDisabledButton('Wager cancelled');
+        }
+        if (this.props.game.is_creator) {
+            if (this.props.game.has_challenger) {
+                if (this.props.game.has_creator_accepted) {
+                    return this.getDisabledButton('Play time!');
+                } else {
+                    return _libReact2["default"].createElement(
+                        "div",
+                        null,
+                        _libReact2["default"].createElement(
+                            "div",
+                            { className: "col col-4" },
+                            _libReact2["default"].createElement(
+                                "button",
+                                { className: "btn btn-primary mb1 mt1 bg-red mr1 col-11", onClick: this.cancelGame },
+                                this.getTextOrLoader('Cancel', 'cancel')
+                            )
+                        ),
+                        _libReact2["default"].createElement(
+                            "div",
+                            { className: "col col-4" },
+                            _libReact2["default"].createElement(
+                                "button",
+                                { className: "btn btn-primary mb1 mt1 bg-maroon mr1 col-11", onClick: this.rejectChallenger },
+                                this.getTextOrLoader('Reject', 'reject')
+                            )
+                        ),
+                        _libReact2["default"].createElement(
+                            "div",
+                            { className: "col col-4" },
+                            _libReact2["default"].createElement(
+                                "button",
+                                { className: "btn btn-primary mb1 mt1 bg-blue ml1 col-11", onClick: this.acceptChallenger },
+                                this.getTextOrLoader('Accept', 'accept')
+                            )
+                        )
+                    );
+                }
+            } else {
+                return _libReact2["default"].createElement(
+                    "button",
+                    { className: "btn btn-primary mb1 mt1 bg-red col-12", onClick: this.cancelGame },
+                    this.getTextOrLoader('Cancel', 'cancel')
+                );
+            }
+        } else {
+            if (this.props.game.is_challenger) {
+                if (this.props.game.has_creator_accepted) {
+                    //ok this game is a go for you
+                    return this.getDisabledButton('Play time!');
+                } else {
+                    //waiting on them to say cool
+                    return this.getDisabledButton('Waiting on player to accept...');
+                }
+            } else if (this.props.game.has_challenger) {
+                //already has a challenger
+                return this.getDisabledButton('Already matched up sorry!');
+            } else {
+                //there is no challenger, show join
+                return _libReact2["default"].createElement(
+                    "button",
+                    { className: "btn btn-primary mb1 mt1 bg-blue col col-12", onClick: this.joinGame },
+                    this.getTextOrLoader('Join', 'join')
+                );
+            }
+        }
+    },
+    getDisabledButton: function getDisabledButton(text) {
+        return _libReact2["default"].createElement(
+            "button",
+            { className: "btn btn-primary mb1 mt1 col col-12 bg-blue is-disabled" },
+            text
+        );
+    },
+    getTextOrLoader: function getTextOrLoader(text, type) {
+        if (this.state.isLoading) {
+            if (type == 'join' && this.state.isJoining || type == 'cancel' && this.state.isCancelling || type == 'reject' && this.state.isRejecting || type == 'accept' && this.state.isAccepting) {
+                return _libReact2["default"].createElement(
+                    "div",
+                    { className: "loader" },
+                    " "
+                );
+            }
+        }
+        return _libReact2["default"].createElement(
+            "div",
+            null,
+            text
+        );
+    },
+    joinGame: function joinGame() {
+        if (this.state.isLoading) {
+            return;
+        }
+        this.setState({ isJoining: true, isLoading: true });
+        $.ajax({
+            url: '/game/' + this.props.game.id + '/join',
+            type: 'POST',
+            success: $.proxy(function (resp) {
+                if (_.has('error')) {
+                    //TODO: handle error
+                } else {
+                        this.props.game = resp.game;
+                    }
+                this.setState({ isJoining: false, isLoading: false });
+            }, this)
+        });
+    },
+    cancelGame: function cancelGame() {
+        if (this.state.isLoading) {
+            return;
+        }
+        this.setState({ isCancelling: true, isLoading: true });
+        $.ajax({
+            url: '/game/g/' + this.props.game.id,
+            type: 'DELETE',
+            success: $.proxy(function (resp) {
+                if (_.has('error')) {
+                    //TODO: handle error
+                } else {
+                        this.props.game = resp.game;
+                    }
+                this.setState({ isCancelling: false, isLoading: false });
+            }, this)
+        });
+    },
+    acceptChallenger: function acceptChallenger() {
+        if (this.state.isLoading) {
+            return;
+        }
+        this.setState({ isAccepting: true, isLoading: true });
+        $.ajax({
+            url: '/game/' + this.props.game.id + '/accept',
+            type: 'POST',
+            success: $.proxy(function (resp) {
+                if (_.has('error')) {
+                    //TODO: handle error
+                } else {
+                        this.props.game = resp.game;
+                    }
+                this.setState({ isAccepting: false, isLoading: false });
+            }, this)
+        });
+    },
+    rejectChallenger: function rejectChallenger() {
+        if (this.state.isLoading) {
+            return;
+        }
+        this.setState({ isRejecting: true, isLoading: true });
+        $.ajax({
+            url: '/game/' + this.props.game.id + '/reject',
+            type: 'POST',
+            success: $.proxy(function (resp) {
+                if (_.has('error')) {
+                    //TODO: handle error
+                } else {
+                        this.props.game = resp.game;
+                    }
+                this.setState({ isRejecting: false, isLoading: false });
+            }, this)
+        });
     }
 });
 
@@ -8163,10 +8406,7 @@ var GameList = _libReact2["default"].createClass({
 
     render: function render() {
         var gameNodes = this.props.games.map(function (game) {
-            return _libReact2["default"].createElement(_gameCard2["default"], { characterName: game.creator.display_name,
-                primaryRace: game.creator.primary_race,
-                highest1v1Rank: game.creator.highest_1v1_rank,
-                wager: game.wager });
+            return _libReact2["default"].createElement(_gameCard2["default"], { game: game });
         });
         return _libReact2["default"].createElement(
             "div",
@@ -8179,7 +8419,7 @@ var GameList = _libReact2["default"].createClass({
             this.setProps({ games: games });
         }, this));
         $.ajax({
-            url: '/game/list',
+            url: '/game/list/' + this.props.listType,
             success: $.proxy(function (resp) {
                 this.setProps({ games: resp });
             }, this)
@@ -8238,7 +8478,7 @@ var CreateGameButton = _libReact2["default"].createClass({
     render: function render() {
         return _libReact2["default"].createElement(
             "div",
-            { className: "sm-col", onClick: this.props.onClick },
+            { className: "sm-col border-right", onClick: this.props.onClick },
             _libReact2["default"].createElement(
                 "a",
                 { href: "#", className: "btn py2" },
@@ -8270,11 +8510,11 @@ var HomeButton = _libReact2["default"].createClass({
     render: function render() {
         return _libReact2["default"].createElement(
             "div",
-            { className: "sm-col" },
+            { className: "sm-col border-right bg-darken-1" },
             _libReact2["default"].createElement(
                 "a",
                 { href: "#", className: "btn py2" },
-                "Home"
+                "Dashboard"
             )
         );
     }
@@ -8321,7 +8561,7 @@ var NavBar = _libReact2['default'].createClass({
     render: function render() {
         return _libReact2['default'].createElement(
             'div',
-            { className: 'clearfix' },
+            { className: 'clearfix border-bottom' },
             _libReact2['default'].createElement(_homeButton2['default'], null),
             _libReact2['default'].createElement(_createGameButton2['default'], { onClick: this.showModal }),
             this.buildModal(),

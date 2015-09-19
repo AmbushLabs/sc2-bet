@@ -5,10 +5,7 @@ var GameList = React.createClass({
     render: function() {
         var gameNodes = this.props.games.map(function(game) {
             return (
-                <GameCard characterName={game.creator.display_name}
-                          primaryRace={game.creator.primary_race}
-                          highest1v1Rank={game.creator.highest_1v1_rank}
-                          wager={game.wager} />
+                <GameCard game={game} />
             );
         });
         return (
@@ -22,7 +19,7 @@ var GameList = React.createClass({
             this.setProps({games:games});
         }, this));
         $.ajax({
-            url:'/game/list',
+            url:'/game/list/' + this.props.listType,
             success: $.proxy(function(resp) {
                 this.setProps({games:resp});
             },this)

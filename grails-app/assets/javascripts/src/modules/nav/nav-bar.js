@@ -10,7 +10,7 @@ var NavBar = React.createClass ({
     },
     render: function() {
         return (
-            <div className="clearfix">
+            <div className="clearfix border-bottom">
                 <HomeButton />
                 <CreateGameButton onClick={this.showModal} />
                 {this.buildModal()}

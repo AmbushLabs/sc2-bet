@@ -10,7 +10,7 @@ require(['/assets/lib/underscore'], function(_) {
         windowChecker = setInterval(function() {
             if (loginWindow.closed) {
                 clearInterval(windowChecker);
-                window.location.href = '/login';
+                window.location.href = '/';
             }
         }, 50);
     });

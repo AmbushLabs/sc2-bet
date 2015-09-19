@@ -28,7 +28,7 @@ class BattleNetApiService {
                 JsonObject jobject = jelement.getAsJsonObject();
 
                 def bnetId = new BigInteger(jobject.get('id').getAsString())
-                bnetAccount = BattleNetAccount.findByBattleNetId(bnetId)
+                bnetAccount = null;//BattleNetAccount.findByBattleNetId(bnetId)
                 if (bnetAccount == null) {
                     bnetAccount = new BattleNetAccount();
                     bnetAccount.battleNetId = bnetId;
