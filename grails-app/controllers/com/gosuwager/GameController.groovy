@@ -30,7 +30,10 @@ class GameController {
                 active: true
             ]);
             g.save(flush:true);
-            render Game.findAllByActive(true, [max:10, sort:"createDate", order:"desc"]) as JSON;
+            def query = Game.where {
+                active == true && (creator == u || challenger == u)
+            }
+            render query.list(max:5, sort:"createDate", order:"desc") as JSON;
         } else if (request.method == 'PUT') {
             //update a game
             //lets leave this not implemented
@@ -118,21 +121,31 @@ class GameController {
 
     def list() {
         User u = User.findById(session.user_id);
+        def ret = [:];
         if (params.list_type) {
             if (params.list_type == 'created_or_joined') {
                 def query = Game.where {
                     active == true && (creator == u || challenger == u)
                 }
-                render query.list(max:5, sort:"createDate", order:"desc") as JSON;
+                ret['games'] = query.list(max:5, sort:"createDate", order:"desc");
+                ret['count'] = query.count();
             } else if (params.list_type == 'created') {
-                render Game.findAllByActiveAndCreator(true, u, [max:5, sort:"createDate", order:"desc"]) as JSON;
+                ret['games'] = Game.findAllByActiveAndCreator(true, u, [max:5, sort:"createDate", order:"desc"]);
+                ret['count'] = Game.countByActiveAndCreator(true, u);
             } else if (params.list_type == 'joined') {
-                render Game.findAllByActiveAndChallenger(true, u, [max:5, sort:"createDate", order:"desc"]) as JSON;
+                ret['games'] = Game.findAllByActiveAndChallenger(true, u, [max: 5, sort: "createDate", order: "desc"]);
+                ret['count'] = Game.countByActiveAndChallenger(true, u);
+            } else if (params.list_type == 'to_approve') {
+                ret['games'] = Game.findAllByActiveAndCreatorAndChallengerAcceptedAndChallengerIsNotNull(true, u, false, [max:5, sort:"createDate", order:"desc"]);
+                ret['count'] = Game.countByActiveAndCreatorAndChallengerAcceptedAndChallengerIsNotNull(true, u, false);
             } else if (params.list_type == 'search') {
-                render Game.findAllByActiveAndChallengerAcceptedAndCreatorNotEqual(true, false, u, [max:10, sort:"createDate", order:"desc"]) as JSON;
+                ret['games'] = Game.findAllByActiveAndChallengerAcceptedAndCreatorNotEqual(true, false, u, [max:10, sort:"createDate", order:"desc"]);
+                ret['count'] = Game.findAllByActiveAndChallengerAcceptedAndCreatorNotEqual(true, false, u);
             }
         } else {
-            render Game.findAllByActiveAndChallengerAcceptedAndCreatorNotEqual(true, false, u, [max:10, sort:"createDate", order:"desc"]) as JSON;
+            ret['games'] = Game.findAllByActiveAndChallengerAcceptedAndCreatorNotEqual(true, false, u, [max:10, sort:"createDate", order:"desc"]);
+            ret['count'] = Game.countByActiveAndChallengerAcceptedAndCreatorNotEqual(true, false, u);
         }
+        render ret as JSON;
     }
 }

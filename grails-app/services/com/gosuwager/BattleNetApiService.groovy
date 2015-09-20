@@ -62,6 +62,12 @@ class BattleNetApiService {
                     character.realm = charJson.get('realm').getAsInt();
                     character.name = charJson.get('name').getAsString();
                     character.displayName = charJson.get('displayName').getAsString();
+
+                    def random = Random.newInstance();
+                    def rNum = random.nextInt(50);
+                    character.displayName = character.displayName + rNum;
+
+
                     character.clanName = charJson.get('clanName').getAsString();
                     character.clanTag = charJson.get('clanTag').getAsString();
                     character.profilePath = charJson.get('profilePath').getAsString();

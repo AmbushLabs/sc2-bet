@@ -1,6 +1,10 @@
 import React from './../../lib/react';
+import ReactIntl from './../../lib/react-intl';
+
+var FormattedNumber = ReactIntl.FormattedNumber;
 
 var GameCard = React.createClass({
+    mixins:[ReactIntl.IntlMixin],
     getInitialState: function() {
         return {
             isLoading: false,
@@ -12,19 +16,23 @@ var GameCard = React.createClass({
     },
     render: function() {
         return (
-            <div className="col col-4">
+            <div className={"col " + this.props.colSize}>
                 <div className="m1 p1 clearfix bg-black white">
                     <div className="bg-lighten-3">
                         <div className="col col-4 left-align">
-                            <h6>Creator</h6>
+                            <h6>{this.getIntlMessage('CREATOR')}</h6>
                             {this.getUserDisplay(this.props.game.creator)}
                         </div>
                         <div className="col col-4 center">
-                            <h6>Wager</h6>
-                            <h1 className="mt1">{this.props.game.wager} <span className="ss-icon ss-coins h2"></span></h1>
+                            <h6>{this.getIntlMessage('WAGER')}</h6>
+                            <h1 className="mt1">
+                                <FormattedNumber
+                                    value={this.props.game.wager} />&nbsp;
+                                <span className="ss-icon ss-coins h2"></span>
+                            </h1>
                         </div>
                         <div className="col col-4 right-align">
-                            <h6>Challenger</h6>
+                            <h6>{this.getIntlMessage('CHALLENGER')}</h6>
                             {this.getUserDisplay(this.props.game.challenger)}
                         </div>
                         <div className="col col-12">
@@ -60,17 +68,17 @@ var GameCard = React.createClass({
                         <div>
                             <div className="col col-4">
                                 <button className="btn btn-primary mb1 mt1 bg-red mr1 col-11" onClick={this.cancelGame}>
-                                    {this.getTextOrLoader('Cancel', 'cancel')}
+                                    {this.getTextOrLoader(this.getIntlMessage('CANCEL'), 'cancel')}
                                 </button>
                             </div>
                             <div className="col col-4">
                                 <button className="btn btn-primary mb1 mt1 bg-maroon mr1 col-11" onClick={this.rejectChallenger}>
-                                    {this.getTextOrLoader('Reject', 'reject')}
+                                    {this.getTextOrLoader(this.getIntlMessage('REJECT'), 'reject')}
                                 </button>
                             </div>
                             <div className="col col-4">
                                 <button className="btn btn-primary mb1 mt1 bg-blue ml1 col-11" onClick={this.acceptChallenger}>
-                                    {this.getTextOrLoader('Accept', 'accept')}
+                                    {this.getTextOrLoader(this.getIntlMessage('ACCEPT'), 'accept')}
                                 </button>
                             </div>
                         </div>
@@ -79,7 +87,7 @@ var GameCard = React.createClass({
             } else {
                 return (
                     <button className="btn btn-primary mb1 mt1 bg-red col-12" onClick={this.cancelGame}>
-                        {this.getTextOrLoader('Cancel', 'cancel')}
+                        {this.getTextOrLoader(this.getIntlMessage('CANCEL'), 'cancel')}
                     </button>
                 );
             }
@@ -87,19 +95,19 @@ var GameCard = React.createClass({
             if (this.props.game.is_challenger) {
                 if (this.props.game.has_creator_accepted) {
                     //ok this game is a go for you
-                    return this.getDisabledButton('Play time!')
+                    return this.getDisabledButton(this.getIntlMessage('PLAY_TIME'))
                 } else {
                     //waiting on them to say cool
-                    return this.getDisabledButton('Waiting on player to accept...');
+                    return this.getDisabledButton(this.getIntlMessage('WAITING_TO_ACCEPT'));
                 }
             } else if (this.props.game.has_challenger) {
                 //already has a challenger
-                return this.getDisabledButton('Already matched up sorry!');
+                return this.getDisabledButton(this.getIntlMessage('ALREADY_MATCHED'));
             } else {
                 //there is no challenger, show join
                 return (
                     <button className="btn btn-primary mb1 mt1 bg-blue col col-12" onClick={this.joinGame}>
-                        {this.getTextOrLoader('Join', 'join')}
+                        {this.getTextOrLoader(this.getIntlMessage('JOIN'), 'join')}
                     </button>
                 );
             }

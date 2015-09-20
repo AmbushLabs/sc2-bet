@@ -42,3 +42,7 @@
 /classes
 
 /node_modules
+
+*.iml
+sc2-bet.iml
+/*.iml

@@ -2,43 +2,17 @@ import React from './../../lib/react';
 import HomeButton from './home-button';
 import CreateGameButton from './create-game-button';
 import Coins from './coins';
-import CreateGameModal from './../create-game/modal';
+
 
 var NavBar = React.createClass ({
-    getInitialState: function() {
-        return {showModal: false};
-    },
     render: function() {
         return (
             <div className="clearfix border-bottom">
                 <HomeButton />
-                <CreateGameButton onClick={this.showModal} />
-                {this.buildModal()}
+                <CreateGameButton onClick={this.props.showModal} />
                 <Coins wagerTokens={this.props.wagerTokens} />
             </div>
         );
-    },
-    buildModal: function() {
-        if (!this.state.showModal) {
-            return;
-        }
-        return (
-            <CreateGameModal hideModal={this.hideModal} gameDispatcher={this.props.gameDispatcher} />
-        );
-    },
-    showModal: function() {
-        this.setState({showModal:true});
-    },
-    hideModal: function() {
-        this.setState({showModal:false});
-    },
-    componentDidMount: function() {
-        $.ajax({
-            url:'/game/list',
-            success: $.proxy(function(resp) {
-                this.setProps({games:resp});
-            },this)
-        });
     }
 });
 
