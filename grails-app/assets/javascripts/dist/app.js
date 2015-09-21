@@ -37,8 +37,8 @@ var $main_body = $('#main_body');
 if ($main_body.length > 0) {
     var searchGameDispatcher = new _libDispatcher2['default']();
     var myGameDispatcher = new _libDispatcher2['default']();
-    var searchGames = [];
-    var myGames = [];
+    var searchGameData = { games: [] };
+    var myGameData = { games: [] };
 
     var App = _libReact2['default'].createClass({
         displayName: 'App',
@@ -49,10 +49,10 @@ if ($main_body.length > 0) {
         },
         componentDidMount: function componentDidMount() {
             this.props.myGameDispatcher.register($.proxy(function (payload) {
-                this.setProps({ myGames: payload.games });
+                this.setProps({ myGameData: payload });
             }, this));
             this.props.searchGameDispatcher.register($.proxy(function (payload) {
-                this.setProps({ searchGames: payload.games });
+                this.setProps({ searchGameData: payload });
             }, this));
         },
         render: function render() {
@@ -62,9 +62,9 @@ if ($main_body.length > 0) {
                 _libReact2['default'].createElement(_modulesNavNavBar2['default'], { gameDispatcher: this.props.myGameDispatcher,
                     showModal: this.showModal }),
                 _libReact2['default'].createElement(_modulesDashboardDashboard2['default'], {
-                    myGames: this.props.myGames,
+                    myGameData: this.props.myGameData,
                     myGameDispatcher: this.props.myGameDispatcher,
-                    searchGames: this.props.searchGames,
+                    searchGameData: this.props.searchGameData,
                     searchGameDispatcher: this.props.searchGameDispatcher,
                     showModal: this.showModal
                 }),
@@ -88,9 +88,9 @@ if ($main_body.length > 0) {
     _libReact2['default'].render(_libReact2['default'].createElement(App, {
         locales: ['en-US'],
         messages: _messages2['default']['en-US'],
-        myGames: myGames,
+        myGameData: myGameData,
         myGameDispatcher: myGameDispatcher,
-        searchGames: searchGames,
+        searchGameData: searchGameData,
         searchGameDispatcher: searchGameDispatcher
     }), $main_body[0]);
 }
@@ -22736,7 +22736,7 @@ var Dashboard = _libReact2['default'].createClass({
                 _libReact2['default'].createElement(
                     'div',
                     { className: 'bg-white p1 mb2 clearfix' },
-                    _libReact2['default'].createElement(_gamesMyGames2['default'], { games: this.props.myGames,
+                    _libReact2['default'].createElement(_gamesMyGames2['default'], { myGameData: this.props.myGameData,
                         gameDispatcher: this.props.myGameDispatcher,
                         showModal: this.props.showModal
                     })
@@ -22749,11 +22749,12 @@ var Dashboard = _libReact2['default'].createClass({
                 _libReact2['default'].createElement(
                     'div',
                     { className: 'bg-white p1 clearfix' },
-                    _libReact2['default'].createElement(_gamesGameList2['default'], { games: this.props.searchGames,
+                    _libReact2['default'].createElement(_gamesGameList2['default'], { gameData: this.props.searchGameData,
                         gameDispatcher: this.props.searchGameDispatcher,
                         colSize: 'col-3',
                         listType: 'search',
-                        showModal: this.props.showModal
+                        showModal: this.props.showModal,
+                        limit: 8
                     })
                 )
             )
@@ -23061,8 +23062,13 @@ var GameList = _libReact2['default'].createClass({
     displayName: 'GameList',
 
     mixins: [_libReactIntl2['default'].IntlMixin],
+    getInitialState: function getInitialState() {
+        return {
+            page: 1
+        };
+    },
     render: function render() {
-        if (_.isNull(this.props.games) || this.props.games.length == 0) {
+        if (_.isNull(this.props.gameData.games) || this.props.gameData.games.length == 0) {
             return _libReact2['default'].createElement(
                 'div',
                 { className: "col " + this.props.colSize },
@@ -23078,23 +23084,101 @@ var GameList = _libReact2['default'].createClass({
                 )
             );
         }
-        var gameNodes = this.props.games.map($.proxy(function (game) {
+        var gameNodes = this.props.gameData.games.map($.proxy(function (game) {
             return _libReact2['default'].createElement(_gameCard2['default'], { game: game, colSize: this.props.colSize });
         }, this));
         return _libReact2['default'].createElement(
             'div',
-            { className: 'clearfix' },
-            gameNodes
+            null,
+            _libReact2['default'].createElement(
+                'div',
+                { className: 'clearfix' },
+                gameNodes
+            ),
+            this.getPaginationControls()
         );
     },
+    getPaginationControls: function getPaginationControls() {
+        if (!_.isUndefined(this.props.gameData.count) && !_.isNull(this.props.gameData.count) && this.props.gameData.count > this.props.limit) {
+            var pages = Math.ceil(this.props.gameData.count / this.props.limit);
+            //heh super simple, one page at a time :)
+            return _libReact2['default'].createElement(
+                'div',
+                { className: 'h6 clearfix' },
+                _libReact2['default'].createElement(
+                    'a',
+                    { href: '#', className: "ss-icon ss-navigateleft " + this.getPrevClassName(), onClick: this.previousPage },
+                    ' '
+                ),
+                ' ',
+                _libReact2['default'].createElement(
+                    'span',
+                    { className: 'black' },
+                    'Page ',
+                    this.state.page,
+                    ' of ',
+                    pages
+                ),
+                ' ',
+                _libReact2['default'].createElement(
+                    'a',
+                    { href: '#', className: "ss-icon ss-navigateright " + this.getNextClassName(), onClick: this.nextPage },
+                    ' '
+                )
+            );
+        } else {
+            return _libReact2['default'].createElement(
+                'div',
+                { className: 'h6 clearfix' },
+                'Page 1 of 1'
+            );
+        }
+    },
+    getPrevClassName: function getPrevClassName() {
+        if (this.state.page == 1) {
+            return "gray";
+        }
+        return "blue";
+    },
+    getNextClassName: function getNextClassName() {
+        if (this.state.page + 1 > Math.ceil(this.props.gameData.count / this.props.limit)) {
+            return "gray";
+        }
+        return "blue;";
+    },
     componentDidMount: function componentDidMount() {
+        this.getList();
+    },
+    nextPage: function nextPage() {
+        if (this.state.page + 1 > Math.ceil(this.props.gameData.count / this.props.limit)) {
+            return;
+        }
+        console.log(this.state.page);
+        this.getList(this.state.page + 1);
+    },
+    previousPage: function previousPage() {
+        if (this.state.page == 1) {
+            return;
+        }
+        this.getList(this.state.page - 1);
+    },
+    getList: function getList(page) {
+        if (_.isUndefined(page) || _.isNull(page)) {
+            page = this.state.page;
+        }
         $.ajax({
             url: '/game/list/' + this.props.listType,
+            data: {
+                page: page,
+                limit: this.props.limit
+            },
             success: $.proxy(function (resp) {
                 this.props.gameDispatcher.dispatch(resp);
+                this.setState({ page: page });
             }, this)
         });
     }
+
 });
 
 exports['default'] = GameList;
@@ -23134,7 +23218,7 @@ var MyGames = _libReact2['default'].createClass({
             null,
             _libReact2['default'].createElement(
                 'div',
-                { className: 'my1 mxn1' },
+                { className: 'my1 mxn1 h6' },
                 _libReact2['default'].createElement(
                     'a',
                     { href: '#',
@@ -23160,11 +23244,12 @@ var MyGames = _libReact2['default'].createClass({
                     'Created'
                 )
             ),
-            _libReact2['default'].createElement(_gamesGameList2['default'], { games: this.props.games,
+            _libReact2['default'].createElement(_gamesGameList2['default'], { gameData: this.props.myGameData,
                 gameDispatcher: this.props.gameDispatcher,
                 colSize: 'col-6',
                 listType: 'created_or_joined',
-                showModal: this.props.showModal
+                showModal: this.props.showModal,
+                limit: 4
             })
         );
     },

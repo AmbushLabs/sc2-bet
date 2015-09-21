@@ -10,7 +10,7 @@ var MyGames = React.createClass({
     render: function () {
         return (
             <section>
-                <div className="my1 mxn1">
+                <div className="my1 mxn1 h6">
                     <a href="#"
                        className={"btn btn-narrow " + this.isSelected('created_or_joined')}
                        onClick={this.getGames}
@@ -24,11 +24,12 @@ var MyGames = React.createClass({
                        onClick={this.getGames}
                        data-list-type="created">Created</a>
                 </div>
-                <GameList games={this.props.games}
+                <GameList gameData={this.props.myGameData}
                     gameDispatcher={this.props.gameDispatcher}
                     colSize="col-6"
                     listType="created_or_joined"
                     showModal={this.props.showModal}
+                    limit={4}
                     />
             </section>
         );

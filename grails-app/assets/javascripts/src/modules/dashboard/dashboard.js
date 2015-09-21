@@ -15,7 +15,7 @@ var Dashboard = React.createClass({
                 </section>
                 <section className="col col-6">
                     <div className="bg-white p1 mb2 clearfix">
-                        <MyGames games={this.props.myGames}
+                        <MyGames myGameData={this.props.myGameData}
                                   gameDispatcher={this.props.myGameDispatcher}
                                   showModal={this.props.showModal}
                                     />
@@ -24,11 +24,12 @@ var Dashboard = React.createClass({
                 <div className="clearfix"></div>
                 <section className="col col-12">
                     <div className="bg-white p1 clearfix">
-                        <GameList games={this.props.searchGames}
+                        <GameList gameData={this.props.searchGameData}
                                   gameDispatcher={this.props.searchGameDispatcher}
                                   colSize="col-3"
                                   listType="search"
                                   showModal={this.props.showModal}
+                                  limit={8}
                                     />
                     </div>
                 </section>

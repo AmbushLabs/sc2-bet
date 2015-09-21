@@ -11,8 +11,8 @@ var $main_body = $('#main_body');
 if ($main_body.length > 0) {
     var searchGameDispatcher = new Dispatcher();
     var myGameDispatcher = new Dispatcher();
-    var searchGames = [];
-    var myGames = [];
+    var searchGameData = {games:[]};
+    var myGameData = {games:[]};
 
     var App = React.createClass({
         mixins: [ReactIntl.IntlMixin],
@@ -21,10 +21,10 @@ if ($main_body.length > 0) {
         },
         componentDidMount: function() {
             this.props.myGameDispatcher.register($.proxy(function(payload) {
-                this.setProps({myGames:payload.games});
+                this.setProps({myGameData:payload});
             },this));
             this.props.searchGameDispatcher.register($.proxy(function(payload) {
-                this.setProps({searchGames:payload.games});
+                this.setProps({searchGameData:payload});
             },this));
         },
         render: function() {
@@ -33,9 +33,9 @@ if ($main_body.length > 0) {
                     <NavBar gameDispatcher={this.props.myGameDispatcher}
                             showModal={this.showModal} />
                     <Dashboard
-                        myGames={this.props.myGames}
+                        myGameData={this.props.myGameData}
                         myGameDispatcher={this.props.myGameDispatcher}
-                        searchGames={this.props.searchGames}
+                        searchGameData={this.props.searchGameData}
                         searchGameDispatcher={this.props.searchGameDispatcher}
                         showModal={this.showModal}
                         />
@@ -63,9 +63,9 @@ if ($main_body.length > 0) {
         <App
             locales={['en-US']}
             messages={Messages['en-US']}
-            myGames={myGames}
+            myGameData={myGameData}
             myGameDispatcher={myGameDispatcher}
-            searchGames={searchGames}
+            searchGameData={searchGameData}
             searchGameDispatcher={searchGameDispatcher}
             />,
         $main_body[0]
