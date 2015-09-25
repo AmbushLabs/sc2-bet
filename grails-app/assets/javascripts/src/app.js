@@ -10,7 +10,7 @@ import Messages from './messages';
 import NavBar from './modules/nav/nav-bar';
 import Dashboard from './modules/dashboard/dashboard';
 import CreateGameModal from './modules/create-game/modal';
-import GameCard from "./modules/games/game-card";
+import GamePage from "./modules/games/game-page";
 
 var $main_body = $('#main_body');
 if ($main_body.length > 0) {
@@ -22,14 +22,19 @@ if ($main_body.length > 0) {
     var App = React.createClass({
         mixins: [ReactIntl.IntlMixin],
         getInitialState: function() {
-            return {showModal: false};
+            return {
+                showModal: false,
+                something: true
+            };
         },
         componentDidMount: function() {
             this.getExternalProps().myGameDispatcher.register($.proxy(function(payload) {
-                this.setProps({myGameData:payload});
+                myGameData = payload;
+                this.setState({something:false}); //he this is not ok, but works for now
             },this));
             this.getExternalProps().searchGameDispatcher.register($.proxy(function(payload) {
-                this.setProps({searchGameData:payload});
+                searchGameData = payload;
+                this.setState({something:false});
             },this));
         },
         getExternalProps: function() {
@@ -53,8 +58,6 @@ if ($main_body.length > 0) {
             );
         },
         getChildren: function() {
-            console.log('props');
-            console.log(this.props);
             if (_.isUndefined(this.props.children) || _.isNull(this.props.children)) {
                 return;
             }
@@ -80,15 +83,17 @@ if ($main_body.length > 0) {
     var routes = (
         <Route path="/" component={App}>
             <IndexRoute component={Dashboard} />
-            <Route path="game" component={GameCard}/>
+            <Route path="/w/:id" component={GamePage} />
         </Route>
     );
 
-    React.render(<Router routes={routes} />,
+    let history = createBrowserHistory();
+
+    React.render(<Router routes={routes} history={history} />,
         document.body
     );
 
-    //let history = createBrowserHistory();
+
     //React.render(<Router history={history}>{routes}</Router>, document.body);
 
     /*

@@ -24,7 +24,9 @@ var GameCard = React.createClass({
                             {this.getUserDisplay(this.props.game.creator)}
                         </div>
                         <div className="col col-4 center">
-                            <h6>{this.getIntlMessage('WAGER')}</h6>
+                            <a className="h6" href={"/w/" + this.props.game.id}>
+                                {this.getIntlMessage('WAGER')}
+                            </a>
                             <h1 className="mt1">
                                 <FormattedNumber
                                     value={this.props.game.wager} />&nbsp;
