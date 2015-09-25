@@ -1,4 +1,4 @@
-import React from './../../lib/react';
+import React from 'react';
 
 var CreateGameButton = React.createClass ({
     render: function() {

@@ -1,4 +1,4 @@
-import React from './../../lib/react';
+import React from 'react';
 
 var Coins = React.createClass({
     render: function() {

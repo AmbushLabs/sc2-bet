@@ -1,4 +1,4 @@
-import React from './../../lib/react';
+import React from 'react';
 import CreateGameForm from './form';
 
 

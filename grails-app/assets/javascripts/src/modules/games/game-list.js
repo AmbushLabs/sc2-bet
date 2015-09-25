@@ -1,6 +1,6 @@
-import React from './../../lib/react';
+import React from 'react';
+import ReactIntl from 'react-intl';
 import GameCard from "./game-card";
-import ReactIntl from './../../lib/react-intl';
 
 var GameList = React.createClass({
     mixins:[ReactIntl.IntlMixin],

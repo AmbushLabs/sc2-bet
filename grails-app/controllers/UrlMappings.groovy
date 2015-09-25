@@ -8,6 +8,7 @@ class UrlMappings {
         }
 
         "/"(controller:"main", action:"index")
+        "/abc"(controller:"main", action:"index")
         "/login"(controller:"main", action:"login")
 
         "/game/create"(controller:"game", action:"create")
@@ -15,6 +16,8 @@ class UrlMappings {
         "/game/$game_id/accept"(controller:"game", action:"accept")
         "/game/$game_id/reject"(controller:"game", action:"reject")
         "/game/g/$game_id"(controller:"game", action:"index")
+
+        "/w/$game_id" (controller:"game", action:"permalink")
 
         "/game/list/$list_type"(controller:"game", action:"list")
 

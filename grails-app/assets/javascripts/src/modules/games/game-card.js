@@ -1,5 +1,5 @@
-import React from './../../lib/react';
-import ReactIntl from './../../lib/react-intl';
+import React from 'react';
+import ReactIntl from 'react-intl';
 
 var FormattedNumber = ReactIntl.FormattedNumber;
 
