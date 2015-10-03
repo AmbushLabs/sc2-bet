@@ -1,8 +1,6 @@
 /**
  * Created by joseph on 10/3/15.
  */
-import React from 'react';
-import ReactIntl from 'react-intl';
 
 var ProfileCard = React.createClass({
     getInitialState: function() {

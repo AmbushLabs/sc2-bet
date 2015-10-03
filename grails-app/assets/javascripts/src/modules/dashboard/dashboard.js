@@ -10,7 +10,7 @@ var Dashboard = React.createClass({
             <section className="bg-darken-1 p2 clearfix">
                 <section className="col col-6 pr2 pb2">
                     <div className="bg-white p1 mr2 mb2 clearfix">
-                        Insert own view of profile here.
+                        <ProfileCard />
                     </div>
                 </section>
                 <section className="col col-6">
