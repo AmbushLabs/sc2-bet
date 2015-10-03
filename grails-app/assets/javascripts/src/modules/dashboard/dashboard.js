@@ -2,6 +2,7 @@ import React from 'react';
 import ReactIntl from 'react-intl';
 import GameList from './../games/game-list';
 import MyGames from './../games/my-games';
+import ProfileCard from './../profile/profile-card';
 
 var Dashboard = React.createClass({
     mixins: [ReactIntl.IntlMixin],
@@ -10,7 +11,8 @@ var Dashboard = React.createClass({
             <section className="bg-darken-1 p2 clearfix">
                 <section className="col col-6 pr2 pb2">
                     <div className="bg-white p1 mr2 mb2 clearfix">
-                        <ProfileCard />
+                        <ProfileCard user="user data in dis here"
+                            />
                     </div>
                 </section>
                 <section className="col col-6">
