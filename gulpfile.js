@@ -7,7 +7,10 @@ var watchify = require('watchify');
 var babel = require('babelify');
 
 function compile(watch) {
-    var bundler = watchify(browserify('./grails-app/assets/javascripts/src/app.js', { debug: true }).transform(babel, {compact: false}));
+    var bundler = watchify(browserify('./grails-app/assets/javascripts/src/app.js', { debug: true }).transform(babel, {
+        compact: false,
+        optional: ["es7.classProperties", "es7.decorators"]
+    }));
 
     function rebundle() {
         bundler.bundle()

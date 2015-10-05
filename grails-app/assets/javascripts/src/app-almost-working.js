@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, compose, combineReducers } from 'redux';
-import ReactIntl from 'react-intl';
 
 import {
     ReduxRouter,
@@ -9,7 +8,7 @@ import {
     reduxReactRouter
 } from 'redux-router';
 
-import { Route, Link, IndexRoute } from 'react-router';
+import { Route, Link } from 'react-router';
 import { Provider, connect } from 'react-redux';
 import { devTools } from 'redux-devtools';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
@@ -17,13 +16,11 @@ import createHistory from '../../../../node_modules/react-router/node_modules/hi
 
 import Messages from './messages';
 import NavBar from './modules/nav/nav-bar';
-import Dashboard from './modules/dashboard/dashboard';
-import CreateGameModal from './modules/create-game/modal';
 
-@connect(state => (state))
+@connect(createGameModalVisible)
 class App extends Component {
 
-    static mixins = [ReactIntl.IntlMixin];
+    //static mixins = [ReactIntl.IntlMixin];
 
     componentDidMount() {
         /*
@@ -46,11 +43,14 @@ class App extends Component {
     }
 
     render() {
-        const { dispatch } = this.props;
+        const { dispatch, createGameModalVisible } = this.props;
+        console.log(this.props);
+        console.log(this.state);
+        console.log(this);
         return (
             <section>
                 <NavBar //gameDispatcher={this.getExternalProps().myGameDispatcher}
-                    showModal={() => dispatch({type:'SHOW_CREATE_GAME_MODAL'})} />
+                    showModal={this.showModal} />
                 {this.getChildren()}
                 {this.buildModal()}
             </section>
@@ -67,14 +67,18 @@ class App extends Component {
         if (!this.props.createGameModalVisible) {
             return;
         }
-
-        const { dispatch } = this.props;
         return (
             <CreateGameModal
-                hideModal={() => dispatch({type:'HIDE_CREATE_GAME_MODAL'})}
+                hideModal={this.hideModal}
                 //gameDispatcher={this.getExternalProps().myGameDispatcher}
                 />
         );
+    }
+    showModal() {
+        this.setState({showModal:true});
+    }
+    hideModal() {
+        this.setState({showModal:false});
     }
 };
 
@@ -83,14 +87,7 @@ const initialState = {
 };
 
 const createGameModalVisible = function(state = initialState, action) {
-    switch(action.type) {
-        case 'SHOW_CREATE_GAME_MODAL':
-            return true;
-        case 'HIDE_CREATE_GAME_MODAL':
-            return false;
-        default:
-            return false;
-    }
+    return state;
 };
 
 const reducer = combineReducers({
@@ -103,6 +100,16 @@ const store = compose(
     devTools()
 )(createStore)(reducer);
 
+function createRouter() {
+    return (
+        <ReduxRouter>
+            <Route path="/" component={App}>
+
+            </Route>
+        </ReduxRouter>
+    );
+}
+
 class Root extends Component {
     render() {
         return (
@@ -110,7 +117,7 @@ class Root extends Component {
                 <Provider store={store}>
                     <ReduxRouter>
                         <Route path="/" component={App}>
-                            <IndexRoute component={Dashboard} />
+
                         </Route>
                     </ReduxRouter>
                 </Provider>

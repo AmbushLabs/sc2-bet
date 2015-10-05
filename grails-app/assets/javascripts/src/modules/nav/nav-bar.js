@@ -9,8 +9,8 @@ var NavBar = React.createClass ({
         return (
             <div className="clearfix border-bottom">
                 <HomeButton />
-                <CreateGameButton onClick={this.props.showModal} />
-                <Coins wagerTokens={this.props.wagerTokens} />
+                <CreateGameButton onCreateGameClick={this.props.showModal} />
+                <Coins wagerTokens={1} />
             </div>
         );
     }
