@@ -1,12 +1,18 @@
-import React from 'react';
-import ReactIntl from 'react-intl';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import GameList from './../games/game-list';
 import MyGames from './../games/my-games';
 import ProfileCard from './../profile/profile-card';
 
-var Dashboard = React.createClass({
-    mixins: [ReactIntl.IntlMixin],
-    render: function() {
+@connect(state => (state))
+class Dashboard extends Component {
+
+    constructor(options) {
+        super(options);
+        this.getSearchGames = this.getSearchGames.bind(this);
+    }
+
+    render() {
         return (
             <section className="bg-darken-1 p2 clearfix">
                 <section className="col col-6 pr2 pb2">
@@ -17,27 +23,65 @@ var Dashboard = React.createClass({
                 </section>
                 <section className="col col-6">
                     <div className="bg-white p1 mb2 clearfix">
-                        <MyGames myGameData={this.props.myGameData}
-                                  gameDispatcher={this.props.myGameDispatcher}
-                                  showModal={this.props.showModal}
-                                    />
+                        <MyGames
+                            games={this.props.games}
+                            />
                     </div>
                 </section>
                 <div className="clearfix"></div>
                 <section className="col col-12">
                     <div className="bg-white p1 clearfix">
-                        <GameList gameData={this.props.searchGameData}
-                                  gameDispatcher={this.props.searchGameDispatcher}
-                                  colSize="col-3"
+                        <GameList colSize="col-3"
                                   listType="search"
                                   showModal={this.props.showModal}
                                   limit={8}
+                                  games={this.getSearchGames()}
                                     />
                     </div>
                 </section>
             </section>
         );
     }
-});
+
+    getSearchGames() {
+        if (this.props && this.props.games && this.props.games.search_games) {
+            var tmp = _.values(_.pick(this.props.games.search_games, this.props.games.search.ids));
+            return tmp;
+            /*return this.props.games.search_games.filter(
+                (element, key) => { this.props.games.search.ids.indexOf(key) > -1 }.bind(this)
+            );*/
+        }
+    }
+
+    componentDidMount() {
+        var self = this;
+        this.props.dispatch(fetchAllGames())
+            .then(() =>
+                console.log(self)
+        );
+    }
+};
 
 export default Dashboard;
+
+function fetchAllGames() {
+    return function (dispatch) {
+        dispatch({
+            type:'FETCH_ALL_GAMES',
+            isFetching: true
+        });
+
+        return fetch('/game/all', {
+            credentials: 'include'
+        })
+            .then(response => response.json())
+            .then(json =>
+                dispatch({
+                    type:'FETCH_ALL_GAMES',
+                    isFetching: false,
+                    status:'SUCCESS',
+                    games:json
+                })
+        );
+    }
+}

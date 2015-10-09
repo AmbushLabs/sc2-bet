@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, compose, combineReducers } from 'redux';
+import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
 import ReactIntl from 'react-intl';
 
 import {
@@ -15,6 +15,9 @@ import { devTools } from 'redux-devtools';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 import createHistory from '../../../../node_modules/react-router/node_modules/history/lib/createBrowserHistory';
 
+import thunk from 'redux-thunk';
+import reduxLogger from 'redux-logger';
+
 import Messages from './messages';
 import NavBar from './modules/nav/nav-bar';
 import Dashboard from './modules/dashboard/dashboard';
@@ -23,19 +26,8 @@ import CreateGameModal from './modules/create-game/modal';
 @connect(state => (state))
 class App extends Component {
 
-    static mixins = [ReactIntl.IntlMixin];
-
     componentDidMount() {
-        /*
-         this.getExternalProps().myGameDispatcher.register($.proxy(function(payload) {
-         //myGameData = payload;
-         this.setState({something:false}); //he this is not ok, but works for now
-         },this));
-         this.getExternalProps().searchGameDispatcher.register($.proxy(function(payload) {
-         //searchGameData = payload;
-         this.setState({something:false});
-         },this));
-         */
+        console.log(this);
     }
 
     getExternalProps() {
@@ -49,7 +41,7 @@ class App extends Component {
         const { dispatch } = this.props;
         return (
             <section>
-                <NavBar //gameDispatcher={this.getExternalProps().myGameDispatcher}
+                <NavBar
                     showModal={() => dispatch({type:'SHOW_CREATE_GAME_MODAL'})} />
                 {this.getChildren()}
                 {this.buildModal()}
@@ -72,7 +64,6 @@ class App extends Component {
         return (
             <CreateGameModal
                 hideModal={() => dispatch({type:'HIDE_CREATE_GAME_MODAL'})}
-                //gameDispatcher={this.getExternalProps().myGameDispatcher}
                 />
         );
     }
@@ -82,7 +73,7 @@ const initialState = {
     createGameModalVisible: false
 };
 
-const createGameModalVisible = function(state = initialState, action) {
+const createGameModalVisible = function(state = false, action) {
     switch(action.type) {
         case 'SHOW_CREATE_GAME_MODAL':
             return true;
@@ -91,14 +82,45 @@ const createGameModalVisible = function(state = initialState, action) {
         default:
             return false;
     }
+    return state;
+};
+
+const games = function(state = { games: {} }, action) {
+    switch(action.type) {
+        case 'FETCH_GAMES':
+            if (action.isFetching) {
+                return state;
+            }
+            switch(action.status) {
+                case 'SUCCESS':
+                    return Object.assign({}, state, action.games.games);
+                    break;
+            }
+            break;
+        case 'FETCH_ALL_GAMES':
+            if (action.isFetching) {
+                return state;
+            }
+            switch(action.status) {
+                case 'SUCCESS':
+                    return Object.assign({}, state, action.games.games);
+                    break;
+            }
+            break;
+    }
+    return state;
 };
 
 const reducer = combineReducers({
     router: routerStateReducer,
-    createGameModalVisible: createGameModalVisible
+    createGameModalVisible: createGameModalVisible,
+    games: games
 });
 
+const middleware = [thunk];
+
 const store = compose(
+    applyMiddleware(...middleware),
     reduxReactRouter({ createHistory }),
     devTools()
 )(createStore)(reducer);

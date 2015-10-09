@@ -1,40 +1,48 @@
-import React from 'react';
-import ReactIntl from 'react-intl';
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 
-var FormattedNumber = ReactIntl.FormattedNumber;
 
-var GameCard = React.createClass({
-    mixins:[ReactIntl.IntlMixin],
-    getInitialState: function() {
-        return {
+export default class GameCard extends Component {
+
+    constructor(options) {
+        super(options);
+        this.getUserDisplay = this.getUserDisplay.bind(this);
+        this.getControls = this.getControls.bind(this);
+        this.getDisabledButton = this.getDisabledButton.bind(this);
+        this.getTextOrLoader = this.getTextOrLoader.bind(this);
+        this.joinGame = this.joinGame.bind(this);
+        this.cancelGame = this.cancelGame.bind(this);
+        this.acceptChallenger = this.acceptChallenger.bind(this);
+        this.rejectChallenger = this.rejectChallenger.bind(this);
+        this.state = {
             isLoading: false,
             isJoining: false,
             isCancelling: false,
             isAccepting: false,
             isRejecting: false
         };
-    },
-    render: function() {
+    }
+
+    render() {
         return (
             <div className={"col " + this.props.colSize}>
                 <div className="m1 p1 clearfix bg-black white">
                     <div className="bg-lighten-3">
                         <div className="col col-4 left-align">
-                            <h6>{this.getIntlMessage('CREATOR')}</h6>
+                            <h6>Creator</h6>
                             {this.getUserDisplay(this.props.game.creator)}
                         </div>
                         <div className="col col-4 center">
                             <a className="h6" href={"/w/" + this.props.game.id}>
-                                {this.getIntlMessage('WAGER')}
+                                Wager
                             </a>
                             <h1 className="mt1">
-                                <FormattedNumber
-                                    value={this.props.game.wager} />&nbsp;
+                                {this.props.game.wager}&nbsp;
                                 <span className="ss-icon ss-coins h2"></span>
                             </h1>
                         </div>
                         <div className="col col-4 right-align">
-                            <h6>{this.getIntlMessage('CHALLENGER')}</h6>
+                            <h6>Challenger</h6>
                             {this.getUserDisplay(this.props.game.challenger)}
                         </div>
                         <div className="col col-12">
@@ -44,8 +52,9 @@ var GameCard = React.createClass({
                 </div>
             </div>
         );
-    },
-    getUserDisplay: function(user) {
+    }
+
+    getUserDisplay(user) {
         if (_.isUndefined(user) || _.isNull(user)) {
             return;
         }
@@ -56,8 +65,9 @@ var GameCard = React.createClass({
                 {user.highest_1v1_rank}
             </div>
         );
-    },
-    getControls: function() {
+    }
+
+    getControls() {
         if (!this.props.game.is_active) {
             return this.getDisabledButton('Wager cancelled');
         }
@@ -70,17 +80,17 @@ var GameCard = React.createClass({
                         <div>
                             <div className="col col-4">
                                 <button className="btn btn-primary mb1 mt1 bg-red mr1 col-11" onClick={this.cancelGame}>
-                                    {this.getTextOrLoader(this.getIntlMessage('CANCEL'), 'cancel')}
+                                    {this.getTextOrLoader('Cancel', 'cancel')}
                                 </button>
                             </div>
                             <div className="col col-4">
                                 <button className="btn btn-primary mb1 mt1 bg-maroon mr1 col-11" onClick={this.rejectChallenger}>
-                                    {this.getTextOrLoader(this.getIntlMessage('REJECT'), 'reject')}
+                                    {this.getTextOrLoader('Reject', 'reject')}
                                 </button>
                             </div>
                             <div className="col col-4">
                                 <button className="btn btn-primary mb1 mt1 bg-blue ml1 col-11" onClick={this.acceptChallenger}>
-                                    {this.getTextOrLoader(this.getIntlMessage('ACCEPT'), 'accept')}
+                                    {this.getTextOrLoader('Accept', 'accept')}
                                 </button>
                             </div>
                         </div>
@@ -89,7 +99,7 @@ var GameCard = React.createClass({
             } else {
                 return (
                     <button className="btn btn-primary mb1 mt1 bg-red col-12" onClick={this.cancelGame}>
-                        {this.getTextOrLoader(this.getIntlMessage('CANCEL'), 'cancel')}
+                        {this.getTextOrLoader('Cancel', 'cancel')}
                     </button>
                 );
             }
@@ -97,30 +107,34 @@ var GameCard = React.createClass({
             if (this.props.game.is_challenger) {
                 if (this.props.game.has_creator_accepted) {
                     //ok this game is a go for you
-                    return this.getDisabledButton(this.getIntlMessage('PLAY_TIME'))
+                    return this.getDisabledButton('Play Time!')
                 } else {
                     //waiting on them to say cool
-                    return this.getDisabledButton(this.getIntlMessage('WAITING_TO_ACCEPT'));
+                    return this.getDisabledButton('Waiting to Accept');
                 }
             } else if (this.props.game.has_challenger) {
                 //already has a challenger
-                return this.getDisabledButton(this.getIntlMessage('ALREADY_MATCHED'));
+                return this.getDisabledButton('Already matched');
             } else {
                 //there is no challenger, show join
                 return (
                     <button className="btn btn-primary mb1 mt1 bg-blue col col-12" onClick={this.joinGame}>
-                        {this.getTextOrLoader(this.getIntlMessage('JOIN'), 'join')}
+                        {this.getTextOrLoader('Join', 'join')}
                     </button>
                 );
             }
         }
-    },
-    getDisabledButton: function(text) {
+    }
+
+    getDisabledButton(text) {
         return (
             <button className="btn btn-primary mb1 mt1 col col-12 bg-blue is-disabled">{text}</button>
         );
-    },
-    getTextOrLoader: function(text, type) {
+    }
+
+    getTextOrLoader(text, type) {
+        console.log('getTextOrLoader');
+        console.log(this);
         if (this.state.isLoading) {
             if ((type == 'join' && this.state.isJoining) ||
                 (type == 'cancel' && this.state.isCancelling) ||
@@ -134,8 +148,9 @@ var GameCard = React.createClass({
         return (
             <div>{text}</div>
         );
-    },
-    joinGame: function() {
+    }
+
+    joinGame() {
         if (this.state.isLoading) {
             return;
         }
@@ -152,8 +167,9 @@ var GameCard = React.createClass({
                 this.setState({isJoining:false, isLoading:false});
             }, this)
         })
-    },
-    cancelGame: function() {
+    }
+
+    cancelGame() {
         if (this.state.isLoading) {
             return;
         }
@@ -170,8 +186,9 @@ var GameCard = React.createClass({
                 this.setState({isCancelling:false, isLoading:false});
             }, this)
         })
-    },
-    acceptChallenger: function() {
+    }
+
+    acceptChallenger() {
         if (this.state.isLoading) {
             return;
         }
@@ -188,8 +205,9 @@ var GameCard = React.createClass({
                 this.setState({isAccepting:false, isLoading:false});
             },this)
         });
-    },
-    rejectChallenger: function() {
+    }
+
+    rejectChallenger() {
         if (this.state.isLoading) {
             return;
         }
@@ -207,6 +225,4 @@ var GameCard = React.createClass({
             },this)
         })
     }
-});
-
-export default GameCard;
+};

@@ -1,58 +1,68 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactIntl from 'react-intl';
 import GameList from './../games/game-list';
 
-var MyGames = React.createClass({
-    mixins: [ReactIntl.IntlMixin],
-    getInitialState: function() {
-        return {current_tab: 'created_or_joined'};
-    },
-    render: function () {
+export default class MyGames extends Component {
+
+    constructor(options) {
+        super(options);
+        this.isSelected = this.isSelected.bind(this);
+        this.getGames = this.getGames.bind(this);
+        this.setGameState = this.setGameState.bind(this);
+        this.state = {
+            current_tab: 'created_or_joined'
+        };
+    }
+
+    render () {
         return (
             <section>
                 <div className="my1 mxn1 h6">
                     <a href="#"
                        className={"btn btn-narrow " + this.isSelected('created_or_joined')}
-                       onClick={this.getGames}
+                       onClick={this.setGameState}
                        data-list-type="created_or_joined">All My Games</a>
                     <a href="#"
                        className={"btn btn-narrow " + this.isSelected('to_approve')}
-                       onClick={this.getGames}
+                       onClick={this.setGameState}
                        data-list-type="to_approve">To Approve</a>
                     <a href="#"
                        className={"btn btn-narrow " + this.isSelected('created')}
-                       onClick={this.getGames}
+                       onClick={this.setGameState}
                        data-list-type="created">Created</a>
                 </div>
-                <GameList gameData={this.props.myGameData}
-                    gameDispatcher={this.props.gameDispatcher}
+                <GameList
                     colSize="col-6"
                     listType="created_or_joined"
-                    showModal={this.props.showModal}
                     limit={4}
+                    games={this.getGames()}
                     />
             </section>
         );
-    },
-    isSelected: function(type) {
+    }
+
+    isSelected(type) {
         if (type == this.state.current_tab) {
             return 'blue';
         }
         return '';
-    },
-    getGames:function(ev) {
+    }
+
+    setGameState(ev) {
         var type = $(ev.currentTarget).data('list-type');
         if (type == this.state.current_tab) {
             return;
         }
-        $.ajax({
-            url:'/game/list/' + type,
-            success:$.proxy(function(resp) {
-                this.props.gameDispatcher.dispatch(resp);
-                this.setState({current_tab:type});
-            },this)
-        })
-    }
-});
 
-export default MyGames;
+        this.setState({current_tab:type});
+    }
+
+    getGames() {
+        if (this.props && this.props.games && this.props.games.my_games) {
+            var tmp = _.values(_.pick(this.props.games.my_games, this.props.games[this.state.current_tab].ids));
+            return tmp;
+        }
+    }
+
+
+};
