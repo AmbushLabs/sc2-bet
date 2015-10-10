@@ -76,7 +76,7 @@ function createGame(wagerAmount) {
                     type: 'CREATE_GAME',
                     isFetching: false,
                     status: 'success',
-                    game: json
+                    data: json
                 })
         );
 

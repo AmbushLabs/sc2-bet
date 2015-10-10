@@ -107,6 +107,25 @@ const games = function(state = { games: {} }, action) {
                     break;
             }
             break;
+        case 'CREATE_GAME':
+            if (action.isFetching) {
+                return state;
+            } else if (!action.isFetching) {
+                switch(action.status) {
+                    case 'success':
+                        let myGames = Object.assign({}, state.my_games);
+                        myGames[action.data.game.id] = action.data.game;
+                        console.log(state);
+                        console.log(action);
+                        return Object.assign({}, state, {
+                            created: Object.assign({}, state.created, {ids:[action.data.game.id, ...state.created.ids]}),
+                            created_or_joined: Object.assign({}, state.created_or_joined, {ids:[action.data.game.id, ...state.created_or_joined.ids]}),
+                            my_games: myGames
+                        });
+                        break;
+                }
+            }
+            break;
     }
     return state;
 };

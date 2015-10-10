@@ -49,13 +49,7 @@ class GameController {
                     println g.errors;
                     ret['error'] = true;
                 }
-                def query = Game.where {
-                    active == true && (creator == u || challenger == u)
-                }
-                ret['games'] = query.list(max: 4, sort: "createDate", order: "desc");
-                ret['count'] = query.count();
-                ret['limit'] = 4;
-                ret['page'] = 1;
+                ret['game'] = g;
             } else {
                 ret['error'] = true;
             }
