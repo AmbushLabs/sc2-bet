@@ -23,10 +23,13 @@ class GameList extends Component {
                 </div>
             );
         }
-        const { colSize, games } = this.props;
-        var gameNodes =games.map((game) => {
+        const { colSize, games, dispatch } = this.props;
+        var gameNodes = games.map((game) => {
             return (
-                <GameCard game={game} colSize={colSize} />
+                <GameCard
+                    game={game}
+                    colSize={colSize}
+                    dispatch={dispatch} />
             );
         });
         return (

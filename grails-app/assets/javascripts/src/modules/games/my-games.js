@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import ReactIntl from 'react-intl';
 import GameList from './../games/game-list';
 
 export default class MyGames extends Component {

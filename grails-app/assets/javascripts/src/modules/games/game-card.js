@@ -9,6 +9,7 @@ import {
 } from './../../actions/actions';
 
 import BasicUser from './../user/basic-user';
+import ActionButton from './action-button';
 
 
 export default class GameCard extends Component {
@@ -17,7 +18,6 @@ export default class GameCard extends Component {
         super(options);
         this.getControls = this.getControls.bind(this);
         this.getDisabledButton = this.getDisabledButton.bind(this);
-        this.getTextOrLoader = this.getTextOrLoader.bind(this);
         this.joinGame = this.joinGame.bind(this);
         this.cancelGame = this.cancelGame.bind(this);
         this.acceptChallenger = this.acceptChallenger.bind(this);
@@ -63,6 +63,13 @@ export default class GameCard extends Component {
         if (!this.props.game.is_active) {
             return this.getDisabledButton('Wager cancelled');
         }
+        const buttonStates = {
+            is_joining: this.props.game.is_joining,
+            is_cancelling: this.props.game.is_cancelling,
+            is_rejecting: this.props.game.is_rejecting,
+            is_accepting: this.props.game.is_accepting,
+            is_fetching: this.props.is_fetching
+        };
         if (this.props.game.is_creator) {
             if (this.props.game.has_challenger) {
                 if (this.props.game.has_creator_accepted) {
@@ -71,28 +78,40 @@ export default class GameCard extends Component {
                     return (
                         <div>
                             <div className="col col-4">
-                                <button className="btn btn-primary mb1 mt1 bg-red mr1 col-11" onClick={this.cancelGame}>
-                                    {this.getTextOrLoader('Cancel', 'cancel')}
-                                </button>
+                                <ActionButton
+                                    {...buttonStates}
+                                    className="btn btn-primary mb1 mt1 bg-red mr1 col-11"
+                                    onClick={this.cancelGame}
+                                    buttonType="Cancel"
+                                    />
                             </div>
                             <div className="col col-4">
-                                <button className="btn btn-primary mb1 mt1 bg-maroon mr1 col-11" onClick={this.rejectChallenger}>
-                                    {this.getTextOrLoader('Reject', 'reject')}
-                                </button>
+                                <ActionButton
+                                    {...buttonStates}
+                                    className="btn btn-primary mb1 mt1 bg-maroon mr1 col-11"
+                                    onClick={this.rejectChallenger}
+                                    buttonType="Reject"
+                                    />
                             </div>
                             <div className="col col-4">
-                                <button className="btn btn-primary mb1 mt1 bg-blue ml1 col-11" onClick={this.acceptChallenger}>
-                                    {this.getTextOrLoader('Accept', 'accept')}
-                                </button>
+                                <ActionButton
+                                    {...buttonStates}
+                                    className="btn btn-primary mb1 mt1 bg-blue ml1 col-11"
+                                    onClick={this.acceptChallenger}
+                                    buttonType="Accept"
+                                    />
                             </div>
                         </div>
                     );
                 }
             } else {
                 return (
-                    <button className="btn btn-primary mb1 mt1 bg-red col-12" onClick={this.cancelGame}>
-                        {this.getTextOrLoader('Cancel', 'cancel')}
-                    </button>
+                    <ActionButton
+                        {...buttonStates}
+                        className="btn btn-primary mb1 mt1 bg-red col-12"
+                        onClick={this.cancelGame}
+                        buttonType="Cancel"
+                        />
                 );
             }
         } else {
@@ -110,9 +129,12 @@ export default class GameCard extends Component {
             } else {
                 //there is no challenger, show join
                 return (
-                    <button className="btn btn-primary mb1 mt1 bg-blue col col-12" onClick={this.joinGame}>
-                        {this.getTextOrLoader('Join', 'join')}
-                    </button>
+                    <ActionButton
+                        {...buttonStates}
+                        className="btn btn-primary mb1 mt1 bg-blue col col-12"
+                        onClick={this.joinGame}
+                        buttonType="Join"
+                        />
                 );
             }
         }
@@ -120,30 +142,22 @@ export default class GameCard extends Component {
 
     getDisabledButton(text) {
         return (
-            <button className="btn btn-primary mb1 mt1 col col-12 bg-blue is-disabled">{text}</button>
+            <ActionButton
+                className="btn btn-primary mb1 mt1 col col-12 bg-blue is-disabled"
+                is_disabled={true}
+                disabled_text={text} />
         );
     }
 
-    getTextOrLoader(text, type) {
-        if (this.props.game.is_fetching) {
-            if ((type == 'join' && this.props.game.is_joining) ||
-                (type == 'cancel' && this.props.game.is_cancelling) ||
-                (type == 'reject' && this.props.game.is_rejecting) ||
-                (type == 'accept' && this.props.game.is_accepting)) {
-                return (
-                    <div className="loader">&nbsp;</div>
-                );
-            }
-        }
-        return (
-            <div>{text}</div>
-        );
-    }
+
 
     joinGame() {
+        console.log('join');
         if (this.props.is_fetching) {
+            console.log('is fetching');
             return;
         }
+        console.log('isnt fetching');
         this.props.dispatch(join(this.props.game.id));
     }
 

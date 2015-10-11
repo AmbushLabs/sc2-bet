@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
 
-import UserImage from './user-image';
+import UserImage from './../user/user-image';
 
 export default class BasicUser extends Component {
 
     render() {
-        const { user } = this.props;
-        if (_.isUndefined(user) || _.isNull(user)) {
-            return (
-                <div>&nbsp;</div>
-            );
-        }
         return (
             <div className="col col-4 border m2 clearfix">
-                <div className="col-12 center mt3">
-                    <UserImage img_src={user.avatar_url} />
+                <div className="col-12 center h3 mt3">
+                    Think you can win?
                 </div>
                 <div className="col-12 center h3 mt1 mb3">
-                    {user.display_name}<br />
+                    See how Gosu you are. Challenge and find out.
                 </div>
                 <div className="col-12">
                     <div className="col col-4 center bg-silver border-right black p1">
