@@ -1,12 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
-import {
-    JOIN_GAME,
-    CANCEL_GAME,
-    ACCEPT_CHALLENGER,
-    REJECT_CHALLENGER
-} from './../../actions/actions';
+import { accept, cancel, join, reject } from './../../api/game/crud';
 
 import BasicUser from './../user/basic-user';
 import ActionButton from './action-button';
@@ -63,13 +58,6 @@ export default class GameCard extends Component {
         if (!this.props.game.is_active) {
             return this.getDisabledButton('Wager cancelled');
         }
-        const buttonStates = {
-            is_joining: this.props.game.is_joining,
-            is_cancelling: this.props.game.is_cancelling,
-            is_rejecting: this.props.game.is_rejecting,
-            is_accepting: this.props.game.is_accepting,
-            is_fetching: this.props.is_fetching
-        };
         if (this.props.game.is_creator) {
             if (this.props.game.has_challenger) {
                 if (this.props.game.has_creator_accepted) {
@@ -79,26 +67,26 @@ export default class GameCard extends Component {
                         <div>
                             <div className="col col-4">
                                 <ActionButton
-                                    {...buttonStates}
+                                    is_fetching={this.props.is_cancelling}
                                     className="btn btn-primary mb1 mt1 bg-red mr1 col-11"
                                     onClick={this.cancelGame}
-                                    buttonType="Cancel"
+                                    buttonText="Cancel"
                                     />
                             </div>
                             <div className="col col-4">
                                 <ActionButton
-                                    {...buttonStates}
+                                    is_fetching={this.props.is_rejecting}
                                     className="btn btn-primary mb1 mt1 bg-maroon mr1 col-11"
                                     onClick={this.rejectChallenger}
-                                    buttonType="Reject"
+                                    buttonText="Reject"
                                     />
                             </div>
                             <div className="col col-4">
                                 <ActionButton
-                                    {...buttonStates}
+                                    is_fetching={this.props.is_accepting}
                                     className="btn btn-primary mb1 mt1 bg-blue ml1 col-11"
                                     onClick={this.acceptChallenger}
-                                    buttonType="Accept"
+                                    buttonText="Accept"
                                     />
                             </div>
                         </div>
@@ -107,10 +95,10 @@ export default class GameCard extends Component {
             } else {
                 return (
                     <ActionButton
-                        {...buttonStates}
+                        is_fetching={this.props.is_cancelling}
                         className="btn btn-primary mb1 mt1 bg-red col-12"
                         onClick={this.cancelGame}
-                        buttonType="Cancel"
+                        buttonText="Cancel"
                         />
                 );
             }
@@ -130,10 +118,10 @@ export default class GameCard extends Component {
                 //there is no challenger, show join
                 return (
                     <ActionButton
-                        {...buttonStates}
+                        is_fetching={this.props.is_joining}
                         className="btn btn-primary mb1 mt1 bg-blue col col-12"
                         onClick={this.joinGame}
-                        buttonType="Join"
+                        buttonText="Join"
                         />
                 );
             }
@@ -145,19 +133,14 @@ export default class GameCard extends Component {
             <ActionButton
                 className="btn btn-primary mb1 mt1 col col-12 bg-blue is-disabled"
                 is_disabled={true}
-                disabled_text={text} />
+                buttonText={text} />
         );
     }
 
-
-
     joinGame() {
-        console.log('join');
         if (this.props.is_fetching) {
-            console.log('is fetching');
             return;
         }
-        console.log('isnt fetching');
         this.props.dispatch(join(this.props.game.id));
     }
 
@@ -182,92 +165,4 @@ export default class GameCard extends Component {
         this.props.dispatch(reject(this.props.game.id));
 
     }
-};
-
-const accept = (game_id) => {
-    return (dispatch) => {
-        dispatch({
-            type: ACCEPT_CHALLENGER,
-            is_fetching: true
-        });
-        return fetch('/game/' + game_id + '/accept', {
-            method:'post',
-            credentials:'include'
-        })
-        .then(response => response.json())
-        .then(json =>
-            dispatch({
-                type: ACCEPT_CHALLENGER,
-                is_fetching: false,
-                status: 'success',
-                data: json
-            })
-        );
-    };
-};
-
-const reject = (game_id) => {
-    return (dispatch) => {
-        dispatch({
-            type: REJECT_CHALLENGER,
-            is_fetching: true
-        });
-        return fetch('/game/' + game_id + '/reject', {
-            method:'post',
-            credentials:'include'
-        })
-        .then(response => response.json())
-        .then(json =>
-            dispatch({
-                type: REJECT_CHALLENGER,
-                is_fetching: false,
-                status: 'success',
-                data: json
-            })
-        );
-    }
-};
-
-const cancel = (game_id) => {
-    return (dispatch) => {
-        dispatch({
-            type: CANCEL_GAME,
-            is_fetching: true
-        });
-        return fetch('/game/g/' + game_id, {
-            method:'delete',
-            credentials:'include'
-        })
-        .then(response => response.json())
-        .then(json =>
-            dispatch({
-                type: CANCEL_GAME,
-                is_fetching: false,
-                status: 'success',
-                data: json
-            })
-        );
-    };
-};
-
-const join = (game_id) => {
-    return (dispatch) => {
-        dispatch({
-            type: JOIN_GAME,
-            is_fetching: true
-        });
-        return fetch('/game/' + game_id + '/join', {
-            method:'post',
-            credentials:'include'
-        })
-        .then(response => response.json())
-        .then(json =>
-            dispatch({
-                type: CANCEL_GAME,
-                is_fetching: false,
-                status: 'success',
-                data: json
-            })
-        );
-    };
 };

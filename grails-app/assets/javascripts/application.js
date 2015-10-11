@@ -14,6 +14,4 @@ require(['/assets/lib/underscore'], function(_) {
             }
         }, 50);
     });
-
-
 });

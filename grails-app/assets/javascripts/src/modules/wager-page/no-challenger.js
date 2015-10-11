@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 
-import UserImage from './../user/user-image';
+import { join } from './../../api/game/crud';
 
-export default class BasicUser extends Component {
+import UserImage from './../user/user-image';
+import ActionButton from './../games/action-button'
+
+export default class NoChallenger extends Component {
+
+    constructor(options) {
+        super(options);
+        this.joinGame = this.joinGame.bind(this);
+    }
 
     render() {
         return (
@@ -14,21 +22,22 @@ export default class BasicUser extends Component {
                     See how Gosu you are. Challenge and find out.
                 </div>
                 <div className="col-12">
-                    <div className="col col-4 center bg-silver border-right black p1">
-                        <div className="h4">{user.primary_race}</div>
-                        <div className="h6 gray">PRIMARY RACE</div>
-                    </div>
-                    <div className="col col-4 center bg-silver border-right black p1">
-                        <div className="h4">{user.primary_race_wins}</div>
-                        <div className="h6 gray">WINS</div>
-                    </div>
-                    <div className="col col-4 center bg-silver black p1">
-                        <div className="h4">{user.highest_1v1_rank}</div>
-                        <div className="h6 gray">HIGHEST RANK</div>
-                    </div>
+                    <ActionButton
+                        is_fetching={this.props.is_joining}
+                        className="btn btn-primary mb1 mt1 bg-blue col col-12"
+                        onClick={this.joinGame}
+                        buttonText="Join"
+                        />
                 </div>
             </div>
         )
+    }
+
+    joinGame() {
+        if (this.props.is_fetching) {
+            return;
+        }
+        this.props.dispatch(join(this.props.game_id));
     }
 
 }

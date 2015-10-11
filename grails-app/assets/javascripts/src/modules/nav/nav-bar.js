@@ -6,13 +6,26 @@ import Coins from './coins';
 
 var NavBar = React.createClass ({
     render: function() {
-        return (
-            <div className="clearfix border-bottom">
-                <HomeButton />
-                <CreateGameButton onCreateGameClick={this.props.showModal} />
-                <Coins wagerTokens={1} />
-            </div>
-        );
+        if (!this.props.loggedIn) {
+            return (
+                <nav className="clearfix black">
+                    <div className="sm-col">
+                        <a href="/" className="btn py2">Home</a>
+                    </div>
+                    <div className="sm-col-right">
+                        <a href="/" className="btn py2">About</a>
+                    </div>
+                </nav>
+            );
+        } else {
+            return (
+                <div className="clearfix border-bottom">
+                    <HomeButton />
+                    <CreateGameButton onCreateGameClick={this.props.showModal} />
+                    <Coins wagerTokens={1} />
+                </div>
+            );
+        }
     }
 });
 

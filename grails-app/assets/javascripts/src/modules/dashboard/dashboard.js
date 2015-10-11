@@ -53,35 +53,6 @@ class Dashboard extends Component {
         }
     }
 
-    componentDidMount() {
-        var self = this;
-        this.props.dispatch(fetchAllGames())
-            .then(() =>
-                console.log(self)
-        );
-    }
 };
 
 export default Dashboard;
-
-function fetchAllGames() {
-    return function (dispatch) {
-        dispatch({
-            type:'FETCH_ALL_GAMES',
-            isFetching: true
-        });
-
-        return fetch('/game/all', {
-            credentials: 'include'
-        })
-            .then(response => response.json())
-            .then(json =>
-                dispatch({
-                    type:'FETCH_ALL_GAMES',
-                    is_fetching: false,
-                    status:'success',
-                    games:json
-                })
-        );
-    }
-}

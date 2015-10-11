@@ -4,12 +4,16 @@ import {
 } from 'redux-router';
 
 import games from './games';
+import user from './user';
 import createGameModalVisible from './createGameModalVisible';
+import loggedIn from './loggedIn';
 
 const reducer = combineReducers({
     router: routerStateReducer,
     createGameModalVisible: createGameModalVisible,
-    games: games
+    games: games,
+    user: user,
+    loggedIn: loggedIn
 });
 
 export default reducer;

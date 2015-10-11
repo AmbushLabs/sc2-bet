@@ -10,14 +10,10 @@
     <asset:stylesheet src="utility.css"/>
     <asset:javascript src="lib/underscore.js" />
     <asset:javascript src="lib/jquery-2.1.4.min.js"/>
-    <asset:javascript src="require.js"/>
     <g:layoutHead/>
     <link href="//cdn.symbolset.com/f3558125ac7afa92f7c800679e8c8ab19e3d003c/symbolset.css" rel="stylesheet">
 </head>
 <body>
-    <g:if test="${!logged_in}">
-        <g:render template="/layouts/includes/logged_out/nav" />
-    </g:if>
     <g:layoutBody/>
     <script src="//cdn.symbolset.com/f3558125ac7afa92f7c800679e8c8ab19e3d003c/symbolset.js"></script>
     <asset:javascript src="dist/app.js"/>

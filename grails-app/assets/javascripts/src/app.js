@@ -25,29 +25,55 @@ import NavBar from './modules/nav/nav-bar';
 import Dashboard from './modules/dashboard/dashboard';
 import CreateGameModal from './modules/create-game/modal';
 import WagerPage from './modules/wager-page/wager-page';
+import LandingPage from './modules/landing/landing-page';
 
 
 @connect(state => (state))
 class App extends Component {
+
+    constructor(options) {
+        super(options);
+        this.getChildren = this.getChildren.bind(this);
+        this.buildModal = this.buildModal.bind(this);
+
+    }
+
+    componentDidMount() {
+        var self = this;
+        this.props.dispatch(initializeApp())
+            .then(() =>
+                console.log(self)
+        );
+    }
 
     render() {
         const { dispatch } = this.props;
         return (
             <section>
                 <NavBar
-                    showModal={() => dispatch({type:Actions.SHOW_CREATE_GAME_MODAL})} />
+                    showModal={() => dispatch({type:Actions.SHOW_CREATE_GAME_MODAL})}
+                    loggedIn={this.props.loggedIn}
+                    />
                 {this.getChildren()}
                 {this.buildModal()}
             </section>
         );
     }
+
     getChildren() {
-        if (_.isUndefined(this.props.children) || _.isNull(this.props.children)) {
-            return;
+        if (!this.props.loggedIn) {
+            return (
+                <LandingPage />
+            );
+        } else {
+            if (_.isUndefined(this.props.children) || _.isNull(this.props.children)) {
+                return;
+            }
+            var { children, ...extraProps } = this.props;
+            return React.cloneElement(children, extraProps);
         }
-        var { children, ...extraProps } = this.props;
-        return React.cloneElement(children, extraProps);
     }
+
     buildModal() {
         if (!this.props.createGameModalVisible) {
             return;
@@ -61,6 +87,28 @@ class App extends Component {
         );
     }
 };
+
+function initializeApp() {
+    return function (dispatch) {
+        dispatch({
+            type:Actions.INITIALIZE_APP,
+            is_fetching: true
+        });
+
+        return fetch('/main/initialize', {
+            credentials: 'include'
+        })
+            .then(response => response.json())
+            .then(json =>
+                dispatch({
+                    type:Actions.INITIALIZE_APP,
+                    is_fetching: false,
+                    status:'success',
+                    data:json
+                })
+        );
+    }
+}
 
 const middleware = [thunk];
 

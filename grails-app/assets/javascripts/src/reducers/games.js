@@ -6,7 +6,8 @@ import {
     JOIN_GAME,
     CANCEL_GAME,
     ACCEPT_CHALLENGER,
-    REJECT_CHALLENGER
+    REJECT_CHALLENGER,
+    INITIALIZE_APP
 } from './../actions/actions';
 
 const games = (state = {}, action = {}) => {
@@ -30,13 +31,13 @@ const games = (state = {}, action = {}) => {
                     break;
             }
             break;
-        case FETCH_ALL_GAMES:
+        case INITIALIZE_APP:
             if (action.is_fetching) {
                 return state;
             }
             switch(action.status) {
                 case 'success':
-                    return Object.assign({}, state, action.games.games);
+                    return Object.assign({}, state, action.data.games);
                     break;
             }
             break;

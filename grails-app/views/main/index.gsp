@@ -9,14 +9,10 @@
 <html>
 <head>
     <title></title>
-    <asset:javascript src="application.js"/>
 </head>
 <body>
-    <g:if test="${logged_in}">
-        <g:render template="/main/logged_in" />
-    </g:if>
-    <g:else>
-        <g:render template="/main/logged_out" />
-    </g:else>
+    <section id="main_body">
+
+    </section>
 </body>
 </html>
