@@ -78,8 +78,8 @@ function fetchAllGames() {
             .then(json =>
                 dispatch({
                     type:'FETCH_ALL_GAMES',
-                    isFetching: false,
-                    status:'SUCCESS',
+                    is_fetching: false,
+                    status:'success',
                     games:json
                 })
         );

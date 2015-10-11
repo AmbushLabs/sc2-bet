@@ -1,12 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
+import {
+    JOIN_GAME,
+    CANCEL_GAME,
+    ACCEPT_CHALLENGER,
+    REJECT_CHALLENGER
+} from './../../actions/actions';
+
+import BasicUser from './../user/basic-user';
+
 
 export default class GameCard extends Component {
 
     constructor(options) {
         super(options);
-        this.getUserDisplay = this.getUserDisplay.bind(this);
         this.getControls = this.getControls.bind(this);
         this.getDisabledButton = this.getDisabledButton.bind(this);
         this.getTextOrLoader = this.getTextOrLoader.bind(this);
@@ -14,13 +22,6 @@ export default class GameCard extends Component {
         this.cancelGame = this.cancelGame.bind(this);
         this.acceptChallenger = this.acceptChallenger.bind(this);
         this.rejectChallenger = this.rejectChallenger.bind(this);
-        this.state = {
-            isLoading: false,
-            isJoining: false,
-            isCancelling: false,
-            isAccepting: false,
-            isRejecting: false
-        };
     }
 
     render() {
@@ -30,7 +31,9 @@ export default class GameCard extends Component {
                     <div className="bg-lighten-3">
                         <div className="col col-4 left-align">
                             <h6>Creator</h6>
-                            {this.getUserDisplay(this.props.game.creator)}
+                            <BasicUser
+                                user={this.props.game.creator}
+                                outerClass="h4 mt1" />
                         </div>
                         <div className="col col-4 center">
                             <a className="h6" href={"/w/" + this.props.game.id}>
@@ -43,26 +46,15 @@ export default class GameCard extends Component {
                         </div>
                         <div className="col col-4 right-align">
                             <h6>Challenger</h6>
-                            {this.getUserDisplay(this.props.game.challenger)}
+                            <BasicUser
+                                user={this.props.game.challenger}
+                                outerClass="h4 mt1" />
                         </div>
                         <div className="col col-12">
                             {this.getControls()}
                         </div>
                     </div>
                 </div>
-            </div>
-        );
-    }
-
-    getUserDisplay(user) {
-        if (_.isUndefined(user) || _.isNull(user)) {
-            return;
-        }
-        return (
-            <div className="h4 mt1">
-                {user.display_name}<br />
-                {user.primary_race}<br />
-                {user.highest_1v1_rank}
             </div>
         );
     }
@@ -133,13 +125,11 @@ export default class GameCard extends Component {
     }
 
     getTextOrLoader(text, type) {
-        console.log('getTextOrLoader');
-        console.log(this);
-        if (this.state.isLoading) {
-            if ((type == 'join' && this.state.isJoining) ||
-                (type == 'cancel' && this.state.isCancelling) ||
-                (type == 'reject' && this.state.isRejecting) ||
-                (type == 'accept' && this.state.isAccepting)) {
+        if (this.props.game.is_fetching) {
+            if ((type == 'join' && this.props.game.is_joining) ||
+                (type == 'cancel' && this.props.game.is_cancelling) ||
+                (type == 'reject' && this.props.game.is_rejecting) ||
+                (type == 'accept' && this.props.game.is_accepting)) {
                 return (
                     <div className="loader">&nbsp;</div>
                 );
@@ -151,78 +141,119 @@ export default class GameCard extends Component {
     }
 
     joinGame() {
-        if (this.state.isLoading) {
+        if (this.props.is_fetching) {
             return;
         }
-        this.setState({isJoining:true, isLoading:true});
-        $.ajax({
-            url:'/game/' + this.props.game.id + '/join',
-            type: 'POST',
-            success: $.proxy(function(resp) {
-                if (_.has('error')) {
-                    //TODO: handle error
-                } else {
-                    this.props.game = resp.game;
-                }
-                this.setState({isJoining:false, isLoading:false});
-            }, this)
-        })
+        this.props.dispatch(join(this.props.game.id));
     }
 
     cancelGame() {
-        if (this.state.isLoading) {
+        if (this.props.is_fetching) {
             return;
         }
-        this.setState({isCancelling:true, isLoading:true});
-        $.ajax({
-            url:'/game/g/' + this.props.game.id,
-            type: 'DELETE',
-            success: $.proxy(function(resp) {
-                if (_.has('error')) {
-                    //TODO: handle error
-                } else {
-                    this.props.game = resp.game;
-                }
-                this.setState({isCancelling:false, isLoading:false});
-            }, this)
-        })
+        this.props.dispatch(cancel(this.props.game.id));
     }
 
     acceptChallenger() {
-        if (this.state.isLoading) {
+        if (this.props.is_fetching) {
             return;
         }
-        this.setState({isAccepting:true, isLoading:true});
-        $.ajax({
-            url:'/game/' + this.props.game.id + '/accept',
-            type: 'POST',
-            success: $.proxy(function(resp) {
-                if (_.has('error')) {
-                    //TODO: handle error
-                } else {
-                    this.props.game = resp.game;
-                }
-                this.setState({isAccepting:false, isLoading:false});
-            },this)
-        });
+        this.props.dispatch(accept(this.props.game.id));
     }
 
     rejectChallenger() {
-        if (this.state.isLoading) {
+        if (this.props.is_fetching) {
             return;
         }
-        this.setState({isRejecting:true, isLoading:true});
-        $.ajax({
-            url:'/game/' + this.props.game.id + '/reject',
-            type: 'POST',
-            success: $.proxy(function(resp) {
-                if (_.has('error')) {
-                    //TODO: handle error
-                } else {
-                    this.props.game = resp.game;
-                }
-                this.setState({isRejecting:false, isLoading:false});
-            },this)
-        })
+        this.props.dispatch(reject(this.props.game.id));
+
     }
+};
+
+const accept = (game_id) => {
+    return (dispatch) => {
+        dispatch({
+            type: ACCEPT_CHALLENGER,
+            is_fetching: true
+        });
+        return fetch('/game/' + game_id + '/accept', {
+            method:'post',
+            credentials:'include'
+        })
+        .then(response => response.json())
+        .then(json =>
+            dispatch({
+                type: ACCEPT_CHALLENGER,
+                is_fetching: false,
+                status: 'success',
+                data: json
+            })
+        );
+    };
+};
+
+const reject = (game_id) => {
+    return (dispatch) => {
+        dispatch({
+            type: REJECT_CHALLENGER,
+            is_fetching: true
+        });
+        return fetch('/game/' + game_id + '/reject', {
+            method:'post',
+            credentials:'include'
+        })
+        .then(response => response.json())
+        .then(json =>
+            dispatch({
+                type: REJECT_CHALLENGER,
+                is_fetching: false,
+                status: 'success',
+                data: json
+            })
+        );
+    }
+};
+
+const cancel = (game_id) => {
+    return (dispatch) => {
+        dispatch({
+            type: CANCEL_GAME,
+            is_fetching: true
+        });
+        return fetch('/game/g/' + game_id, {
+            method:'delete',
+            credentials:'include'
+        })
+        .then(response => response.json())
+        .then(json =>
+            dispatch({
+                type: CANCEL_GAME,
+                is_fetching: false,
+                status: 'success',
+                data: json
+            })
+        );
+    };
+};
+
+const join = (game_id) => {
+    return (dispatch) => {
+        dispatch({
+            type: JOIN_GAME,
+            is_fetching: true
+        });
+        return fetch('/game/' + game_id + '/join', {
+            method:'post',
+            credentials:'include'
+        })
+        .then(response => response.json())
+        .then(json =>
+            dispatch({
+                type: CANCEL_GAME,
+                is_fetching: false,
+                status: 'success',
+                data: json
+            })
+        );
+    };
 };

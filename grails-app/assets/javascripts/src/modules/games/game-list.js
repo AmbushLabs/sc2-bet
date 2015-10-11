@@ -1,25 +1,34 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import GameCard from "./game-card";
+import { SHOW_CREATE_GAME_MODAL } from './../../actions/actions';
 
+@connect((state) => ({createGameModalVisible:state.createGameModalVisible}))
 class GameList extends Component {
+
+    constructor(options) {
+        super(options);
+        this.getPaginationControls = this.getPaginationControls.bind(this);
+        this.showCreateGameModal = this.showCreateGameModal.bind(this);
+    }
 
     render() {
         if (_.isNull(this.props.games) || _.isUndefined(this.props.games) || this.props.games.length == 0) {
             return (
                 <div className={"col " + this.props.colSize}>
                     <p>No active games</p>
-                    <button className="btn btn-primary mb1 mt1 bg-blue mr1 col-11" onClick={this.props.showModal}>
+                    <button className="btn btn-primary mb1 mt1 bg-blue mr1 col-11" onClick={this.showCreateGameModal}>
                         Create Game
                     </button>
                 </div>
             );
         }
-        var gameNodes = this.props.games.map($.proxy(function(game) {
+        const { colSize, games } = this.props;
+        var gameNodes =games.map((game) => {
             return (
-                <GameCard game={game} colSize={this.props.colSize} />
+                <GameCard game={game} colSize={colSize} />
             );
-        }, this));
+        });
         return (
             <div>
                 <div className="clearfix">
@@ -28,6 +37,10 @@ class GameList extends Component {
                 {/*this.getPaginationControls() */}
             </div>
         );
+    }
+
+    showCreateGameModal() {
+        this.props.dispatch({type:SHOW_CREATE_GAME_MODAL})
     }
 
     getPaginationControls() {
@@ -115,8 +128,8 @@ function fetchGames(listType, page, limit) {
         .then(json =>
             dispatch({
                 type:'FETCH_GAMES',
-                isFetching: false,
-                status:'SUCCESS',
+                is_fetching: false,
+                status:'success',
                 gameData:json
             })
         );

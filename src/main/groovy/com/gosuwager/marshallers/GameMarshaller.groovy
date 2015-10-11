@@ -55,6 +55,13 @@ class GameMarshaller {
         mp['highest_team_rank'] = character.highestTeamRank;
         mp['season_total_games'] = character.seasonTotalGames;
         mp['career_total_games'] = character.careerTotalGames;
+        if (character.primaryRace.toLowerCase().equals("protoss")) {
+            mp['primary_race_wins'] = character.protossWins;
+        } else if (character.primaryRace.toLowerCase().equals("terran")) {
+            mp['primary_race_wins'] = character.terranWins;
+        } else {
+            mp['primary_race_wins'] = character.zergWins;
+        }
         return mp;
     }
 

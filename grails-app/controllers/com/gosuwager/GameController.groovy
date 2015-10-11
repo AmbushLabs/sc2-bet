@@ -28,11 +28,14 @@ class GameController {
         if (request.method == 'GET' && params.game_id) {
             //either get a specific game
             Game g = Game.findById(params.game_id);
+            def ret = [:]
             if (g != null) {
-                render g as JSON;
+                ret['game'] = g;
+                ret['status'] = 'success';
+                render ret as JSON;
             } else {
-                def tmp = [error:'error'];
-                render tmp as JSON;
+                ret['status'] = 'error';
+                render ret as JSON;
             }
         } else if (request.method == 'POST') {
             //create a game
