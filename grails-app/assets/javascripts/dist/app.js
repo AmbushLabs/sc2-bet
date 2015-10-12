@@ -311,9 +311,7 @@ var App = (function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             var self = this;
-            this.props.dispatch(initializeApp()).then(function () {
-                return console.log(self);
-            });
+            this.props.dispatch(initializeApp()).then(function () {});
         }
     }, {
         key: 'render',
@@ -375,7 +373,6 @@ var App = (function (_Component) {
     }, {
         key: 'buildEmailModal',
         value: function buildEmailModal() {
-            console.log(this.props);
             if (this.props.hasEmail || !this.props.loggedIn) {
                 return;
             }
@@ -608,7 +605,7 @@ var CreateGameModal = (function (_Component) {
     }, {
         key: 'onSubmit',
         value: function onSubmit(ev) {
-            var wagerAmount = $(this.refs.gameForm.refs.wagerAmount.getDOMNode()).val();
+            var wagerAmount = this.refs.gameForm.refs.wagerAmount.value;
             if (_.isEmpty(wagerAmount)) {
                 this.showSubmitError();
                 ev.stopPropagation();
@@ -1472,25 +1469,27 @@ exports['default'] = MyGames;
 module.exports = exports['default'];
 
 },{"./../games/game-list":14,"react":281}],16:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _actionsActions = require('./../../actions/actions');
 
 var LandingPage = (function (_Component) {
     _inherits(LandingPage, _Component);
@@ -1498,223 +1497,223 @@ var LandingPage = (function (_Component) {
     function LandingPage(options) {
         _classCallCheck(this, LandingPage);
 
-        _get(Object.getPrototypeOf(LandingPage.prototype), "constructor", this).call(this, options);
+        _get(Object.getPrototypeOf(LandingPage.prototype), 'constructor', this).call(this, options);
         this.signUp = this.signUp.bind(this);
     }
 
     _createClass(LandingPage, [{
-        key: "render",
+        key: 'render',
         value: function render() {
-            return _react2["default"].createElement(
-                "div",
+            return _react2['default'].createElement(
+                'div',
                 null,
-                _react2["default"].createElement(
-                    "header",
-                    { className: "center px3 py4 white bg-navy bg-cover bg-center" },
-                    _react2["default"].createElement(
-                        "h1",
-                        { className: "h1 h0-responsive caps mt4 mb0 regular" },
-                        "Gosu Wager"
+                _react2['default'].createElement(
+                    'header',
+                    { className: 'center px3 py4 white bg-navy bg-cover bg-center' },
+                    _react2['default'].createElement(
+                        'h1',
+                        { className: 'h1 h0-responsive caps mt4 mb0 regular' },
+                        'Gosu Wager'
                     ),
-                    _react2["default"].createElement(
-                        "p",
-                        { className: "h3" },
-                        "Play the craphts for the duckets with yo friends"
+                    _react2['default'].createElement(
+                        'p',
+                        { className: 'h3' },
+                        'Play the craphts for the duckets with yo friends'
                     ),
-                    _react2["default"].createElement(
-                        "a",
-                        { href: "#", className: "h4 btn btn-primary mb4", onClick: this.signUp },
-                        "Sign up"
+                    _react2['default'].createElement(
+                        'a',
+                        { href: '#', className: 'h4 btn btn-primary mb4', onClick: this.signUp },
+                        'Sign up'
                     )
                 ),
-                _react2["default"].createElement(
-                    "section",
-                    { className: "container center p2" },
-                    _react2["default"].createElement(
-                        "div",
-                        { className: "flex flex-wrap mxn2" },
-                        _react2["default"].createElement(
-                            "div",
-                            { className: "sm-col-12 md-col-4" },
-                            _react2["default"].createElement(
-                                "div",
-                                { className: "p1 border rounded m2" },
-                                _react2["default"].createElement("img", { src: "http://d2v52k3cl9vedd.cloudfront.net/assets/images/placeholder-square.svg", width: "256", height: "auto" }),
-                                _react2["default"].createElement(
-                                    "h2",
+                _react2['default'].createElement(
+                    'section',
+                    { className: 'container center p2' },
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'flex flex-wrap mxn2' },
+                        _react2['default'].createElement(
+                            'div',
+                            { className: 'sm-col-12 md-col-4' },
+                            _react2['default'].createElement(
+                                'div',
+                                { className: 'p1 border rounded m2' },
+                                _react2['default'].createElement('img', { src: 'http://d2v52k3cl9vedd.cloudfront.net/assets/images/placeholder-square.svg', width: '256', height: 'auto' }),
+                                _react2['default'].createElement(
+                                    'h2',
                                     null,
-                                    "Explanation 1"
+                                    'Explanation 1'
                                 ),
-                                _react2["default"].createElement(
-                                    "p",
-                                    { className: "m0" },
-                                    "Card"
+                                _react2['default'].createElement(
+                                    'p',
+                                    { className: 'm0' },
+                                    'Card'
                                 )
                             )
                         ),
-                        _react2["default"].createElement(
-                            "div",
-                            { className: "sm-col-12 md-col-4" },
-                            _react2["default"].createElement(
-                                "div",
-                                { className: "p1 border rounded m2" },
-                                _react2["default"].createElement("img", { src: "http://d2v52k3cl9vedd.cloudfront.net/assets/images/placeholder-square.svg", width: "256", height: "auto" }),
-                                _react2["default"].createElement(
-                                    "h2",
+                        _react2['default'].createElement(
+                            'div',
+                            { className: 'sm-col-12 md-col-4' },
+                            _react2['default'].createElement(
+                                'div',
+                                { className: 'p1 border rounded m2' },
+                                _react2['default'].createElement('img', { src: 'http://d2v52k3cl9vedd.cloudfront.net/assets/images/placeholder-square.svg', width: '256', height: 'auto' }),
+                                _react2['default'].createElement(
+                                    'h2',
                                     null,
-                                    "Explanation 2"
+                                    'Explanation 2'
                                 ),
-                                _react2["default"].createElement(
-                                    "p",
-                                    { className: "m0" },
-                                    "Card"
+                                _react2['default'].createElement(
+                                    'p',
+                                    { className: 'm0' },
+                                    'Card'
                                 )
                             )
                         ),
-                        _react2["default"].createElement(
-                            "div",
-                            { className: "sm-col-12 md-col-4" },
-                            _react2["default"].createElement(
-                                "div",
-                                { className: "p1 border rounded m2" },
-                                _react2["default"].createElement("img", { src: "http://d2v52k3cl9vedd.cloudfront.net/assets/images/placeholder-square.svg", width: "256", height: "auto" }),
-                                _react2["default"].createElement(
-                                    "h2",
+                        _react2['default'].createElement(
+                            'div',
+                            { className: 'sm-col-12 md-col-4' },
+                            _react2['default'].createElement(
+                                'div',
+                                { className: 'p1 border rounded m2' },
+                                _react2['default'].createElement('img', { src: 'http://d2v52k3cl9vedd.cloudfront.net/assets/images/placeholder-square.svg', width: '256', height: 'auto' }),
+                                _react2['default'].createElement(
+                                    'h2',
                                     null,
-                                    "Explanation 3"
+                                    'Explanation 3'
                                 ),
-                                _react2["default"].createElement(
-                                    "p",
-                                    { className: "m0" },
-                                    "Card"
+                                _react2['default'].createElement(
+                                    'p',
+                                    { className: 'm0' },
+                                    'Card'
                                 )
                             )
                         )
                     )
                 ),
-                _react2["default"].createElement(
-                    "section",
-                    { className: "bg-silver" },
-                    _react2["default"].createElement(
-                        "section",
-                        { className: "container px2 py3" },
-                        _react2["default"].createElement(
-                            "h1",
-                            { className: "mt0" },
-                            "So much fun for everyone"
+                _react2['default'].createElement(
+                    'section',
+                    { className: 'bg-silver' },
+                    _react2['default'].createElement(
+                        'section',
+                        { className: 'container px2 py3' },
+                        _react2['default'].createElement(
+                            'h1',
+                            { className: 'mt0' },
+                            'So much fun for everyone'
                         ),
-                        _react2["default"].createElement(
-                            "div",
-                            { className: "clearfix mxn2" },
-                            _react2["default"].createElement(
-                                "div",
-                                { className: "sm-col sm-col-8 md-col-9 px2" },
-                                _react2["default"].createElement(
-                                    "div",
+                        _react2['default'].createElement(
+                            'div',
+                            { className: 'clearfix mxn2' },
+                            _react2['default'].createElement(
+                                'div',
+                                { className: 'sm-col sm-col-8 md-col-9 px2' },
+                                _react2['default'].createElement(
+                                    'div',
                                     null,
-                                    _react2["default"].createElement(
-                                        "h2",
-                                        { className: "h3" },
-                                        "Some info about something"
+                                    _react2['default'].createElement(
+                                        'h2',
+                                        { className: 'h3' },
+                                        'Some info about something'
                                     ),
-                                    _react2["default"].createElement(
-                                        "p",
+                                    _react2['default'].createElement(
+                                        'p',
                                         null,
-                                        "Bacon ipsum dolor sit amet chuck prosciutto landjaeger ham hock filet mignon shoulder hamburger pig venison. Ham bacon corned beef, sausage kielbasa flank tongue pig drumstick capicola swine short loin ham hock kevin."
+                                        'Bacon ipsum dolor sit amet chuck prosciutto landjaeger ham hock filet mignon shoulder hamburger pig venison. Ham bacon corned beef, sausage kielbasa flank tongue pig drumstick capicola swine short loin ham hock kevin.'
                                     ),
-                                    _react2["default"].createElement(
-                                        "a",
-                                        { href: "#" },
-                                        "Sup with that?"
+                                    _react2['default'].createElement(
+                                        'a',
+                                        { href: '#' },
+                                        'Sup with that?'
                                     )
                                 ),
-                                _react2["default"].createElement(
-                                    "div",
+                                _react2['default'].createElement(
+                                    'div',
                                     null,
-                                    _react2["default"].createElement(
-                                        "h2",
-                                        { className: "h3" },
-                                        _react2["default"].createElement(
-                                            "a",
-                                            { href: "#", className: "black" },
-                                            "Another more info"
+                                    _react2['default'].createElement(
+                                        'h2',
+                                        { className: 'h3' },
+                                        _react2['default'].createElement(
+                                            'a',
+                                            { href: '#', className: 'black' },
+                                            'Another more info'
                                         )
                                     ),
-                                    _react2["default"].createElement(
-                                        "p",
+                                    _react2['default'].createElement(
+                                        'p',
                                         null,
-                                        "Bacon ipsum dolor sit amet chuck prosciutto landjaeger ham hock filet mignon shoulder hamburger pig venison. Ham bacon corned beef, sausage kielbasa flank tongue pig drumstick capicola swine short loin ham hock kevin."
+                                        'Bacon ipsum dolor sit amet chuck prosciutto landjaeger ham hock filet mignon shoulder hamburger pig venison. Ham bacon corned beef, sausage kielbasa flank tongue pig drumstick capicola swine short loin ham hock kevin.'
                                     ),
-                                    _react2["default"].createElement(
-                                        "a",
-                                        { href: "#" },
-                                        "Maybe you want more?"
+                                    _react2['default'].createElement(
+                                        'a',
+                                        { href: '#' },
+                                        'Maybe you want more?'
                                     )
                                 )
                             ),
-                            _react2["default"].createElement(
-                                "div",
-                                { className: "sm-col sm-col-4 md-col-3 px2 sm-show" },
-                                _react2["default"].createElement(
-                                    "h3",
-                                    { className: "h4" },
-                                    "Things about other things"
+                            _react2['default'].createElement(
+                                'div',
+                                { className: 'sm-col sm-col-4 md-col-3 px2 sm-show' },
+                                _react2['default'].createElement(
+                                    'h3',
+                                    { className: 'h4' },
+                                    'Things about other things'
                                 ),
-                                _react2["default"].createElement(
-                                    "ul",
-                                    { className: "list-reset" },
-                                    _react2["default"].createElement(
-                                        "li",
+                                _react2['default'].createElement(
+                                    'ul',
+                                    { className: 'list-reset' },
+                                    _react2['default'].createElement(
+                                        'li',
                                         null,
-                                        _react2["default"].createElement(
-                                            "a",
-                                            { href: "#", className: "" },
-                                            "Bacon"
+                                        _react2['default'].createElement(
+                                            'a',
+                                            { href: '#', className: '' },
+                                            'Bacon'
                                         )
                                     ),
-                                    _react2["default"].createElement(
-                                        "li",
+                                    _react2['default'].createElement(
+                                        'li',
                                         null,
-                                        _react2["default"].createElement(
-                                            "a",
-                                            { href: "#", className: "" },
-                                            "Bratwurst"
+                                        _react2['default'].createElement(
+                                            'a',
+                                            { href: '#', className: '' },
+                                            'Bratwurst'
                                         )
                                     ),
-                                    _react2["default"].createElement(
-                                        "li",
+                                    _react2['default'].createElement(
+                                        'li',
                                         null,
-                                        _react2["default"].createElement(
-                                            "a",
-                                            { href: "#", className: "" },
-                                            "Andouille"
+                                        _react2['default'].createElement(
+                                            'a',
+                                            { href: '#', className: '' },
+                                            'Andouille'
                                         )
                                     ),
-                                    _react2["default"].createElement(
-                                        "li",
+                                    _react2['default'].createElement(
+                                        'li',
                                         null,
-                                        _react2["default"].createElement(
-                                            "a",
-                                            { href: "#", className: "" },
-                                            "Pork Loin"
+                                        _react2['default'].createElement(
+                                            'a',
+                                            { href: '#', className: '' },
+                                            'Pork Loin'
                                         )
                                     ),
-                                    _react2["default"].createElement(
-                                        "li",
+                                    _react2['default'].createElement(
+                                        'li',
                                         null,
-                                        _react2["default"].createElement(
-                                            "a",
-                                            { href: "#", className: "" },
-                                            "Corned Beef"
+                                        _react2['default'].createElement(
+                                            'a',
+                                            { href: '#', className: '' },
+                                            'Corned Beef'
                                         )
                                     ),
-                                    _react2["default"].createElement(
-                                        "li",
+                                    _react2['default'].createElement(
+                                        'li',
                                         null,
-                                        _react2["default"].createElement(
-                                            "a",
-                                            { href: "#", className: "" },
-                                            "Pastrami"
+                                        _react2['default'].createElement(
+                                            'a',
+                                            { href: '#', className: '' },
+                                            'Pastrami'
                                         )
                                     )
                                 )
@@ -1725,7 +1724,7 @@ var LandingPage = (function (_Component) {
             );
         }
     }, {
-        key: "signUp",
+        key: 'signUp',
         value: function signUp() {
             var loginWindow = window.open('/auth/bnet_start_auth', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=400');
             var dispatch = this.props.dispatch;
@@ -1742,7 +1741,7 @@ var LandingPage = (function (_Component) {
     return LandingPage;
 })(_react.Component);
 
-exports["default"] = LandingPage;
+exports['default'] = LandingPage;
 
 var checkEmail = function checkEmail() {
     return function (dispatch) {
@@ -1750,15 +1749,15 @@ var checkEmail = function checkEmail() {
             return response.json();
         }).then(function (json) {
             return dispatch({
-                type: 'CHECK_EMAIL_ADDRESS',
+                type: _actionsActions.CHECK_EMAIL_ADDRESS,
                 data: json
             });
         });
     };
 };
-module.exports = exports["default"];
+module.exports = exports['default'];
 
-},{"react":281}],17:[function(require,module,exports){
+},{"./../../actions/actions":1,"react":281}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2505,31 +2504,54 @@ var NoChallenger = (function (_Component) {
     _createClass(NoChallenger, [{
         key: 'render',
         value: function render() {
-            return _react2['default'].createElement(
-                'div',
-                { className: 'col col-4 border m2 clearfix' },
-                _react2['default'].createElement(
+            if (this.props.game.is_creator) {
+                return _react2['default'].createElement(
                     'div',
-                    { className: 'col-12 center h3 mt3' },
-                    'Think you can win?'
-                ),
-                _react2['default'].createElement(
+                    { className: 'col col-4 border m2 clearfix' },
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'col-12 center h3 mt3' },
+                        'Invite your friends to challenge you.'
+                    ),
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'col-12 center h3 mt1 mb3' },
+                        'See how Gosu you are.'
+                    ),
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'col-12 center mb2' },
+                        'Share: ',
+                        this.props.game.link
+                    )
+                );
+            } else {
+                return _react2['default'].createElement(
                     'div',
-                    { className: 'col-12 center h3 mt1 mb3' },
-                    'See how Gosu you are. Challenge and find out.'
-                ),
-                _react2['default'].createElement(
-                    'div',
-                    { className: 'col-12' },
-                    _react2['default'].createElement(_gamesGameActions2['default'], {
-                        game: this.props.game,
-                        is_cancelling: this.props.is_cancelling,
-                        is_rejecting: this.props.is_rejecting,
-                        is_accepting: this.props.is_accepting,
-                        is_joining: this.props.is_joining,
-                        dispatch: this.props.dispatch })
-                )
-            );
+                    { className: 'col col-4 border m2 clearfix' },
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'col-12 center h3 mt3' },
+                        'Think you can win?'
+                    ),
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'col-12 center h3 mt1 mb3' },
+                        'See how Gosu you are. Challenge and find out.'
+                    ),
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'col-12' },
+                        _react2['default'].createElement(_gamesGameActions2['default'], {
+                            game: this.props.game,
+                            is_cancelling: this.props.game.is_cancelling,
+                            is_rejecting: this.props.game.is_rejecting,
+                            is_accepting: this.props.game.is_accepting,
+                            is_joining: this.props.game.is_joining,
+                            dispatch: this.props.dispatch })
+                    )
+                );
+            }
         }
     }]);
 
@@ -2632,6 +2654,10 @@ var _noChallenger = require('./no-challenger');
 
 var _noChallenger2 = _interopRequireDefault(_noChallenger);
 
+var _gamesGameActions = require('./../games/game-actions');
+
+var _gamesGameActions2 = _interopRequireDefault(_gamesGameActions);
+
 var WagerPage = (function (_Component) {
     _inherits(WagerPage, _Component);
 
@@ -2640,6 +2666,7 @@ var WagerPage = (function (_Component) {
 
         _get(Object.getPrototypeOf(_WagerPage.prototype), 'constructor', this).call(this, options);
         this.renderUser = this.renderUser.bind(this);
+        this.renderOwnerControlsIfOwner = this.renderOwnerControlsIfOwner.bind(this);
     }
 
     _createClass(WagerPage, [{
@@ -2659,9 +2686,18 @@ var WagerPage = (function (_Component) {
             return _react2['default'].createElement(
                 'div',
                 null,
-                this.renderUser(game.creator, 'creator'),
-                _react2['default'].createElement(_wagerAmount2['default'], { wager: game.wager }),
-                this.renderUser(game.challenger, 'challenger')
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'col col-12' },
+                    this.renderUser(game.creator, 'creator'),
+                    _react2['default'].createElement(_wagerAmount2['default'], { wager: game.wager }),
+                    this.renderUser(game.challenger, 'challenger')
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'col col-12' },
+                    this.renderOwnerControlsIfOwner()
+                )
             );
         }
     }, {
@@ -2677,6 +2713,30 @@ var WagerPage = (function (_Component) {
                 }
             }
             return _react2['default'].createElement(_userFullUser2['default'], { user: user });
+        }
+    }, {
+        key: 'renderOwnerControlsIfOwner',
+        value: function renderOwnerControlsIfOwner() {
+            var game = this.props.games.all[this.props.router.params.id];
+            if (!game.is_creator) {
+                return;
+            }
+            return _react2['default'].createElement(
+                'div',
+                { className: 'col col-4 m2' },
+                _react2['default'].createElement(
+                    'h3',
+                    null,
+                    'Your Game Controls'
+                ),
+                _react2['default'].createElement(_gamesGameActions2['default'], {
+                    game: game,
+                    is_cancelling: game.is_cancelling,
+                    is_rejecting: game.is_rejecting,
+                    is_accepting: game.is_accepting,
+                    is_joining: game.is_joining,
+                    dispatch: this.props.dispatch })
+            );
         }
     }]);
 
@@ -2709,7 +2769,7 @@ var getGame = function getGame(game_id) {
 exports['default'] = WagerPage;
 module.exports = exports['default'];
 
-},{"./../../actions/actions":1,"./../user/full-user":26,"./no-challenger":28,"./wager-amount":29,"react":281,"react-redux":74}],31:[function(require,module,exports){
+},{"./../../actions/actions":1,"./../games/game-actions":12,"./../user/full-user":26,"./no-challenger":28,"./wager-amount":29,"react":281,"react-redux":74}],31:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2885,7 +2945,7 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../actions/actions');
 
-var loggedIn = function loggedIn() {
+var hasEmail = function hasEmail() {
     var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
     var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
@@ -2904,7 +2964,7 @@ var loggedIn = function loggedIn() {
     return state;
 };
 
-exports['default'] = loggedIn;
+exports['default'] = hasEmail;
 module.exports = exports['default'];
 
 },{"./../actions/actions":1}],34:[function(require,module,exports){
@@ -2922,6 +2982,7 @@ var loggedIn = function loggedIn() {
 
     switch (action.type) {
         case _actionsActions.INITIALIZE_APP:
+        case _actionsActions.CHECK_EMAIL_ADDRESS:
             if (action.is_fetching) {
                 return state;
             }

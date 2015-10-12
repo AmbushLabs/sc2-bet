@@ -1,6 +1,6 @@
 import { CHECK_EMAIL_ADDRESS, INITIALIZE_APP, ADD_EMAIL_ADDRESS } from './../actions/actions';
 
-const loggedIn = function(state = false, action = {}) {
+const hasEmail = function(state = false, action = {}) {
     switch(action.type) {
         case INITIALIZE_APP:
         case CHECK_EMAIL_ADDRESS:
@@ -16,4 +16,4 @@ const loggedIn = function(state = false, action = {}) {
     return state;
 };
 
-export default loggedIn;
+export default hasEmail;

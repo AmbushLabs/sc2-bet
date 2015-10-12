@@ -25,6 +25,9 @@ class GameMarshaller {
             ret['has_challenger'] = !(g.challenger == null);
             ret['has_creator_accepted'] = g.challengerAccepted;
 
+
+            ret['link'] = 'https://localhost:8443/w/' + g.id;
+
             def creatorCharacter = g.creator.battleNetAccount.characters.first();
             ret['creator'] = getCharacterMap(creatorCharacter);
 

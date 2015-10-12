@@ -9,6 +9,9 @@ class Email {
     String email;
     Boolean isPrimary = false;
     Boolean isActive = true;
+    Boolean isConfirmed = false;
+
+    String confirmHash;
 
     def beforeInsert() {
         if (createDate == NULL_DATE) {
@@ -21,5 +24,7 @@ class Email {
         isPrimary (nullable: false)
         isActive (nullable: false)
         createDate (nullable: false)
+        isConfirmed (nullable: false)
+        confirmHash (nullable: false)
     }
 }

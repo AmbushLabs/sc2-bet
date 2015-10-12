@@ -39,7 +39,7 @@ export default class CreateGameModal extends Component {
     }
 
     onSubmit(ev) {
-        var wagerAmount = $(this.refs.gameForm.refs.wagerAmount.getDOMNode()).val();
+        var wagerAmount = this.refs.gameForm.refs.wagerAmount.value;
         if (_.isEmpty(wagerAmount)) {
             this.showSubmitError();
             ev.stopPropagation();

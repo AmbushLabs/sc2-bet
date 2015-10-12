@@ -44,7 +44,7 @@ class App extends Component {
         var self = this;
         this.props.dispatch(initializeApp())
             .then(() =>
-                console.log(self)
+                {}
         );
     }
 
@@ -97,7 +97,6 @@ class App extends Component {
     }
 
     buildEmailModal() {
-        console.log(this.props);
         if (this.props.hasEmail || !this.props.loggedIn) {
             return;
         }

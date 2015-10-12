@@ -8,6 +8,7 @@ import {
 import FullUser from './../user/full-user';
 import WagerAmount from './wager-amount';
 import NoChallenger from './no-challenger';
+import GameActions from './../games/game-actions'
 
 @connect(state => (state))
 class WagerPage extends Component {
@@ -15,6 +16,7 @@ class WagerPage extends Component {
     constructor(options) {
         super(options);
         this.renderUser = this.renderUser.bind(this);
+        this.renderOwnerControlsIfOwner = this.renderOwnerControlsIfOwner.bind(this);
     }
 
     componentDidMount() {
@@ -30,9 +32,14 @@ class WagerPage extends Component {
         const game = this.props.games.all[this.props.router.params.id];
         return (
             <div>
+                <div className="col col-12">
                 {this.renderUser(game.creator, 'creator')}
                 <WagerAmount wager={game.wager} />
                 {this.renderUser(game.challenger, 'challenger')}
+                </div>
+                <div className="col col-12">
+                    {this.renderOwnerControlsIfOwner()}
+                </div>
             </div>
         )
     }
@@ -51,6 +58,25 @@ class WagerPage extends Component {
         }
         return (
             <FullUser user={user} />
+        );
+    }
+
+    renderOwnerControlsIfOwner() {
+        const game = this.props.games.all[this.props.router.params.id];
+        if (!game.is_creator) {
+            return;
+        }
+        return (
+            <div className="col col-4 m2">
+                <h3>Your Game Controls</h3>
+                <GameActions
+                    game={game}
+                    is_cancelling={game.is_cancelling}
+                    is_rejecting={game.is_rejecting}
+                    is_accepting={game.is_accepting}
+                    is_joining={game.is_joining}
+                    dispatch={this.props.dispatch} />
+            </div>
         );
     }
 

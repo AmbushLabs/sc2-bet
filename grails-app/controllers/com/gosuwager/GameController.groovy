@@ -97,7 +97,9 @@ class GameController {
             } else {
                 User u = User.findById(session.user_id);
                 g.challenger = u;
-                g.save();
+                if (g.save()) {
+                    SendEmailService.send(u, 'challenger-joined-wager', g);
+                }
                 ret['game'] = g;
             }
             render ret as JSON;
@@ -118,7 +120,9 @@ class GameController {
                 ret['error'] = 'Challenger already accepted';
             } else {
                 g.challengerAccepted = true;
-                g.save();
+                if (g.save()) {
+                    SendEmailService.send(g.challenger, 'creator-accepted-challenge', g);
+                }
                 ret['game'] = g;
             }
             render ret as JSON;
@@ -140,7 +144,9 @@ class GameController {
             } else {
                 g.challenger = null;
                 g.challengerAccepted = false;
-                g.save();
+                if (g.save()) {
+                    SendEmailService.send(g.challenger, 'creator-rejected-challenger', g);
+                }
                 ret['game'] = g;
             }
             render ret as JSON;

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { CHECK_EMAIL_ADDRESS } from './../../actions/actions';
 
 export default class LandingPage extends Component {
 
@@ -104,7 +105,7 @@ const checkEmail = () => {
             .then(response => response.json())
             .then(json =>
                 dispatch({
-                    type:'CHECK_EMAIL_ADDRESS',
+                    type: CHECK_EMAIL_ADDRESS,
                     data: json
                 })
             );

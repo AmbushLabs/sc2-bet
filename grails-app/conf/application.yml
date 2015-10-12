@@ -86,6 +86,7 @@ environments:
             key: g89dx38xpqy232vmn67wk7fjv4t75vdx
             secret: QWmYN2Xq82K4e6DbYG2gmQEeaqkRa8dJ
             redirect_uri: "https://localhost:8443/auth/battlenet"
+        site_uri: "https://localhost:8443/"
         dataSource:
             dbCreate: create-drop
             url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE

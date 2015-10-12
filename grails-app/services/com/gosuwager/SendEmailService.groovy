@@ -8,9 +8,12 @@ import grails.transaction.Transactional
 @Transactional
 class SendEmailService {
 
+    def grailsApplication;
+
     def send(User u, String templateName, data) {
         def devKey = "kB1KnDIZhKaqIsf96H4BdQ";
         def prodKey = "GZxHhSsWtFGKgx6eKgksng";
+        def siteUri = grailsApplication.config.getProperty('site_uri');
 
         MandrillApi mandrillApi = new MandrillApi(prodKey);
         MandrillMessage message = new MandrillMessage();
@@ -21,13 +24,21 @@ class SendEmailService {
         tags.add(templateName);
 
         List<MandrillMessage.MergeVar> mergeVars = new ArrayList<MandrillMessage.MergeVar>();
+        mergeVars.add(new MandrillMessage.MergeVar("site_link", siteUri));
         def templateContent = [:];
         switch(templateName) {
             case 'welcome':
 
                 break;
             case 'wager-created':
-                mergeVars.add(new MandrillMessage.MergeVar("wager_link", 'https://localhost:8443/w/' + data.id));
+            case 'creator-rejected-challenger':
+            case 'creator-accepted-challenge':
+            case 'challenger-joined-wager':
+                mergeVars.add(new MandrillMessage.MergeVar("wager_link", siteUri + 'w/' + data.id));
+                break;
+
+            case 'confirm-email':
+                mergeVars.add(new MandrillMessage.MergeVar("confirm_email_link", siteUri + 'email/confirm?confirm=' + data.confirmHash));
                 break;
         }
 
