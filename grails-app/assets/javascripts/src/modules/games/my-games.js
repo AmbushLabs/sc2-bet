@@ -57,8 +57,8 @@ export default class MyGames extends Component {
     }
 
     getGames() {
-        if (this.props && this.props.games && this.props.games.my_games) {
-            var tmp = _.values(_.pick(this.props.games.my_games, this.props.games[this.state.current_tab].ids));
+        if (this.props && this.props.games && this.props.games.all) {
+            var tmp = _.values(_.pick(this.props.games.all, this.props.games[this.state.current_tab].ids));
             return tmp;
         }
     }

@@ -1,32 +1,28 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import CreateGameForm from './form';
-import { SET_NOTIFICATION, CREATE_GAME } from './../../actions/actions';
+import EmailAddressForm from './form';
 
-@connect(state => (state))
-export default class CreateGameModal extends Component {
+export default class EnterEmailModal extends Component {
 
     constructor(options) {
         super(options);
-        this.preventBubble = this.preventBubble.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.validateEmail = this.validateEmail.bind(this);
+        this.showSubmitError = this.showSubmitError.bind(this);
     }
 
     render() {
         return (
-            <div className="modal" id="create-game-modal" onClick={this.props.hideModal}>
+            <div className="modal" id="enter-email-modal">
                 <div className="modal-dialog col col-6" onClick={this.preventBubble}>
                     <form className="">
                         <div className="modal-header clearfix">
-                            <h2 className="col col-11 mt1 mb1">Create a Game</h2>
-                            <a href="#" className="btn-close col col-1 center mt1" onClick={this.props.hideModal}>×</a>
+                            <h2 className="col col-11 mt1 mb1">Enter Email</h2>
                         </div>
                         <div className="modal-body">
-                            <CreateGameForm ref="gameForm" />
+                            <EmailAddressForm ref="emailForm" />
                         </div>
                         <div className="modal-footer">
-                            <input type="submit" className="btn btn-primary mr2" onClick={this.onSubmit} value="Create Game" />
-                            <button type="reset" className="btn btn-primary black bg-gray" onClick={this.props.hideModal}>Cancel</button>
+                            <input type="submit" className="btn btn-primary mr2" onClick={this.onSubmit} value="Enter Email" />
                         </div>
                     </form>
                 </div>
@@ -38,16 +34,21 @@ export default class CreateGameModal extends Component {
         ev.stopPropagation();
     }
 
+    validateEmail(email) {
+        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+        return re.test(email);
+    }
+
     onSubmit(ev) {
-        var wagerAmount = $(this.refs.gameForm.refs.wagerAmount.getDOMNode()).val();
-        if (_.isEmpty(wagerAmount)) {
+        var emailAddress = this.refs.emailForm.refs.emailAddress.value;
+        if (_.isEmpty(emailAddress) || !this.validateEmail(emailAddress)) {
             this.showSubmitError();
             ev.stopPropagation();
             ev.preventDefault();
             return false;
         }
         const { dispatch } = this.props;
-        dispatch(createGame(wagerAmount))
+        dispatch(linkEmailAddress(emailAddress))
             .then(() =>
                 dispatch({
                     type:'HIDE_CREATE_GAME_MODAL'
@@ -59,37 +60,32 @@ export default class CreateGameModal extends Component {
     }
 
     showSubmitError() {
-        alert('error :(');
+        alert('Please enter a valid email address :(');
     }
 };
 
-function createGame(wagerAmount) {
+function linkEmailAddress(emailAddress) {
     return function(dispatch) {
         dispatch({
-            type: CREATE_GAME,
+            type: 'ADD_EMAIL_ADDRESS',
             isFetching: true
         });
-        return fetch('/game', {
+        return fetch('/user/email' , {
             method:'post',
             headers: {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
-            body: "wager=" + wagerAmount,
+            body: "email_address=" + emailAddress,
             credentials: 'include'
         })
             .then(response => response.json())
-            .then(json => {
+            .then(json =>
                 dispatch({
-                    type: CREATE_GAME,
+                    type: 'ADD_EMAIL_ADDRESS',
                     isFetching: false,
                     status: 'success',
                     data: json
                 })
-                dispatch({
-                    type: SET_NOTIFICATION,
-                    message: 'Game created!'
-                });
-            }
         );
 
     }

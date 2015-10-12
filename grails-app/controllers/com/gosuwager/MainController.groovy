@@ -25,10 +25,14 @@ class MainController {
             ret['logged_in'] = false;
         } else {
             ret['logged_in'] = true;
+            if (u.emails.size() > 0 && u.emails.find { it.isActive && it.isPrimary } != null) {
+                ret['has_email'] = true;
+            } else {
+                ret['has_email'] = false;
+            }
             ret['user'] = u;
             ret['games'] = [:];
-            ret['games']['my_games'] = [:];
-            ret['games']['search_games'] = [:];
+            ret['games']['all'] = [:];
             def limit = Integer.valueOf(params.limit?:4);
             def page = Integer.valueOf(params.page?:1);
             def query = Game.where {
@@ -46,16 +50,12 @@ class MainController {
             def to_approve = Game.findAllByActiveAndCreatorAndChallengerAcceptedAndChallengerIsNotNull(true, u, false, [max:limit, offset:(page-1)*limit, sort:"createDate", order:"desc"]);
             def to_approve_count = Game.countByActiveAndCreatorAndChallengerAcceptedAndChallengerIsNotNull(true, u, false);
 
-            def search = Game.findAllByActiveAndChallengerAcceptedAndCreatorNotEqual(true, false, u, [max:limit, offset:(page-1)*limit, sort:"createDate", order:"desc"]);
-            def search_count = Game.findAllByActiveAndChallengerAcceptedAndCreatorNotEqual(true, false, u);
+            def search = Game.findAllByActiveAndChallengerAcceptedAndCreatorNotEqualAndChallengerIsNull(true, false, u, [max:limit, offset:(page-1)*limit, sort:"createDate", order:"desc"]);
+            def search_count = Game.findAllByActiveAndChallengerAcceptedAndCreatorNotEqualAndChallengerIsNull(true, false, u);
 
-            (created_or_joined + created + joined + to_approve).each { g ->
-                ret['games']['my_games'][g.id] = g;
+            (created_or_joined + created + joined + to_approve + search).each { g ->
+                ret['games']['all'][g.id] = g;
             }
-            search.each { g->
-                ret['games']['search_games'][g.id] = g;
-            }
-
             ret['games']['created_or_joined'] = [:]
             ret['games']['created_or_joined']['ids'] = created_or_joined.collect { it.id };
             ret['games']['created_or_joined']['count'] = created_or_joined_count;
@@ -75,6 +75,9 @@ class MainController {
             ret['games']['search'] = [:]
             ret['games']['search']['ids'] = search.collect { it.id };
             ret['games']['search']['count'] = search_count;
+
+            ret['gosu_coins'] = [:];
+            ret['gosu_coins']['wagered'] = created_or_joined.sum { g -> g.tokenWager }
         }
 
         render ret as JSON;

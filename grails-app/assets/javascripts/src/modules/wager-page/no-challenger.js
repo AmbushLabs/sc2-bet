@@ -3,13 +3,12 @@ import React, { Component } from 'react';
 import { join } from './../../api/game/crud';
 
 import UserImage from './../user/user-image';
-import ActionButton from './../games/action-button'
+import GameActions from './../games/game-actions'
 
 export default class NoChallenger extends Component {
 
     constructor(options) {
         super(options);
-        this.joinGame = this.joinGame.bind(this);
     }
 
     render() {
@@ -22,22 +21,16 @@ export default class NoChallenger extends Component {
                     See how Gosu you are. Challenge and find out.
                 </div>
                 <div className="col-12">
-                    <ActionButton
-                        is_fetching={this.props.is_joining}
-                        className="btn btn-primary mb1 mt1 bg-blue col col-12"
-                        onClick={this.joinGame}
-                        buttonText="Join"
-                        />
+                    <GameActions
+                        game={this.props.game}
+                        is_cancelling={this.props.is_cancelling}
+                        is_rejecting={this.props.is_rejecting}
+                        is_accepting={this.props.is_accepting}
+                        is_joining={this.props.is_joining}
+                        dispatch={this.props.dispatch} />
                 </div>
             </div>
         )
-    }
-
-    joinGame() {
-        if (this.props.is_fetching) {
-            return;
-        }
-        this.props.dispatch(join(this.props.game_id));
     }
 
 }

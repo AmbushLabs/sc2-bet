@@ -5,6 +5,8 @@ import grails.converters.JSON
 
 class GameController {
 
+    def SendEmailService;
+
     static allowedMethods = [
         index:['GET', 'POST', 'DELETE'],
         list:['GET'],
@@ -51,6 +53,8 @@ class GameController {
                 if (!g.save(flush: true)) {
                     println g.errors;
                     ret['error'] = true;
+                } else {
+                    SendEmailService.send(u, 'wager-created', g);
                 }
                 ret['game'] = g;
             } else {

@@ -1,20 +1,14 @@
 package com.gosuwager
 
-class User {
+class Email {
 
     private static final Date NULL_DATE = new Date(0)
 
     Date createDate = NULL_DATE;
 
-    static hasOne = [
-        battleNetAccount:BattleNetAccount
-    ];
-
-    static hasMany = [
-        wagerTokens:WagerToken,
-        emails:Email
-    ];
-
+    String email;
+    Boolean isPrimary = false;
+    Boolean isActive = true;
 
     def beforeInsert() {
         if (createDate == NULL_DATE) {
@@ -23,5 +17,9 @@ class User {
     }
 
     static constraints = {
+        email (nullable: false)
+        isPrimary (nullable: false)
+        isActive (nullable: false)
+        createDate (nullable: false)
     }
 }

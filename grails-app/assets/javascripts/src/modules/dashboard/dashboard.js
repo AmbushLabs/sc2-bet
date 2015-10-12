@@ -44,8 +44,8 @@ class Dashboard extends Component {
     }
 
     getSearchGames() {
-        if (this.props && this.props.games && this.props.games.search_games) {
-            var tmp = _.values(_.pick(this.props.games.search_games, this.props.games.search.ids));
+        if (this.props && this.props.games && this.props.games.all) {
+            var tmp = _.values(_.pick(this.props.games.all, this.props.games.search.ids));
             return tmp;
             /*return this.props.games.search_games.filter(
                 (element, key) => { this.props.games.search.ids.indexOf(key) > -1 }.bind(this)

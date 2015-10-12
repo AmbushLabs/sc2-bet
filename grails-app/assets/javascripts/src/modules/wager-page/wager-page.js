@@ -7,6 +7,7 @@ import {
 
 import FullUser from './../user/full-user';
 import WagerAmount from './wager-amount';
+import NoChallenger from './no-challenger';
 
 @connect(state => (state))
 class WagerPage extends Component {
@@ -23,10 +24,10 @@ class WagerPage extends Component {
     }
 
     render() {
-        if (!this.props.games.list) {
+        if (!this.props.games.all) {
             return (<div></div>);
         }
-        const game = this.props.games.list[this.props.router.params.id];
+        const game = this.props.games.all[this.props.router.params.id];
         return (
             <div>
                 {this.renderUser(game.creator, 'creator')}
@@ -39,8 +40,12 @@ class WagerPage extends Component {
     renderUser(user, type) {
         if (!user) {
             if (type == 'challenger') {
+                const game = this.props.games.all[this.props.router.params.id];
                 return (
-                    <div>No challenger yet, whattup.</div>
+                    <NoChallenger
+                        game={game}
+                        dispatch={this.props.dispatch}
+                        />
                 );
             }
         }

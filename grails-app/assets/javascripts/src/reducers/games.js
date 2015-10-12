@@ -18,7 +18,7 @@ const games = (state = {}, action = {}) => {
             }
             switch(action.status) {
                 case 'success':
-                    return Object.assign({}, state, action.games.games);
+                    return Object.assign({}, state, action.data.games);
                     break;
             }
             break;
@@ -26,7 +26,7 @@ const games = (state = {}, action = {}) => {
             switch(action.status) {
                 case 'success':
                     return Object.assign({}, state, {
-                        list: cloneGamesAndUpdate(state.list, action.data.game)
+                        all: cloneGamesAndUpdate(state.all, action.data.game)
                     });
                     break;
             }
@@ -50,7 +50,7 @@ const games = (state = {}, action = {}) => {
                         return Object.assign({}, state, {
                             created: Object.assign({}, state.created, {ids:[action.data.game.id, ...state.created.ids]}),
                             created_or_joined: Object.assign({}, state.created_or_joined, {ids:[action.data.game.id, ...state.created_or_joined.ids]}),
-                            my_games: cloneGamesAndUpdate(state.my_games, action.data.game)
+                            all: cloneGamesAndUpdate(state.all, action.data.game)
                         });
                         break;
                 }
@@ -59,13 +59,13 @@ const games = (state = {}, action = {}) => {
         case JOIN_GAME:
             if (action.is_fetching && action.game_id) {
                 return Object.assign({}, state, {
-                    search_games: setGameFetching(state.search_games, action.game_id, getFetchTypeFromType(action.type))
+                    all: setGameFetching(state.all, action.game_id, getFetchTypeFromType(action.type))
                 });
             } else if (!action.is_fetching) {
                 switch (action.status) {
                     case 'success':
                         return Object.assign({}, state, {
-                            search_games:cloneGamesAndUpdate(state.search_games, action.data.game)
+                            all:cloneGamesAndUpdate(state.all, action.data.game)
                         });
                         break;
                 }
@@ -76,13 +76,19 @@ const games = (state = {}, action = {}) => {
         case REJECT_CHALLENGER:
             if (action.is_fetching && action.game_id) {
                 return Object.assign({}, state, {
-                    my_games: setGameFetching(state.my_games, action.game_id, getFetchTypeFromType(action.type))
+                    all: setGameFetching(state.all, action.game_id, getFetchTypeFromType(action.type))
                 });
             } else if (!action.is_fetching) {
                 switch (action.status) {
                     case 'success':
+                        let newArr = state.to_approve.ids.slice(0);
+                        newArr.splice(newArr.indexOf(action.data.game.id), 1);
                         return Object.assign({}, state, {
-                            my_games:cloneGamesAndUpdate(state.my_games, action.data.game)
+                            all: cloneGamesAndUpdate(state.all, action.data.game),
+                            to_approve: {
+                                count: --state.to_approve.count,
+                                ids: newArr
+                            }
                         });
                         break;
                 }

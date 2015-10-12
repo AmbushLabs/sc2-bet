@@ -24,8 +24,10 @@ import * as Actions from './actions/actions';
 import NavBar from './modules/nav/nav-bar';
 import Dashboard from './modules/dashboard/dashboard';
 import CreateGameModal from './modules/create-game/modal';
+import EnterEmailModal from './modules/sign-up/enter-email-modal';
 import WagerPage from './modules/wager-page/wager-page';
 import LandingPage from './modules/landing/landing-page';
+import PageNotification from './modules/notifications/page-notification';
 
 
 @connect(state => (state))
@@ -35,7 +37,7 @@ class App extends Component {
         super(options);
         this.getChildren = this.getChildren.bind(this);
         this.buildModal = this.buildModal.bind(this);
-
+        this.buildEmailModal = this.buildEmailModal.bind(this);
     }
 
     componentDidMount() {
@@ -56,14 +58,21 @@ class App extends Component {
                     />
                 {this.getChildren()}
                 {this.buildModal()}
+                {this.buildEmailModal()}
+                <PageNotification
+                    text={this.props.notifications.message}
+                    show={this.props.notifications.show}
+                    dispatch={this.props.dispatch}
+                    />
             </section>
         );
     }
 
     getChildren() {
-        if (!this.props.loggedIn) {
+        if (!this.props.loggedIn || !this.props.hasEmail) {
             return (
-                <LandingPage />
+                <LandingPage
+                    dispatch={this.props.dispatch} />
             );
         } else {
             if (_.isUndefined(this.props.children) || _.isNull(this.props.children)) {
@@ -83,6 +92,19 @@ class App extends Component {
         return (
             <CreateGameModal
                 hideModal={() => dispatch({type:Actions.HIDE_CREATE_GAME_MODAL})}
+                />
+        );
+    }
+
+    buildEmailModal() {
+        console.log(this.props);
+        if (this.props.hasEmail || !this.props.loggedIn) {
+            return;
+        }
+        const { dispatch } = this.props;
+        return (
+            <EnterEmailModal
+                dispatch={dispatch}
                 />
         );
     }

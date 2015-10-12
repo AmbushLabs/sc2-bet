@@ -88,11 +88,25 @@ export default class LandingPage extends Component {
             'targetWindow',
             'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=400'
         );
+        const { dispatch } = this.props;
         var windowChecker = setInterval(function() {
             if (loginWindow.closed) {
                 clearInterval(windowChecker);
-                window.location.href = '/';
+                dispatch(checkEmail());
             }
-        }, 50);
+        }.bind(this), 50);
+    }
+}
+
+const checkEmail = () => {
+    return (dispatch) => {
+        return fetch('/user/hasEmail', {credentials:'include'})
+            .then(response => response.json())
+            .then(json =>
+                dispatch({
+                    type:'CHECK_EMAIL_ADDRESS',
+                    data: json
+                })
+            );
     }
 }
