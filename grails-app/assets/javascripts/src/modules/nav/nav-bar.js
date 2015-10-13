@@ -22,7 +22,7 @@ var NavBar = React.createClass ({
                 <div className="clearfix border-bottom">
                     <HomeButton />
                     <CreateGameButton onCreateGameClick={this.props.showModal} />
-                    <Coins wagerTokens={1} />
+                    <Coins wagerTokens={this.props.remainingTokens} />
                 </div>
             );
         }

@@ -13,7 +13,7 @@ import {
 const games = (state = {}, action = {}) => {
     switch(action.type) {
         case FETCH_GAMES:
-            if (action.is_fetching) {
+            if (action.is_fetching || action.error) {
                 return state;
             }
             switch(action.status) {
@@ -32,7 +32,7 @@ const games = (state = {}, action = {}) => {
             }
             break;
         case INITIALIZE_APP:
-            if (action.is_fetching) {
+            if (action.is_fetching || action.error) {
                 return state;
             }
             switch(action.status) {
@@ -42,7 +42,7 @@ const games = (state = {}, action = {}) => {
             }
             break;
         case CREATE_GAME:
-            if (action.is_fetching) {
+            if (action.is_fetching || (action.data && action.data.error)) {
                 return state;
             } else if (!action.is_fetching) {
                 switch(action.status) {

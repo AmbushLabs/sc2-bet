@@ -9,6 +9,8 @@ import createGameModalVisible from './createGameModalVisible';
 import loggedIn from './loggedIn';
 import hasEmail from './hasEmail';
 import notifications from './notifications';
+import errors from './errors';
+import gosuCoins from './gosuCoins';
 
 const reducer = combineReducers({
     router: routerStateReducer,
@@ -17,7 +19,9 @@ const reducer = combineReducers({
     games: games,
     user: user,
     loggedIn: loggedIn,
-    notifications: notifications
+    notifications: notifications,
+    errors: errors,
+    gosuCoins: gosuCoins
 });
 
 export default reducer;

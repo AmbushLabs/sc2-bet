@@ -7,7 +7,7 @@ const createGameModalVisible = function(state = false, action = {}) {
         case HIDE_CREATE_GAME_MODAL:
             return false;
         default:
-            return false;
+            return state;
     }
     return state;
 };

@@ -5,6 +5,8 @@ import grails.converters.JSON
 
 class MainController {
 
+    def GosuCoinService;
+
     def index() {
         def user = User.findById(session.user_id?:0);
         def characterName = '';
@@ -76,8 +78,7 @@ class MainController {
             ret['games']['search']['ids'] = search.collect { it.id };
             ret['games']['search']['count'] = search_count;
 
-            ret['gosu_coins'] = [:];
-            ret['gosu_coins']['wagered'] = created_or_joined.sum { g -> g.tokenWager }
+            ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
         }
 
         render ret as JSON;

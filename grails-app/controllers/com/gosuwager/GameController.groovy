@@ -6,6 +6,7 @@ import grails.converters.JSON
 class GameController {
 
     def SendEmailService;
+    def GosuCoinService;
 
     static allowedMethods = [
         index:['GET', 'POST', 'DELETE'],
@@ -36,6 +37,7 @@ class GameController {
                 ret['status'] = 'success';
                 render ret as JSON;
             } else {
+                ret['error'] = true;
                 ret['status'] = 'error';
                 render ret as JSON;
             }
@@ -45,18 +47,23 @@ class GameController {
             def ret = [:]
             if (u) {
                 Game g = new Game([
-                        creator           : u,
-                        tokenWager        : params.wager,
-                        challengerAccepted: false,
-                        active            : true
+                    creator           : u,
+                    tokenWager        : params.wager,
+                    challengerAccepted: false,
+                    active            : true
                 ]);
-                if (!g.save(flush: true)) {
-                    println g.errors;
-                    ret['error'] = true;
+                if (GosuCoinService.canUserCreateOrJoinGame(u, g)) {
+                    if (!g.save(flush: true)) {
+                        ret['error'] = true;
+                    } else {
+                        SendEmailService.send(u, 'wager-created', g);
+                    }
+                    ret['game'] = g;
+                    ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
                 } else {
-                    SendEmailService.send(u, 'wager-created', g);
+                    ret['error'] = true;
+                    ret['error_reason'] = 'not_enough_coins';
                 }
-                ret['game'] = g;
             } else {
                 ret['error'] = true;
             }
@@ -70,7 +77,8 @@ class GameController {
             Game g = Game.findById(params.game_id);
             def ret = [:];
             if (g.creator.id != session.user_id) {
-                ret['error'] = 'You have to have created the wager to cancel it.'
+                ret['error'] = true;
+                ret['error_reason'] = 'not_creator';
             } else {
                 g.active = false;
                 g.save();
@@ -89,18 +97,27 @@ class GameController {
             def ret = [:];
             Game g = Game.findById(params.game_id);
             if (!g.active) {
-                ret['error'] = 'Game no longer exists.';
+                ret['error'] = true;
+                ret['error_reason'] = 'game_gone';
             } else if (g.creator.id == session.user_id) {
-                ret['error'] = 'Can\'t join your own games.';
+                ret['error'] = true;
+                ret['error_reason'] = 'your_game';
             } else if (g.challenger != null) {
-                ret['error'] = 'Game already has challenger.';
+                ret['error'] = true;
+                ret['error_reason'] = 'challenger_exists';
             } else {
                 User u = User.findById(session.user_id);
-                g.challenger = u;
-                if (g.save()) {
-                    SendEmailService.send(u, 'challenger-joined-wager', g);
+                if (GosuCoinService.canUserCreateOrJoinGame(u, g)) {
+                    g.challenger = u;
+                    if (g.save()) {
+                        SendEmailService.send(u, 'challenger-joined-wager', g);
+                    }
+                    ret['game'] = g;
+                    ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
+                } else {
+                    ret['error'] = true;
+                    ret['error_reason'] = 'not_enough_coins';
                 }
-                ret['game'] = g;
             }
             render ret as JSON;
         }
@@ -111,13 +128,17 @@ class GameController {
             def ret = [:];
             Game g = Game.findById(params.game_id);
             if (!g.active) {
-                ret['error'] = 'Game no longer exists.';
+                ret['error'] = true;
+                ret['error_reason'] = 'game_gone';
             } else if (g.creator.id != session.user_id) {
-                ret['error'] = 'You can\'t accept challengers if you aren\'t the creator';
+                ret['error'] = true;
+                ret['error_reason'] = 'not_creator';
             } else if (g.challenger == null) {
-                ret['error'] = 'You need a challenger to accept.';
+                ret['error'] = true;
+                ret['error_reason'] = 'no_challenger';
             } else if (g.challengerAccepted) {
-                ret['error'] = 'Challenger already accepted';
+                ret['error'] = true;
+                ret['error_reason'] = 'already_accepted';
             } else {
                 g.challengerAccepted = true;
                 if (g.save()) {
@@ -134,13 +155,17 @@ class GameController {
             def ret = [:];
             Game g = Game.findById(params.game_id);
             if (!g.active) {
-                ret['error'] = 'Game no longer exists.';
+                ret['error'] = true;
+                ret['error_reason'] = 'game_gone';
             } else if (g.creator.id != session.user_id) {
-                ret['error'] = 'You can\'t reject challengers if you aren\'t the creator';
+                ret['error'] = true;
+                ret['error_reason'] = 'not_creator';
             } else if (g.challenger == null) {
-                ret['error'] = 'You need a challenger to reject.';
+                ret['error'] = true;
+                ret['error_reason'] = 'no_challenger';
             } else if (g.challengerAccepted) {
-                ret['error'] = 'Challenger already accepted.';
+                ret['error'] = true;
+                ret['error_reason'] = 'already_accepted';
             } else {
                 g.challenger = null;
                 g.challengerAccepted = false;

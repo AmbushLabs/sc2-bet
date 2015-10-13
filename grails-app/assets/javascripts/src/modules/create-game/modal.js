@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import CreateGameForm from './form';
-import { SET_NOTIFICATION, CREATE_GAME } from './../../actions/actions';
+import { SET_NOTIFICATION, CREATE_GAME, HIDE_CREATE_GAME_MODAL } from './../../actions/actions';
 
 @connect(state => (state))
 export default class CreateGameModal extends Component {
@@ -10,6 +10,7 @@ export default class CreateGameModal extends Component {
         super(options);
         this.preventBubble = this.preventBubble.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.getErrorState = this.getErrorState.bind(this);
     }
 
     render() {
@@ -23,6 +24,7 @@ export default class CreateGameModal extends Component {
                         </div>
                         <div className="modal-body">
                             <CreateGameForm ref="gameForm" />
+                            {this.getErrorState()}
                         </div>
                         <div className="modal-footer">
                             <input type="submit" className="btn btn-primary mr2" onClick={this.onSubmit} value="Create Game" />
@@ -38,6 +40,18 @@ export default class CreateGameModal extends Component {
         ev.stopPropagation();
     }
 
+    getErrorState() {
+        if (this.props.errors && this.props.errors.error) {
+            if (this.props.errors.reasonType === 'not_enough_coins') {
+                return (
+                    <div className="border white bg-red">
+                        Not enough coins yo. Gotta get some more to create a game.
+                    </div>
+                );
+            }
+        }
+    }
+
     onSubmit(ev) {
         var wagerAmount = this.refs.gameForm.refs.wagerAmount.value;
         if (_.isEmpty(wagerAmount)) {
@@ -47,12 +61,10 @@ export default class CreateGameModal extends Component {
             return false;
         }
         const { dispatch } = this.props;
-        dispatch(createGame(wagerAmount))
-            .then(() =>
-                dispatch({
-                    type:'HIDE_CREATE_GAME_MODAL'
-                })
-        );
+        dispatch(createGame(wagerAmount));
+            //.then(() =>
+//
+//        );
         ev.stopPropagation();
         ev.preventDefault();
         return false;
@@ -84,11 +96,16 @@ function createGame(wagerAmount) {
                     isFetching: false,
                     status: 'success',
                     data: json
-                })
-                dispatch({
-                    type: SET_NOTIFICATION,
-                    message: 'Game created!'
                 });
+                if (!json.error) {
+                    dispatch({
+                        type: SET_NOTIFICATION,
+                        message: 'Game created!'
+                    });
+                    dispatch({
+                        type:HIDE_CREATE_GAME_MODAL
+                    });
+                }
             }
         );
 

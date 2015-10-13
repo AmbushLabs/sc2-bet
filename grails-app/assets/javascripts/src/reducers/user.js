@@ -1,9 +1,9 @@
 import { INITIALIZE_APP } from './../actions/actions';
 
-const user = function(state = false, action = {}) {
+const user = function(state = {}, action = {}) {
     switch(action.type) {
         case INITIALIZE_APP:
-            if (!action.is_fetching) {
+            if (!action.isFetching && action.data) {
                 return Object.assign({}, state, action.data.user);
             }
         default:

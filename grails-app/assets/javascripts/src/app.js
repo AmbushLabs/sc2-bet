@@ -55,6 +55,7 @@ class App extends Component {
                 <NavBar
                     showModal={() => dispatch({type:Actions.SHOW_CREATE_GAME_MODAL})}
                     loggedIn={this.props.loggedIn}
+                    remainingTokens={this.props.gosuCoins.remaining}
                     />
                 {this.getChildren()}
                 {this.buildModal()}
