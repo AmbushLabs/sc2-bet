@@ -31,7 +31,9 @@ class GosuCoinService {
         def ret = [:];
         ret['wagered'] = (getWageredGosuCoins(u)?:0).intValue();
         ret['total'] = (getTotalGosuCoins(u)?:0).intValue();
+        ret['total_value'] = ret['total']/100;
         ret['remaining'] = ret['total'] - ret['wagered'];
+        ret['remaining_value'] = ret['remaining']/100;
         return ret;
     }
 
