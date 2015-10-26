@@ -62,6 +62,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.mandrillapp.wrapper.lutung:lutung:0.0.6'
 
+    compile 'com.stripe:stripe-java:1.37.1'
+
     compile "org.grails.plugins:hibernate"
     compile "org.grails.plugins:cache"
     compile "org.hibernate:hibernate-ehcache"

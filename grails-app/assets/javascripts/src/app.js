@@ -26,6 +26,7 @@ import Dashboard from './modules/dashboard/dashboard';
 import CreateGameModal from './modules/create-game/modal';
 import EnterEmailModal from './modules/sign-up/enter-email-modal';
 import WagerPage from './modules/wager-page/wager-page';
+import GosuCoins from './modules/payments/gosu-coins';
 import LandingPage from './modules/landing/landing-page';
 import PageNotification from './modules/notifications/page-notification';
 
@@ -155,6 +156,7 @@ class Root extends Component {
                         <Route path="/" component={App}>
                             <IndexRoute component={Dashboard} />
                             <Route path="/w/:id" component={WagerPage} />
+                            <Route path="/gosucoins" component={GosuCoins} />
                         </Route>
                     </ReduxRouter>
                 </Provider>

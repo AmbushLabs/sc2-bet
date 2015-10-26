@@ -6,12 +6,13 @@ class User {
 
     Date createDate = NULL_DATE;
 
+    Integer gosuCoins = 1;
+
     static hasOne = [
         battleNetAccount:BattleNetAccount
     ];
 
     static hasMany = [
-        wagerTokens:WagerToken,
         emails:Email
     ];
 
@@ -23,5 +24,6 @@ class User {
     }
 
     static constraints = {
+        gosuCoins (nullable: false);
     }
 }

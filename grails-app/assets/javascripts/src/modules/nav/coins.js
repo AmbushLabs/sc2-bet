@@ -3,10 +3,10 @@ import React from 'react';
 var Coins = React.createClass({
     render: function() {
         return (
-            <div className="right center h2 py1 px2">
+            <a className="right center h2 py1 px2" href="/gosucoins">
                 {this.props.wagerTokens}
-                <a className="ss-icon ss-coins" href="#"></a>
-            </div>
+                <span className="ss-icon ss-coins"></span>
+            </a>
         );
     }
 });

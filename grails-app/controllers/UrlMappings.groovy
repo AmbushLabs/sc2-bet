@@ -8,7 +8,8 @@ class UrlMappings {
         }
 
         "/"(controller:"main", action:"index")
-        "/abc"(controller:"main", action:"index")
+        "/gosucoins"(controller:"main", action:"index")
+
         "/login"(controller:"main", action:"login")
 
         "/game/create"(controller:"game", action:"create")

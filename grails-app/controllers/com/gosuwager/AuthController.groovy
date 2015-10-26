@@ -34,7 +34,7 @@ class AuthController {
 
                 User u = new User();
                 u.setBattleNetAccount(account);
-                u.addToWagerTokens(new WagerToken());
+                u.gosuCoins = 10;
 
                 if (u.save(flush:true)) {
                     session.user_id = u.id;

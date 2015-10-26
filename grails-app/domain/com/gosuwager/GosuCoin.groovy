@@ -1,6 +1,6 @@
 package com.gosuwager
 
-class WagerToken {
+class GosuCoin {
 
     private static final Date NULL_DATE = new Date(0)
 
@@ -8,7 +8,7 @@ class WagerToken {
     Integer tokenValue = 1;
 
     static hasMany = [
-        wagerTokenTransactions:WagerTokenTransaction
+        wagerTokenTransactions:GosuCoinTransaction
     ];
 
     def beforeInsert() {

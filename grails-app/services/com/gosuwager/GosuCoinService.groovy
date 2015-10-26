@@ -24,9 +24,7 @@ class GosuCoinService {
     }
 
     def getTotalGosuCoins(User u) {
-        return u.wagerTokens.sum {
-            it.tokenValue
-        }
+        return u.gosuCoins;
     }
 
     def getGosuCoinReturnMap(User u) {
@@ -35,6 +33,24 @@ class GosuCoinService {
         ret['total'] = (getTotalGosuCoins(u)?:0).intValue();
         ret['remaining'] = ret['total'] - ret['wagered'];
         return ret;
+    }
+
+    def getNumGosuCoinsForPrice(price) {
+        def coinOpts = getGosuCoinOptions();
+        if (coinOpts.containsKey(price)) {
+            return coinOpts[price];
+        }
+        return 0;
+    }
+
+    def getGosuCoinOptions() {
+        //[price ==> coins]
+        return [
+            500: 500,
+            1000: 1025,
+            2000: 2060,
+            5000: 5175
+        ];
     }
 
 }

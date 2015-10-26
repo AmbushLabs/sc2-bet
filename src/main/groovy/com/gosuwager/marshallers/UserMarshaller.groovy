@@ -14,9 +14,12 @@ class UserMarshaller {
         JSON.registerObjectMarshaller(User) { User u ->
             def ret = [:]
             ret['id'] = u.id;
-            ret['gosu_coins'] = u.wagerTokens.sum {
-                it.tokenValue
+
+            def activePrimaryEmail = u.emails.find { it.isActive && it.isPrimary };
+            if (activePrimaryEmail) {
+                ret['email'] = activePrimaryEmail.email;
             }
+
             ret['character'] = getCharacterMap(u.battleNetAccount.characters.first());
             return ret;
         }
