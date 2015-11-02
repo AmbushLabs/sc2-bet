@@ -10,7 +10,6 @@ import GosuCoinBalance from './gosu-coin-balance';
 export default class GosuCoins extends Component {
 
     render() {
-        console.log(this.props);
         return (
             <div>
                 <AddCoins

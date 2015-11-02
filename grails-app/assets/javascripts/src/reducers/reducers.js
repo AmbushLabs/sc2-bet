@@ -11,6 +11,7 @@ import hasEmail from './hasEmail';
 import notifications from './notifications';
 import errors from './errors';
 import gosuCoins from './gosuCoins';
+import s3 from './s3';
 
 const reducer = combineReducers({
     router: routerStateReducer,
@@ -21,7 +22,8 @@ const reducer = combineReducers({
     loggedIn: loggedIn,
     notifications: notifications,
     errors: errors,
-    gosuCoins: gosuCoins
+    gosuCoins: gosuCoins,
+    s3: s3
 });
 
 export default reducer;

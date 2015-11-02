@@ -10,6 +10,8 @@ import WagerAmount from './wager-amount';
 import NoChallenger from './no-challenger';
 import GameActions from './../games/game-actions'
 
+import ReplayDropzone from './../replay-uploader/replay-drop-zone';
+
 @connect(state => (state))
 class WagerPage extends Component {
 
@@ -39,6 +41,9 @@ class WagerPage extends Component {
                 </div>
                 <div className="col col-12">
                     {this.renderOwnerControlsIfOwner()}
+                </div>
+                <div className="col col-12">
+                    <ReplayDropzone s3={this.props.s3} />
                 </div>
             </div>
         )

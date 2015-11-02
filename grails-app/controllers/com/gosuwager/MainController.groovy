@@ -6,6 +6,7 @@ import grails.converters.JSON
 class MainController {
 
     def GosuCoinService;
+    def ReplayService;
 
     def index() {
         def user = User.findById(session.user_id?:0);
@@ -79,6 +80,8 @@ class MainController {
             ret['games']['search']['count'] = search_count;
 
             ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
+
+            ret['s3'] = ReplayService.s3PolicyAndSignature();
         }
 
         render ret as JSON;
