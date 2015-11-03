@@ -43,7 +43,10 @@ class WagerPage extends Component {
                     {this.renderOwnerControlsIfOwner()}
                 </div>
                 <div className="col col-12">
-                    <ReplayDropzone s3={this.props.s3} />
+                    <ReplayDropzone
+                        s3={this.props.s3}
+                        game={game}
+                        />
                 </div>
             </div>
         )

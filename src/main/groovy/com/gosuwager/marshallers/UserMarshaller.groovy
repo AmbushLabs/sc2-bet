@@ -20,6 +20,8 @@ class UserMarshaller {
                 ret['email'] = activePrimaryEmail.email;
             }
 
+            ret['b'] = u.battleNetAccount.battleNetId;
+            ret['c'] = u.battleNetAccountId;
             ret['character'] = getCharacterMap(u.battleNetAccount.characters.first());
             return ret;
         }
@@ -42,6 +44,7 @@ class UserMarshaller {
         mp['highest_team_rank'] = character.highestTeamRank;
         mp['season_total_games'] = character.seasonTotalGames;
         mp['career_total_games'] = character.careerTotalGames;
+        mp['a'] = character.characterId;
         if (character.primaryRace.toLowerCase().equals("protoss")) {
             mp['primary_race_wins'] = character.protossWins;
         } else if (character.primaryRace.toLowerCase().equals("terran")) {

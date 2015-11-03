@@ -211,4 +211,28 @@ class GameController {
         ret['page'] = page;
         render ret as JSON;
     }
+
+    def completeUpload() {
+        if (params.key && params.bucket) {
+            def fullPath = params.key;
+            def explodedPath = fullPath.split("/");
+            def gameId = Integer.valueOf(explodedPath[1]);
+            def game = Game.findById(gameId);
+            GameReplay gr = new GameReplay(
+                replayName: explodedPath[2],
+                replayFullPath: fullPath,
+                bucket: params.bucket,
+                etag: params.etag,
+                game: game
+            );
+            if (gr.save()) {
+
+
+            } else {
+                println gr.errors;
+            }
+
+            render 'hi';
+        }
+    }
 }

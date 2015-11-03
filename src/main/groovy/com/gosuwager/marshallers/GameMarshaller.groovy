@@ -4,6 +4,10 @@ import com.gosuwager.Game
 import com.gosuwager.bnet.SC2Character
 import grails.converters.JSON
 import org.springframework.web.context.request.RequestContextHolder
+import sun.misc.BASE64Encoder
+
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
 
 /**
  * Created by aaronhenshaw on 9/2/15.
@@ -27,6 +31,12 @@ class GameMarshaller {
 
 
             ret['link'] = 'https://localhost:8443/w/' + g.id;
+
+            Mac hmac = Mac.getInstance("HmacSHA1");
+            hmac.init(new SecretKeySpec("LHZ,E=&VM4yC,rx.s,.P*-IGu]TQ".getBytes("UTF-8"), "HmacSHA1"));
+            ret['upload_hash'] = (new BASE64Encoder()).encode(
+                    hmac.doFinal(ret['link'].getBytes("UTF-8")))
+                    .replaceAll("\n", "");
 
             def creatorCharacter = g.creator.battleNetAccount.characters.first();
             ret['creator'] = getCharacterMap(creatorCharacter);

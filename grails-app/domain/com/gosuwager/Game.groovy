@@ -12,6 +12,10 @@ class Game {
     Boolean active;
     Boolean challengerAccepted;
 
+    Boolean completed = false;
+
+    String winner = null; //creator, challenger
+
     def beforeInsert() {
         if (createDate == NULL_DATE) {
             createDate = new Date();
@@ -24,5 +28,7 @@ class Game {
         challenger nullable: true;
         active nullable: false;
         challengerAccepted nullable: false;
+        completed nullable: false;
+        winner nullable: true;
     }
 }

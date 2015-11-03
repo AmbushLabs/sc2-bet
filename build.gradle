@@ -64,6 +64,10 @@ dependencies {
 
     compile 'com.stripe:stripe-java:1.37.1'
 
+    compile 'com.amazonaws:aws-java-sdk-s3:1.10.30'
+
+    compile "org.grails.plugins:quartz:2.0.0.M4"
+
     compile "org.grails.plugins:hibernate"
     compile "org.grails.plugins:cache"
     compile "org.hibernate:hibernate-ehcache"

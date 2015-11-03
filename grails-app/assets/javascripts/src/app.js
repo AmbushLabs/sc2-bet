@@ -10,9 +10,7 @@ import {
 
 import { Route, Link, IndexRoute } from 'react-router';
 import { Provider, connect } from 'react-redux';
-import { devTools } from 'redux-devtools';
-import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
-import createHistory from '../../../../node_modules/react-router/node_modules/history/lib/createBrowserHistory';
+import createHistory from 'history/lib/createBrowserHistory';
 
 import thunk from 'redux-thunk';
 import reduxLogger from 'redux-logger';
@@ -137,15 +135,9 @@ const middleware = [thunk];
 
 const store = compose(
     applyMiddleware(...middleware),
-    reduxReactRouter({ createHistory }),
-    devTools()
+    reduxReactRouter({ createHistory })
 )(createStore)(reducers);
 
-const debugPanel = (
-    <DebugPanel top right bottom>
-        <DevTools store={store} monitor={LogMonitor} />
-    </DebugPanel>
-);
 
 class Root extends Component {
     render() {
@@ -160,7 +152,6 @@ class Root extends Component {
                         </Route>
                     </ReduxRouter>
                 </Provider>
-                {/*debugPanel*/}
             </div>
         );
     }
