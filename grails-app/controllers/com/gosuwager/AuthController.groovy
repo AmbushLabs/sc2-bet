@@ -5,6 +5,8 @@ class AuthController {
     BattleNetAuthService battleNetAuthService;
     BattleNetApiService battleNetApiService;
 
+    def GameService;
+
     def index() { }
 
     def bnet_start_auth() {
@@ -30,18 +32,23 @@ class AuthController {
                 def character = battleNetApiService.getCharacterForToken(bnetToken);
                 if (account.characters == null || account.characters.size() == 0) {
                     account.addToCharacters(character);
+                    if (!character.save()) {
+                        println character.errors;
+                    }
                 }
 
-                User u = new User();
-                u.setBattleNetAccount(account);
-                u.gosuCoins = 10;
+                def usr = new User([
+                    battleNetAccount: account,
+                    gosuCoins: 10
+                ]);
 
-                if (u.save(flush:true)) {
-                    session.user_id = u.id;
-                    println 'new user_id is ' + u.id;
-                    println 'session user_id is ' + session.user_id;
+                if (usr.save(flush:true) && account.save(flush:true)) {
+                    GameService.createPrivateGamesForUser(usr, [10, 50, 100, 500, 1000]);
+                    session.user_id = usr.id;
+
                 } else {
-                    println account.errors
+                    println account.errors;
+                    println usr.errors;
                 }
             }
             [

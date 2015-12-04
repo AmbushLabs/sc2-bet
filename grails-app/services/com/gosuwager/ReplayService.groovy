@@ -17,12 +17,12 @@ import javax.crypto.spec.SecretKeySpec
 class ReplayService {
 
     def updateGameFromReplay(GameReplay gr) {
-        if (gr.processed && gr.game.creator && gr.game.challenger && gr.game.challengerAccepted) {
+        if (gr.processed && gr.game.player1 && gr.game.player2 && gr.game.challengerAccepted) {
             //first confirm valid replay
             //lets get characters a & b
             def creatorChar, chalChar;
             def creatorWon = false, challengerWon = false;
-            gr.game.creator.battleNetAccount.characters.each {
+            gr.game.player1.battleNetAccount.characters.each {
                 if (it.characterId == gr.player1Uid
                     || it.characterId == gr.player2Uid) {
                     creatorChar = it;
@@ -41,7 +41,7 @@ class ReplayService {
                     }
                 }
             }
-            gr.game.challenger.battleNetAccount.characters.each {
+            gr.game.player2.battleNetAccount.characters.each {
                 if (it.characterId == gr.player1Uid
                         || it.characterId == gr.player2Uid) {
                     chalChar = it;
@@ -50,9 +50,9 @@ class ReplayService {
 
             gr.game.completed = true;
             if (creatorWon) {
-                gr.game.winner = "creator";
+                gr.game.winner = "player1";
             } else {
-                gr.game.winner = "challenger";
+                gr.game.winner = "player2";
             }
             if (gr.game.save()) {
 

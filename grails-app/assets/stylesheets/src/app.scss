@@ -1,0 +1,9 @@
+$gosu-blue: #1a3061;
+$text-on-gosu-blue: #ffffff;
+
+.gosu-blue-bg {
+    background-color: $gosu-blue;
+}
+
+@import "modal";
+@import "errors";

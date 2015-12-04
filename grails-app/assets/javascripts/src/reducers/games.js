@@ -7,7 +7,12 @@ import {
     CANCEL_GAME,
     ACCEPT_CHALLENGER,
     REJECT_CHALLENGER,
-    INITIALIZE_APP
+    INITIALIZE_APP,
+    ADD_EMAIL_ADDRESS,
+    CHANGE_GAME_FILTER,
+    LEAVE_GAME,
+    SHOW_SHARE_GAME_MODAL,
+    HIDE_SHARE_GAME_MODAL
 } from './../actions/actions';
 
 const games = (state = {}, action = {}) => {
@@ -32,6 +37,7 @@ const games = (state = {}, action = {}) => {
             }
             break;
         case INITIALIZE_APP:
+        case ADD_EMAIL_ADDRESS:
             if (action.is_fetching || action.error) {
                 return state;
             }
@@ -64,12 +70,40 @@ const games = (state = {}, action = {}) => {
             } else if (!action.is_fetching) {
                 switch (action.status) {
                     case 'success':
+                        let newArr = state.waiting.ids.slice(0);
+                        newArr.push(action.data.game.id);
                         return Object.assign({}, state, {
-                            all:cloneGamesAndUpdate(state.all, action.data.game)
+                            all: cloneGamesAndUpdate(state.all, action.data.game),
+                            waiting: {
+                                count: ++state.waiting.count,
+                                ids: newArr
+                            }
                         });
                         break;
                 }
             }
+            break;
+        case LEAVE_GAME:
+            if (action.is_fetching && action.game_id) {
+                return Object.assign({}, state, {
+                    all: setGameFetching(state.all, action.game_id, getFetchTypeFromType(action.type))
+                });
+            } else if (!action.is_fetching) {
+                switch (action.status) {
+                    case 'success':
+                        let newArr = state.waiting.ids.slice(0);
+                        newArr.splice(newArr.indexOf(action.data.game.id), 1);
+                        return Object.assign({}, state, {
+                            all: cloneGamesAndUpdate(state.all, action.data.game),
+                            waiting: {
+                                count: --state.waiting.count,
+                                ids: newArr
+                            }
+                        });
+                        break;
+                }
+            }
+            break;
             break;
         case CANCEL_GAME:
         case ACCEPT_CHALLENGER:
@@ -94,6 +128,20 @@ const games = (state = {}, action = {}) => {
                 }
             }
             break;
+        case CHANGE_GAME_FILTER:
+            return Object.assign({}, state, { selected_rank: action.data.selectedRank });
+        case SHOW_SHARE_GAME_MODAL: {
+            const gameUpdated = Object.assign({}, state.all[action.data.gameId], { show_share_modal: true });
+            return Object.assign({}, state, {
+                all: cloneGamesAndUpdate(state.all, gameUpdated)
+            });
+        }
+        case HIDE_SHARE_GAME_MODAL: {
+            const gameUpdated = Object.assign({}, state.all[action.data.gameId], { show_share_modal: false });
+            return Object.assign({}, state, {
+                all: cloneGamesAndUpdate(state.all, gameUpdated)
+            });
+        }
     }
     return state;
 };
@@ -123,6 +171,8 @@ const getFetchTypeFromType = (type) => {
             return 'is_joining';
         case REJECT_CHALLENGER:
             return 'is_rejecting';
+        case LEAVE_GAME:
+            return 'is_leaving';
     }
 }
 

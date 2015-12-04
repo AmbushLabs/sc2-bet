@@ -8,6 +8,8 @@
     <asset:stylesheet src="basscss.css"/>
     <asset:stylesheet src="modal.css"/>
     <asset:stylesheet src="utility.css"/>
+    <asset:stylesheet src="animate.css" />
+    <asset:stylesheet src="src/dist/app.css" />
     <asset:javascript src="lib/underscore.js" />
     <asset:javascript src="lib/jquery-2.1.4.min.js"/>
     <g:layoutHead/>

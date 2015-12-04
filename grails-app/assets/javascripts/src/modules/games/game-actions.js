@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 
 import ActionButton from './action-button';
-
+import Join from './action-buttons/join';
 import { accept, cancel, join, reject } from './../../api/game/crud';
+
 
 export default class GameActions extends Component {
 

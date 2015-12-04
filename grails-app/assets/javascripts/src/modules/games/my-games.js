@@ -9,7 +9,7 @@ export default class MyGames extends Component {
         this.getGames = this.getGames.bind(this);
         this.setGameState = this.setGameState.bind(this);
         this.state = {
-            current_tab: 'created_or_joined'
+            current_tab: 'to_approve'
         };
     }
 
@@ -18,23 +18,24 @@ export default class MyGames extends Component {
             <section>
                 <div className="my1 mxn1 h6">
                     <a href="#"
-                       className={"btn btn-narrow " + this.isSelected('created_or_joined')}
-                       onClick={this.setGameState}
-                       data-list-type="created_or_joined">All My Games</a>
-                    <a href="#"
                        className={"btn btn-narrow " + this.isSelected('to_approve')}
                        onClick={this.setGameState}
                        data-list-type="to_approve">To Approve</a>
                     <a href="#"
-                       className={"btn btn-narrow " + this.isSelected('created')}
+                       className={"btn btn-narrow " + this.isSelected('ready')}
                        onClick={this.setGameState}
-                       data-list-type="created">Created</a>
+                       data-list-type="ready">Ready to Play</a>
+                    <a href="#"
+                       className={"btn btn-narrow " + this.isSelected('waiting')}
+                       onClick={this.setGameState}
+                       data-list-type="waiting">Pending</a>
                 </div>
                 <GameList
                     colSize="col-6"
                     listType="created_or_joined"
                     limit={4}
                     games={this.getGames()}
+                    dispatch={this.props.dispatch}
                     />
             </section>
         );

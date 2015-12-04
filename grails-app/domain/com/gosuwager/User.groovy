@@ -2,7 +2,7 @@ package com.gosuwager
 
 class User {
 
-    private static final Date NULL_DATE = new Date(0)
+    private static final Date NULL_DATE = new Date(0);
 
     Date createDate = NULL_DATE;
 
@@ -24,6 +24,9 @@ class User {
     }
 
     static constraints = {
-        gosuCoins (nullable: false);
+        createDate nullable: false;
+        battleNetAccount nullable: false;
+        emails nullable: true;
+        gosuCoins nullable: false;
     }
 }

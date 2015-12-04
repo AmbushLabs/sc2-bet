@@ -11,6 +11,7 @@ class SendEmailService {
     def grailsApplication;
 
     def send(User u, String templateName, data) {
+        return; //TODO: fix email template names
         def devKey = "kB1KnDIZhKaqIsf96H4BdQ";
         def prodKey = "GZxHhSsWtFGKgx6eKgksng";
         def siteUri = grailsApplication.config.getProperty('site_uri');
@@ -31,9 +32,10 @@ class SendEmailService {
 
                 break;
             case 'wager-created':
-            case 'creator-rejected-challenger':
-            case 'creator-accepted-challenge':
-            case 'challenger-joined-wager':
+            case 'player1-rejected-player2':
+            case 'player1-accepted-challenge':
+            case 'player2-joined-wager':
+            case 'player1-joined-wager':
                 mergeVars.add(new MandrillMessage.MergeVar("wager_link", siteUri + 'w/' + data.id));
                 break;
 

@@ -1,25 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import GameCard from "./game-card";
-import { SHOW_CREATE_GAME_MODAL } from './../../actions/actions';
 
-@connect((state) => ({createGameModalVisible:state.createGameModalVisible}))
 class GameList extends Component {
 
     constructor(options) {
         super(options);
         this.getPaginationControls = this.getPaginationControls.bind(this);
-        this.showCreateGameModal = this.showCreateGameModal.bind(this);
     }
 
     render() {
         if (_.isNull(this.props.games) || _.isUndefined(this.props.games) || this.props.games.length == 0) {
             return (
-                <div className={"col " + this.props.colSize}>
+                <div className={"col p1 " + this.props.colSize}>
                     <p>No active games</p>
-                    <button className="btn btn-primary mb1 mt1 bg-blue mr1 col-11" onClick={this.showCreateGameModal}>
-                        Create Game
-                    </button>
                 </div>
             );
         }
@@ -40,10 +34,6 @@ class GameList extends Component {
                 {/*this.getPaginationControls() */}
             </div>
         );
-    }
-
-    showCreateGameModal() {
-        this.props.dispatch({type:SHOW_CREATE_GAME_MODAL})
     }
 
     getPaginationControls() {

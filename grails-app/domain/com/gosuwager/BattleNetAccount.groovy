@@ -18,14 +18,17 @@ class BattleNetAccount {
     ];
 
     def beforeInsert() {
-        println 'beforeInsert';
         if (createDate == NULL_DATE) {
-            println 'beforeInsert: setting date';
             createDate = new Date();
         }
     }
 
     static constraints = {
-        createDate nullable:false;
+        createDate nullable: false;
+        battleNetId nullable: false;
+        battleTag nullable: true;
+        token: nullable: false;
+        characters: nullable: false;
+        user nullable: false;
     }
 }

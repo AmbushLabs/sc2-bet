@@ -1,8 +1,9 @@
-import { INITIALIZE_APP, CREATE_GAME, JOIN_GAME, PURCHASE_GOSU_COINS } from './../actions/actions';
+import { INITIALIZE_APP, ADD_EMAIL_ADDRESS, CREATE_GAME, JOIN_GAME, PURCHASE_GOSU_COINS } from './../actions/actions';
 
 const gosuCoins = function(state = {remaining:0}, action = {}) {
     switch(action.type) {
         case INITIALIZE_APP:
+        case ADD_EMAIL_ADDRESS:
         case CREATE_GAME:
         case JOIN_GAME:
         case PURCHASE_GOSU_COINS:

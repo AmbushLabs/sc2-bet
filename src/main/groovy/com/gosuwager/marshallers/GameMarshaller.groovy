@@ -19,16 +19,21 @@ class GameMarshaller {
         JSON.registerObjectMarshaller(Game) { Game g ->
             def ret = [:]
             ret['id'] = g.id;
-            ret['wager'] = g.tokenWager;
+            ret['wager'] = g.gosuCoin;
             ret['created'] = g.createDate.getTime();
             ret['is_active'] = g.active;
 
             def session = RequestContextHolder.currentRequestAttributes().getSession()
-            ret['is_creator'] = (g.creator.id == session.user_id);
-            ret['is_challenger'] = false;
-            ret['has_challenger'] = !(g.challenger == null);
-            ret['has_creator_accepted'] = g.challengerAccepted;
-
+            def isPlayer1 = (g.player1 && g.player1.id == session.user_id);
+            def isPlayer2 = (g.player2 && g.player2.id == session.user_id);
+            ret['has_player1'] = !(g.player1 == null);
+            ret['has_player2'] = !(g.player2 == null);
+            ret['is_player1'] = isPlayer1;
+            ret['is_player2'] = isPlayer2;
+            ret['is_joined'] = (isPlayer1 || isPlayer2);
+            ret['has_player1_accepted'] = g.challengerAccepted;
+            ret['rank'] = g.rank;
+            ret['rank_display'] = Rank.rankToString(g.rank);
 
             ret['link'] = 'https://localhost:8443/w/' + g.id;
 
@@ -38,13 +43,14 @@ class GameMarshaller {
                     hmac.doFinal(ret['link'].getBytes("UTF-8")))
                     .replaceAll("\n", "");
 
-            def creatorCharacter = g.creator.battleNetAccount.characters.first();
-            ret['creator'] = getCharacterMap(creatorCharacter);
+            if (g.player1) {
+                def creatorCharacter = g.player1.battleNetAccount.characters.first();
+                ret['player1'] = getCharacterMap(creatorCharacter);
+            }
 
-            if (g.challenger) {
-                def challengerCharacter = g.challenger.battleNetAccount.characters.first();
-                ret['challenger'] = getCharacterMap(challengerCharacter);
-                ret['is_challenger'] = (g.challenger.id == session.user_id);
+            if (g.player2) {
+                def challengerCharacter = g.player2.battleNetAccount.characters.first();
+                ret['player2'] = getCharacterMap(challengerCharacter);
             }
 
             return ret;

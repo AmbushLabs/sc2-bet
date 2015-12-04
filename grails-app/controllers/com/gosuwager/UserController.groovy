@@ -5,6 +5,7 @@ import grails.converters.JSON
 class UserController {
 
     def SendEmailService;
+    def DashboardService;
 
     def index() { }
 
@@ -49,7 +50,7 @@ class UserController {
                     u.addToEmails(e);
                     if (u.save()) {
                         isSuccessful = true;
-                        ret['has_email'] = true;
+                        ret = DashboardService.getInitializeData(u);
                         ret['status'] = 'success';
                         SendEmailService.send(u, 'confirm-email', e);
                     }
@@ -59,7 +60,6 @@ class UserController {
                 ret['has_email'] = false;
                 ret['status'] = 'failure';
             }
-
         }
         render ret as JSON;
     }

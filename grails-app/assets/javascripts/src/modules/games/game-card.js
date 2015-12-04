@@ -1,53 +1,87 @@
 import React, { Component, PropTypes } from 'react';
 
-import BasicUser from './../user/basic-user';
-import GameActions from './game-actions';
+import GameCardUser from './../user/game-card-user';
+import GameActions from './game-actions2';
+import ShareModal from './../share-modal/share';
 
 
 export default class GameCard extends Component {
 
     constructor(options) {
         super(options);
+        this.getChallenger = this.getChallenger.bind(this);
+        this.getHasJoinedStar = this.getHasJoinedStar.bind(this);
+        this.getShareModal = this.getShareModal.bind(this);
+    }
 
+    getChallenger() {
+        const { game } = this.props;
+        if (game) {
+            if (game.has_player1 && !game.is_player1) {
+                return (
+                    <GameCardUser
+                        user={game.player1} />
+                );
+            } else if (game.has_player2 && !game.is_player2) {
+                return (
+                    <GameCardUser
+                        user={game.player2} />
+                );
+            }
+        }
+        return (
+           <GameCardUser />
+        );
+    }
+
+    getShareModal() {
+        const { game, dispatch } = this.props;
+        if (game.show_share_modal) {
+            return (
+                <ShareModal
+                    game={game}
+                    dispatch={dispatch}
+                    />
+            );
+        }
+        return;
+    }
+
+    getHasJoinedStar() {
+        if (this.props.game.is_joined) {
+            return (<span>&nbsp;<span className="ss-icon ss-star orange h5">&nbsp;</span></span>);
+        }
+        return (<span>&nbsp;</span>);
     }
 
     render() {
         return (
             <div className={"col " + this.props.colSize}>
-                <div className="m1 p1 clearfix bg-black white">
-                    <div className="bg-lighten-3">
-                        <div className="col col-4 left-align">
-                            <h6>Creator</h6>
-                            <BasicUser
-                                user={this.props.game.creator}
-                                outerClass="h4 mt1" />
-                        </div>
-                        <div className="col col-4 center">
-                            <a className="h6" href={"/w/" + this.props.game.id}>
-                                Wager
-                            </a>
-                            <h1 className="mt1">
-                                {this.props.game.wager}&nbsp;
-                                <span className="ss-icon ss-coins h2"></span>
-                            </h1>
-                        </div>
-                        <div className="col col-4 right-align">
-                            <h6>Challenger</h6>
-                            <BasicUser
-                                user={this.props.game.challenger}
-                                outerClass="h4 mt1" />
+                <div className="m1 p1 clearfix black border">
+                    <div className="col col-8">
+                        <p className="h4">
+                            <a href={"/w/" + this.props.game.id}><span className="ss-icon ss-coins h5"></span>&nbsp;{this.props.game.wager}&nbsp;Gosu Coin</a>
+                        </p>
+                    </div>
+                    <div className="col col-4 right-align">
+                        {this.props.game.rank_display}
+                        {this.getHasJoinedStar()}
+                    </div>
+                    <div className="">
+                        <div className="col col-12 left-align">
+                            <div className="">
+                                {this.getChallenger()}
+                            </div>
                         </div>
                         <div className="col col-12">
                             <GameActions
                                 game={this.props.game}
-                                is_cancelling={this.props.is_cancelling}
-                                is_rejecting={this.props.is_rejecting}
-                                is_accepting={this.props.is_accepting}
-                                is_joining={this.props.is_joining}
                                 dispatch={this.props.dispatch} />
+
                         </div>
                     </div>
                 </div>
+                {this.getShareModal()}
             </div>
         );
     }

@@ -14,6 +14,7 @@ class UrlMappings {
 
         "/game/create"(controller:"game", action:"create")
         "/game/$game_id/join"(controller:"game", action:"join")
+        "/game/$game_id/leave"(controller:"game", action:"leave")
         "/game/$game_id/accept"(controller:"game", action:"accept")
         "/game/$game_id/reject"(controller:"game", action:"reject")
         "/game/g/$game_id"(controller:"game", action:"index")

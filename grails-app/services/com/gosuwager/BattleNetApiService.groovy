@@ -27,8 +27,8 @@ class BattleNetApiService {
                 JsonElement jelement = new JsonParser().parse(reader.keySet()[0]);
                 JsonObject jobject = jelement.getAsJsonObject();
 
-                def bnetId = new BigInteger(jobject.get('id').getAsString())
-                bnetAccount = null;//BattleNetAccount.findByBattleNetId(bnetId)
+                def bnetId = new BigInteger(jobject.get('id').getAsString());
+                bnetAccount = BattleNetAccount.findByBattleNetId(bnetId);
                 if (bnetAccount == null) {
                     bnetAccount = new BattleNetAccount();
                     bnetAccount.battleNetId = bnetId;
@@ -44,11 +44,13 @@ class BattleNetApiService {
     def getCharacterForToken(BattleNetToken bnetToken) {
         def character = new SC2Character();
         def http = new HTTPBuilder('https://us.api.battle.net/sc2/profile/user');
+
+        //println 'https://us.api.battle.net/sc2/profile/user?access_token=' + bnetToken.accessToken;
         http.request(Method.GET, ContentType.URLENC) {
             uri.query = [
                 access_token: bnetToken.accessToken
             ]
-            headers.'User-Agent' = "GosuWager 0.1"
+            headers.'User-Agent' = "GosuEmpire 0.1"
             headers.Accept = 'application/json'
 
             response.success = { resp, reader ->

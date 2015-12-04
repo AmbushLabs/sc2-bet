@@ -1,6 +1,5 @@
 import React from 'react';
 import HomeButton from './home-button';
-import CreateGameButton from './create-game-button';
 import Coins from './coins';
 
 
@@ -19,9 +18,8 @@ var NavBar = React.createClass ({
             );
         } else {
             return (
-                <div className="clearfix border-bottom">
+                <div className="clearfix border-bottom gosu-blue-bg">
                     <HomeButton />
-                    <CreateGameButton onCreateGameClick={this.props.showModal} />
                     <Coins wagerTokens={this.props.remainingTokens} />
                 </div>
             );

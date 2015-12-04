@@ -48,7 +48,7 @@ class GameController {
             if (u) {
                 Game g = new Game([
                     creator           : u,
-                    tokenWager        : params.wager,
+                    gosuCoin        : params.wager,
                     challengerAccepted: false,
                     active            : true
                 ]);
@@ -76,7 +76,7 @@ class GameController {
             //delete a game
             Game g = Game.findById(params.game_id);
             def ret = [:];
-            if (g.creator.id != session.user_id) {
+            if (g.player1.id != session.user_id) {
                 ret['error'] = true;
                 ret['error_reason'] = 'not_creator';
             } else {
@@ -88,8 +88,40 @@ class GameController {
         }
     }
 
-    def create() {
-
+    def leave() {
+        if (request.method == 'POST' && params.game_id) {
+            def ret = [:];
+            Game g = Game.findById(params.game_id);
+            if (!g.active) {
+                ret['error'] = true;
+                ret['error_reason'] = 'game_gone';
+            } else if (
+                (g.player1 && g.player1.id == session.user_id && !g.isPrivate) ||
+                (g.player2 && g.player2.id == session.user_id)
+            ) {
+                if (g.player1.id == session.user_id) {
+                    g.player1 = g.player2;
+                    g.player2 = null;
+                } else if (g.player2.id == session.user_id) {
+                    g.player2 = null;
+                }
+                if (g.save()) {
+                    def u = User.findById(session.user_id);
+                    SendEmailService.send(u, "player-left-contest", g);
+                    ret['game'] = g;
+                    ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
+                }
+            } else {
+                if (g.isPrivate && g.player1 && g.player1.id == session.user_id) {
+                    ret['error'] = true;
+                    ret['error_reason'] = 'your_private_game';
+                } else {
+                    ret['error'] = true;
+                    ret['error_reason'] = 'not_your_game';
+                }
+            }
+            render ret as JSON;
+        }
     }
 
     def join() {
@@ -99,18 +131,28 @@ class GameController {
             if (!g.active) {
                 ret['error'] = true;
                 ret['error_reason'] = 'game_gone';
-            } else if (g.creator.id == session.user_id) {
+            } else if (g.player1 && g.player1.id == session.user_id) {
                 ret['error'] = true;
                 ret['error_reason'] = 'your_game';
-            } else if (g.challenger != null) {
+            } else if (g.player2 != null) {
                 ret['error'] = true;
                 ret['error_reason'] = 'challenger_exists';
             } else {
                 User u = User.findById(session.user_id);
                 if (GosuCoinService.canUserCreateOrJoinGame(u, g)) {
-                    g.challenger = u;
+                    def emailType = '';
+                    if (!g.player1) {
+                        g.player1 = u;
+                        emailType = 'player1-joined-wager';
+                    } else if (!g.player2) {
+                        emailType = 'player2-joined-wager';
+                        g.player2 = u;
+                    }
+
                     if (g.save()) {
-                        SendEmailService.send(u, 'challenger-joined-wager', g);
+                        SendEmailService.send(u, emailType, g);
+                    } else {
+                        println g.errors;
                     }
                     ret['game'] = g;
                     ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
@@ -130,10 +172,10 @@ class GameController {
             if (!g.active) {
                 ret['error'] = true;
                 ret['error_reason'] = 'game_gone';
-            } else if (g.creator.id != session.user_id) {
+            } else if (g.player1.id != session.user_id) {
                 ret['error'] = true;
                 ret['error_reason'] = 'not_creator';
-            } else if (g.challenger == null) {
+            } else if (g.player2 == null) {
                 ret['error'] = true;
                 ret['error_reason'] = 'no_challenger';
             } else if (g.challengerAccepted) {
@@ -142,7 +184,7 @@ class GameController {
             } else {
                 g.challengerAccepted = true;
                 if (g.save()) {
-                    SendEmailService.send(g.challenger, 'creator-accepted-challenge', g);
+                    SendEmailService.send(g.player2, 'player1-accepted-challenge', g);
                 }
                 ret['game'] = g;
             }
@@ -157,20 +199,20 @@ class GameController {
             if (!g.active) {
                 ret['error'] = true;
                 ret['error_reason'] = 'game_gone';
-            } else if (g.creator.id != session.user_id) {
+            } else if (g.player1.id != session.user_id) {
                 ret['error'] = true;
                 ret['error_reason'] = 'not_creator';
-            } else if (g.challenger == null) {
+            } else if (g.player2 == null) {
                 ret['error'] = true;
                 ret['error_reason'] = 'no_challenger';
             } else if (g.challengerAccepted) {
                 ret['error'] = true;
                 ret['error_reason'] = 'already_accepted';
             } else {
-                g.challenger = null;
+                g.player2 = null;
                 g.challengerAccepted = false;
                 if (g.save()) {
-                    SendEmailService.send(g.challenger, 'creator-rejected-challenger', g);
+                    SendEmailService.send(g.player2, 'player1-rejected-player2', g);
                 }
                 ret['game'] = g;
             }
@@ -186,26 +228,26 @@ class GameController {
         if (params.list_type) {
             if (params.list_type == 'created_or_joined') {
                 def query = Game.where {
-                    active == true && (creator == u || challenger == u)
+                    active == true && (player1 == u || player2 == u)
                 }
                 ret['games'] = query.list(max:limit, offset:(page-1)*limit, sort:"createDate", order:"desc");
                 ret['count'] = query.count();
             } else if (params.list_type == 'created') {
-                ret['games'] = Game.findAllByActiveAndCreator(true, u, [max:limit, offset:(page-1)*limit, sort:"createDate", order:"desc"]);
-                ret['count'] = Game.countByActiveAndCreator(true, u);
+                ret['games'] = Game.findAllByActiveAndPlayer1(true, u, [max:limit, offset:(page-1)*limit, sort:"createDate", order:"desc"]);
+                ret['count'] = Game.countByActiveAndPlayer1(true, u);
             } else if (params.list_type == 'joined') {
-                ret['games'] = Game.findAllByActiveAndChallenger(true, u, [max: limit, offset:(page-1)*limit, sort: "createDate", order: "desc"]);
-                ret['count'] = Game.countByActiveAndChallenger(true, u);
+                ret['games'] = Game.findAllByActiveAndPlayer2(true, u, [max: limit, offset:(page-1)*limit, sort: "createDate", order: "desc"]);
+                ret['count'] = Game.countByActiveAndPlayer2(true, u);
             } else if (params.list_type == 'to_approve') {
-                ret['games'] = Game.findAllByActiveAndCreatorAndChallengerAcceptedAndChallengerIsNotNull(true, u, false, [max:limit, offset:(page-1)*limit, sort:"createDate", order:"desc"]);
-                ret['count'] = Game.countByActiveAndCreatorAndChallengerAcceptedAndChallengerIsNotNull(true, u, false);
+                ret['games'] = Game.findAllByActiveAndPlayer1AndChallengerAcceptedAndPlayer2IsNotNull(true, u, false, [max:limit, offset:(page-1)*limit, sort:"createDate", order:"desc"]);
+                ret['count'] = Game.countByActiveAndPlayer1AndChallengerAcceptedAndPlayer2IsNotNull(true, u, false);
             } else if (params.list_type == 'search') {
-                ret['games'] = Game.findAllByActiveAndChallengerAcceptedAndCreatorNotEqual(true, false, u, [max:limit, offset:(page-1)*limit, sort:"createDate", order:"desc"]);
-                ret['count'] = Game.findAllByActiveAndChallengerAcceptedAndCreatorNotEqual(true, false, u);
+                ret['games'] = Game.findAllByActiveAndChallengerAcceptedAndPlayer1NotEqual(true, false, u, [max:limit, offset:(page-1)*limit, sort:"createDate", order:"desc"]);
+                ret['count'] = Game.findAllByActiveAndChallengerAcceptedAndPlayer1NotEqual(true, false, u);
             }
         } else {
-            ret['games'] = Game.findAllByActiveAndChallengerAcceptedAndCreatorNotEqual(true, false, u, [max:limit, offset:(page-1)*limit, sort:"createDate", order:"desc"]);
-            ret['count'] = Game.countByActiveAndChallengerAcceptedAndCreatorNotEqual(true, false, u);
+            ret['games'] = Game.findAllByActiveAndChallengerAcceptedAndPlayer1NotEqual(true, false, u, [max:limit, offset:(page-1)*limit, sort:"createDate", order:"desc"]);
+            ret['count'] = Game.countByActiveAndChallengerAcceptedAndPlayer1NotEqual(true, false, u);
         }
         ret['limit'] = limit;
         ret['page'] = page;

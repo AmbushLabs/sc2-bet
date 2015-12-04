@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import GameList from './../games/game-list';
 import MyGames from './../games/my-games';
 import ProfileCard from './../profile/profile-card';
+import { CHANGE_GAME_FILTER } from './../../actions/actions';
 
 @connect(state => (state))
 class Dashboard extends Component {
@@ -25,31 +26,61 @@ class Dashboard extends Component {
                     <div className="bg-white p1 mb2 clearfix">
                         <MyGames
                             games={this.props.games}
+                            dispatch={this.props.dispatch}
                             />
                     </div>
                 </section>
                 <div className="clearfix"></div>
-                <section className="col col-12">
-                    <div className="bg-white p1 clearfix">
-                        <GameList colSize="col-3"
-                                  listType="search"
-                                  showModal={this.props.showModal}
-                                  limit={8}
-                                  games={this.getSearchGames()}
-                                    />
-                    </div>
+                <section className="col col-12 bg-white p1">
+                    <section className="col col-9">
+                        <p className="h3">Find a Game</p>
+                    </section>
+                    <section className="col col-3 right">
+                        <select className="block col-12 field"
+                                ref="currentRank"
+                                onChange={() => this.onChangeGames()}>
+                            <optgroup label="Select a Rank">
+                                <option value="1">Master</option>
+                                <option value="2">Diamond</option>
+                                <option value="3">Platinum</option>
+                                <option value="4">Gold</option>
+                                <option value="5">Silver</option>
+                                <option value="6">Bronze</option>
+                            </optgroup>
+                        </select>
+                    </section>
+
+                    <section className="col col-12">
+                        <div className="bg-white clearfix">
+                            <GameList
+                                colSize="col-3"
+                                listType="search"
+                                limit={8}
+                                games={this.getSearchGames()}
+                                dispatch={this.props.dispatch}
+                                />
+                        </div>
+                    </section>
                 </section>
             </section>
         );
     }
 
+    onChangeGames() {
+        const { dispatch } = this.props;
+        dispatch({
+            type: CHANGE_GAME_FILTER,
+            data: {
+                selectedRank: this.refs.currentRank.value
+            }
+        })
+    }
+
     getSearchGames() {
         if (this.props && this.props.games && this.props.games.all) {
+            var rank = this.props.games.selected_rank;
             var tmp = _.values(_.pick(this.props.games.all, this.props.games.search.ids));
-            return tmp;
-            /*return this.props.games.search_games.filter(
-                (element, key) => { this.props.games.search.ids.indexOf(key) > -1 }.bind(this)
-            );*/
+            return tmp.filter((element) => element.rank == rank);
         }
     }
 

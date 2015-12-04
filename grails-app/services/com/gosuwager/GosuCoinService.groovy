@@ -9,7 +9,7 @@ class GosuCoinService {
         def total = getTotalGosuCoins(u)?:0;
         def totalWagered = getWageredGosuCoins(u)?:0;
         def remainingCoins = total.intValue() - totalWagered.intValue();
-        if (remainingCoins >= g.tokenWager) {
+        if (remainingCoins >= g.gosuCoin) {
             return true;
         }
         return false;
@@ -17,10 +17,10 @@ class GosuCoinService {
 
     def getWageredGosuCoins(User u) {
         def query = Game.where {
-            active == true && (creator == u || challenger == u)
+            active == true && (player1 == u || player2 == u) && (challengerAccepted == true || isPrivate == false)
         }
         def created_or_joined = query.list();
-        return created_or_joined.sum { g -> g.tokenWager };
+        return created_or_joined.sum { g -> g.gosuCoin };
     }
 
     def getTotalGosuCoins(User u) {

@@ -2,6 +2,8 @@ package com.gosuwager
 
 class Email {
 
+    static belongsTo = [user:User]
+
     private static final Date NULL_DATE = new Date(0)
 
     Date createDate = NULL_DATE;
@@ -20,6 +22,7 @@ class Email {
     }
 
     static constraints = {
+        user (nullable: true)
         email (nullable: false)
         isPrimary (nullable: false)
         isActive (nullable: false)

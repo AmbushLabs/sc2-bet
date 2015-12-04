@@ -1,0 +1,60 @@
+.gosu-blue-bg {
+  background-color: #1a3061; }
+
+.modal:before {
+  content: "";
+  display: block;
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10; }
+
+.modal:target:before {
+  display: block; }
+
+.modal:target .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+  top: 20%; }
+
+.modal-dialog {
+  background: #fefefe;
+  border: #333333 solid 1px;
+  position: fixed;
+  left: 25%;
+  top: 20%;
+  z-index: 11; }
+
+.modal-body {
+  padding: 10px 20px 20px;
+  background-color: #1a3061;
+  color: #ffffff;
+  border-bottom: #efefef solid 1px; }
+
+.modal-header,
+.modal-footer {
+  padding: 10px 20px; }
+
+.modal-header {
+  background-color: #1a3061;
+  color: #ffffff; }
+
+.modal-header h2 {
+  font-size: 20px; }
+
+.modal-footer {
+  border-top: #eeeeee solid 1px;
+  text-align: right;
+  background-color: #fff; }
+
+/*ADDED TO STOP SCROLLING TO TOP*/
+#close {
+  display: none; }
+
+.is_error {
+  color: #D8000C;
+  background-color: #FFBABA; }

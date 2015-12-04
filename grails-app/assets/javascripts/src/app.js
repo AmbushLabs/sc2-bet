@@ -20,8 +20,8 @@ import reducers from './reducers/reducers';
 import * as Actions from './actions/actions';
 
 import NavBar from './modules/nav/nav-bar';
+import ErrorToast from './modules/error-toast/error';
 import Dashboard from './modules/dashboard/dashboard';
-import CreateGameModal from './modules/create-game/modal';
 import EnterEmailModal from './modules/sign-up/enter-email-modal';
 import WagerPage from './modules/wager-page/wager-page';
 import GosuCoins from './modules/payments/gosu-coins';
@@ -35,7 +35,6 @@ class App extends Component {
     constructor(options) {
         super(options);
         this.getChildren = this.getChildren.bind(this);
-        this.buildModal = this.buildModal.bind(this);
         this.buildEmailModal = this.buildEmailModal.bind(this);
     }
 
@@ -52,12 +51,11 @@ class App extends Component {
         return (
             <section>
                 <NavBar
-                    showModal={() => dispatch({type:Actions.SHOW_CREATE_GAME_MODAL})}
                     loggedIn={this.props.loggedIn}
                     remainingTokens={this.props.gosuCoins.remaining}
                     />
+                <ErrorToast />
                 {this.getChildren()}
-                {this.buildModal()}
                 {this.buildEmailModal()}
                 <PageNotification
                     text={this.props.notifications.message}
@@ -81,19 +79,6 @@ class App extends Component {
             var { children, ...extraProps } = this.props;
             return React.cloneElement(children, extraProps);
         }
-    }
-
-    buildModal() {
-        if (!this.props.createGameModalVisible) {
-            return;
-        }
-
-        const { dispatch } = this.props;
-        return (
-            <CreateGameModal
-                hideModal={() => dispatch({type:Actions.HIDE_CREATE_GAME_MODAL})}
-                />
-        );
     }
 
     buildEmailModal() {

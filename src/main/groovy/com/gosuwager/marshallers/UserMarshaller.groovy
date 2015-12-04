@@ -41,6 +41,7 @@ class UserMarshaller {
         mp['terran_wins'] = character.terranWins;
         mp['zerg_wins'] = character.zergWins;
         mp['highest_1v1_rank'] = character.highest1v1Rank;
+        mp['highest_1v1_rank_int'] = Rank.rankToInteger(character.highest1v1Rank);
         mp['highest_team_rank'] = character.highestTeamRank;
         mp['season_total_games'] = character.seasonTotalGames;
         mp['career_total_games'] = character.careerTotalGames;
