@@ -127,39 +127,45 @@ class GameController {
     def join() {
         if (request.method == 'POST' && params.game_id) {
             def ret = [:];
-            Game g = Game.findById(params.game_id);
-            if (!g.active) {
-                ret['error'] = true;
-                ret['error_reason'] = 'game_gone';
-            } else if (g.player1 && g.player1.id == session.user_id) {
-                ret['error'] = true;
-                ret['error_reason'] = 'your_game';
-            } else if (g.player2 != null) {
-                ret['error'] = true;
-                ret['error_reason'] = 'challenger_exists';
-            } else {
-                User u = User.findById(session.user_id);
-                if (GosuCoinService.canUserCreateOrJoinGame(u, g)) {
-                    def emailType = '';
-                    if (!g.player1) {
-                        g.player1 = u;
-                        emailType = 'player1-joined-wager';
-                    } else if (!g.player2) {
-                        emailType = 'player2-joined-wager';
-                        g.player2 = u;
-                    }
-
-                    if (g.save()) {
-                        SendEmailService.send(u, emailType, g);
-                    } else {
-                        println g.errors;
-                    }
-                    ret['game'] = g;
-                    ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
-                } else {
+            if (session.user_id) {
+                Game g = Game.findById(params.game_id);
+                if (!g.active) {
                     ret['error'] = true;
-                    ret['error_reason'] = 'not_enough_coins';
+                    ret['error_reason'] = 'game_gone';
+                } else if (g.player1 && g.player1.id == session.user_id) {
+                    ret['error'] = true;
+                    ret['error_reason'] = 'your_game';
+                } else if (g.player2 != null) {
+                    ret['error'] = true;
+                    ret['error_reason'] = 'challenger_exists';
+                } else {
+                    User u = User.findById(session.user_id);
+                    if (GosuCoinService.canUserCreateOrJoinGame(u, g)) {
+                        def emailType = '';
+                        if (!g.player1) {
+                            g.player1 = u;
+                            emailType = 'player1-joined-wager';
+                        } else if (!g.player2) {
+                            emailType = 'player2-joined-wager';
+                            g.player2 = u;
+                        }
+
+                        if (g.save()) {
+                            SendEmailService.send(u, emailType, g);
+                        } else {
+                            println g.errors;
+                        }
+                        ret['game'] = g;
+                        ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
+                    } else {
+                        ret['error'] = true;
+                        ret['error_reason'] = 'not_enough_coins';
+                    }
                 }
+
+            } else {
+                ret['error'] = true;
+                ret['error_reason'] = 'not_logged_in';
             }
             render ret as JSON;
         }

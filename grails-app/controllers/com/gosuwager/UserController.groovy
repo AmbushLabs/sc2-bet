@@ -53,7 +53,11 @@ class UserController {
                         ret = DashboardService.getInitializeData(u);
                         ret['status'] = 'success';
                         SendEmailService.send(u, 'confirm-email', e);
+                    } else {
+                        println u.errors;
                     }
+                } else {
+                    println e.errors;
                 }
             }
             if (!isSuccessful) {

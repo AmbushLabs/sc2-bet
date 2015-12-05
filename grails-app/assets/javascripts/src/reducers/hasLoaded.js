@@ -8,7 +8,7 @@ const loggedIn = function(state = false, action = {}) {
             if (action.isFetching || action.is_fetching) { //AHHHH I DID THIS TO MYSELF :(
                 return state;
             }
-            return action.data.logged_in;
+            return action.data.has_loaded;
     }
     return state;
 };

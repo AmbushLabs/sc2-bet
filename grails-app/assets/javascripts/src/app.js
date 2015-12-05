@@ -48,13 +48,18 @@ class App extends Component {
 
     render() {
         const { dispatch } = this.props;
+        if (!this.props.hasLoaded) {
+            return (<div>&nbsp;</div>); //TODO: LOADING
+        }
         return (
             <section>
                 <NavBar
                     loggedIn={this.props.loggedIn}
                     remainingTokens={this.props.gosuCoins.remaining}
                     />
-                <ErrorToast />
+                <ErrorToast
+                    errors={this.props.errors}
+                    dispatch={dispatch} />
                 {this.getChildren()}
                 {this.buildEmailModal()}
                 <PageNotification

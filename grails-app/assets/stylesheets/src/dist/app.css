@@ -1,6 +1,12 @@
 .gosu-blue-bg {
   background-color: #1a3061; }
 
+.gosu-blue-text {
+  color: #1a3061; }
+
+.gosu-light-blue-bg {
+  background-color: #e0e6f3; }
+
 .modal:before {
   content: "";
   display: block;
@@ -58,3 +64,15 @@
 .is_error {
   color: #D8000C;
   background-color: #FFBABA; }
+
+.is_hidden {
+  display: none; }
+
+.game-card-user .gcu-avatar {
+  position: absolute;
+  margin: 20px 0px 0px 10px;
+  height: 80px;
+  width: 80px; }
+
+.game-card-user .gcu-right-container {
+  padding-left: 110px; }

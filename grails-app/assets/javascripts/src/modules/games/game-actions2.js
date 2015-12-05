@@ -57,16 +57,20 @@ const GameActions = ({game, dispatch}) => {
                 </div>
             );
         } else if (game.is_player2) {
+            console.log('is player 2 leave button');
             //show either: 1) waiting on player1 OR 2) leave game
-            <div className="col col-12">
-                <LeaveButton
-                    dispatch={dispatch}
-                    gameId={game.id}
-                    loading={game.is_leaving}
-                    colClass="col-12"
-                    />
-            </div>
+            return (
+                <div className="col col-12">
+                    <LeaveButton
+                        dispatch={dispatch}
+                        gameId={game.id}
+                        loading={game.is_leaving}
+                        colClass="col-12"
+                        />
+                </div>
+            );
         } else {
+            console.log('no controls');
             //no controls
         }
     }

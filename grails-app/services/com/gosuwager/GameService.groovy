@@ -31,12 +31,9 @@ class GameService {
 
     def createGamesForRankAndGosuCoins(Integer rank, gosuCoinAmounts) {
         def currentGames = Game.findAllByRankAndActiveAndIsPrivateAndPlayer2IsNull(rank, true, false);
-        println 'current games: ' + currentGames;
         def currentGameAmounts = currentGames.collect { it.gosuCoin };
 
         def remaining = gosuCoinAmounts - currentGameAmounts;
-
-        println 'remaining to create: ' + remaining;
 
         remaining.each { amt ->
             Game g = new Game([

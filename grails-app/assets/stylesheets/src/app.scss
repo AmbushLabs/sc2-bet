@@ -1,9 +1,20 @@
 $gosu-blue: #1a3061;
+$gosu-light-blue: #e0e6f3;
 $text-on-gosu-blue: #ffffff;
 
 .gosu-blue-bg {
     background-color: $gosu-blue;
 }
 
+.gosu-blue-text {
+    color: $gosu-blue;
+}
+
+.gosu-light-blue-bg {
+    background-color: $gosu-light-blue;
+}
+
 @import "modal";
 @import "errors";
+@import "game_card_user";
+

@@ -17,7 +17,7 @@ const join = (game_id) => {
                 dispatch({
                     type: JOIN_GAME,
                     is_fetching: false,
-                    status: 'success',
+                    status: (json && json.error) ? 'error' : 'success',
                     data: json
                 })
         );

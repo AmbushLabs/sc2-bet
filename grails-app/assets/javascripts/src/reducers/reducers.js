@@ -8,6 +8,7 @@ import user from './user';
 import createGameModalVisible from './createGameModalVisible';
 import loggedIn from './loggedIn';
 import hasEmail from './hasEmail';
+import hasLoaded from './hasLoaded';
 import notifications from './notifications';
 import errors from './errors';
 import gosuCoins from './gosuCoins';
@@ -20,6 +21,7 @@ const reducer = combineReducers({
     games: games,
     user: user,
     loggedIn: loggedIn,
+    hasLoaded: hasLoaded,
     notifications: notifications,
     errors: errors,
     gosuCoins: gosuCoins,

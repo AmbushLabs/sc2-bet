@@ -7,18 +7,26 @@ import {
     CANCEL_GAME,
     ACCEPT_CHALLENGER,
     REJECT_CHALLENGER,
-    INITIALIZE_APP
+    INITIALIZE_APP,
+    CLEAR_ERRORS
 } from './../actions/actions';
 
-const errors = function(state = {error: false, reasonType: ''}, action = {}) {
+import errorMessages from './errors/errors-messages';
+
+const errors = function(state = [], action = {}) {
     switch(action.type) {
         case CREATE_GAME:
+        case JOIN_GAME:
             if (action && action.data && action.data.error) {
-                return {
+                return [{
                     error: true,
-                    reasonType: action.data.error_reason
-                };
+                    reasonType: action.data.error_reason,
+                    errorDetail: errorMessages(action.data.error_reason)
+                }];
             }
+        break;
+        case CLEAR_ERRORS:
+            return [];
         break;
     }
 

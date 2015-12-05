@@ -11,6 +11,7 @@ class Dashboard extends Component {
     constructor(options) {
         super(options);
         this.getSearchGames = this.getSearchGames.bind(this);
+        this.getSelectedText = this.getSelectedText.bind(this);
     }
 
     render() {
@@ -40,12 +41,12 @@ class Dashboard extends Component {
                                 ref="currentRank"
                                 onChange={() => this.onChangeGames()}>
                             <optgroup label="Select a Rank">
-                                <option value="1">Master</option>
-                                <option value="2">Diamond</option>
-                                <option value="3">Platinum</option>
-                                <option value="4">Gold</option>
-                                <option value="5">Silver</option>
-                                <option value="6">Bronze</option>
+                                <option value="1" selected={this.getSelectedText(1)}>Master</option>
+                                <option value="2" selected={this.getSelectedText(2)}>Diamond</option>
+                                <option value="3" selected={this.getSelectedText(3)}>Platinum</option>
+                                <option value="4" selected={this.getSelectedText(4)}>Gold</option>
+                                <option value="5" selected={this.getSelectedText(5)}>Silver</option>
+                                <option value="6" selected={this.getSelectedText(6)}>Bronze</option>
                             </optgroup>
                         </select>
                     </section>
@@ -64,6 +65,13 @@ class Dashboard extends Component {
                 </section>
             </section>
         );
+    }
+
+    getSelectedText(rank) {
+        if(this.props && this.props.games && this.props.games.selected_rank == rank) {
+            return 'selected';
+        }
+        return '';
     }
 
     onChangeGames() {

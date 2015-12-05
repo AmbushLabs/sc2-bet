@@ -9,8 +9,9 @@ class DashboardService {
     def ReplayService;
     def GameService;
 
-    def getInitializeData(User u) {
+    def getInitializeData(u) {
         def ret = [:];
+        ret['has_loaded'] = true;
         if (u == null) {
             ret['logged_in'] = false;
         } else {
@@ -22,7 +23,6 @@ class DashboardService {
             }
             ret['user'] = u;
 
-            GameService.createPrivateGamesForUser(u, [10, 50, 100, 500, 1000])
             GameService.initializeGames();
 
             ret['games'] = [:];
@@ -39,8 +39,12 @@ class DashboardService {
             def search = Game.findAllByActiveAndChallengerAcceptedAndIsPrivateAndPlayer2IsNull(true, false, false, [sort:"createDate", order:"desc"]);
             def search_count = Game.countByActiveAndChallengerAcceptedAndIsPrivateAndPlayer2IsNull(true, false, false);
 
-            def waiting = Game.findAllByActiveAndPlayer1AndIsPrivateAndPlayer2IsNull(true, u, false, [sort:"createDate", order:"desc"]);
-            def waiting_count = Game.countByActiveAndPlayer1AndIsPrivateAndPlayer2IsNull(true, u, false);
+            def waitingQuery = Game.where {
+                active == true && isPrivate == false && ((player1 == u && player2 == null) || (player2 == u && challengerAccepted == false))
+            }
+            def waiting = waitingQuery.list(sort:"createDate", order:"desc");
+            //Game.findAllByActiveAndPlayer1AndIsPrivateAndPlayer2IsNull(true, u, false, [sort:"createDate", order:"desc"]);
+            def waiting_count = waitingQuery.count();
 
             (ready + to_approve + search + waiting).each { g ->
                 ret['games']['all'][g.id] = g;
