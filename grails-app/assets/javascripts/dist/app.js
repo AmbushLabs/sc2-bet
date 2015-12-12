@@ -2626,31 +2626,47 @@ var AddCoins = (function (_Component) {
         value: function render() {
             return _react2['default'].createElement(
                 'div',
-                null,
-                _react2['default'].createElement(_addGosuCoinButton2['default'], {
-                    price: '5.00',
-                    priceCents: 500,
-                    numCoins: 500,
-                    user: this.props.user,
-                    dispatch: this.props.dispatch }),
-                _react2['default'].createElement(_addGosuCoinButton2['default'], {
-                    price: '10.00',
-                    priceCents: 1000,
-                    numCoins: 1025,
-                    user: this.props.user,
-                    dispatch: this.props.dispatch }),
-                _react2['default'].createElement(_addGosuCoinButton2['default'], {
-                    price: '20.00',
-                    priceCents: 2000,
-                    numCoins: 2060,
-                    user: this.props.user,
-                    dispatch: this.props.dispatch }),
-                _react2['default'].createElement(_addGosuCoinButton2['default'], {
-                    price: '50.00',
-                    priceCents: 5000,
-                    numCoins: 5175,
-                    user: this.props.user,
-                    dispatch: this.props.dispatch })
+                { className: 'col col-12 clearfix' },
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'col col-3' },
+                    _react2['default'].createElement(_addGosuCoinButton2['default'], {
+                        price: '5.00',
+                        priceCents: 500,
+                        numCoins: 500,
+                        user: this.props.user,
+                        dispatch: this.props.dispatch })
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'col col-3' },
+                    _react2['default'].createElement(_addGosuCoinButton2['default'], {
+                        price: '10.00',
+                        priceCents: 1000,
+                        numCoins: 1025,
+                        user: this.props.user,
+                        dispatch: this.props.dispatch })
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'col col-3' },
+                    _react2['default'].createElement(_addGosuCoinButton2['default'], {
+                        price: '20.00',
+                        priceCents: 2000,
+                        numCoins: 2060,
+                        user: this.props.user,
+                        dispatch: this.props.dispatch })
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'col col-3' },
+                    _react2['default'].createElement(_addGosuCoinButton2['default'], {
+                        price: '50.00',
+                        priceCents: 5000,
+                        numCoins: 5175,
+                        user: this.props.user,
+                        dispatch: this.props.dispatch })
+                )
             );
         }
     }, {
@@ -2724,8 +2740,8 @@ var AddGosuCoinButton = (function (_Component) {
         value: function render() {
             return _react2['default'].createElement(
                 'button',
-                { onClick: this.showBuyCoins, className: 'btn btn-outline blue m2' },
-                'Buy ',
+                { onClick: this.showBuyCoins, className: 'btn btn-outline blue m2 h5 gosu-blue-text' },
+                'Add ',
                 this.props.numCoins,
                 ' GC for $',
                 this.props.price
@@ -2806,23 +2822,53 @@ var GosuCoinBalance = (function (_Component) {
             if (this.props.gosuCoins) {
                 return _react2["default"].createElement(
                     "div",
-                    { className: "sm-col-6 border p2 m2 clearfix" },
+                    { className: "col col-12 clearfix mt3" },
                     _react2["default"].createElement(
                         "div",
-                        { className: "col sm-col-8" },
-                        "You currently have ",
-                        this.props.gosuCoins.remaining,
-                        " GC, valued at $",
-                        this.props.gosuCoins.remaining_value
+                        { className: "col col-4" },
+                        " "
                     ),
                     _react2["default"].createElement(
                         "div",
-                        { className: "col sm-col-4 right" },
+                        { className: "col col-4 border m2 gosu-light-blue-bg" },
                         _react2["default"].createElement(
-                            "button",
-                            { type: "button", className: "btn btn-primary" },
-                            "Withdraw"
+                            "div",
+                            { className: "col col-12 p2" },
+                            _react2["default"].createElement(
+                                "p",
+                                { className: "h3 gosu-blue-text center" },
+                                "Current Gosu Coin Balance"
+                            ),
+                            _react2["default"].createElement(
+                                "p",
+                                { className: "h5 center" },
+                                "You have ",
+                                _react2["default"].createElement(
+                                    "span",
+                                    { className: "bold gosu-blue-text" },
+                                    this.props.gosuCoins.remaining,
+                                    " GC"
+                                ),
+                                ", valued at ",
+                                _react2["default"].createElement(
+                                    "span",
+                                    { className: "bold gosu-blue-text" },
+                                    "$",
+                                    this.props.gosuCoins.remaining_value
+                                ),
+                                "."
+                            )
+                        ),
+                        _react2["default"].createElement(
+                            "div",
+                            { className: "col col-12 gosu-blue-bg" },
+                            " "
                         )
+                    ),
+                    _react2["default"].createElement(
+                        "div",
+                        { className: "col col-4" },
+                        " "
                     )
                 );
             }
@@ -2884,15 +2930,38 @@ var GosuCoins = (function (_Component) {
         value: function render() {
             return _react2['default'].createElement(
                 'div',
-                null,
-                _react2['default'].createElement(_addCoins2['default'], {
-                    user: this.props.user,
-                    dispatch: this.props.dispatch
-                }),
-                _react2['default'].createElement(_gosuCoinBalance2['default'], {
-                    gosuCoins: this.props.gosuCoins
-                }),
-                _react2['default'].createElement(_addBankAccount2['default'], null)
+                { className: 'col col-12' },
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'col col-2' },
+                    ' '
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'col col-8' },
+                    _react2['default'].createElement(
+                        'p',
+                        { className: 'h1 center mt3 gosu-blue-text' },
+                        'Add more Gosu Coins to Your Account'
+                    ),
+                    _react2['default'].createElement(_addCoins2['default'], {
+                        user: this.props.user,
+                        dispatch: this.props.dispatch
+                    }),
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'col col-12 border-top mt3' },
+                        ' '
+                    ),
+                    _react2['default'].createElement(_gosuCoinBalance2['default'], {
+                        gosuCoins: this.props.gosuCoins
+                    })
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'col col-2' },
+                    ' '
+                )
             );
         }
     }]);

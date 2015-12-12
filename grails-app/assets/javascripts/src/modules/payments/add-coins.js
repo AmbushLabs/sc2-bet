@@ -11,31 +11,39 @@ export default class AddCoins extends Component {
 
     render() {
         return (
-            <div>
+            <div className="col col-12 clearfix">
+                <div className="col col-3">
                 <AddGosuCoinButton
                     price="5.00"
                     priceCents={500}
                     numCoins={500}
                     user={this.props.user}
                     dispatch={this.props.dispatch} />
+                </div>
+                <div className="col col-3">
                 <AddGosuCoinButton
                     price="10.00"
                     priceCents={1000}
                     numCoins={1025}
                     user={this.props.user}
                     dispatch={this.props.dispatch} />
+                </div>
+                <div className="col col-3">
                 <AddGosuCoinButton
                     price="20.00"
                     priceCents={2000}
                     numCoins={2060}
                     user={this.props.user}
                     dispatch={this.props.dispatch} />
+                </div>
+                <div className="col col-3">
                 <AddGosuCoinButton
                     price="50.00"
                     priceCents={5000}
                     numCoins={5175}
                     user={this.props.user}
                     dispatch={this.props.dispatch} />
+                </div>
             </div>
         );
     }

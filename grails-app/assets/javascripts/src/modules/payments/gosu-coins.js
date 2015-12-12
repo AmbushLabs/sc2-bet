@@ -11,18 +11,24 @@ export default class GosuCoins extends Component {
 
     render() {
         return (
-            <div>
-                <AddCoins
-                    user={this.props.user}
-                    dispatch={this.props.dispatch}
-                    />
-                <GosuCoinBalance
-                    gosuCoins={this.props.gosuCoins}
-                    />
-                <AddBankAccount
-
-                    />
-
+            <div className="col col-12">
+                <div className="col col-2">
+                    &nbsp;
+                </div>
+                <div className="col col-8">
+                    <p className="h1 center mt3 gosu-blue-text">Add more Gosu Coins to Your Account</p>
+                    <AddCoins
+                        user={this.props.user}
+                        dispatch={this.props.dispatch}
+                        />
+                    <div className="col col-12 border-top mt3">&nbsp;</div>
+                    <GosuCoinBalance
+                        gosuCoins={this.props.gosuCoins}
+                        />
+                </div>
+                <div className="col col-2">
+                    &nbsp;
+                </div>
             </div>
         );
     }

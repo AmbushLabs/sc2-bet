@@ -10,7 +10,7 @@ export default class AddGosuCoinButton extends Component {
 
     render() {
         return (
-            <button onClick={this.showBuyCoins} className="btn btn-outline blue m2">Buy {this.props.numCoins} GC for ${this.props.price}</button>
+            <button onClick={this.showBuyCoins} className="btn btn-outline blue m2 h5 gosu-blue-text">Add {this.props.numCoins} GC for ${this.props.price}</button>
         );
     }
 

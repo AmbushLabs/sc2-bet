@@ -9,14 +9,21 @@ export default class GosuCoinBalance extends Component {
     render() {
         if (this.props.gosuCoins) {
             return (
-                <div className="sm-col-6 border p2 m2 clearfix">
-                    <div className="col sm-col-8">
-                        You currently have {this.props.gosuCoins.remaining} GC,
-                        valued at ${this.props.gosuCoins.remaining_value}
+                <div className="col col-12 clearfix mt3">
+                    <div className="col col-4">&nbsp;</div>
+                    <div className="col col-4 border m2 gosu-light-blue-bg">
+                        <div className="col col-12 p2">
+                            <p className="h3 gosu-blue-text center">Current Gosu Coin Balance</p>
+                            <p className="h5 center">
+                                You have <span className="bold gosu-blue-text">{this.props.gosuCoins.remaining} GC</span>,
+                                valued at <span className="bold gosu-blue-text">${this.props.gosuCoins.remaining_value}</span>.
+                            </p>
+                        </div>
+                        <div className="col col-12 gosu-blue-bg">
+                            &nbsp;
+                        </div>
                     </div>
-                    <div className="col sm-col-4 right">
-                        <button type="button" className="btn btn-primary">Withdraw</button>
-                    </div>
+                    <div className="col col-4">&nbsp;</div>
                 </div>
             );
         }

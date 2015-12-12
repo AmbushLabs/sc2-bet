@@ -11,6 +11,7 @@ class UserController {
 
     def hasEmail() {
         def ret = [:];
+        ret['has_loaded'] = true;
         User u = User.findById(session.user_id);
         if (u != null && u.emails.find { it.isActive && it.isPrimary }) {
             ret['has_email'] = true;
