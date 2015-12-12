@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({ user }) => {
+export default ({ user, userId }) => {
     var bgColor = 'gosu-blue-bg';
     var gcuAvatar = '';
     if (!user.avatar_url || user.avatar_url == '' || user.avatar_url.indexOf('http') < 0) {
@@ -17,7 +17,7 @@ export default ({ user }) => {
             <div className={"col col-12 p1 " + bgColor}>
                 <div className="gcu-right-container">
                     <div className="h6 silver">YOUR ACCOUNT</div>
-                    <div className="h4 white">{user.display_name}</div>
+                    <div className="h4 white"><a href={"/p/" + userId}>{user.display_name}</a></div>
                 </div>
             </div>
             <div className="col col-12 gosu-light-blue-bg">

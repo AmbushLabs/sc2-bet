@@ -43,7 +43,7 @@ export default class LandingPage extends Component {
                 </section>
             </div>
         );
-    }
+    } 
 
     signUp() {
         var loginWindow = window.open(

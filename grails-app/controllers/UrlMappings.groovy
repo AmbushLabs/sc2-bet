@@ -19,7 +19,11 @@ class UrlMappings {
         "/game/$game_id/reject"(controller:"game", action:"reject")
         "/game/g/$game_id"(controller:"game", action:"index")
 
+        "/user/profile/$user_id"(controller:"user", action:"profile")
+
         "/w/$game_id" (controller:"game", action:"permalink")
+
+        "/p/$user_id" (controller:"main", action:"index")
 
         "/game/list/$list_type"(controller:"game", action:"list")
 

@@ -30,7 +30,7 @@ const GameCardUser = ({ user }) => {
             <div className={"col col-12 p1 " + bgColor}>
                 <div className="gcu-right-container">
                     <div className="h6 silver">{challenger}</div>
-                    <div className="h4 white">{user.display_name}</div>
+                    <div className="h4 white"><a href={"/p/" + user.user_id}>{user.display_name}</a></div>
                 </div>
             </div>
             <div className="col col-12 gosu-light-blue-bg">

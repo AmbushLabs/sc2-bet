@@ -46,11 +46,13 @@ class GameMarshaller {
             if (g.player1) {
                 def creatorCharacter = g.player1.battleNetAccount.characters.first();
                 ret['player1'] = getCharacterMap(creatorCharacter);
+                ret['player1']['user_id'] = g.player1.id;
             }
 
             if (g.player2) {
                 def challengerCharacter = g.player2.battleNetAccount.characters.first();
                 ret['player2'] = getCharacterMap(challengerCharacter);
+                ret['player2']['user_id'] = g.player2.id;
             }
 
             return ret;
