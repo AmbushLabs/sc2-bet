@@ -18,13 +18,14 @@ class Dashboard extends Component {
         return (
             <section className="bg-darken-1 p2 clearfix">
                 <section className="col col-6 pr2 pb2">
-                    <div className="bg-white p1 mr2 mb2 clearfix">
-                        <ProfileCard user="user data in dis here"
+                    <div className="mr2 mb2 clearfix">
+                        <ProfileCard
+                            user={this.props.user}
                             />
                     </div>
                 </section>
                 <section className="col col-6">
-                    <div className="bg-white p1 mb2 clearfix">
+                    <div className="bg-white p1 mb2 clearfix my-games">
                         <MyGames
                             games={this.props.games}
                             dispatch={this.props.dispatch}
@@ -34,7 +35,7 @@ class Dashboard extends Component {
                 <div className="clearfix"></div>
                 <section className="col col-12 bg-white p1">
                     <section className="col col-9">
-                        <p className="h3">Find a Game</p>
+                        <p className="h3 ml1 mt1">Find a Game</p>
                     </section>
                     <section className="col col-3 right">
                         <select className="block col-12 field"

@@ -7,6 +7,10 @@
 .gosu-light-blue-bg {
   background-color: #e0e6f3; }
 
+.gosu-empire-logo-header {
+  height: 20px;
+  width: auto; }
+
 .modal:before {
   content: "";
   display: block;
@@ -68,6 +72,9 @@
 .is_hidden {
   display: none; }
 
+.game-card-full-user {
+  min-height: 285px; }
+
 .game-card-user .gcu-avatar {
   position: absolute;
   margin: 20px 0px 0px 10px;
@@ -76,3 +83,6 @@
 
 .game-card-user .gcu-right-container {
   padding-left: 110px; }
+
+.my-games {
+  min-height: 269px; }
