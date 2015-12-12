@@ -4,6 +4,7 @@ class Game {
     private static final Date NULL_DATE = new Date(0)
 
     Date createDate = NULL_DATE;
+    Date challengerAcceptedDate = NULL_DATE;
     Integer gosuCoin;
 
     User player1;
@@ -45,5 +46,6 @@ class Game {
         player2 nullable: true;
         winner nullable: true;
         rank nullable: true;
+        challengerAcceptedDate nullable: true;
     }
 }

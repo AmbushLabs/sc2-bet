@@ -87,5 +87,11 @@
 .my-games {
   min-height: 269px; }
 
+.replay-drop-zone {
+  border: 1px solid #1a3061;
+  cursor: pointer; }
+  .replay-drop-zone:hover {
+    color: #BB6622; }
+
 .big-symbol {
   font-size: 3em; }

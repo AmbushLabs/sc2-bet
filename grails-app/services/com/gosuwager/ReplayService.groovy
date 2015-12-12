@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model.GetObjectRequest
 import com.amazonaws.services.s3.model.S3Object
 import com.devdaily.system.ThreadedStreamHandler
-import net.sf.json.JSONObject
+import org.grails.web.json.JSONObject
 import sun.misc.BASE64Encoder
 import grails.transaction.Transactional
 
@@ -15,6 +15,23 @@ import javax.crypto.spec.SecretKeySpec
 
 @Transactional
 class ReplayService {
+
+    def arePlayersValid(GameReplay gr) {
+        def char1 = null, char2 = null;
+        gr.game.player1.battleNetAccount.characters.each {
+            if (it.characterId == gr.player1Uid
+                    || it.characterId == gr.player2Uid) {
+                char1 = it;
+            }
+        }
+        gr.game.player2.battleNetAccount.characters.each {
+            if (it.characterId == gr.player1Uid
+                    || it.characterId == gr.player2Uid) {
+                char2 = it;
+            }
+        }
+        return (char1 != null && char2 != null);
+    }
 
     def updateGameFromReplay(GameReplay gr) {
         if (gr.processed && gr.game.player1 && gr.game.player2 && gr.game.challengerAccepted) {
@@ -53,11 +70,6 @@ class ReplayService {
                 gr.game.winner = "player1";
             } else {
                 gr.game.winner = "player2";
-            }
-            if (gr.game.save()) {
-
-            } else {
-                println gr.game.errors
             }
         }
     }
@@ -130,18 +142,20 @@ class ReplayService {
         inputStreamHandler.join();
         errorStreamHandler.join();
 
-        //println 'error: ' + errorStreamHandler.getOutputBuffer();
+        println 'error: ' + errorStreamHandler.getOutputBuffer();
 
         String jsonGameData = inputStreamHandler.getOutputBuffer().toString();
+        println jsonGameData;
         return new JSONObject(jsonGameData);
+
     }
 
     def updateReplayFromJSONReplay(JSONObject jgd, GameReplay replay) {
         JSONObject player1 = jgd.getJSONObject("player_1_detail_data")
         JSONObject player2 = jgd.getJSONObject("player_2_detail_data")
 
-        replay.gameStartTime = new Date(jgd.getInt("start_time"));
-        replay.gameEndTime = new Date(jgd.getInt("end_time"));
+        replay.gameStartTime = new Date(jgd.getLong("start_time"));
+        //replay.gameEndTime = new Date(jgd.getLong("end_time"));
         replay.mapName = jgd.getString("map_name");
         replay.numberOfPlayers = jgd.getInt("num_players");
         replay.player1Race = jgd.getString("player_1_pick_race");
@@ -151,18 +165,17 @@ class ReplayService {
 
 
         JSONObject p1bnet = player1.getJSONObject("bnet");
-        replay.player1Name = p1bnet.getString("name");
-        replay.player1BnetRegion = p1bnet.getString("region");
-        replay.player1BnetSubRegion = p1bnet.getString("subregion");
-        replay.player1Uid = p1bnet.getString("uid");
+        replay.player1Name = player1.getString("name");
+        replay.player1BnetRegion = p1bnet.getInt("region");
+        replay.player1BnetSubRegion = p1bnet.getInt("subregion");
+        replay.player1Uid = p1bnet.getInt("uid");
 
         JSONObject p2bnet = player2.getJSONObject("bnet");
-        replay.player2Name = p2bnet.getString("name");
-        replay.player2BnetRegion = p2bnet.getString("region");
-        replay.player2BnetSubRegion = p2bnet.getString("subregion");
-        replay.player2Uid = p2bnet.getString("uid");
+        replay.player2Name = player2.getString("name");
+        replay.player2BnetRegion = p2bnet.getInt("region");
+        replay.player2BnetSubRegion = p2bnet.getInt("subregion");
+        replay.player2Uid = p2bnet.getInt("uid");
 
-        replay.processed = true;
         if (replay.save()) {
             return true;
         } else {

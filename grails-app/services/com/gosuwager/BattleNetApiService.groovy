@@ -65,9 +65,9 @@ class BattleNetApiService {
                     character.name = charJson.get('name').getAsString();
                     character.displayName = charJson.get('displayName').getAsString();
 
-                    def random = Random.newInstance();
-                    def rNum = random.nextInt(50);
-                    character.displayName = character.displayName + rNum;
+                    //def random = Random.newInstance();
+                    //def rNum = random.nextInt(50);
+                    character.displayName = character.displayName;// + rNum;
 
 
                     character.clanName = charJson.get('clanName').getAsString();

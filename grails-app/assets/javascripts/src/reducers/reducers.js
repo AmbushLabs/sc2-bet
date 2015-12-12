@@ -14,6 +14,7 @@ import errors from './errors';
 import gosuCoins from './gosuCoins';
 import s3 from './s3';
 import profile from './profile';
+import gameReplay from './gameReplay';
 
 const reducer = combineReducers({
     router: routerStateReducer,
@@ -27,7 +28,8 @@ const reducer = combineReducers({
     errors: errors,
     gosuCoins: gosuCoins,
     s3: s3,
-    profile: profile
+    profile: profile,
+    gameReplay: gameReplay
 });
 
 export default reducer;

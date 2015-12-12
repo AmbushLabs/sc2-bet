@@ -1,3 +1,4 @@
+import com.gosuwager.marshallers.GameReplayMarshaller
 import com.gosuwager.marshallers.ObjectMarshallers
 import com.gosuwager.marshallers.GameMarshaller
 import com.gosuwager.marshallers.UserMarshaller
@@ -7,7 +8,8 @@ beans = {
     objectMarshallers(ObjectMarshallers) {
         marshallers = [
             new GameMarshaller(),
-            new UserMarshaller()
+            new UserMarshaller(),
+            new GameReplayMarshaller()
         ]
     }
 

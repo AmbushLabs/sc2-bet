@@ -17,6 +17,7 @@ class GameReplay {
     Boolean processed = false;
     Boolean processing = false;
     Boolean isValidForGame = false;
+    String errorReason; //start_time_before_accepted, invalid_players
 
     //post processed data
     Date gameStartTime;
@@ -78,5 +79,7 @@ class GameReplay {
         player2BnetRegion nullable: true
         player2BnetSubRegion nullable: true
         player2Uid nullable: true
+
+        errorReason nullable: true
     }
 }

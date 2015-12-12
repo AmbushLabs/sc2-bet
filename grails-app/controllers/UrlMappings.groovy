@@ -18,6 +18,7 @@ class UrlMappings {
         "/game/$game_id/accept"(controller:"game", action:"accept")
         "/game/$game_id/reject"(controller:"game", action:"reject")
         "/game/g/$game_id"(controller:"game", action:"index")
+        "/game/replay/$game_id"(controller:"game", action:"replayInfo")
 
         "/user/profile/$user_id"(controller:"user", action:"profile")
 

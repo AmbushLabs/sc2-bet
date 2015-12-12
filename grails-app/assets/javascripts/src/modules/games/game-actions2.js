@@ -19,12 +19,7 @@ const GameActions = ({game, dispatch}) => {
             //play time!
             return (
                 <div className="col col-12">
-                    <JoinChatButton
-                        dispatch={dispatch}
-                        gameId={game.id}
-                        loading={false}
-                        colClass="col-12"
-                        />
+
                 </div>
             );
         } else if (game.is_player1) {

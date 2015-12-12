@@ -33,6 +33,10 @@ class GameController {
             Game g = Game.findById(params.game_id);
             def ret = [:]
             if (g != null) {
+                def replayQuery = GameReplay.where {
+                    game == g
+                };
+                ret['game_replay'] = replayQuery.find(sort:"createDate", order:"desc");
                 ret['game'] = g;
                 ret['status'] = 'success';
                 render ret as JSON;
@@ -189,6 +193,7 @@ class GameController {
                 ret['error_reason'] = 'already_accepted';
             } else {
                 g.challengerAccepted = true;
+                g.challengerAcceptedDate = new Date();
                 if (g.save()) {
                     SendEmailService.send(g.player2, 'player1-accepted-challenge', g);
                 }
@@ -260,8 +265,32 @@ class GameController {
         render ret as JSON;
     }
 
+    def replayInfo() {
+        def ret = [:]
+        if (request.method == 'GET' && params.game_id) {
+            //either get a specific game
+            Game g = Game.findById(params.game_id);
+            if (g != null) {
+                def replayQuery = GameReplay.where {
+                    game == g
+                };
+                ret['game_replay'] = replayQuery.find(sort: "createDate", order: "desc");
+                ret['game'] = g;
+                ret['status'] = 'success';
+                render ret as JSON;
+            } else {
+                ret['error'] = true;
+                ret['status'] = 'error';
+                render ret as JSON;
+            }
+        }
+        render ret as JSON;
+    }
+
     def completeUpload() {
-        if (params.key && params.bucket) {
+
+        if (params.key && params.bucket && session.user_id) {
+            User u = User.findById(session.user_id);
             def fullPath = params.key;
             def explodedPath = fullPath.split("/");
             def gameId = Integer.valueOf(explodedPath[1]);
@@ -271,10 +300,10 @@ class GameController {
                 replayFullPath: fullPath,
                 bucket: params.bucket,
                 etag: params.etag,
-                game: game
+                game: game,
+                user: u
             );
             if (gr.save()) {
-
 
             } else {
                 println gr.errors;

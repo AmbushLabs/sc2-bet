@@ -1,6 +1,7 @@
 package com.gosuwager
 
-import net.sf.json.JSONObject
+import org.grails.web.json.JSONObject
+
 
 class ProcessReplayJob {
 
@@ -28,13 +29,45 @@ class ProcessReplayJob {
 
                 try {
                     JSONObject jgd = ReplayService.getJsonFromReplayFile(localFile);
+                    //first check the thing.
+                    Date d = new Date(jgd.getLong("start_time"));
                     if (ReplayService.updateReplayFromJSONReplay(jgd, replayToProcess)) {
                         println "processed and updated successfully";
-                        println "updating game and winner details"
-                        ReplayService.updateGameFromReplay(replayToProcess);
+                        if (1==0 && d.getTime() < replayToProcess.game.challengerAcceptedDate.getTime()) {
+                            //invalid...
+                            println 'invalid because of time'
+                            replayToProcess.isValidForGame = false;
+                            replayToProcess.errorReason = 'start_time_before_accepted';
+                        } else {
+                            def isTwoPlayers = replayToProcess.numberOfPlayers == 2;
+                            def validPlayers = ReplayService.arePlayersValid(replayToProcess);
+                            if (!isTwoPlayers) {
+                                println "invalid number of players";
+                                replayToProcess.isValidForGame = false;
+                                replayToProcess.errorReason = 'invalid_player_number';
+                            } else if (!validPlayers) {
+                                println "invalid players";
+                                replayToProcess.isValidForGame = false;
+                                replayToProcess.errorReason = 'invalid_players';
+                            } else {
+                                println "updating game and winner details";
+                                replayToProcess.isValidForGame = true;
+                                ReplayService.updateGameFromReplay(replayToProcess);
+                            }
+                        }
+
+                    }
+                    replayToProcess.processed = true;
+                    replayToProcess.processing = false;
+                    if (replayToProcess.game.save() && replayToProcess.save()) {
+
+                    } else {
+                        println replayToProcess.errors;
+                        println replayToProcess.game.errors
                     }
                 } catch (Exception ex) {
                     println ex;
+                    ex.printStackTrace();
                 }
                 println 'processed ' + replayToProcess.replayFullPath;
             } else {
