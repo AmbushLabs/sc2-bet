@@ -2060,26 +2060,26 @@ var LandingPage = (function (_Component) {
                 null,
                 _react2['default'].createElement(
                     'header',
-                    { className: 'center px3 py4 white bg-navy bg-cover bg-center' },
+                    { className: 'center px3 py4 white bg-no-repeat bg-cover bg-center', style: 'background-image: url(https://s3-us-west-2.amazonaws.com/gosuempire/assets/banner-gosu-empire.png);' },
                     _react2['default'].createElement(
                         'h1',
                         { className: 'h1 h0-responsive caps mt4 mb0 regular' },
-                        'Gosu Wager'
+                        'GosuEmpire'
                     ),
                     _react2['default'].createElement(
                         'p',
                         { className: 'h3' },
-                        'Play the craphts for the duckets with yo friends'
+                        'Win real money playing Starcraft 2 against your friends'
                     ),
                     _react2['default'].createElement(
                         'a',
                         { href: '#', className: 'h4 btn btn-primary mb4', onClick: this.signUp },
-                        'Sign up'
+                        'Play Now For Free'
                     )
                 ),
                 _react2['default'].createElement(
                     'section',
-                    { className: 'container center p2' },
+                    { className: 'container center p2', style: 'background-image: url();' },
                     _react2['default'].createElement(
                         'div',
                         { className: 'flex flex-wrap mxn2' },
@@ -2088,17 +2088,17 @@ var LandingPage = (function (_Component) {
                             { className: 'sm-col-12 md-col-4' },
                             _react2['default'].createElement(
                                 'div',
-                                { className: 'p1 border rounded m2' },
+                                { className: 'p1 m2' },
                                 _react2['default'].createElement('img', { src: 'http://d2v52k3cl9vedd.cloudfront.net/assets/images/placeholder-square.svg', width: '256', height: 'auto' }),
                                 _react2['default'].createElement(
                                     'h2',
                                     null,
-                                    'Explanation 1'
+                                    'Create an Account'
                                 ),
                                 _react2['default'].createElement(
                                     'p',
                                     { className: 'm0' },
-                                    'Card'
+                                    'Signup by linking your battle.net account to GosuEmpire.'
                                 )
                             )
                         ),
@@ -2107,17 +2107,17 @@ var LandingPage = (function (_Component) {
                             { className: 'sm-col-12 md-col-4' },
                             _react2['default'].createElement(
                                 'div',
-                                { className: 'p1 border rounded m2' },
+                                { className: 'p1 m2' },
                                 _react2['default'].createElement('img', { src: 'http://d2v52k3cl9vedd.cloudfront.net/assets/images/placeholder-square.svg', width: '256', height: 'auto' }),
                                 _react2['default'].createElement(
                                     'h2',
                                     null,
-                                    'Explanation 2'
+                                    'Join a Match'
                                 ),
                                 _react2['default'].createElement(
                                     'p',
                                     { className: 'm0' },
-                                    'Card'
+                                    'Buy some GosuCoin or join a free contest to play against friends or strangers.'
                                 )
                             )
                         ),
@@ -2126,147 +2126,17 @@ var LandingPage = (function (_Component) {
                             { className: 'sm-col-12 md-col-4' },
                             _react2['default'].createElement(
                                 'div',
-                                { className: 'p1 border rounded m2' },
+                                { className: 'p1 m2' },
                                 _react2['default'].createElement('img', { src: 'http://d2v52k3cl9vedd.cloudfront.net/assets/images/placeholder-square.svg', width: '256', height: 'auto' }),
                                 _react2['default'].createElement(
                                     'h2',
                                     null,
-                                    'Explanation 3'
+                                    'Win Real Cash'
                                 ),
                                 _react2['default'].createElement(
                                     'p',
                                     { className: 'm0' },
-                                    'Card'
-                                )
-                            )
-                        )
-                    )
-                ),
-                _react2['default'].createElement(
-                    'section',
-                    { className: 'bg-silver' },
-                    _react2['default'].createElement(
-                        'section',
-                        { className: 'container px2 py3' },
-                        _react2['default'].createElement(
-                            'h1',
-                            { className: 'mt0' },
-                            'So much fun for everyone'
-                        ),
-                        _react2['default'].createElement(
-                            'div',
-                            { className: 'clearfix mxn2' },
-                            _react2['default'].createElement(
-                                'div',
-                                { className: 'sm-col sm-col-8 md-col-9 px2' },
-                                _react2['default'].createElement(
-                                    'div',
-                                    null,
-                                    _react2['default'].createElement(
-                                        'h2',
-                                        { className: 'h3' },
-                                        'Some info about something'
-                                    ),
-                                    _react2['default'].createElement(
-                                        'p',
-                                        null,
-                                        'Bacon ipsum dolor sit amet chuck prosciutto landjaeger ham hock filet mignon shoulder hamburger pig venison. Ham bacon corned beef, sausage kielbasa flank tongue pig drumstick capicola swine short loin ham hock kevin.'
-                                    ),
-                                    _react2['default'].createElement(
-                                        'a',
-                                        { href: '#' },
-                                        'Sup with that?'
-                                    )
-                                ),
-                                _react2['default'].createElement(
-                                    'div',
-                                    null,
-                                    _react2['default'].createElement(
-                                        'h2',
-                                        { className: 'h3' },
-                                        _react2['default'].createElement(
-                                            'a',
-                                            { href: '#', className: 'black' },
-                                            'Another more info'
-                                        )
-                                    ),
-                                    _react2['default'].createElement(
-                                        'p',
-                                        null,
-                                        'Bacon ipsum dolor sit amet chuck prosciutto landjaeger ham hock filet mignon shoulder hamburger pig venison. Ham bacon corned beef, sausage kielbasa flank tongue pig drumstick capicola swine short loin ham hock kevin.'
-                                    ),
-                                    _react2['default'].createElement(
-                                        'a',
-                                        { href: '#' },
-                                        'Maybe you want more?'
-                                    )
-                                )
-                            ),
-                            _react2['default'].createElement(
-                                'div',
-                                { className: 'sm-col sm-col-4 md-col-3 px2 sm-show' },
-                                _react2['default'].createElement(
-                                    'h3',
-                                    { className: 'h4' },
-                                    'Things about other things'
-                                ),
-                                _react2['default'].createElement(
-                                    'ul',
-                                    { className: 'list-reset' },
-                                    _react2['default'].createElement(
-                                        'li',
-                                        null,
-                                        _react2['default'].createElement(
-                                            'a',
-                                            { href: '#', className: '' },
-                                            'Bacon'
-                                        )
-                                    ),
-                                    _react2['default'].createElement(
-                                        'li',
-                                        null,
-                                        _react2['default'].createElement(
-                                            'a',
-                                            { href: '#', className: '' },
-                                            'Bratwurst'
-                                        )
-                                    ),
-                                    _react2['default'].createElement(
-                                        'li',
-                                        null,
-                                        _react2['default'].createElement(
-                                            'a',
-                                            { href: '#', className: '' },
-                                            'Andouille'
-                                        )
-                                    ),
-                                    _react2['default'].createElement(
-                                        'li',
-                                        null,
-                                        _react2['default'].createElement(
-                                            'a',
-                                            { href: '#', className: '' },
-                                            'Pork Loin'
-                                        )
-                                    ),
-                                    _react2['default'].createElement(
-                                        'li',
-                                        null,
-                                        _react2['default'].createElement(
-                                            'a',
-                                            { href: '#', className: '' },
-                                            'Corned Beef'
-                                        )
-                                    ),
-                                    _react2['default'].createElement(
-                                        'li',
-                                        null,
-                                        _react2['default'].createElement(
-                                            'a',
-                                            { href: '#', className: '' },
-                                            'Pastrami'
-                                        )
-                                    )
+                                    'Upload the replay from your match. GosuEmpire automatically determines the winners from data stored in SC2 replays and pays out the winner.'
                                 )
                             )
                         )
