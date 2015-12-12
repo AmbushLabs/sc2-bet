@@ -13,6 +13,7 @@ import notifications from './notifications';
 import errors from './errors';
 import gosuCoins from './gosuCoins';
 import s3 from './s3';
+import profile from './profile';
 
 const reducer = combineReducers({
     router: routerStateReducer,
@@ -25,7 +26,8 @@ const reducer = combineReducers({
     notifications: notifications,
     errors: errors,
     gosuCoins: gosuCoins,
-    s3: s3
+    s3: s3,
+    profile: profile
 });
 
 export default reducer;

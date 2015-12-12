@@ -28,6 +28,7 @@ import GosuCoins from './modules/payments/gosu-coins';
 import LandingPage from './modules/landing/landing-page';
 import PageNotification from './modules/notifications/page-notification';
 import Footer from './modules/footer/footer';
+import ProfilePage from './modules/profile-page/profile-page';
 
 
 @connect(state => (state))
@@ -142,6 +143,7 @@ class Root extends Component {
                         <Route path="/" component={App}>
                             <IndexRoute component={Dashboard} />
                             <Route path="/w/:id" component={WagerPage} />
+                            <Route path="/p/:id" component={ProfilePage} />
                             <Route path="/gosucoins" component={GosuCoins} />
                         </Route>
                     </ReduxRouter>

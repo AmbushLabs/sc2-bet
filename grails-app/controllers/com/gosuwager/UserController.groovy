@@ -69,4 +69,20 @@ class UserController {
         render ret as JSON;
     }
 
+    def profile() {
+        def ret = [:];
+        if (request.method == 'GET' && params.user_id) {
+            User u = User.findById(params.user_id);
+            ret['user'] = u;
+
+            def gamesQuery = Game.where {
+                completed == true && (player1 == u || player2 == u)
+            };
+
+            ret['games_played'] = gamesQuery.list(sort:"createDate", order:"desc");
+
+        }
+        render ret as JSON;
+    }
+
 }
