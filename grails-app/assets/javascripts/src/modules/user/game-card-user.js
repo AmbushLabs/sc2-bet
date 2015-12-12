@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GameCardUser = ({ user }) => {
+const GameCardUser = ({ user, game }) => {
     var bgColor = 'gosu-blue-bg';
     var challenger = 'CHALLENGER';
     var gcuAvatar = '';
@@ -24,13 +24,31 @@ const GameCardUser = ({ user }) => {
             gcuAvatar = (<img className="circle gcu-avatar" src={user.avatar_url} />);
         }
     }
+
+    var isWinner = (<div className="col col-2">&nbsp;</div>);
+    var winnerOuterClass = "";
+    var winnerTextClass = "";
+    if (user && user.winner) {
+        challenger = 'WINNER';
+        winnerOuterClass = "winner-border";
+        winnerTextClass = "winner-text";
+        isWinner = (
+            <div className="col col-2 center mt1">
+                <span className="ss-icons ss-crown h2 winner-text"></span>
+            </div>
+        );
+    }
+
     return (
-        <div className="col col-12 border mb1 game-card-user">
+        <div className={"col col-12 border mb1 game-card-user " + winnerOuterClass}>
             {gcuAvatar}
             <div className={"col col-12 p1 " + bgColor}>
                 <div className="gcu-right-container">
-                    <div className="h6 silver">{challenger}</div>
-                    <div className="h4 white"><a href={"/p/" + user.user_id}>{user.display_name}</a></div>
+                    <div className="col col-10">
+                        <div className={"h6 silver " + winnerTextClass}>{challenger}</div>
+                        <div className="h4 white"><a href={"/p/" + user.user_id}>{user.display_name}</a></div>
+                    </div>
+                    {isWinner}
                 </div>
             </div>
             <div className="col col-12 gosu-light-blue-bg">
@@ -46,7 +64,7 @@ const GameCardUser = ({ user }) => {
                 </div>
             </div>
         </div>
-    )
+    );
 };
 
 export default GameCardUser;

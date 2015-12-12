@@ -21,12 +21,12 @@ class GameService {
      */
 
     def initializeGames() {
-        createGamesForRankAndGosuCoins(1, [10, 50, 100, 500, 1000]);
-        createGamesForRankAndGosuCoins(2, [10, 50, 100, 500, 1000]);
-        createGamesForRankAndGosuCoins(3, [10, 50, 100, 500, 1000]);
-        createGamesForRankAndGosuCoins(4, [10, 50, 100, 500, 1000]);
-        createGamesForRankAndGosuCoins(5, [10, 50, 100, 500, 1000]);
-        createGamesForRankAndGosuCoins(6, [10, 50, 100, 500, 1000]);
+        createGamesForRankAndGosuCoins(1, [50, 100, 500, 1000]);
+        createGamesForRankAndGosuCoins(2, [50, 100, 500, 1000]);
+        createGamesForRankAndGosuCoins(3, [50, 100, 500, 1000]);
+        createGamesForRankAndGosuCoins(4, [50, 100, 500, 1000]);
+        createGamesForRankAndGosuCoins(5, [50, 100, 500, 1000]);
+        createGamesForRankAndGosuCoins(6, [50, 100, 500, 1000]);
     }
 
     def createGamesForRankAndGosuCoins(Integer rank, gosuCoinAmounts) {

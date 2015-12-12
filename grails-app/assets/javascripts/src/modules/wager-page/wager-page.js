@@ -8,6 +8,7 @@ import {
 import FullUser from './../user/full-user';
 import WagerAmount from './wager-amount';
 import NoChallenger from './no-challenger';
+import ReplayInfo from './replay-info';
 
 import GameCardUser from './../user/game-card-user';
 import GameActions from './../games/game-actions2';
@@ -51,12 +52,16 @@ class WagerPage extends Component {
                     </div>
                     <div className="col col-4">
                         <div className="px1">
-                            <GameCardUser user={game.player1} />
+                            <GameCardUser
+                                user={game.player1}
+                                game={game} />
                         </div>
                     </div>
                     <div className="col col-4">
                         <div className="px1">
-                            <GameCardUser user={game.player2} />
+                            <GameCardUser
+                                user={game.player2}
+                                game={game} />
                         </div>
                     </div>
                     <div className="col col-2">
@@ -112,15 +117,10 @@ class WagerPage extends Component {
                 setTimeout(() => dispatch(replayStatus(game.id)), 10000);
             } else if (gameReplay && gameReplay.uploaded && gameReplay.processed && gameReplay.valid) {
                 dropZone = (
-                    <div className="center p3 replay-drop-zone">
-                        <div className="">
-                            <p className="h1 ss-icons ss-check bold"></p>
-
-                            <p className="h3">
-                                Replay processed successfully!
-                            </p>
-                        </div>
-                    </div>
+                    <ReplayInfo
+                        game={game}
+                        replay={gameReplay}
+                        />
                 );
             } else {
                 if (gameReplay && gameReplay.uploaded && gameReplay.error_reason) {
@@ -181,7 +181,9 @@ class WagerPage extends Component {
         if (!game) {
             return '';
         }
-        if (game.has_player1 && game.has_player2 && game.has_player1_accepted) {
+        if (game.completed) {
+            return 'Completed!';
+        } else if (game.has_player1 && game.has_player2 && game.has_player1_accepted) {
             return 'Ready to play! Upload the replay when you are done.';
         } else if (game.has_player1 && game.has_player2) {
             return 'Waiting for challenger to be accepted.';

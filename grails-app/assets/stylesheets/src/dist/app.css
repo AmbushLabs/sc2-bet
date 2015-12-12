@@ -95,3 +95,9 @@
 
 .big-symbol {
   font-size: 3em; }
+
+.winner-text {
+  color: gold; }
+
+.winner-border {
+  border: 1px solid gold; }

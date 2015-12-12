@@ -32,6 +32,8 @@ class ProcessReplayJob {
                     //first check the thing.
                     Date d = new Date(jgd.getLong("start_time"));
                     if (ReplayService.updateReplayFromJSONReplay(jgd, replayToProcess)) {
+                        replayToProcess.processed = true;
+                        replayToProcess.processing = false;
                         println "processed and updated successfully";
                         if (1==0 && d.getTime() < replayToProcess.game.challengerAcceptedDate.getTime()) {
                             //invalid...
@@ -57,13 +59,11 @@ class ProcessReplayJob {
                         }
 
                     }
-                    replayToProcess.processed = true;
-                    replayToProcess.processing = false;
-                    if (replayToProcess.game.save() && replayToProcess.save()) {
+
+                    if (replayToProcess.save()) {
 
                     } else {
                         println replayToProcess.errors;
-                        println replayToProcess.game.errors
                     }
                 } catch (Exception ex) {
                     println ex;

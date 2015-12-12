@@ -1,6 +1,7 @@
 $gosu-blue: #1a3061;
 $gosu-light-blue: #e0e6f3;
 $text-on-gosu-blue: #ffffff;
+$gosu-winner-color: gold;
 
 .gosu-blue-bg {
     background-color: $gosu-blue;
@@ -28,5 +29,6 @@ $text-on-gosu-blue: #ffffff;
 @import "replay_drop_zone";
 
 @import "landing";
+@import "win_states";
 
 
