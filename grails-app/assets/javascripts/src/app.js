@@ -27,6 +27,7 @@ import WagerPage from './modules/wager-page/wager-page';
 import GosuCoins from './modules/payments/gosu-coins';
 import LandingPage from './modules/landing/landing-page';
 import PageNotification from './modules/notifications/page-notification';
+import Footer from './modules/footer/footer';
 
 
 @connect(state => (state))
@@ -65,7 +66,10 @@ class App extends Component {
                 <PageNotification
                     text={this.props.notifications.message}
                     show={this.props.notifications.show}
-                    dispatch={this.props.dispatch}
+                    dispatch={dispatch}
+                    />
+                <Footer
+                    linka="something"
                     />
             </section>
         );
