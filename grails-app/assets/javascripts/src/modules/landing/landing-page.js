@@ -22,30 +22,30 @@ export default class LandingPage extends Component {
         }
         return (
         <div>
-            <header className="center px3 py4 white bg-no-repeat bg-cover bg-center" style={bgImage} >
+            <header className="center px3 py4 white bg-cover" style={bgImage} >
                 <h1 className="h1 h0-responsive caps mt4 mb0 regular">GosuEmpire</h1>
                 <p className="h3">Win real money playing Starcraft 2 against your friends</p>
                 <a href="#" className="h4 btn btn-primary mb4" onClick={this.signUp}>Play Now For Free</a>
             </header>
-            <section className="container center p2 bg-cover bg-center" style={bgImageMain}>
+            <section className=" center p2 bg-cover bg-center" style={bgImageMain}>
                 <div className="flex flex-wrap mxn2">
                     <div className="sm-col-12 md-col-4">
                         <div className="p1 m2">
-                            <div className="ss-icons ss-userprofile h1 mt2"></div>
+                            <div className="big-symbol ss-icons ss-userprofile mt2"></div>
                             <h2>Create an Account</h2>
                             <p className="m0">Signup by linking your battle.net account to GosuEmpire.</p>
                         </div>
                     </div>
                     <div className="sm-col-12 md-col-4">
                         <div className="p1 m2">
-                            <div className="ss-icons ss-videogame h1 mt2"></div>
+                            <div className="big-symbol ss-icons ss-videogame mt2"></div>
                             <h2>Join a Match</h2>
                             <p className="m0">Buy some GosuCoin or join a free contest to play against friends or strangers.</p>
                         </div>
                     </div>
                     <div className="sm-col-12 md-col-4">
                         <div className="p1 m2">
-                            <div className="ss-icons ss-moneybag h1 mt2"></div>
+                            <div className="big-symbol ss-icons ss-moneybag mt2"></div>
                             <h2>Win Real Cash</h2>
                             <p className="m0">Upload the replay from your match. GosuEmpire automatically determines the winners from data stored in SC2 replays and pays out the winner.</p>
                         </div>

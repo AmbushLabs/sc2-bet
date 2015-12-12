@@ -2075,7 +2075,7 @@ var LandingPage = (function (_Component) {
                 null,
                 _react2['default'].createElement(
                     'header',
-                    { className: 'center px3 py4 white bg-no-repeat bg-cover bg-center', style: bgImage },
+                    { className: 'center px3 py4 white bg-cover', style: bgImage },
                     _react2['default'].createElement(
                         'h1',
                         { className: 'h1 h0-responsive caps mt4 mb0 regular' },
@@ -2094,7 +2094,7 @@ var LandingPage = (function (_Component) {
                 ),
                 _react2['default'].createElement(
                     'section',
-                    { className: 'container center p2 bg-cover bg-center', style: bgImageMain },
+                    { className: ' center p2 bg-cover bg-center', style: bgImageMain },
                     _react2['default'].createElement(
                         'div',
                         { className: 'flex flex-wrap mxn2' },
@@ -2104,7 +2104,7 @@ var LandingPage = (function (_Component) {
                             _react2['default'].createElement(
                                 'div',
                                 { className: 'p1 m2' },
-                                _react2['default'].createElement('div', { className: 'ss-icons ss-userprofile h1 mt2' }),
+                                _react2['default'].createElement('div', { className: 'big-symbol ss-icons ss-userprofile mt2' }),
                                 _react2['default'].createElement(
                                     'h2',
                                     null,
@@ -2123,7 +2123,7 @@ var LandingPage = (function (_Component) {
                             _react2['default'].createElement(
                                 'div',
                                 { className: 'p1 m2' },
-                                _react2['default'].createElement('div', { className: 'ss-icons ss-videogame h1 mt2' }),
+                                _react2['default'].createElement('div', { className: 'big-symbol ss-icons ss-videogame mt2' }),
                                 _react2['default'].createElement(
                                     'h2',
                                     null,
@@ -2142,7 +2142,7 @@ var LandingPage = (function (_Component) {
                             _react2['default'].createElement(
                                 'div',
                                 { className: 'p1 m2' },
-                                _react2['default'].createElement('div', { className: 'ss-icons ss-moneybag h1 mt2' }),
+                                _react2['default'].createElement('div', { className: 'big-symbol ss-icons ss-moneybag mt2' }),
                                 _react2['default'].createElement(
                                     'h2',
                                     null,
