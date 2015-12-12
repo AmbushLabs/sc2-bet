@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><g:layoutTitle default="Gosu Wager"/></title>
+    <title><g:layoutTitle default="GosuEmpire"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <asset:stylesheet src="basscss.css"/>
     <asset:stylesheet src="modal.css"/>
@@ -14,6 +14,7 @@
     <asset:javascript src="lib/jquery-2.1.4.min.js"/>
     <g:layoutHead/>
     <link href="//cdn.symbolset.com/f3558125ac7afa92f7c800679e8c8ab19e3d003c/symbolset.css" rel="stylesheet">
+    <link rel="shortcut icon" href="${createLinkTo(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
 </head>
 <body>
     <g:layoutBody/>

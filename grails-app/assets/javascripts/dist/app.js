@@ -830,33 +830,29 @@ var Footer = function Footer(_ref) {
         { className: 'clearfix col col-12 gosu-blue-bg white' },
         _react2['default'].createElement(
             'div',
-            { className: 'sm-col' },
-            _react2['default'].createElement(
-                'div',
-                null,
-                'Gosu Empire, 2015 ** New York, NY ** GLHF'
-            ),
+            { className: 'sm-col py2 my2' },
             _react2['default'].createElement(
                 'a',
-                { href: 'mailto:support@gosuempire.zendesk.com?subject=Contact Gosu Empire', className: 'btn py2' },
+                { href: 'mailto:support@gosuempire.zendesk.com?subject=Contact Gosu Empire', className: 'h5 p4 m4 white' },
                 'Contact Us'
             ),
             _react2['default'].createElement(
                 'a',
-                { href: 'https://gosuempire.zendesk.com/hc/en-us/sections/203560088-FAQ', className: 'btn py2' },
+                { href: 'https://gosuempire.zendesk.com/hc/en-us/sections/203560088-FAQ', className: 'h5 p4 m4 white' },
                 'FAQ'
             ),
             _react2['default'].createElement(
                 'a',
-                { href: 'https://gosuempire.zendesk.com/hc/en-us/categories/202447277-Rules', className: 'btn py2' },
+                { href: 'https://gosuempire.zendesk.com/hc/en-us/categories/202447277-Rules', className: 'h5 p4 m4 white' },
                 'Rules'
             ),
             _react2['default'].createElement(
                 'a',
-                { href: 'https://gosuempire.zendesk.com/hc/en-us/articles/214963648-Terms-of-Service', className: 'btn py2' },
+                { href: 'https://gosuempire.zendesk.com/hc/en-us/articles/214963648-Terms-of-Service', className: 'h5 p4 m4 white' },
                 'Terms of Service'
             )
-        )
+        ),
+        _react2['default'].createElement('div', null)
     );
 };
 
@@ -2063,12 +2059,23 @@ var LandingPage = (function (_Component) {
     _createClass(LandingPage, [{
         key: 'render',
         value: function render() {
+            var bgImage = {
+                backgroundImage: 'url(https://s3-us-west-2.amazonaws.com/gosuempire/assets/banner-gosu-empire.png)',
+                WebkitTransition: 'all',
+                msTransition: 'all'
+            };
+            var bgImageMain = {
+                backgroundImage: 'url(https://s3-us-west-2.amazonaws.com/gosuempire/assets/main_bg.png)',
+                WebkitTransition: 'all',
+                msTransition: 'all'
+
+            };
             return _react2['default'].createElement(
                 'div',
                 null,
                 _react2['default'].createElement(
                     'header',
-                    { className: 'center px3 py4 white bg-no-repeat bg-cover bg-center', style: 'background-image: url(https://s3-us-west-2.amazonaws.com/gosuempire/assets/banner-gosu-empire.png);' },
+                    { className: 'center px3 py4 white bg-no-repeat bg-cover bg-center', style: bgImage },
                     _react2['default'].createElement(
                         'h1',
                         { className: 'h1 h0-responsive caps mt4 mb0 regular' },
@@ -2087,7 +2094,7 @@ var LandingPage = (function (_Component) {
                 ),
                 _react2['default'].createElement(
                     'section',
-                    { className: 'container center p2', style: 'background-image: url(https://s3-us-west-2.amazonaws.com/gosuempire/assets/main_bg.png);' },
+                    { className: 'container center p2 bg-cover bg-center', style: bgImageMain },
                     _react2['default'].createElement(
                         'div',
                         { className: 'flex flex-wrap mxn2' },
@@ -2097,7 +2104,7 @@ var LandingPage = (function (_Component) {
                             _react2['default'].createElement(
                                 'div',
                                 { className: 'p1 m2' },
-                                _react2['default'].createElement('img', { src: 'http://d2v52k3cl9vedd.cloudfront.net/assets/images/placeholder-square.svg', width: '256', height: 'auto' }),
+                                _react2['default'].createElement('div', { className: 'ss-icons ss-userprofile h1 mt2' }),
                                 _react2['default'].createElement(
                                     'h2',
                                     null,
@@ -2116,7 +2123,7 @@ var LandingPage = (function (_Component) {
                             _react2['default'].createElement(
                                 'div',
                                 { className: 'p1 m2' },
-                                _react2['default'].createElement('img', { src: 'http://d2v52k3cl9vedd.cloudfront.net/assets/images/placeholder-square.svg', width: '256', height: 'auto' }),
+                                _react2['default'].createElement('div', { className: 'ss-icons ss-videogame h1 mt2' }),
                                 _react2['default'].createElement(
                                     'h2',
                                     null,
@@ -2135,7 +2142,7 @@ var LandingPage = (function (_Component) {
                             _react2['default'].createElement(
                                 'div',
                                 { className: 'p1 m2' },
-                                _react2['default'].createElement('img', { src: 'http://d2v52k3cl9vedd.cloudfront.net/assets/images/placeholder-square.svg', width: '256', height: 'auto' }),
+                                _react2['default'].createElement('div', { className: 'ss-icons ss-moneybag h1 mt2' }),
                                 _react2['default'].createElement(
                                     'h2',
                                     null,
