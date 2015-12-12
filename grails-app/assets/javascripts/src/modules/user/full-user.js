@@ -1,40 +1,52 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import UserImage from './user-image';
+export default ({ user }) => {
+    var bgColor = 'gosu-blue-bg';
+    var gcuAvatar = '';
+    if (!user.avatar_url || user.avatar_url == '' || user.avatar_url.indexOf('http') < 0) {
+        gcuAvatar = (<div className="circle gcu-avatar center bg-white"><div className="ss-icons ss-user h1 mt2"></div></div>);
+    } else {
+        gcuAvatar = (<img className="circle gcu-avatar" src={user.avatar_url} />);
+    }
+    const seasonWins = user.protoss_wins + user.terran_wins + user.zerg_wins;
+    const seasonLosses = user.season_total_games - seasonWins;
 
-export default class BasicUser extends Component {
-
-    render() {
-        const { user } = this.props;
-        if (_.isUndefined(user) || _.isNull(user)) {
-            return (
-                <div>&nbsp;</div>
-            );
-        }
-        return (
-            <div className="col col-4 border m2 clearfix">
-                <div className="col-12 center mt3">
-                    <UserImage img_src={user.avatar_url} />
+    return (
+        <div className="col col-12 border mb1 game-card-user game-card-full-user gosu-light-blue-bg">
+            {gcuAvatar}
+            <div className={"col col-12 p1 " + bgColor}>
+                <div className="gcu-right-container">
+                    <div className="h6 silver">YOUR ACCOUNT</div>
+                    <div className="h4 white">{user.display_name}</div>
                 </div>
-                <div className="col-12 center h3 mt1 mb3">
-                    {user.display_name}<br />
-                </div>
-                <div className="col-12">
-                    <div className="col col-4 center bg-silver border-right black p1">
-                        <div className="h4">{user.primary_race}</div>
-                        <div className="h6 gray">PRIMARY RACE</div>
+            </div>
+            <div className="col col-12 gosu-light-blue-bg">
+                <div className="gcu-right-container">
+                    <div className="col col-12">
+                        <div className="col col-6 p1">
+                            <div className="h6 gray">RACE</div>
+                            <div className="h6">{user.primary_race}</div>
+                        </div>
+                        <div className="col col-6 p1">
+                            <div className="h6 gray">TOP RANK</div>
+                            <div className="h6">{user.highest_1v1_rank}</div>
+                        </div>
                     </div>
-                    <div className="col col-4 center bg-silver border-right black p1">
-                        <div className="h4">{user.primary_race_wins}</div>
-                        <div className="h6 gray">WINS</div>
+                    <div className="col col-12">
+                        <div className="col col-6 p1">
+                            <div className="h6 gray">SEASON RECORD</div>
+                            <div className="h6">{seasonWins} - {seasonLosses}</div>
+                        </div>
+                        <div className="col col-6 p1">
+                            <div className="h6 gray">CAREER GAMES PLAYED</div>
+                            <div className="h6">{user.career_total_games}</div>
+                        </div>
                     </div>
-                    <div className="col col-4 center bg-silver black p1">
-                        <div className="h4">{user.highest_1v1_rank}</div>
-                        <div className="h6 gray">HIGHEST RANK</div>
+                    <div className="col col-12">
+                        &nbsp;
                     </div>
                 </div>
             </div>
-        )
-    }
-
-}
+        </div>
+    )
+};

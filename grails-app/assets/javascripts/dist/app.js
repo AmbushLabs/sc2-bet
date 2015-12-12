@@ -607,8 +607,9 @@ var Dashboard = (function (_Component) {
                     { className: 'col col-6 pr2 pb2' },
                     _react2['default'].createElement(
                         'div',
-                        { className: 'bg-white p1 mr2 mb2 clearfix' },
-                        _react2['default'].createElement(_profileProfileCard2['default'], { user: 'user data in dis here'
+                        { className: 'mr2 mb2 clearfix' },
+                        _react2['default'].createElement(_profileProfileCard2['default'], {
+                            user: this.props.user
                         })
                     )
                 ),
@@ -617,7 +618,7 @@ var Dashboard = (function (_Component) {
                     { className: 'col col-6' },
                     _react2['default'].createElement(
                         'div',
-                        { className: 'bg-white p1 mb2 clearfix' },
+                        { className: 'bg-white p1 mb2 clearfix my-games' },
                         _react2['default'].createElement(_gamesMyGames2['default'], {
                             games: this.props.games,
                             dispatch: this.props.dispatch
@@ -633,7 +634,7 @@ var Dashboard = (function (_Component) {
                         { className: 'col col-9' },
                         _react2['default'].createElement(
                             'p',
-                            { className: 'h3' },
+                            { className: 'h3 ml1 mt1' },
                             'Find a Game'
                         )
                     ),
@@ -1674,13 +1675,17 @@ var GameList = (function (_Component) {
         key: 'render',
         value: function render() {
             if (_.isNull(this.props.games) || _.isUndefined(this.props.games) || this.props.games.length == 0) {
+                var gameListType = "currently";
                 return _react2['default'].createElement(
                     'div',
-                    { className: "col p1 " + this.props.colSize },
+                    { className: 'col col-12 center p2 mt2' },
+                    _react2['default'].createElement('p', { className: 'ss-icons ss-binoculars h1' }),
                     _react2['default'].createElement(
                         'p',
-                        null,
-                        'No active games'
+                        { className: 'center h4' },
+                        'You have no games ',
+                        gameListType,
+                        '. Try looking for a game to join below.'
                     )
                 );
             }
@@ -2297,7 +2302,12 @@ var HomeButton = _react2["default"].createClass({
             _react2["default"].createElement(
                 "a",
                 { href: "/#", className: "btn py2" },
-                "Gosu Empire"
+                _react2["default"].createElement("img", { src: "https://s3-us-west-2.amazonaws.com/gosuempire/assets/logo.png", className: "gosu-empire-logo-header left" }),
+                _react2["default"].createElement(
+                    "div",
+                    { className: "left ml1" },
+                    "Gosu Empire"
+                )
             )
         );
     }
@@ -2977,9 +2987,6 @@ exports['default'] = GosuCoins;
 module.exports = exports['default'];
 
 },{"./add-bank-account":30,"./add-coins":31,"./gosu-coin-balance":33,"react":307,"react-redux":120}],35:[function(require,module,exports){
-/**
- * Created by joseph on 10/3/15.
- */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2992,41 +2999,19 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactIntl = require('react-intl');
+var _userFullUser = require('./../user/full-user');
 
-var _reactIntl2 = _interopRequireDefault(_reactIntl);
+var _userFullUser2 = _interopRequireDefault(_userFullUser);
 
-var ProfileCard = _react2['default'].createClass({
-    displayName: 'ProfileCard',
+exports['default'] = function (_ref) {
+    var user = _ref.user;
 
-    getInitialState: function getInitialState() {
-        return {
-            isLoading: false
-        };
-    },
-    render: function render() {
-        return _react2['default'].createElement(
-            'section',
-            null,
-            this.getUserProfile(this.props.user)
-        );
-    },
-    getUserProfile: function getUserProfile(user) {
-        if (_.isUndefined(user) || _.isNull(user)) {
-            return;
-        }
-        return _react2['default'].createElement(
-            'div',
-            { className: 'loader' },
-            ' '
-        );
-    }
-});
+    return _react2['default'].createElement(_userFullUser2['default'], { user: user.character });
+};
 
-exports['default'] = ProfileCard;
 module.exports = exports['default'];
 
-},{"react":307,"react-intl":88}],36:[function(require,module,exports){
+},{"./../user/full-user":40,"react":307}],36:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -3482,116 +3467,136 @@ Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _userImage = require('./user-image');
+exports['default'] = function (_ref) {
+    var user = _ref.user;
 
-var _userImage2 = _interopRequireDefault(_userImage);
-
-var BasicUser = (function (_Component) {
-    _inherits(BasicUser, _Component);
-
-    function BasicUser() {
-        _classCallCheck(this, BasicUser);
-
-        _get(Object.getPrototypeOf(BasicUser.prototype), 'constructor', this).apply(this, arguments);
+    var bgColor = 'gosu-blue-bg';
+    var gcuAvatar = '';
+    if (!user.avatar_url || user.avatar_url == '' || user.avatar_url.indexOf('http') < 0) {
+        gcuAvatar = _react2['default'].createElement(
+            'div',
+            { className: 'circle gcu-avatar center bg-white' },
+            _react2['default'].createElement('div', { className: 'ss-icons ss-user h1 mt2' })
+        );
+    } else {
+        gcuAvatar = _react2['default'].createElement('img', { className: 'circle gcu-avatar', src: user.avatar_url });
     }
+    var seasonWins = user.protoss_wins + user.terran_wins + user.zerg_wins;
+    var seasonLosses = user.season_total_games - seasonWins;
 
-    _createClass(BasicUser, [{
-        key: 'render',
-        value: function render() {
-            var user = this.props.user;
-
-            if (_.isUndefined(user) || _.isNull(user)) {
-                return _react2['default'].createElement(
-                    'div',
-                    null,
-                    ' '
-                );
-            }
-            return _react2['default'].createElement(
+    return _react2['default'].createElement(
+        'div',
+        { className: 'col col-12 border mb1 game-card-user game-card-full-user gosu-light-blue-bg' },
+        gcuAvatar,
+        _react2['default'].createElement(
+            'div',
+            { className: "col col-12 p1 " + bgColor },
+            _react2['default'].createElement(
                 'div',
-                { className: 'col col-4 border m2 clearfix' },
+                { className: 'gcu-right-container' },
                 _react2['default'].createElement(
                     'div',
-                    { className: 'col-12 center mt3' },
-                    _react2['default'].createElement(_userImage2['default'], { img_src: user.avatar_url })
+                    { className: 'h6 silver' },
+                    'YOUR ACCOUNT'
                 ),
                 _react2['default'].createElement(
                     'div',
-                    { className: 'col-12 center h3 mt1 mb3' },
-                    user.display_name,
-                    _react2['default'].createElement('br', null)
-                ),
+                    { className: 'h4 white' },
+                    user.display_name
+                )
+            )
+        ),
+        _react2['default'].createElement(
+            'div',
+            { className: 'col col-12 gosu-light-blue-bg' },
+            _react2['default'].createElement(
+                'div',
+                { className: 'gcu-right-container' },
                 _react2['default'].createElement(
                     'div',
-                    { className: 'col-12' },
+                    { className: 'col col-12' },
                     _react2['default'].createElement(
                         'div',
-                        { className: 'col col-4 center bg-silver border-right black p1' },
+                        { className: 'col col-6 p1' },
                         _react2['default'].createElement(
                             'div',
-                            { className: 'h4' },
+                            { className: 'h6 gray' },
+                            'RACE'
+                        ),
+                        _react2['default'].createElement(
+                            'div',
+                            { className: 'h6' },
                             user.primary_race
-                        ),
-                        _react2['default'].createElement(
-                            'div',
-                            { className: 'h6 gray' },
-                            'PRIMARY RACE'
                         )
                     ),
                     _react2['default'].createElement(
                         'div',
-                        { className: 'col col-4 center bg-silver border-right black p1' },
-                        _react2['default'].createElement(
-                            'div',
-                            { className: 'h4' },
-                            user.primary_race_wins
-                        ),
+                        { className: 'col col-6 p1' },
                         _react2['default'].createElement(
                             'div',
                             { className: 'h6 gray' },
-                            'WINS'
-                        )
-                    ),
-                    _react2['default'].createElement(
-                        'div',
-                        { className: 'col col-4 center bg-silver black p1' },
+                            'TOP RANK'
+                        ),
                         _react2['default'].createElement(
                             'div',
-                            { className: 'h4' },
+                            { className: 'h6' },
                             user.highest_1v1_rank
-                        ),
-                        _react2['default'].createElement(
-                            'div',
-                            { className: 'h6 gray' },
-                            'HIGHEST RANK'
                         )
                     )
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'col col-12' },
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'col col-6 p1' },
+                        _react2['default'].createElement(
+                            'div',
+                            { className: 'h6 gray' },
+                            'SEASON RECORD'
+                        ),
+                        _react2['default'].createElement(
+                            'div',
+                            { className: 'h6' },
+                            seasonWins,
+                            ' - ',
+                            seasonLosses
+                        )
+                    ),
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'col col-6 p1' },
+                        _react2['default'].createElement(
+                            'div',
+                            { className: 'h6 gray' },
+                            'CAREER GAMES PLAYED'
+                        ),
+                        _react2['default'].createElement(
+                            'div',
+                            { className: 'h6' },
+                            user.career_total_games
+                        )
+                    )
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'col col-12' },
+                    ' '
                 )
-            );
-        }
-    }]);
+            )
+        )
+    );
+};
 
-    return BasicUser;
-})(_react.Component);
-
-exports['default'] = BasicUser;
 module.exports = exports['default'];
 
-},{"./user-image":42,"react":307}],41:[function(require,module,exports){
+},{"react":307}],41:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {

@@ -11,9 +11,11 @@ class GameList extends Component {
 
     render() {
         if (_.isNull(this.props.games) || _.isUndefined(this.props.games) || this.props.games.length == 0) {
+            const gameListType = "currently"
             return (
-                <div className={"col p1 " + this.props.colSize}>
-                    <p>No active games</p>
+                <div className="col col-12 center p2 mt2">
+                    <p className="ss-icons ss-binoculars h1"></p>
+                    <p className="center h4">You have no games {gameListType}. Try looking for a game to join below.</p>
                 </div>
             );
         }

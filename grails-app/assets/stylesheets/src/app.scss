@@ -14,7 +14,15 @@ $text-on-gosu-blue: #ffffff;
     background-color: $gosu-light-blue;
 }
 
+.gosu-empire-logo-header {
+    height: 20px;
+    width: auto;
+}
+
 @import "modal";
 @import "errors";
+@import "game_card_full_user";
 @import "game_card_user";
+
+@import "my_games";
 
