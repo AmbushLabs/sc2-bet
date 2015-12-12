@@ -835,17 +835,17 @@ var Footer = function Footer(_ref) {
             ),
             _react2['default'].createElement(
                 'a',
-                { href: '/', className: 'btn py2' },
+                { href: 'https://gosuempire.zendesk.com/hc/en-us/sections/203560088-FAQ', className: 'btn py2' },
                 'FAQ'
             ),
             _react2['default'].createElement(
                 'a',
-                { href: '/', className: 'btn py2' },
+                { href: 'https://gosuempire.zendesk.com/hc/en-us/categories/202447277-Rules', className: 'btn py2' },
                 'Rules'
             ),
             _react2['default'].createElement(
                 'a',
-                { href: '/', className: 'btn py2' },
+                { href: 'https://gosuempire.zendesk.com/hc/en-us/articles/214963648-Terms-of-Service', className: 'btn py2' },
                 'Terms of Service'
             )
         )
