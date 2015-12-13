@@ -72,6 +72,11 @@
 .is_hidden {
   display: none; }
 
+.page-notification {
+  color: #00BB00;
+  background-color: #e4f3e4;
+  z-index: 1; }
+
 .game-card-full-user {
   min-height: 285px; }
 

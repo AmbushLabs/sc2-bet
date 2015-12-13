@@ -13,10 +13,11 @@ import {
     LEAVE_GAME,
     SHOW_SHARE_GAME_MODAL,
     HIDE_SHARE_GAME_MODAL,
-    FETCH_REPLAY_STATUS
+    FETCH_REPLAY_STATUS,
+    SET_CURRENT_MY_GAMES_TAB
 } from './../actions/actions';
 
-const games = (state = {}, action = {}) => {
+const games = (state = {current_my_games_tab:'to_approve'}, action = {}) => {
     switch(action.type) {
         case FETCH_GAMES:
             if (action.is_fetching || action.error) {
@@ -87,7 +88,8 @@ const games = (state = {}, action = {}) => {
                             waiting: {
                                 count: ++state.waiting.count,
                                 ids: newArr
-                            }
+                            },
+                            current_my_games_tab: 'waiting'
                         });
                         break;
                 }
@@ -150,6 +152,11 @@ const games = (state = {}, action = {}) => {
             const gameUpdated = Object.assign({}, state.all[action.data.gameId], { show_share_modal: false });
             return Object.assign({}, state, {
                 all: cloneGamesAndUpdate(state.all, gameUpdated)
+            });
+        }
+        case SET_CURRENT_MY_GAMES_TAB: {
+            return Object.assign({}, state, {
+                current_my_games_tab: action.my_games_tab
             });
         }
     }

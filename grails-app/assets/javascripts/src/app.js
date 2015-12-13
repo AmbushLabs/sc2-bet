@@ -59,16 +59,16 @@ class App extends Component {
                     loggedIn={this.props.loggedIn}
                     remainingTokens={this.props.gosuCoins.remaining}
                     />
-                <ErrorToast
-                    errors={this.props.errors}
-                    dispatch={dispatch} />
-                {this.getChildren()}
-                {this.buildEmailModal()}
                 <PageNotification
                     text={this.props.notifications.message}
                     show={this.props.notifications.show}
                     dispatch={dispatch}
                     />
+                <ErrorToast
+                    errors={this.props.errors}
+                    dispatch={dispatch} />
+                {this.getChildren()}
+                {this.buildEmailModal()}
                 <Footer
                     linka="something"
                     />

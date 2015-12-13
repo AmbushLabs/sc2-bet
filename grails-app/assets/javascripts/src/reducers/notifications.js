@@ -1,4 +1,7 @@
-import { SET_NOTIFICATION, CLEAR_NOTIFICATION } from './../actions/actions';
+import {
+    SET_NOTIFICATION,
+    CLEAR_NOTIFICATION
+} from './../actions/actions';
 
 const notifications = function(state = {show: false, message: ''}, action = {}) {
     switch(action.type) {

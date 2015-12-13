@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import GameList from './../games/game-list';
+import {
+    SET_CURRENT_MY_GAMES_TAB
+} from './../../actions/actions';
 
 export default class MyGames extends Component {
 
@@ -8,9 +11,6 @@ export default class MyGames extends Component {
         this.isSelected = this.isSelected.bind(this);
         this.getGames = this.getGames.bind(this);
         this.setGameState = this.setGameState.bind(this);
-        this.state = {
-            current_tab: 'to_approve'
-        };
     }
 
     render () {
@@ -42,7 +42,7 @@ export default class MyGames extends Component {
     }
 
     isSelected(type) {
-        if (type == this.state.current_tab) {
+        if (type == this.props.games.current_my_games_tab) {
             return 'blue';
         }
         return '';
@@ -50,16 +50,18 @@ export default class MyGames extends Component {
 
     setGameState(ev) {
         var type = $(ev.currentTarget).data('list-type');
-        if (type == this.state.current_tab) {
+        if (type == this.props.games.current_my_games_tab) {
             return;
         }
-
-        this.setState({current_tab:type});
+        this.props.dispatch({
+            type: SET_CURRENT_MY_GAMES_TAB,
+            my_games_tab: type
+        });
     }
 
     getGames() {
         if (this.props && this.props.games && this.props.games.all) {
-            var tmp = _.values(_.pick(this.props.games.all, this.props.games[this.state.current_tab].ids));
+            var tmp = _.values(_.pick(this.props.games.all, this.props.games[this.props.games.current_my_games_tab].ids));
             return tmp;
         }
     }
