@@ -59,6 +59,8 @@ var START_CHAT_FOR_GAME = 'START_CHAT_FOR_GAME';
 exports.START_CHAT_FOR_GAME = START_CHAT_FOR_GAME;
 var CLEAR_ERRORS = 'CLEAR_ERROR';
 exports.CLEAR_ERRORS = CLEAR_ERRORS;
+var SET_CURRENT_MY_GAMES_TAB = 'SET_CURRENT_MY_GAMES_TAB';
+exports.SET_CURRENT_MY_GAMES_TAB = SET_CURRENT_MY_GAMES_TAB;
 
 },{}],2:[function(require,module,exports){
 'use strict';
@@ -229,12 +231,18 @@ var join = function join(game_id) {
         }).then(function (response) {
             return response.json();
         }).then(function (json) {
-            return dispatch({
+            dispatch({
                 type: _actionsActions.JOIN_GAME,
                 is_fetching: false,
                 status: json && json.error ? 'error' : 'success',
                 data: json
             });
+            if (!(json && json.error)) {
+                dispatch({
+                    type: _actionsActions.SET_NOTIFICATION,
+                    message: 'Successfully joined the contest!'
+                });
+            }
         });
     };
 };
@@ -473,16 +481,16 @@ var App = (function (_Component) {
                     loggedIn: this.props.loggedIn,
                     remainingTokens: this.props.gosuCoins.remaining
                 }),
-                _react2['default'].createElement(_modulesErrorToastError2['default'], {
-                    errors: this.props.errors,
-                    dispatch: dispatch }),
-                this.getChildren(),
-                this.buildEmailModal(),
                 _react2['default'].createElement(_modulesNotificationsPageNotification2['default'], {
                     text: this.props.notifications.message,
                     show: this.props.notifications.show,
                     dispatch: dispatch
                 }),
+                _react2['default'].createElement(_modulesErrorToastError2['default'], {
+                    errors: this.props.errors,
+                    dispatch: dispatch }),
+                this.getChildren(),
+                this.buildEmailModal(),
                 _react2['default'].createElement(_modulesFooterFooter2['default'], {
                     linka: 'something'
                 })
@@ -2032,6 +2040,8 @@ var _gamesGameList = require('./../games/game-list');
 
 var _gamesGameList2 = _interopRequireDefault(_gamesGameList);
 
+var _actionsActions = require('./../../actions/actions');
+
 var MyGames = (function (_Component) {
     _inherits(MyGames, _Component);
 
@@ -2042,9 +2052,6 @@ var MyGames = (function (_Component) {
         this.isSelected = this.isSelected.bind(this);
         this.getGames = this.getGames.bind(this);
         this.setGameState = this.setGameState.bind(this);
-        this.state = {
-            current_tab: 'to_approve'
-        };
     }
 
     _createClass(MyGames, [{
@@ -2093,7 +2100,7 @@ var MyGames = (function (_Component) {
     }, {
         key: 'isSelected',
         value: function isSelected(type) {
-            if (type == this.state.current_tab) {
+            if (type == this.props.games.current_my_games_tab) {
                 return 'blue';
             }
             return '';
@@ -2102,17 +2109,19 @@ var MyGames = (function (_Component) {
         key: 'setGameState',
         value: function setGameState(ev) {
             var type = $(ev.currentTarget).data('list-type');
-            if (type == this.state.current_tab) {
+            if (type == this.props.games.current_my_games_tab) {
                 return;
             }
-
-            this.setState({ current_tab: type });
+            this.props.dispatch({
+                type: _actionsActions.SET_CURRENT_MY_GAMES_TAB,
+                my_games_tab: type
+            });
         }
     }, {
         key: 'getGames',
         value: function getGames() {
             if (this.props && this.props.games && this.props.games.all) {
-                var tmp = _.values(_.pick(this.props.games.all, this.props.games[this.state.current_tab].ids));
+                var tmp = _.values(_.pick(this.props.games.all, this.props.games[this.props.games.current_my_games_tab].ids));
                 return tmp;
             }
         }
@@ -2125,7 +2134,7 @@ exports['default'] = MyGames;
 ;
 module.exports = exports['default'];
 
-},{"./../games/game-list":25,"react":317}],27:[function(require,module,exports){
+},{"./../../actions/actions":1,"./../games/game-list":25,"react":317}],27:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2465,11 +2474,11 @@ var PageNotification = (function (_Component) {
                         dispatch({
                             type: _actionsActions.CLEAR_NOTIFICATION
                         });
-                    }, 3000);
+                    }, 8000);
                     return {
                         v: _react2['default'].createElement(
                             'div',
-                            { className: 'fixed top-0 left-0 right-0 p2 white bg-green' },
+                            { className: 'page-notification col col-12 absolute bg-white border center p2 h5 animated fadeIn' },
                             _this.props.text
                         )
                     };
@@ -2477,7 +2486,7 @@ var PageNotification = (function (_Component) {
 
                 if (typeof _ret === 'object') return _ret.v;
             }
-            return _react2['default'].createElement('div', null);
+            return _react2['default'].createElement('div', { className: 'is_hidden' });
         }
     }]);
 
@@ -4931,7 +4940,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var _actionsActions = require('./../actions/actions');
 
 var games = function games() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var state = arguments.length <= 0 || arguments[0] === undefined ? { current_my_games_tab: 'to_approve' } : arguments[0];
     var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
     switch (action.type) {
@@ -5004,7 +5013,8 @@ var games = function games() {
                             waiting: {
                                 count: ++state.waiting.count,
                                 ids: newArr
-                            }
+                            },
+                            current_my_games_tab: 'waiting'
                         });
                         break;
                 }
@@ -5069,6 +5079,12 @@ var games = function games() {
                 var gameUpdated = Object.assign({}, state.all[action.data.gameId], { show_share_modal: false });
                 return Object.assign({}, state, {
                     all: cloneGamesAndUpdate(state.all, gameUpdated)
+                });
+            }
+        case _actionsActions.SET_CURRENT_MY_GAMES_TAB:
+            {
+                return Object.assign({}, state, {
+                    current_my_games_tab: action.my_games_tab
                 });
             }
     }

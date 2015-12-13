@@ -11,13 +11,13 @@ export default class PageNotification extends Component {
                 dispatch({
                     type: CLEAR_NOTIFICATION
                 });
-            }, 3000);
+            }, 8000);
             return (
-                <div className="fixed top-0 left-0 right-0 p2 white bg-green">
+                <div className="page-notification col col-12 absolute bg-white border center p2 h5 animated fadeIn">
                     {this.props.text}
                 </div>
             );
         }
-        return (<div></div>);
+        return (<div className="is_hidden"></div>);
     }
 }
