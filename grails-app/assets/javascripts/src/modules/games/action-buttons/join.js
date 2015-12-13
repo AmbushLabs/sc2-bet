@@ -11,7 +11,7 @@ const Join = ({dispatch, gameId, loading, colClass}) => {
             crudAction={join}
             gameId={gameId}
             loading={loading}
-            iconVal={"tiny-symbol ss-icons p1 ss-target"}
+            iconVal={"tiny-symbol ss-icons ss-swords"}
             />
     )
 };

@@ -11,7 +11,7 @@ const Leave = ({dispatch, gameId, loading, colClass}) => {
             crudAction={reject}
             gameId={gameId}
             loading={loading}
-            iconVal={"tiny-symbol ss-icons p1 ss-ban"}
+            iconVal={"tiny-symbol ss-icons ss-ban"}
             />
     )
 };

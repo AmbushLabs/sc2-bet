@@ -25,8 +25,8 @@ const Footer = ({linka}) => {
                         <a href="https://gosuempire.zendesk.com/hc/en-us/articles/214963648-Terms-of-Service" className="h5 white">Terms of Service</a>
                     </div>
                 </div>
-                <div className="col col-4">
-                    &nbsp;
+                <div className="col col-4 center py3">
+                    <span className="h6 white">an <a href="http://ambushlabs.com">AmbushLabs</a> production </span>
                 </div>
             </div>
         </section>

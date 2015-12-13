@@ -961,8 +961,18 @@ var Footer = function Footer(_ref) {
             ),
             _react2['default'].createElement(
                 'div',
-                { className: 'col col-4' },
-                ' '
+                { className: 'col col-4 center py3' },
+                _react2['default'].createElement(
+                    'span',
+                    { className: 'h6 white' },
+                    'an ',
+                    _react2['default'].createElement(
+                        'a',
+                        { href: 'http://ambushlabs.com' },
+                        'AmbushLabs'
+                    ),
+                    ' production '
+                )
             )
         )
     );
@@ -1076,7 +1086,7 @@ var Leave = function Leave(_ref) {
         crudAction: _apiGameCrud.accept,
         gameId: gameId,
         loading: loading,
-        iconVal: "tiny-symbol ss-icons p1 ss-check"
+        iconVal: "tiny-symbol ss-icons ss-check"
     });
 };
 
@@ -1125,6 +1135,7 @@ var ButtonBase = function ButtonBase(_ref) {
             }
         },
         _react2["default"].createElement("span", { className: iconVal }),
+        " ",
         buttonText
     );
 };
@@ -1201,7 +1212,7 @@ var Join = function Join(_ref) {
         crudAction: _apiGameCrud.join,
         gameId: gameId,
         loading: loading,
-        iconVal: "tiny-symbol ss-icons p1 ss-target"
+        iconVal: "tiny-symbol ss-icons ss-swords"
     });
 };
 
@@ -1240,7 +1251,7 @@ var Leave = function Leave(_ref) {
         crudAction: _apiGameCrud.leave,
         gameId: gameId,
         loading: loading,
-        iconVal: "tiny-symbol ss-icons p1 ss-skullandcrossbones"
+        iconVal: "tiny-symbol ss-icons ss-skullandcrossbones"
     });
 };
 
@@ -1279,7 +1290,7 @@ var Leave = function Leave(_ref) {
         crudAction: _apiGameCrud.reject,
         gameId: gameId,
         loading: loading,
-        iconVal: "tiny-symbol ss-icons p1 ss-ban"
+        iconVal: "tiny-symbol ss-icons ss-ban"
     });
 };
 
@@ -1323,7 +1334,7 @@ var Join = function Join(_ref) {
             };
         },
         gameId: gameId,
-        iconVal: "tiny-symbol ss-icons p1 ss-share ml1"
+        iconVal: "tiny-symbol ss-icons ss-share"
     });
 };
 
@@ -1739,7 +1750,7 @@ var GameCard = (function (_Component) {
                     ' ',
                     _react2['default'].createElement(
                         'span',
-                        { className: 'ss-icon ss-swords yellow h5' },
+                        { className: 'ss-icon ss-swords tiny-symbol' },
                         ' '
                     )
                 );

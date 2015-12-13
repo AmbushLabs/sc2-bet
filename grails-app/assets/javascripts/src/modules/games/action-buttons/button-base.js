@@ -13,7 +13,7 @@ const ButtonBase = ({buttonText, buttonClass, dispatch, crudAction, gameId, load
             className={"btn btn-outline " + buttonClass}
             onClick={() => dispatch(crudAction(gameId))}
             >
-            <span className={iconVal}></span>
+            <span className={iconVal}></span>&nbsp;
             {buttonText}
         </button>
     );
