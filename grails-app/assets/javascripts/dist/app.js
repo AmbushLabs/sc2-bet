@@ -1685,7 +1685,7 @@ var GameCard = (function (_Component) {
                     ' ',
                     _react2['default'].createElement(
                         'span',
-                        { className: 'ss-icon ss-star orange h5' },
+                        { className: 'ss-icon ss-swords yellow h5' },
                         ' '
                     )
                 );

@@ -50,7 +50,7 @@ export default class GameCard extends Component {
 
     getHasJoinedStar() {
         if (this.props.game.is_joined) {
-            return (<span>&nbsp;<span className="ss-icon ss-star orange h5">&nbsp;</span></span>);
+            return (<span>&nbsp;<span className="ss-icon ss-swords yellow h5">&nbsp;</span></span>);
         }
         return (<span>&nbsp;</span>);
     }
