@@ -1,11 +1,14 @@
 package com.gosuwager
 
+import java.security.SecureRandom
+
 class AuthController {
 
     BattleNetAuthService battleNetAuthService;
     BattleNetApiService battleNetApiService;
 
     def GameService;
+    def ReferralCodeService;
 
     def index() { }
 
@@ -36,10 +39,15 @@ class AuthController {
                         println character.errors;
                     }
                 }
+                String referralCode = '';
+                while (referralCode == '' || User.findByReferralCode(referralCode)) {
+                    referralCode = ReferralCodeService.randomAlphaNumericString();
+                }
 
                 def usr = new User([
                     battleNetAccount: account,
-                    gosuCoins: 100
+                    gosuCoins: 100,
+                    referralCode: referralCode
                 ]);
 
                 if (usr.save(flush:true) && account.save(flush:true)) {

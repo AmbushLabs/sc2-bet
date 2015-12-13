@@ -1,6 +1,7 @@
 import com.gosuwager.BattleNetAccount
 import com.gosuwager.BattleNetToken
 import com.gosuwager.Email
+import com.gosuwager.ReferralCode
 import com.gosuwager.User
 import com.gosuwager.bnet.SC2Character
 import org.springframework.web.context.support.WebApplicationContextUtils
@@ -36,11 +37,26 @@ class BootStrap {
         createUser('aaronhenshaw@gmail.com', 'cmonson');
         createUser('joseph.lallouz@gmail.com', 'flyingnome');
 
+        (new ReferralCode([
+            referralCode: 'RADIATOR_GANG',
+            timesUsed: 0,
+            maxTimes: 20,
+            gosuCoinBonus: 2500
+        ])).save();
+
+        (new ReferralCode([
+            referralCode: 'USOCHOBO',
+            timesUsed: 0,
+            maxTimes: 10,
+            gosuCoinBonus: 1000
+        ])).save();
+
     }
 
     def createUser(emailAddress, battleTag) {
         User u = new User([
-                gosuCoins: 100
+            gosuCoins: 100,
+            referralCode: 'suckaphree'
         ]);
 
         Email e = new Email([

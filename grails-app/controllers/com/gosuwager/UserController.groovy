@@ -6,6 +6,7 @@ class UserController {
 
     def SendEmailService;
     def DashboardService;
+    def ReferralCodeService;
 
     def index() { }
 
@@ -50,6 +51,9 @@ class UserController {
                 if (e.save(flush:true)) {
                     u.addToEmails(e);
                     if (u.save()) {
+                        if (params.referral_code && params.referral_code.trim() != '') {
+                            ReferralCodeService.handleReferralCode(params.referral_code.trim(), u);
+                        }
                         isSuccessful = true;
                         ret = DashboardService.getInitializeData(u);
                         ret['status'] = 'success';

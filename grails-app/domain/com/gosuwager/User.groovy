@@ -10,6 +10,12 @@ class User {
     Integer contestWins = 0;
     Integer contestLosses = 0;
 
+    String referralCode;
+    Integer referralUses = 0;
+
+    String referralCodeUsed;
+    String referralCodeUsedType;
+
     static hasOne = [
         battleNetAccount:BattleNetAccount
     ];
@@ -32,5 +38,10 @@ class User {
         battleNetAccount nullable: false;
         emails nullable: true;
         gosuCoins nullable: false;
+        referralCode nullable: false;
+        referralUses nullable: false;
+
+        referralCodeUsed nullable: true;
+        referralCodeUsedType nullable: true;
     }
 }
