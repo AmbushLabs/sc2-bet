@@ -12,7 +12,8 @@ import {
     CHANGE_GAME_FILTER,
     LEAVE_GAME,
     SHOW_SHARE_GAME_MODAL,
-    HIDE_SHARE_GAME_MODAL
+    HIDE_SHARE_GAME_MODAL,
+    FETCH_REPLAY_STATUS
 } from './../actions/actions';
 
 const games = (state = {}, action = {}) => {
@@ -28,6 +29,15 @@ const games = (state = {}, action = {}) => {
             }
             break;
         case FETCH_SINGLE_GAME:
+            switch(action.status) {
+                case 'success':
+                    return Object.assign({}, state, {
+                        all: cloneGamesAndUpdate(state.all, action.data.game)
+                    });
+                    break;
+            }
+            break;
+        case FETCH_REPLAY_STATUS:
             switch(action.status) {
                 case 'success':
                     return Object.assign({}, state, {

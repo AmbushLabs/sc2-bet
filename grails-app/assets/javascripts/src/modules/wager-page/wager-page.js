@@ -38,6 +38,9 @@ class WagerPage extends Component {
             return (<div></div>);
         }
         const game = this.props.games.all[this.props.router.params.id];
+        if (!game) {
+            return (<div></div>);
+        }
         const { dispatch, gameReplay } = this.props;
 
         return (

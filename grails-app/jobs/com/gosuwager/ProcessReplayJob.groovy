@@ -61,7 +61,21 @@ class ProcessReplayJob {
                     }
 
                     if (replayToProcess.save()) {
+                        //lets update the players now?
+                        def g = replayToProcess.game;
+                        if (g.winner == 'player1') {
+                            g.player1.gosuCoins += g.gosuCoin;
+                            g.player2.gosuCoins -= g.gosuCoin;
+                        } else if (replayToProcess.game.winner == 'player2') {
+                            g.player2.gosuCoins += g.gosuCoin;
+                            g.player1.gosuCoins -= g.gosuCoin;
+                        }
+                        if (g.player1.save() && g.player2.save()) {
 
+                        } else {
+                            println g.player1.errors;
+                            println g.player2.errors;
+                        }
                     } else {
                         println replayToProcess.errors;
                     }
