@@ -7,13 +7,9 @@ var NavBar = React.createClass ({
     render: function() {
         if (!this.props.loggedIn) {
             return (
-                <nav className="clearfix black">
-                    <div className="sm-col">
-                        <a href="/" className="btn py2">Home</a>
-                    </div>
-                    <div className="sm-col-right">
-                        <a href="/" className="btn py2">About</a>
-                    </div>
+                <nav className="clearfix black border-bottom gosu-blue-bg">
+                    <HomeButton />
+                    <a href="#" className="h6 btn btn-primary right m2 mr4" onClick={this.signUp}>Signup</a>
                 </nav>
             );
         } else {

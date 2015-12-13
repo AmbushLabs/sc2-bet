@@ -11,10 +11,10 @@ class GameList extends Component {
 
     render() {
         if (_.isNull(this.props.games) || _.isUndefined(this.props.games) || this.props.games.length == 0) {
-            const gameListType = "currently"
+            const gameListType = this.getCleanListName(this.props.listType);
             return (
                 <div className="col col-12 center p2 mt2">
-                    <p className="ss-icons ss-binoculars h1"></p>
+                    <p className="ss-icons ss-activity h1"></p>
                     <p className="center h4">You have no games {gameListType}. Try looking for a game to join below.</p>
                 </div>
             );
@@ -105,6 +105,16 @@ class GameList extends Component {
                 this.setState({page:page});
             },this)
         });
+    }
+
+    getCleanListName(listType) {
+        const defName = "currently";
+        if (_.isUndefined(listType) || _.isNull(listType))
+            return defName;
+        if(listType == "created_or_joined")
+            return "waiting for your approval";
+        return listType;
+
     }
 
 };

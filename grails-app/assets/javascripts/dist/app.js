@@ -1801,11 +1801,11 @@ var GameList = (function (_Component) {
         key: 'render',
         value: function render() {
             if (_.isNull(this.props.games) || _.isUndefined(this.props.games) || this.props.games.length == 0) {
-                var gameListType = "currently";
+                var gameListType = this.getCleanListName(this.props.listType);
                 return _react2['default'].createElement(
                     'div',
                     { className: 'col col-12 center p2 mt2' },
-                    _react2['default'].createElement('p', { className: 'ss-icons ss-binoculars h1' }),
+                    _react2['default'].createElement('p', { className: 'ss-icons ss-activity h1' }),
                     _react2['default'].createElement(
                         'p',
                         { className: 'center h4' },
@@ -1926,6 +1926,14 @@ var GameList = (function (_Component) {
                     this.setState({ page: page });
                 }, this)
             });
+        }
+    }, {
+        key: 'getCleanListName',
+        value: function getCleanListName(listType) {
+            var defName = "currently";
+            if (_.isUndefined(listType) || _.isNull(listType)) return defName;
+            if (listType == "created_or_joined") return "waiting for your approval";
+            return listType;
         }
     }]);
 
@@ -2351,24 +2359,12 @@ var NavBar = _react2['default'].createClass({
         if (!this.props.loggedIn) {
             return _react2['default'].createElement(
                 'nav',
-                { className: 'clearfix black' },
+                { className: 'clearfix black border-bottom gosu-blue-bg' },
+                _react2['default'].createElement(_homeButton2['default'], null),
                 _react2['default'].createElement(
-                    'div',
-                    { className: 'sm-col' },
-                    _react2['default'].createElement(
-                        'a',
-                        { href: '/', className: 'btn py2' },
-                        'Home'
-                    )
-                ),
-                _react2['default'].createElement(
-                    'div',
-                    { className: 'sm-col-right' },
-                    _react2['default'].createElement(
-                        'a',
-                        { href: '/', className: 'btn py2' },
-                        'About'
-                    )
+                    'a',
+                    { href: '#', className: 'h6 btn btn-primary right m2 mr4', onClick: this.signUp },
+                    'Signup'
                 )
             );
         } else {
@@ -3789,12 +3785,12 @@ exports['default'] = function (_ref) {
                         { className: 'col col-6 p1' },
                         _react2['default'].createElement(
                             'div',
-                            { className: 'h6 gray' },
-                            'RACE'
+                            { className: 'h4 gray' },
+                            'PRIMARY RACE'
                         ),
                         _react2['default'].createElement(
                             'div',
-                            { className: 'h6' },
+                            { className: 'h4' },
                             user.primary_race
                         )
                     ),
@@ -3803,12 +3799,12 @@ exports['default'] = function (_ref) {
                         { className: 'col col-6 p1' },
                         _react2['default'].createElement(
                             'div',
-                            { className: 'h6 gray' },
+                            { className: 'h4 gray' },
                             'TOP RANK'
                         ),
                         _react2['default'].createElement(
                             'div',
-                            { className: 'h6' },
+                            { className: 'h4' },
                             user.highest_1v1_rank
                         )
                     )
@@ -3821,12 +3817,12 @@ exports['default'] = function (_ref) {
                         { className: 'col col-6 p1' },
                         _react2['default'].createElement(
                             'div',
-                            { className: 'h6 gray' },
+                            { className: 'h4 gray' },
                             'SEASON RECORD'
                         ),
                         _react2['default'].createElement(
                             'div',
-                            { className: 'h6' },
+                            { className: 'h4' },
                             seasonWins,
                             ' - ',
                             seasonLosses
@@ -3837,12 +3833,12 @@ exports['default'] = function (_ref) {
                         { className: 'col col-6 p1' },
                         _react2['default'].createElement(
                             'div',
-                            { className: 'h6 gray' },
+                            { className: 'h4 gray' },
                             'CAREER GAMES PLAYED'
                         ),
                         _react2['default'].createElement(
                             'div',
-                            { className: 'h6' },
+                            { className: 'h4' },
                             user.career_total_games
                         )
                     )
