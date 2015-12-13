@@ -71,6 +71,11 @@ class ReplayService {
             } else {
                 gr.game.winner = "player2";
             }
+            if (gr.game.save()) {
+
+            } else {
+                println gr.game.errors;
+            }
         }
     }
 
@@ -142,10 +147,10 @@ class ReplayService {
         inputStreamHandler.join();
         errorStreamHandler.join();
 
-        println 'error: ' + errorStreamHandler.getOutputBuffer();
+        //println 'error: ' + errorStreamHandler.getOutputBuffer();
 
         String jsonGameData = inputStreamHandler.getOutputBuffer().toString();
-        println jsonGameData;
+        //println jsonGameData;
         return new JSONObject(jsonGameData);
 
     }

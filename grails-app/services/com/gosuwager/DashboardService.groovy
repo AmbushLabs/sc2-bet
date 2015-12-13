@@ -28,21 +28,21 @@ class DashboardService {
             ret['games'] = [:];
             ret['games']['all'] = [:];
             def query = Game.where {
-                active == true && challengerAccepted == true && (player1 == u || player2 == u)
+                completed == false && active == true && challengerAccepted == true && (player1 == u || player2 == u)
             }
-            def ready = query.list(sort:"createDate", order:"desc");
+            def ready = query.list(sort:"gosuCoin", order:"desc");
             def ready_count = query.count();
 
-            def to_approve = Game.findAllByActiveAndPlayer1AndChallengerAcceptedAndPlayer2IsNotNull(true, u, false, [sort:"createDate", order:"desc"]);
-            def to_approve_count = Game.countByActiveAndPlayer1AndChallengerAcceptedAndPlayer2IsNotNull(true, u, false);
+            def to_approve = Game.findAllByActiveAndPlayer1AndChallengerAcceptedAndCompletedAndPlayer2IsNotNull(true, u, false, false, [sort:"gosuCoin", order:"desc"]);
+            def to_approve_count = Game.countByActiveAndPlayer1AndChallengerAcceptedAndCompletedAndPlayer2IsNotNull(true, u, false, false);
 
-            def search = Game.findAllByActiveAndChallengerAcceptedAndIsPrivateAndPlayer2IsNull(true, false, false, [sort:"createDate", order:"desc"]);
-            def search_count = Game.countByActiveAndChallengerAcceptedAndIsPrivateAndPlayer2IsNull(true, false, false);
+            def search = Game.findAllByActiveAndChallengerAcceptedAndIsPrivateAndCompletedAndPlayer2IsNull(true, false, false, false, [sort:"gosuCoin", order:"desc"]);
+            def search_count = Game.countByActiveAndChallengerAcceptedAndIsPrivateAndCompletedAndPlayer2IsNull(true, false, false, false);
 
             def waitingQuery = Game.where {
-                active == true && isPrivate == false && ((player1 == u && player2 == null) || (player2 == u && challengerAccepted == false))
+                completed == false && active == true && isPrivate == false && ((player1 == u && player2 == null) || (player2 == u && challengerAccepted == false))
             }
-            def waiting = waitingQuery.list(sort:"createDate", order:"desc");
+            def waiting = waitingQuery.list(sort:"gosuCoin", order:"desc");
             //Game.findAllByActiveAndPlayer1AndIsPrivateAndPlayer2IsNull(true, u, false, [sort:"createDate", order:"desc"]);
             def waiting_count = waitingQuery.count();
 

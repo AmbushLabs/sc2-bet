@@ -22,6 +22,8 @@ class GameMarshaller {
             ret['wager'] = g.gosuCoin;
             ret['created'] = g.createDate.getTime();
             ret['is_active'] = g.active;
+            ret['completed'] = g.completed;
+            ret['winner'] = g.winner;
 
             def session = RequestContextHolder.currentRequestAttributes().getSession()
             def isPlayer1 = (g.player1 && g.player1.id == session.user_id);
@@ -47,12 +49,14 @@ class GameMarshaller {
                 def creatorCharacter = g.player1.battleNetAccount.characters.first();
                 ret['player1'] = getCharacterMap(creatorCharacter);
                 ret['player1']['user_id'] = g.player1.id;
+                ret['player1']['winner'] = (g.completed && g.winner == 'player1');
             }
 
             if (g.player2) {
                 def challengerCharacter = g.player2.battleNetAccount.characters.first();
                 ret['player2'] = getCharacterMap(challengerCharacter);
                 ret['player2']['user_id'] = g.player2.id;
+                ret['player2']['winner'] = (g.completed && g.winner == 'player2');
             }
 
             return ret;

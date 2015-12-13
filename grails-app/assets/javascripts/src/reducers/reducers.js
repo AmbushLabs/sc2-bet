@@ -15,6 +15,7 @@ import gosuCoins from './gosuCoins';
 import s3 from './s3';
 import profile from './profile';
 import gameReplay from './gameReplay';
+import gamesPlayed from './gamesPlayed';
 
 const reducer = combineReducers({
     router: routerStateReducer,
@@ -29,7 +30,8 @@ const reducer = combineReducers({
     gosuCoins: gosuCoins,
     s3: s3,
     profile: profile,
-    gameReplay: gameReplay
+    gameReplay: gameReplay,
+    gamesPlayed: gamesPlayed
 });
 
 export default reducer;

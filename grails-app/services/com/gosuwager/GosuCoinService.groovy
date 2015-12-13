@@ -17,7 +17,7 @@ class GosuCoinService {
 
     def getWageredGosuCoins(User u) {
         def query = Game.where {
-            active == true && (player1 == u || player2 == u) && (challengerAccepted == true || isPrivate == false)
+            completed == false && active == true && (player1 == u || player2 == u) && (challengerAccepted == true || isPrivate == false)
         }
         def created_or_joined = query.list();
         return created_or_joined.sum { g -> g.gosuCoin };
