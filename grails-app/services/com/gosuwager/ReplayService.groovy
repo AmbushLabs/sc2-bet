@@ -68,13 +68,19 @@ class ReplayService {
             gr.game.completed = true;
             if (creatorWon) {
                 gr.game.winner = "player1";
+                gr.game.player1.contestWins++;
+                gr.game.player2.contestLosses++;
             } else {
                 gr.game.winner = "player2";
+                gr.game.player1.contestLosses++;
+                gr.game.player2.contestWins++;
             }
-            if (gr.game.save()) {
+            if (gr.game.save() && gr.game.player1.save() && gr.game.player2.save()) {
 
             } else {
                 println gr.game.errors;
+                println gr.game.player1.errors;
+                println gr.game.player2.errors;
             }
         }
     }

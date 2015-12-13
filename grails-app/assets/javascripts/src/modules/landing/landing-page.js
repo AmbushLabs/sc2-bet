@@ -68,7 +68,7 @@ export default class LandingPage extends Component {
                 clearInterval(windowChecker);
                 dispatch(checkEmail());
             }
-        }.bind(this), 50);
+        }.bind(this), 50); 
     }
 }
 

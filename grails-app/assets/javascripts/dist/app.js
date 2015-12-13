@@ -3912,7 +3912,7 @@ var EnterEmailForm = (function (_Component) {
                     { className: "gray h5" },
                     "Referral Code"
                 ),
-                _react2["default"].createElement("input", { type: "text", className: "block col-12 mb1 field", ref: "refCode", placeholder: "optional" })
+                _react2["default"].createElement("input", { type: "text", className: "block col-12 mb1 field", ref: "referral_code", placeholder: "optional" })
             );
         }
     }]);

@@ -152,11 +152,11 @@ class GameController {
                             g.rank = Rank.rankToInteger(u.battleNetAccount.characters.first().highest1v1Rank);
                             emailTypes = [[template: 'player-1-joined-empty-conest', user: g.player1]];
                         } else if (!g.player2) {
-                            emailTypes = [
-                                    [template: 'player2-joined-contest', user: g.player2],
-                                    [template: 'notify-player-1-player-2-joined-contest', user: g.player1]
-                            ];
                             g.player2 = u;
+                            emailTypes = [
+                                [template: 'player2-joined-contest', user: g.player2],
+                                [template: 'notify-player-1-player-2-joined-contest', user: g.player1]
+                            ];
                         }
 
                         if (g.save()) {
