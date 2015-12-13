@@ -36,4 +36,5 @@ EXPOSE 8443
 EXPOSE 80
 EXPOSE 443
 
+ENTRYPOINT ["/sbin/entrypoint.sh"]
 CMD ["/usr/bin/supervisord"]
