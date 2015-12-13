@@ -1,6 +1,7 @@
 package com.gosuwager
 
 import com.gosuwager.bnet.SC2Character
+import com.gosuwager.marshallers.Rank
 import grails.converters.JSON
 
 class GameController {
@@ -22,8 +23,8 @@ class GameController {
             characterName = sc2Char.displayName;
         }
         [
-                logged_in: (user != null) ? true : false,
-                character_name: characterName
+            logged_in: (user != null) ? true : false,
+            character_name: characterName
         ]
     }
 
@@ -148,6 +149,7 @@ class GameController {
                         def emailType = '';
                         if (!g.player1) {
                             g.player1 = u;
+                            g.rank = Rank.rankToInteger(u.battleNetAccount.characters.first().highest1v1Rank);
                             emailType = 'player1-joined-wager';
                         } else if (!g.player2) {
                             emailType = 'player2-joined-wager';

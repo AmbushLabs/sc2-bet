@@ -21,12 +21,26 @@ class GameService {
      */
 
     def initializeGames() {
-        createGamesForRankAndGosuCoins(1, [50, 100, 500, 1000]);
-        createGamesForRankAndGosuCoins(2, [50, 100, 500, 1000]);
-        createGamesForRankAndGosuCoins(3, [50, 100, 500, 1000]);
-        createGamesForRankAndGosuCoins(4, [50, 100, 500, 1000]);
-        createGamesForRankAndGosuCoins(5, [50, 100, 500, 1000]);
-        createGamesForRankAndGosuCoins(6, [50, 100, 500, 1000]);
+        createGamesForGosuCoins([50, 100, 500, 1000]);
+        //createGamesForRankAndGosuCoins(2, [50, 100, 500, 1000]);
+        //createGamesForRankAndGosuCoins(3, [50, 100, 500, 1000]);
+        //createGamesForRankAndGosuCoins(4, [50, 100, 500, 1000]);
+        //createGamesForRankAndGosuCoins(5, [50, 100, 500, 1000]);
+        //createGamesForRankAndGosuCoins(6, [50, 100, 500, 1000]);
+    }
+
+    def createGamesForGosuCoins(gosuCoinAmounts) {
+        def currentGames = Game.findAllByActiveAndIsPrivateAndPlayer2IsNullAndRankIsNull(true, false);
+        def currentGameAmounts = currentGames.collect { it.gosuCoin };
+        def remaining = gosuCoinAmounts - currentGameAmounts;
+        remaining.each { amt ->
+            Game g = new Game([
+                gosuCoin: amt
+            ]);
+            if (!g.save()) {
+                println g.errors;
+            }
+        }
     }
 
     def createGamesForRankAndGosuCoins(Integer rank, gosuCoinAmounts) {

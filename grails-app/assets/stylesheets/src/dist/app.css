@@ -101,3 +101,12 @@
 
 .winner-border {
   border: 1px solid gold; }
+
+.game-played .gcu-avatar {
+  position: absolute;
+  margin: 20px 0px 0px 10px;
+  height: 80px;
+  width: 80px; }
+
+.game-played .gcu-right-container {
+  padding-left: 110px; }

@@ -34,7 +34,7 @@ const GameCardUser = ({ user, game }) => {
         winnerTextClass = "winner-text";
         isWinner = (
             <div className="col col-2 center mt1">
-                <span className="ss-icons ss-crown h2 winner-text"></span>
+                <span className="ss-icons ss-trophy h2 winner-text"></span>
             </div>
         );
     }

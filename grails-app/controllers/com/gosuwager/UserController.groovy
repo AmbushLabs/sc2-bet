@@ -79,7 +79,8 @@ class UserController {
                 completed == true && (player1 == u || player2 == u)
             };
 
-            ret['games_played'] = gamesQuery.list(sort:"createDate", order:"desc");
+            def gp = gamesQuery.list(sort:"createDate", order:"desc");
+            ret['games_played'] = gp;
 
         }
         render ret as JSON;

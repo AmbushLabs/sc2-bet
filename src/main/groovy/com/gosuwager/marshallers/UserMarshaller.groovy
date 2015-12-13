@@ -20,8 +20,8 @@ class UserMarshaller {
                 ret['email'] = activePrimaryEmail.email;
             }
 
-            ret['b'] = u.battleNetAccount.battleNetId;
-            ret['c'] = u.battleNetAccountId;
+            ret['wins'] = 4;
+            ret['losses'] = 1;
             ret['character'] = getCharacterMap(u.battleNetAccount.characters.first());
             return ret;
         }

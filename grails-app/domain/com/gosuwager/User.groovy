@@ -7,6 +7,8 @@ class User {
     Date createDate = NULL_DATE;
 
     Integer gosuCoins = 1;
+    Integer contestWins = 0;
+    Integer contestLosses = 0;
 
     static hasOne = [
         battleNetAccount:BattleNetAccount
@@ -24,6 +26,8 @@ class User {
     }
 
     static constraints = {
+        contestWins nullable: false;
+        contestLosses nullable: false;
         createDate nullable: false;
         battleNetAccount nullable: false;
         emails nullable: true;

@@ -45,6 +45,7 @@ class ProfilePage extends Component {
                     <div className="col col-8">
                         <GamesPlayed
                             games={gamesPlayed}
+                            user={profile}
                             />
                     </div>
                     <div className="col col-2">&nbsp;</div>

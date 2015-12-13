@@ -11,6 +11,7 @@ class Dashboard extends Component {
     constructor(options) {
         super(options);
         this.getSearchGames = this.getSearchGames.bind(this);
+        this.getEmptyGames = this.getEmptyGames.bind(this);
         this.getSelectedText = this.getSelectedText.bind(this);
     }
 
@@ -33,9 +34,26 @@ class Dashboard extends Component {
                     </div>
                 </section>
                 <div className="clearfix"></div>
+                <section className="col col-12 bg-white p1 mb2">
+                    <section className="col col-12">
+                        <p className="h3 ml1 mt1">Join an Empty Contest</p>
+                    </section>
+                    <section className="col col-12">
+                        <div className="bg-white clearfix">
+                            <GameList
+                                colSize="col-3"
+                                listType="search"
+                                limit={8}
+                                games={this.getEmptyGames()}
+                                dispatch={this.props.dispatch}
+                                />
+                        </div>
+                    </section>
+                </section>
+                <div className="clearfix"></div>
                 <section className="col col-12 bg-white p1">
                     <section className="col col-9">
-                        <p className="h3 ml1 mt1">Find a Game</p>
+                        <p className="h3 ml1 mt1">Find a Contest by Skill Level</p>
                     </section>
                     <section className="col col-3 right">
                         <select className="block col-12 field"
@@ -90,6 +108,13 @@ class Dashboard extends Component {
             var rank = this.props.games.selected_rank;
             var tmp = _.values(_.pick(this.props.games.all, this.props.games.search.ids));
             return tmp.filter((element) => element.rank == rank);
+        }
+    }
+
+    getEmptyGames() {
+        if (this.props && this.props.games && this.props.games.all) {
+            var tmp = _.values(_.pick(this.props.games.all, this.props.games.search.ids));
+            return tmp.filter((element) => element.rank == null);
         }
     }
 
