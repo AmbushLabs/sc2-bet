@@ -16,13 +16,13 @@ export default class EnterEmailModal extends Component {
                 <div className="modal-dialog col col-6" onClick={this.preventBubble}>
                     <form className="" onSubmit={this.onSubmit}>
                         <div className="modal-header clearfix">
-                            <h2 className="col col-11 mt1 mb1">Enter Email</h2>
+                            <h2 className="col col-11 mt1 mb1">Please Add An Email Address</h2>
                         </div>
                         <div className="modal-body">
                             <EmailAddressForm ref="emailForm" />
                         </div>
                         <div className="modal-footer">
-                            <input type="submit" className="btn btn-primary mr2" value="Enter Email" />
+                            <input type="submit" className="btn btn-primary mr2" value="Submit" />
                         </div>
                     </form>
                 </div>
