@@ -13,7 +13,7 @@ export default class GosuCoinBalance extends Component {
                     <div className="col col-4">&nbsp;</div>
                     <div className="col col-4 border m2 gosu-light-blue-bg">
                         <div className="col col-12 p2">
-                            <p className="h3 gosu-blue-text center">Current Gosu Coin Balance</p>
+                            <p className="h3 gosu-blue-text center">Current GosuCoin Balance</p>
                             <p className="h5 center">
                                 You have <span className="bold gosu-blue-text">{this.props.gosuCoins.remaining} GC</span>,
                                 valued at <span className="bold gosu-blue-text">${this.props.gosuCoins.remaining_value}</span>.

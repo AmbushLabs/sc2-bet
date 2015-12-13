@@ -1789,8 +1789,12 @@ var GameCard = (function (_Component) {
                     _react2['default'].createElement(
                         'div',
                         { className: 'col col-4 right-align' },
-                        this.props.game.rank_display,
-                        this.getHasJoinedStar()
+                        this.getHasJoinedStar(),
+                        _react2['default'].createElement(
+                            'a',
+                            { href: "/w/" + this.props.game.id },
+                            _react2['default'].createElement('span', { className: 'ss-icon ss-redirect gosu-blue right h4' })
+                        )
                     ),
                     _react2['default'].createElement(
                         'div',
@@ -2087,15 +2091,7 @@ var MyGames = (function (_Component) {
                             className: "btn btn-narrow " + this.isSelected('to_approve'),
                             onClick: this.setGameState,
                             'data-list-type': 'to_approve' },
-                        'To Approve'
-                    ),
-                    _react2['default'].createElement(
-                        'a',
-                        { href: '#',
-                            className: "btn btn-narrow " + this.isSelected('ready'),
-                            onClick: this.setGameState,
-                            'data-list-type': 'ready' },
-                        'Ready to Play'
+                        'Needs Approval'
                     ),
                     _react2['default'].createElement(
                         'a',
@@ -2104,6 +2100,14 @@ var MyGames = (function (_Component) {
                             onClick: this.setGameState,
                             'data-list-type': 'waiting' },
                         'Pending'
+                    ),
+                    _react2['default'].createElement(
+                        'a',
+                        { href: '#',
+                            className: "btn btn-narrow " + this.isSelected('ready'),
+                            onClick: this.setGameState,
+                            'data-list-type': 'ready' },
+                        'Ready to Play!'
                     )
                 ),
                 _react2['default'].createElement(_gamesGameList2['default'], {
@@ -2916,7 +2920,7 @@ var GosuCoinBalance = (function (_Component) {
                             _react2["default"].createElement(
                                 "p",
                                 { className: "h3 gosu-blue-text center" },
-                                "Current Gosu Coin Balance"
+                                "Current GosuCoin Balance"
                             ),
                             _react2["default"].createElement(
                                 "p",
@@ -3021,7 +3025,8 @@ var GosuCoins = (function (_Component) {
                     _react2['default'].createElement(
                         'p',
                         { className: 'h1 center mt3 gosu-blue-text' },
-                        'Add more Gosu Coins to Your Account'
+                        'Buy GosuCoin ',
+                        _react2['default'].createElement('span', { className: ' gosu-coins-gold ss-icon ss-coins h2' })
                     ),
                     _react2['default'].createElement(_addCoins2['default'], {
                         user: this.props.user,

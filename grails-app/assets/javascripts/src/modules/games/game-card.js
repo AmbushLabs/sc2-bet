@@ -65,8 +65,8 @@ export default class GameCard extends Component {
                         </p>
                     </div>
                     <div className="col col-4 right-align">
-                        {this.props.game.rank_display}
                         {this.getHasJoinedStar()}
+                        <a href={"/w/" + this.props.game.id}><span className="ss-icon ss-redirect gosu-blue right h4"></span></a>
                     </div>
                     <div className="">
                         <div className="col col-12 left-align">

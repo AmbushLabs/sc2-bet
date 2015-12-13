@@ -20,15 +20,15 @@ export default class MyGames extends Component {
                     <a href="#"
                        className={"btn btn-narrow " + this.isSelected('to_approve')}
                        onClick={this.setGameState}
-                       data-list-type="to_approve">To Approve</a>
-                    <a href="#"
-                       className={"btn btn-narrow " + this.isSelected('ready')}
-                       onClick={this.setGameState}
-                       data-list-type="ready">Ready to Play</a>
+                       data-list-type="to_approve">Needs Approval</a>
                     <a href="#"
                        className={"btn btn-narrow " + this.isSelected('waiting')}
                        onClick={this.setGameState}
                        data-list-type="waiting">Pending</a>
+                    <a href="#"
+                       className={"btn btn-narrow " + this.isSelected('ready')}
+                       onClick={this.setGameState}
+                       data-list-type="ready">Ready to Play!</a>
                 </div>
                 <GameList
                     colSize="col-6"

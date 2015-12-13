@@ -16,7 +16,7 @@ export default class GosuCoins extends Component {
                     &nbsp;
                 </div>
                 <div className="col col-8">
-                    <p className="h1 center mt3 gosu-blue-text">Add more Gosu Coins to Your Account</p>
+                    <p className="h1 center mt3 gosu-blue-text">Buy GosuCoin&nbsp;<span className=" gosu-coins-gold ss-icon ss-coins h2"></span></p>
                     <AddCoins
                         user={this.props.user}
                         dispatch={this.props.dispatch}
