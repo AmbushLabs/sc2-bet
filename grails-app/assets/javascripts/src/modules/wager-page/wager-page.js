@@ -46,7 +46,7 @@ class WagerPage extends Component {
         return (
             <div className="col col-12 mb4 clearfix">
                 <div className="col col-12 center mt3 mb2">
-                    <div className="h1 gosu-blue-text">Contest: {game.wager} Gosu Coins</div>
+                    <div className="h1 gosu-blue-text">Winner Takes <span className="gosu-coins-gold"><span className="ss-icon ss-coins h2"></span>&nbsp;{game.wager}</span></div>
                     <div className="h4 gray">Current Status: {this.getStatusDisplay(game)}</div>
                 </div>
                 <div className="col col-12">

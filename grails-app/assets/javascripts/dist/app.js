@@ -693,7 +693,7 @@ var Dashboard = (function (_Component) {
                         _react2['default'].createElement(
                             'p',
                             { className: 'h3 ml1 mt1' },
-                            'Join an Empty Contest'
+                            'Join a contest, then get a friend to join it.'
                         )
                     ),
                     _react2['default'].createElement(
@@ -722,7 +722,7 @@ var Dashboard = (function (_Component) {
                         _react2['default'].createElement(
                             'p',
                             { className: 'h3 ml1 mt1' },
-                            'Find a Contest by Skill Level'
+                            'Filter Contests by Skill Level.'
                         )
                     ),
                     _react2['default'].createElement(
@@ -971,7 +971,7 @@ var Footer = function Footer(_ref) {
                         { href: 'http://ambushlabs.com' },
                         'AmbushLabs'
                     ),
-                    ' production, 2015 '
+                    ' production © 2015 '
                 )
             )
         )
@@ -1775,14 +1775,14 @@ var GameCard = (function (_Component) {
                         { className: 'col col-8' },
                         _react2['default'].createElement(
                             'p',
-                            { className: 'h4' },
+                            { className: 'h3' },
                             _react2['default'].createElement(
                                 'a',
-                                { href: "/w/" + this.props.game.id },
+                                { className: 'gosu-coins-gold', href: "/w/" + this.props.game.id },
                                 _react2['default'].createElement('span', { className: 'ss-icon ss-coins h5' }),
                                 ' ',
                                 this.props.game.wager,
-                                ' Gosu Coin'
+                                ' '
                             )
                         )
                     ),
@@ -2387,7 +2387,7 @@ var HomeButton = _react2["default"].createClass({
                 _react2["default"].createElement(
                     "div",
                     { className: "left ml1" },
-                    "Gosu Empire"
+                    "GosuEmpire"
                 )
             )
         );
@@ -4557,9 +4557,14 @@ var WagerPage = (function (_Component) {
                     _react2['default'].createElement(
                         'div',
                         { className: 'h1 gosu-blue-text' },
-                        'Contest: ',
-                        game.wager,
-                        ' Gosu Coins'
+                        'Winner Takes ',
+                        _react2['default'].createElement(
+                            'span',
+                            { className: 'gosu-coins-gold' },
+                            _react2['default'].createElement('span', { className: 'ss-icon ss-coins h2' }),
+                            ' ',
+                            game.wager
+                        )
                     ),
                     _react2['default'].createElement(
                         'div',

@@ -2,6 +2,7 @@ $gosu-blue: #1a3061;
 $gosu-light-blue: #e0e6f3;
 $text-on-gosu-blue: #ffffff;
 $gosu-winner-color: gold;
+$gosu-coins-color: #FFD700;
 
 .gosu-blue-bg {
     background-color: $gosu-blue;
@@ -18,6 +19,10 @@ $gosu-winner-color: gold;
 .gosu-empire-logo-header {
     height: 20px;
     width: auto;
+}
+
+.gosu-coins-gold {
+    color: $gosu-coins-color;
 }
 
 @import "modal";

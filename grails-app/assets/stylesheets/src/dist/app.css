@@ -11,6 +11,9 @@
   height: 20px;
   width: auto; }
 
+.gosu-coins-gold {
+  color: #FFD700; }
+
 .modal:before {
   content: "";
   display: block;

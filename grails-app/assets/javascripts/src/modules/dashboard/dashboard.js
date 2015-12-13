@@ -36,7 +36,7 @@ class Dashboard extends Component {
                 <div className="clearfix"></div>
                 <section className="col col-12 bg-white p1 mb2">
                     <section className="col col-12">
-                        <p className="h3 ml1 mt1">Join an Empty Contest</p>
+                        <p className="h3 ml1 mt1">Join a contest, then get a friend to join it.</p>
                     </section>
                     <section className="col col-12">
                         <div className="bg-white clearfix">
@@ -53,7 +53,7 @@ class Dashboard extends Component {
                 <div className="clearfix"></div>
                 <section className="col col-12 bg-white p1">
                     <section className="col col-9">
-                        <p className="h3 ml1 mt1">Find a Contest by Skill Level</p>
+                        <p className="h3 ml1 mt1">Filter Contests by Skill Level.</p>
                     </section>
                     <section className="col col-3 right">
                         <select className="block col-12 field"

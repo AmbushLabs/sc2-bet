@@ -26,7 +26,7 @@ const Footer = ({linka}) => {
                     </div>
                 </div>
                 <div className="col col-4 center py3">
-                    <span className="h6 white">an <a href="http://ambushlabs.com">AmbushLabs</a> production, 2015 </span>
+                    <span className="h6 white">an <a href="http://ambushlabs.com">AmbushLabs</a> production &copy;&nbsp;2015 </span>
                 </div>
             </div>
         </section>
