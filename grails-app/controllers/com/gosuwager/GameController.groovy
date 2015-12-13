@@ -112,7 +112,7 @@ class GameController {
                 }
                 if (g.save()) {
                     def u = User.findById(session.user_id);
-                    SendEmailService.send(u, "player-left-contest", g);
+                    //SendEmailService.send(u, "player-left-contest", g);
                     ret['game'] = g;
                     ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
                 }
@@ -146,18 +146,23 @@ class GameController {
                 } else {
                     User u = User.findById(session.user_id);
                     if (GosuCoinService.canUserCreateOrJoinGame(u, g)) {
-                        def emailType = '';
+                        def emailTypes = [];
                         if (!g.player1) {
                             g.player1 = u;
                             g.rank = Rank.rankToInteger(u.battleNetAccount.characters.first().highest1v1Rank);
-                            emailType = 'player1-joined-wager';
+                            emailTypes = [[template: 'player-1-joined-empty-conest', user: g.player1]];
                         } else if (!g.player2) {
-                            emailType = 'player2-joined-wager';
+                            emailTypes = [
+                                    [template: 'player2-joined-contest', user: g.player2],
+                                    [template: 'notify-player-1-player-2-joined-contest', user: g.player1]
+                            ];
                             g.player2 = u;
                         }
 
                         if (g.save()) {
-                            SendEmailService.send(u, emailType, g);
+                            emailTypes.each {
+                                SendEmailService.send(it.user, it.template, g);
+                            }
                         } else {
                             println g.errors;
                         }
@@ -197,7 +202,7 @@ class GameController {
                 g.challengerAccepted = true;
                 g.challengerAcceptedDate = new Date();
                 if (g.save()) {
-                    SendEmailService.send(g.player2, 'player1-accepted-challenge', g);
+                    SendEmailService.send(g.player2, 'creator-accepted-challenge', g);
                 }
                 ret['game'] = g;
             }
@@ -225,7 +230,7 @@ class GameController {
                 g.player2 = null;
                 g.challengerAccepted = false;
                 if (g.save()) {
-                    SendEmailService.send(g.player2, 'player1-rejected-player2', g);
+                    SendEmailService.send(g.player2, 'creator-rejected-challenger', g);
                 }
                 ret['game'] = g;
             }
