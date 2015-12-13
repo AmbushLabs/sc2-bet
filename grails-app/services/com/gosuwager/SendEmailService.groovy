@@ -37,7 +37,6 @@ class SendEmailService {
             case 'notify-player-1-player-2-joined-contest':
                 mergeVars.add(new MandrillMessage.MergeVar("wager_link", siteUri + 'w/' + data.id));
                 break;
-
             case 'confirm-email':
                 mergeVars.add(new MandrillMessage.MergeVar("confirm_email_link", siteUri + 'email/confirm?confirm=' + data.confirmHash));
                 break;
