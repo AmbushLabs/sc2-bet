@@ -32,7 +32,7 @@ class SendEmailService {
                 break;
             case 'creator-accepted-challenge': //player1-rejected-player2
             case 'creator-rejected-challenger'://player1-accepted-player2
-            case 'player2-joined-contest':
+            case 'player-2-joined-contest':
             case 'player-1-joined-empty-conest':
             case 'notify-player-1-player-2-joined-contest':
                 mergeVars.add(new MandrillMessage.MergeVar("wager_link", siteUri + 'w/' + data.id));
