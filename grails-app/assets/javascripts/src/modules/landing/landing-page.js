@@ -24,7 +24,7 @@ export default class LandingPage extends Component {
         <div>
             <header className="center px3 py4 white bg-cover" style={bgImage} >
                 <h1 className="h1 h0-responsive caps mt4 mb0 regular">GosuEmpire</h1>
-                <p className="h3">Win real money playing Starcraft 2 against your friends</p>
+                <p className="h3">Win real money playing Starcraft with your friends</p>
                 <a href="#" className="h4 btn btn-primary mb4" onClick={this.signUp}>Play Now For Free</a>
             </header>
             <section className=" center p2 bg-cover bg-center" style={bgImageMain}>
