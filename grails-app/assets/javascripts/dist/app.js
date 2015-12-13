@@ -924,7 +924,7 @@ var Footer = function Footer(_ref) {
                 { className: 'col col-8 py3' },
                 _react2['default'].createElement(
                     'div',
-                    { className: 'col col-3 center' },
+                    { className: 'col col-2 center' },
                     _react2['default'].createElement(
                         'a',
                         { href: 'mailto:support@gosuempire.zendesk.com?subject=Contact Gosu Empire', className: 'h5 white' },
@@ -933,7 +933,7 @@ var Footer = function Footer(_ref) {
                 ),
                 _react2['default'].createElement(
                     'div',
-                    { className: 'col col-3 center' },
+                    { className: 'col col-2 center' },
                     _react2['default'].createElement(
                         'a',
                         { href: 'https://gosuempire.zendesk.com/hc/en-us/sections/203560088-FAQ', className: 'h5 white' },
@@ -942,7 +942,7 @@ var Footer = function Footer(_ref) {
                 ),
                 _react2['default'].createElement(
                     'div',
-                    { className: 'col col-3 center' },
+                    { className: 'col col-2 center' },
                     _react2['default'].createElement(
                         'a',
                         { href: 'https://gosuempire.zendesk.com/hc/en-us/categories/202447277-Rules', className: 'h5 white' },
@@ -951,7 +951,7 @@ var Footer = function Footer(_ref) {
                 ),
                 _react2['default'].createElement(
                     'div',
-                    { className: 'col col-3 center' },
+                    { className: 'col col-2 center' },
                     _react2['default'].createElement(
                         'a',
                         { href: 'https://gosuempire.zendesk.com/hc/en-us/articles/214963648-Terms-of-Service', className: 'h5 white' },
@@ -971,7 +971,7 @@ var Footer = function Footer(_ref) {
                         { href: 'http://ambushlabs.com' },
                         'AmbushLabs'
                     ),
-                    ' production '
+                    ' production, 2015 '
                 )
             )
         )
