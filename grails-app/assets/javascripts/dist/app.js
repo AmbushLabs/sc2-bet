@@ -3807,6 +3807,7 @@ var EnterEmailModal = (function (_Component) {
         key: 'onSubmit',
         value: function onSubmit(ev) {
             var emailAddress = this.refs.emailForm.refs.emailAddress.value;
+            var referralCode = this.refs.emailForm.refs.referralCode.value;
             if (_.isEmpty(emailAddress) || !this.validateEmail(emailAddress)) {
                 this.showSubmitError();
                 ev.stopPropagation();
@@ -3815,7 +3816,7 @@ var EnterEmailModal = (function (_Component) {
             }
             var dispatch = this.props.dispatch;
 
-            dispatch(linkEmailAddress(emailAddress)).then(function () {
+            dispatch(linkEmailAddress(emailAddress, referralCode)).then(function () {
                 return dispatch({
                     type: 'HIDE_CREATE_GAME_MODAL'
                 });
@@ -3837,7 +3838,7 @@ var EnterEmailModal = (function (_Component) {
 exports['default'] = EnterEmailModal;
 ;
 
-function linkEmailAddress(emailAddress) {
+function linkEmailAddress(emailAddress, referralCode) {
     return function (dispatch) {
         dispatch({
             type: 'ADD_EMAIL_ADDRESS',
@@ -3848,7 +3849,7 @@ function linkEmailAddress(emailAddress) {
             headers: {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
-            body: "email_address=" + emailAddress,
+            body: "email_address=" + emailAddress + '&referral_code=' + referralCode,
             credentials: 'include'
         }).then(function (response) {
             return response.json();
@@ -3912,7 +3913,7 @@ var EnterEmailForm = (function (_Component) {
                     { className: "gray h5" },
                     "Referral Code"
                 ),
-                _react2["default"].createElement("input", { type: "text", className: "block col-12 mb1 field", ref: "referral_code", placeholder: "optional" })
+                _react2["default"].createElement("input", { type: "text", className: "block col-12 mb1 field", ref: "referralCode", placeholder: "optional" })
             );
         }
     }]);

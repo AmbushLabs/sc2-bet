@@ -154,7 +154,7 @@ class GameController {
                         } else if (!g.player2) {
                             g.player2 = u;
                             emailTypes = [
-                                [template: 'player2-joined-contest', user: g.player2],
+                                [template: 'player-2-joined-contest', user: g.player2],
                                 [template: 'notify-player-1-player-2-joined-contest', user: g.player1]
                             ];
                         }

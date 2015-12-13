@@ -41,6 +41,7 @@ export default class EnterEmailModal extends Component {
 
     onSubmit(ev) {
         var emailAddress = this.refs.emailForm.refs.emailAddress.value;
+        var referralCode = this.refs.emailForm.refs.referralCode.value;
         if (_.isEmpty(emailAddress) || !this.validateEmail(emailAddress)) {
             this.showSubmitError();
             ev.stopPropagation();
@@ -48,7 +49,7 @@ export default class EnterEmailModal extends Component {
             return false;
         }
         const { dispatch } = this.props;
-        dispatch(linkEmailAddress(emailAddress))
+        dispatch(linkEmailAddress(emailAddress, referralCode))
             .then(() =>
                 dispatch({
                     type:'HIDE_CREATE_GAME_MODAL'
@@ -64,7 +65,7 @@ export default class EnterEmailModal extends Component {
     }
 };
 
-function linkEmailAddress(emailAddress) {
+function linkEmailAddress(emailAddress, referralCode) {
     return function(dispatch) {
         dispatch({
             type: 'ADD_EMAIL_ADDRESS',
@@ -75,7 +76,7 @@ function linkEmailAddress(emailAddress) {
             headers: {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
-            body: "email_address=" + emailAddress,
+            body: "email_address=" + emailAddress + '&referral_code=' + referralCode,
             credentials: 'include'
         })
             .then(response => response.json())

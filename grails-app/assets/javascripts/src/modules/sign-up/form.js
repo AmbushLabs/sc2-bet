@@ -8,8 +8,7 @@ export default class EnterEmailForm extends Component {
                 <input type="email" className="block col-12 mb1 field" ref="emailAddress" placeholder="glhf@example.com" />
                 <h5></h5>
                 <label className="gray h5">Referral Code</label>
-                <input type="text" className="block col-12 mb1 field" ref="referral_code" placeholder="optional" />
-
+                <input type="text" className="block col-12 mb1 field" ref="referralCode" placeholder="optional" />
             </div>
         );
     }

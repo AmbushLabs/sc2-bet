@@ -46,12 +46,11 @@ class AuthController {
 
                 def usr = new User([
                     battleNetAccount: account,
-                    gosuCoins: 100,
+                    gosuCoins: 0,
                     referralCode: referralCode
                 ]);
 
                 if (usr.save(flush:true) && account.save(flush:true)) {
-                    GameService.createPrivateGamesForUser(usr, [50, 100, 500, 1000]);
                     session.user_id = usr.id;
 
                 } else {
