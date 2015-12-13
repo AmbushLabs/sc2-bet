@@ -14,8 +14,8 @@ class GameList extends Component {
             const gameListType = this.getCleanListName(this.props.listType);
             return (
                 <div className="col col-12 center p2 mt2">
-                    <p className="ss-icons ss-activity h1"></p>
-                    <p className="center h4">You have no games {gameListType}. Try looking for a game to join below.</p>
+                    <p className="ss-icons ss-swords h1"></p>
+                    <p className="center h4">You have no contests {gameListType}. Join an empty contest and share to a friend to challenge, or be the challenger of an existing contest below.</p>
                 </div>
             );
         }

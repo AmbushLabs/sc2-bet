@@ -1805,13 +1805,13 @@ var GameList = (function (_Component) {
                 return _react2['default'].createElement(
                     'div',
                     { className: 'col col-12 center p2 mt2' },
-                    _react2['default'].createElement('p', { className: 'ss-icons ss-activity h1' }),
+                    _react2['default'].createElement('p', { className: 'ss-icons ss-swords h1' }),
                     _react2['default'].createElement(
                         'p',
                         { className: 'center h4' },
-                        'You have no games ',
+                        'You have no contests ',
                         gameListType,
-                        '. Try looking for a game to join below.'
+                        '. Join an empty contest and share to a friend to challenge, or be the challenger of an existing contest below.'
                     )
                 );
             }
