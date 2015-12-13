@@ -17,6 +17,7 @@ const Join = ({dispatch, gameId, colClass}) => {
                 }
             }}
             gameId={gameId}
+            iconVal={"tiny-symbol ss-icons p1 ss-share ml1"}
             />
     )
 };

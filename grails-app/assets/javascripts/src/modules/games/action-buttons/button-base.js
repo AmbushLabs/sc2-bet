@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ButtonBase = ({buttonText, buttonClass, dispatch, crudAction, gameId, loading}) => {
+const ButtonBase = ({buttonText, buttonClass, dispatch, crudAction, gameId, loading, iconVal}) => {
     if (loading) {
         return (
             <button className={"btn btn-outline " + buttonClass}>
@@ -13,6 +13,7 @@ const ButtonBase = ({buttonText, buttonClass, dispatch, crudAction, gameId, load
             className={"btn btn-outline " + buttonClass}
             onClick={() => dispatch(crudAction(gameId))}
             >
+            <span className={iconVal}></span>
             {buttonText}
         </button>
     );

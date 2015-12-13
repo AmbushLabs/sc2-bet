@@ -9,7 +9,7 @@ var NavBar = React.createClass ({
             return (
                 <nav className="clearfix black border-bottom gosu-blue-bg">
                     <HomeButton />
-                    <a href="#" className="h6 btn btn-primary right m2 mr4" onClick={this.signUp}>Signup</a>
+                    <a href="#" className="h6 btn btn-primary right m2 mr4" onClick={this.signUp}>Login with Battle.net</a>
                 </nav>
             );
         } else {

@@ -6,11 +6,12 @@ const Join = ({dispatch, gameId, loading, colClass}) => {
     return (
         <ButtonBase
             buttonClass={"blue col " + colClass}
-            buttonText="Join Contest"
+            buttonText="Click to Join"
             dispatch={dispatch}
             crudAction={join}
             gameId={gameId}
             loading={loading}
+            iconVal={"tiny-symbol ss-icons p1 ss-target"}
             />
     )
 };

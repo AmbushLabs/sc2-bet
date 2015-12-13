@@ -1075,7 +1075,8 @@ var Leave = function Leave(_ref) {
         dispatch: dispatch,
         crudAction: _apiGameCrud.accept,
         gameId: gameId,
-        loading: loading
+        loading: loading,
+        iconVal: "tiny-symbol ss-icons p1 ss-check"
     });
 };
 
@@ -1102,6 +1103,7 @@ var ButtonBase = function ButtonBase(_ref) {
     var crudAction = _ref.crudAction;
     var gameId = _ref.gameId;
     var loading = _ref.loading;
+    var iconVal = _ref.iconVal;
 
     if (loading) {
         return _react2["default"].createElement(
@@ -1122,6 +1124,7 @@ var ButtonBase = function ButtonBase(_ref) {
                 return dispatch(crudAction(gameId));
             }
         },
+        _react2["default"].createElement("span", { className: iconVal }),
         buttonText
     );
 };
@@ -1193,11 +1196,12 @@ var Join = function Join(_ref) {
 
     return _react2['default'].createElement(_buttonBase2['default'], {
         buttonClass: "blue col " + colClass,
-        buttonText: 'Join Contest',
+        buttonText: 'Click to Join',
         dispatch: dispatch,
         crudAction: _apiGameCrud.join,
         gameId: gameId,
-        loading: loading
+        loading: loading,
+        iconVal: "tiny-symbol ss-icons p1 ss-target"
     });
 };
 
@@ -1235,7 +1239,8 @@ var Leave = function Leave(_ref) {
         dispatch: dispatch,
         crudAction: _apiGameCrud.leave,
         gameId: gameId,
-        loading: loading
+        loading: loading,
+        iconVal: "tiny-symbol ss-icons p1 ss-skullandcrossbones"
     });
 };
 
@@ -1273,7 +1278,8 @@ var Leave = function Leave(_ref) {
         dispatch: dispatch,
         crudAction: _apiGameCrud.reject,
         gameId: gameId,
-        loading: loading
+        loading: loading,
+        iconVal: "tiny-symbol ss-icons p1 ss-ban"
     });
 };
 
@@ -1316,7 +1322,8 @@ var Join = function Join(_ref) {
                 }
             };
         },
-        gameId: gameId
+        gameId: gameId,
+        iconVal: "tiny-symbol ss-icons p1 ss-share ml1"
     });
 };
 
@@ -2412,7 +2419,7 @@ var NavBar = _react2['default'].createClass({
                 _react2['default'].createElement(
                     'a',
                     { href: '#', className: 'h6 btn btn-primary right m2 mr4', onClick: this.signUp },
-                    'Signup'
+                    'Login with Battle.net'
                 )
             );
         } else {
@@ -3757,7 +3764,7 @@ var EnterEmailModal = (function (_Component) {
                             _react2['default'].createElement(
                                 'h2',
                                 { className: 'col col-11 mt1 mb1' },
-                                'Please Add An Email Address'
+                                'Please Enter Your Email Address'
                             )
                         ),
                         _react2['default'].createElement(
@@ -3768,7 +3775,7 @@ var EnterEmailModal = (function (_Component) {
                         _react2['default'].createElement(
                             'div',
                             { className: 'modal-footer' },
-                            _react2['default'].createElement('input', { type: 'submit', className: 'btn btn-primary mr2', value: 'Submit' })
+                            _react2['default'].createElement('input', { type: 'submit', className: 'btn btn-primary mr2', value: 'Finish' })
                         )
                     )
                 )
