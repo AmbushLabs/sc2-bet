@@ -3875,10 +3875,17 @@ var EnterEmailForm = (function (_Component) {
                 null,
                 _react2["default"].createElement(
                     "h5",
-                    null,
-                    "We use email to communicate when someone challenges you or you win a contest. We will not spam your account or share your info."
+                    { className: "mb1 gray" },
+                    "We use email to communicate when you are sent a challenge or you win a contest. We will not spam your account or share your info."
                 ),
-                _react2["default"].createElement("input", { type: "email", className: "block col-12 mb1 field", ref: "emailAddress", placeholder: "glhf@example.com" })
+                _react2["default"].createElement("input", { type: "email", className: "block col-12 mb1 field", ref: "emailAddress", placeholder: "glhf@example.com" }),
+                _react2["default"].createElement("h5", null),
+                _react2["default"].createElement(
+                    "label",
+                    { className: "gray h5" },
+                    "Referral Code"
+                ),
+                _react2["default"].createElement("input", { type: "text", className: "block col-12 mb1 field", ref: "refCode", placeholder: "optional" })
             );
         }
     }]);
