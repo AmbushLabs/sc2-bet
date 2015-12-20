@@ -1,3 +1,6 @@
 #!/bin/bash
 
-exec grails prod run-app -https
+echo "moving directory";
+cd /opt/sc2-bet/app;
+echo "running grails app";
+exec grails prod run-app

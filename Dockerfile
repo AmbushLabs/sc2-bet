@@ -1,11 +1,5 @@
-FROM aaronhenshaw/grails-mysql-nginx-sc2reader
+FROM aaronhenshaw/nginx-python-sc2reader
 MAINTAINER Aaron Henshaw <aaronhenshaw@gmail.com>
-
-#OK INSTALL MYSQL, NGINX
-
-
-#TODO: figure out how to get rid of this line
-#RUN chmod -R 777 ${CATALINA_HOME}
 
 #######################
 ### SSH KEYS FOR GITHUB
@@ -29,12 +23,15 @@ RUN git clone git@github.com:AmbushLabs/sc2-bet.git ${PROJECT_HOME}/app
 #############
 WORKDIR ${PROJECT_HOME}/app
 RUN grails clean
+RUN chmod +x run-gosu-wager.sh
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-EXPOSE 8443
+#EXPOSE 8443
 EXPOSE 80
+EXPOSE 8080
 EXPOSE 443
 
-ENTRYPOINT ["/sbin/entrypoint.sh"]
+# ENTRYPOINT ["/sbin/entrypoint.sh"]
 CMD ["/usr/bin/supervisord"]
+# CMD ["grails", "prod", "run-app", "-https"]
