@@ -38,12 +38,11 @@ ENV LETSENCRYPT_HOME /opt/letsencrypt
 RUN mkdir ${LETSENCRYPT_HOME}
 RUN git clone https://github.com/letsencrypt/letsencrypt ${LETSENCRYPT_HOME}
 WORKDIR ${LETSENCRYPT_HOME}
-#RUN ./letsencrypt-auto certonly --test-cert --standalone --agree-tos --redirect --duplicate --text --register-unsafely-without-email -d gosuempire.com -d www.gosuempire.com
+RUN ./letsencrypt-auto certonly --test-cert --standalone --agree-tos --redirect --duplicate --text --register-unsafely-without-email -d gosuempire.com -d www.gosuempire.com
 
 #EXPOSE 8443
 EXPOSE 80
 EXPOSE 443
 
-# ENTRYPOINT ["/sbin/entrypoint.sh"]
+WORKDIR ${PROJECT_HOME}/app/docker
 CMD ["/usr/bin/supervisord"]
-# CMD ["grails", "prod", "run-app", "-https"]
