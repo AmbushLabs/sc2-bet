@@ -9,12 +9,23 @@ server {
 }
 
 server {
+        listen 80;
+        server_name gosuempire.com;
+
+        location / {
+                proxy_pass      http://gosuempire;
+                proxy_set_header Host $http_host;
+        }
+}
+
+
+server {
         listen 443;
         server_name gosuempire.com;
 
-        ssl on;
-        ssl_certificate /etc/letsencrypt/live/gosuempire.com/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/gosuempire.com/privkey.pem;
+        #ssl on;
+        #ssl_certificate /etc/letsencrypt/live/gosuempire.com/fullchain.pem;
+        #ssl_certificate_key /etc/letsencrypt/live/gosuempire.com/privkey.pem;
 
         location / {
                 proxy_pass      http://gosuempire;
