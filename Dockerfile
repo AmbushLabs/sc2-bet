@@ -31,6 +31,18 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/nginx/sites-available/gosuempire /etc/nginx/sites-available/gosuempire
 COPY docker/nginx/conf.d/gosuempire.conf /etc/nginx/conf.d/gosuempire.conf
 
+#######
+### SSL
+#######
+WORKDIR /etc/nginx
+RUN openssl dhparam -out dhparam.pem 2048
+RUN mkdir -p /etc/letsencrypt/live/gosuempire.com
+COPY docker/keys/cert.pem /etc/letsencrypt/live/gosuempire.com/cert.pem
+COPY docker/keys/chain.pem /etc/letsencrypt/live/gosuempire.com/chain.pem
+COPY docker/keys/fullchain.pem /etc/letsencrypt/live/gosuempire.com/fullchain.pem
+COPY docker/keys/privkey.pem /etc/letsencrypt/live/gosuempire.com/privkey.pem
+
+
 ###############
 ### LETSENCRYPT
 ###############
