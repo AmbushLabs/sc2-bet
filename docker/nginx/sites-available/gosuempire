@@ -1,6 +1,41 @@
 server {
-        listen 80;
+        listen 443;
         server_name localhost;
+
+        ssl on;
+        ssl_certificate /etc/letsencrypt/live/localhost/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/localhost/privkey.pem;
+
+        location / {
+                proxy_pass      http://gosuempire;
+                proxy_set_header Host $http_host;
+        }
+}
+
+
+server {
+        listen 443;
+        server_name 192.168.99.101;
+
+        ssl on;
+        ssl_certificate /etc/letsencrypt/live/192.168.99.101/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/192.168.99.101/privkey.pem;
+
+        location / {
+                proxy_pass      http://gosuempire;
+                proxy_set_header Host $http_host;
+        }
+}
+
+
+server {
+        listen 443;
+        server_name gosuempire.com;
+
+        ssl on;
+        ssl_certificate /etc/letsencrypt/live/gosuempire.com/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/gosuempire.com/privkey.pem;
+
         location / {
                 proxy_pass      http://gosuempire;
                 proxy_set_header Host $http_host;

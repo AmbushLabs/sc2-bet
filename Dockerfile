@@ -28,9 +28,17 @@ RUN chmod +x run-gosu-wager.sh
 RUN chmod +x run-nginx.sh
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
 COPY docker/nginx/sites-available/gosuempire /etc/nginx/sites-available/gosuempire
 COPY docker/nginx/conf.d/gosuempire.conf /etc/nginx/conf.d/gosuempire.conf
+
+###############
+### LETSENCRYPT
+###############
+ENV LETSENCRYPT_HOME /opt/letsencrypt
+RUN mkdir ${LETSENCRYPT_HOME}
+RUN git clone https://github.com/letsencrypt/letsencrypt ${LETSENCRYPT_HOME}
+WORKDIR ${LETSENCRYPT_HOME}
+RUN ./letsencrypt-auto certonly --test-cert --standalone --agree-tos --redirect --duplicate --text --email admin@gosuempire.com -d gosuempire.com -d www.gosuempire.com -d 192.168.99.101 -d localhost
 
 #EXPOSE 8443
 EXPOSE 80
