@@ -23,16 +23,14 @@ RUN git clone git@github.com:AmbushLabs/sc2-bet.git ${PROJECT_HOME}/app
 #############
 WORKDIR ${PROJECT_HOME}/app
 RUN grails clean
+WORKDIR ${PROJECT_HOME}/app/docker
 RUN chmod +x run-gosu-wager.sh
+RUN chmod +x run-nginx.sh
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 COPY docker/nginx/sites-available/gosuempire /etc/nginx/sites-available/gosuempire
 COPY docker/nginx/conf.d/gosuempire.conf /etc/nginx/conf.d/gosuempire.conf
-
-WORKDIR /etc/nginx/sites-enabled
-RUN unlink default
-RUN ln -s /etc/nginx/sites-available/gosuempire gosuempire
 
 #EXPOSE 8443
 EXPOSE 80
