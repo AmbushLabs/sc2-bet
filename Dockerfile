@@ -34,15 +34,11 @@ COPY docker/nginx/conf.d/gosuempire.conf /etc/nginx/conf.d/gosuempire.conf
 ###############
 ### LETSENCRYPT
 ###############
-ENV LETSENCRYPT_HOME /opt/letsencrypt
-RUN mkdir ${LETSENCRYPT_HOME}
-RUN git clone https://github.com/letsencrypt/letsencrypt ${LETSENCRYPT_HOME}
-WORKDIR ${LETSENCRYPT_HOME}
-# RUN ./letsencrypt-auto certonly --verbose --test-cert --standalone --agree-tos --redirect --duplicate --text --register-unsafely-without-email -d gosuempire.com -d www.gosuempire.com
+#ENV LETSENCRYPT_HOME /opt/letsencrypt
+#RUN mkdir ${LETSENCRYPT_HOME}
+#RUN git clone https://github.com/letsencrypt/letsencrypt ${LETSENCRYPT_HOME}
 
-#EXPOSE 8443
-EXPOSE 80
-EXPOSE 443
+EXPOSE 80 443 8080
 
 WORKDIR ${PROJECT_HOME}/app/docker
 CMD ["/usr/bin/supervisord"]
