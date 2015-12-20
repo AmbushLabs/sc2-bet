@@ -30,8 +30,9 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/nginx/sites-available/gosuempire /etc/nginx/sites-available/gosuempire
 COPY docker/nginx/conf.d/gosuempire.conf /etc/nginx/conf.d/gosuempire.conf
 
-RUN rm /etc/nginx/sites-enabled/default
-RUN ln -s /etc/nginx/sites-available/gosuempire /etc/nginx/sites-enabled/gosuempire
+WORKDIR /etc/nginx/sites-enabled
+RUN unlink default
+RUN ln -s /etc/nginx/sites-available/gosuempire gosuempire
 
 #EXPOSE 8443
 EXPOSE 80
