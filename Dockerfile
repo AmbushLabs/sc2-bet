@@ -27,9 +27,14 @@ RUN chmod +x run-gosu-wager.sh
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+COPY docker/nginx/sites-available/gosuempire /etc/nginx/sites-available/gosuempire
+COPY docker/nginx/conf.d/gosuempire.conf /etc/nginx/conf.d/gosuempire.conf
+
+RUN rm /etc/nginx/sites-enabled/default
+RUN ln -s /etc/nginx/sites-available/gosuempire /etc/nginx/sites-enabled/gosuempire
+
 #EXPOSE 8443
 EXPOSE 80
-EXPOSE 8080
 EXPOSE 443
 
 # ENTRYPOINT ["/sbin/entrypoint.sh"]
