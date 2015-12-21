@@ -24,7 +24,7 @@ export default class MyGames extends Component {
                     <a href="#"
                        className={"btn btn-narrow " + this.isSelected('waiting')}
                        onClick={this.setGameState}
-                       data-list-type="waiting">Pending</a>
+                       data-list-type="waiting">My Pending Contests</a>
                     <a href="#"
                        className={"btn btn-narrow " + this.isSelected('ready')}
                        onClick={this.setGameState}

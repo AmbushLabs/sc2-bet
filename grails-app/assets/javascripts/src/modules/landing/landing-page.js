@@ -32,14 +32,14 @@ export default class LandingPage extends Component {
                     <div className="sm-col-12 md-col-4">
                         <div className="p1 m2">
                             <div className="big-symbol ss-icons ss-userprofile mt2"></div>
-                            <h2>Create an Account</h2>
+                            <h2>Signup for Free</h2>
                             <p className="m0">Signup by linking your battle.net account to GosuEmpire.</p>
                         </div>
                     </div>
                     <div className="sm-col-12 md-col-4">
                         <div className="p1 m2">
                             <div className="big-symbol ss-icons ss-videogame mt2"></div>
-                            <h2>Join a Match</h2>
+                            <h2>Join a Contest</h2>
                             <p className="m0">Buy some GosuCoin or join a free contest to play against friends or strangers.</p>
                         </div>
                     </div>

@@ -2099,7 +2099,7 @@ var MyGames = (function (_Component) {
                             className: "btn btn-narrow " + this.isSelected('waiting'),
                             onClick: this.setGameState,
                             'data-list-type': 'waiting' },
-                        'Pending'
+                        'My Pending Contests'
                     ),
                     _react2['default'].createElement(
                         'a',
@@ -2241,7 +2241,7 @@ var LandingPage = (function (_Component) {
                                 _react2['default'].createElement(
                                     'h2',
                                     null,
-                                    'Create an Account'
+                                    'Signup for Free'
                                 ),
                                 _react2['default'].createElement(
                                     'p',
@@ -2260,7 +2260,7 @@ var LandingPage = (function (_Component) {
                                 _react2['default'].createElement(
                                     'h2',
                                     null,
-                                    'Join a Match'
+                                    'Join a Contest'
                                 ),
                                 _react2['default'].createElement(
                                     'p',
@@ -2386,11 +2386,11 @@ var HomeButton = _react2["default"].createClass({
             { className: "sm-col white" },
             _react2["default"].createElement(
                 "a",
-                { href: "/#", className: "btn py2" },
+                { href: "/#", className: "btn py2 h2" },
                 _react2["default"].createElement("img", { src: "https://s3-us-west-2.amazonaws.com/gosuempire/assets/logo.png", className: "gosu-empire-logo-header left" }),
                 _react2["default"].createElement(
                     "div",
-                    { className: "left ml1" },
+                    { className: "left ml1 py1" },
                     "GosuEmpire"
                 )
             )
@@ -2445,6 +2445,17 @@ var NavBar = _react2['default'].createClass({
                 _react2['default'].createElement(_coins2['default'], { wagerTokens: this.props.remainingTokens })
             );
         }
+    },
+    signUp: function signUp() {
+        var loginWindow = window.open('/auth/bnet_start_auth', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=400');
+        var dispatch = this.props.dispatch;
+
+        var windowChecker = setInterval((function () {
+            if (loginWindow.closed) {
+                clearInterval(windowChecker);
+                dispatch(checkEmail());
+            }
+        }).bind(this), 50);
     }
 });
 
