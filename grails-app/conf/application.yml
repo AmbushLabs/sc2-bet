@@ -102,7 +102,8 @@ environments:
         dataSource:
             dbCreate: update
             pooled: true
-            url: jdbc:mysql://10.77.86.195:3306/gosuempire
+            driverClassName: com.mysql.jdbc.Driver
+            url: jdbc:mysql://52.22.137.13:3306/gosuempire
             dialect: org.hibernate.dialect.MySQL5InnoDBDialect
             username: g0suK1nG$
             password: 0uhIXD8WkI2OxweICojSzwB70d2M
