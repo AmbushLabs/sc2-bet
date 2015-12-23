@@ -104,7 +104,7 @@ environments:
             pooled: true
             url: jdbc:mysql://10.77.86.195:3306/gosuempire
             dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-            username: g0suK1nG
+            username: g0suK1nG$
             password: 0uhIXD8WkI2OxweICojSzwB70d2M
             properties:
                 jmxEnabled: true
