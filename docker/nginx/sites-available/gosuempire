@@ -1,21 +1,20 @@
 server {
         listen 80;
-        server_name localhost;
+        server_name gosuempire.com;
 
-        location / {
-                proxy_pass      http://gosuempire;
-                proxy_set_header Host $http_host;
-        }
+        301 https://$server_name$request_uri;
 }
 
 server {
         listen 80;
-        server_name gosuempire.com;
+        server_name www.gosuempire.com;
+        return 301 https://gosuempire.com$request_uri;
+}
 
-        location / {
-                proxy_pass      http://gosuempire;
-                proxy_set_header Host $http_host;
-        }
+server {
+        listen 443;
+        server_name www.gosuempire.com;
+        return 301 https://gosuempire.com$request_uri;
 }
 
 
