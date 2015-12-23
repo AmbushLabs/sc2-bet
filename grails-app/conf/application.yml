@@ -101,12 +101,16 @@ environments:
             redirect_uri: "https://gosuempire.com/auth/battlenet"
         dataSource:
             dbCreate: update
-            url: jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            pooled: true
+            url: jdbc:mysql://10.77.86.195:3306/gosuempire
+            dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+            username: g0suK1nG
+            password: 0uhIXD8WkI2OxweICojSzwB70d2M
             properties:
                 jmxEnabled: true
-                initialSize: 5
+                initialSize: 10
                 maxActive: 50
-                minIdle: 5
+                minIdle: 10
                 maxIdle: 25
                 maxWait: 10000
                 maxAge: 600000
@@ -118,5 +122,5 @@ environments:
                 testOnBorrow: true
                 testWhileIdle: true
                 testOnReturn: false
-                jdbcInterceptors: ConnectionState
-                defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+                jdbcInterceptors: ConnectionState;StatementCache(max=200)
+                defaultTransactionIsolation: 2 # java.sql.Connection.TRANSACTION_READ_COMMITTED
