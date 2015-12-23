@@ -41,6 +41,10 @@ class SendEmailService {
                 mergeVars.add(new MandrillMessage.MergeVar("confirm_email_link", siteUri + 'email/confirm?confirm=' + data.confirmHash));
                 break;
         }
+        //add in additional mergevars
+        mergeVars.add(new MandrillMessage.MergeVar("facebookurl","https://facebook.com/gosuempire"));
+        mergeVars.add(new MandrillMessage.MergeVar("twitterurl","https://twitter.com/gosuempire"));
+        mergeVars.add(new MandrillMessage.MergeVar("current_year","2015"));
 
         Email e = u.emails.find {it.isPrimary && it.isActive};
         ArrayList<MandrillMessage.Recipient> recipients = new ArrayList<MandrillMessage.Recipient>();
