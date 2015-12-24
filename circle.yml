@@ -2,7 +2,8 @@ dependencies:
   pre:
     - curl -s get.gvmtool.net | bash
     - source ~/.sdkman/bin/sdkman-init.sh
-    - sdk install grails
+    - echo sdkman_auto_answer=true > ~/.sdkman/etc/config
+    - sdk install grails 3.0.3
 
 test:
   override:
