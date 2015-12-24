@@ -4,6 +4,9 @@ dependencies:
     - source ~/.sdkman/bin/sdkman-init.sh
     - echo sdkman_auto_answer=true > ~/.sdkman/etc/config
     - sdk install grails 3.0.3
+    - sudo add-apt-repository ppa:cwchien/gradle -y
+    - sudo apt-get update
+    - sudo apt-get install gradle-2.1
 
 test:
   override:
