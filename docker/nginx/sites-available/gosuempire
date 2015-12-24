@@ -12,13 +12,6 @@ server {
         return 301 https://gosuempire.com$request_uri;
 }
 
-server {
-        listen 443;
-        server_name www.gosuempire.com;
-
-        return 301 https://gosuempire.com$request_uri;
-}
-
 
 server {
         listen 443 ssl;
