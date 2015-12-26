@@ -27,4 +27,5 @@ class MainController {
         def ret = DashboardService.getInitializeData(u);
         render ret as JSON;
     }
+
 }

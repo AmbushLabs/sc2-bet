@@ -3,7 +3,7 @@ import React from 'react';
 export default ({ user, userId }) => {
     var bgColor = 'gosu-blue-bg';
     var gcuAvatar = '';
-    if (!user.avatar_url || user.avatar_url == '' || user.avatar_url.indexOf('http') < 0) {
+    if (!user || !user.avatar_url || user.avatar_url == '' || user.avatar_url.indexOf('http') < 0) {
         gcuAvatar = (<div className="circle gcu-avatar center bg-white"><div className="ss-icons ss-user h1 mt2"></div></div>);
     } else {
         gcuAvatar = (<img className="circle gcu-avatar" src={user.avatar_url} />);

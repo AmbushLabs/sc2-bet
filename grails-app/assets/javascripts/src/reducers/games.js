@@ -9,6 +9,7 @@ import {
     REJECT_CHALLENGER,
     INITIALIZE_APP,
     ADD_EMAIL_ADDRESS,
+    CHECK_EMAIL_ADDRESS,
     CHANGE_GAME_FILTER,
     LEAVE_GAME,
     SHOW_SHARE_GAME_MODAL,
@@ -48,6 +49,7 @@ const games = (state = {current_my_games_tab:'to_approve'}, action = {}) => {
             }
             break;
         case INITIALIZE_APP:
+        case CHECK_EMAIL_ADDRESS:
         case ADD_EMAIL_ADDRESS:
             if (action.is_fetching || action.error) {
                 return state;

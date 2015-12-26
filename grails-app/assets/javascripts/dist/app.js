@@ -890,91 +890,90 @@ module.exports = exports['default'];
 /**
  * Created by joseph on 12/12/15.
  */
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
 var Footer = function Footer(_ref) {
-    var linka = _ref.linka;
+    _objectDestructuringEmpty(_ref);
 
-    //code things
-    var a = 'true';
-
-    return _react2['default'].createElement(
-        'section',
-        { className: 'clearfix col col-12 white' },
-        _react2['default'].createElement(
-            'div',
-            { className: 'col col-12 gosu-blue-bg' },
-            _react2['default'].createElement(
-                'div',
-                { className: 'col col-12 md-col-8 py3' },
-                _react2['default'].createElement(
-                    'div',
-                    { className: 'col center px2' },
-                    _react2['default'].createElement(
-                        'a',
-                        { href: 'mailto:support@gosuempire.zendesk.com?subject=Contact Gosu Empire', className: 'h5 white' },
-                        'Contact Us'
+    return _react2["default"].createElement(
+        "section",
+        { className: "clearfix col col-12 white" },
+        _react2["default"].createElement(
+            "div",
+            { className: "col col-12 gosu-blue-bg" },
+            _react2["default"].createElement(
+                "div",
+                { className: "col col-12 md-col-8 py3" },
+                _react2["default"].createElement(
+                    "div",
+                    { className: "col center px2" },
+                    _react2["default"].createElement(
+                        "a",
+                        { href: "mailto:support@gosuempire.zendesk.com?subject=Contact Gosu Empire", className: "h5 white" },
+                        "Contact Us"
                     )
                 ),
-                _react2['default'].createElement(
-                    'div',
-                    { className: 'col center px2' },
-                    _react2['default'].createElement(
-                        'a',
-                        { href: 'https://gosuempire.zendesk.com/hc/en-us/sections/203560088-FAQ', className: 'h5 white' },
-                        'FAQ'
+                _react2["default"].createElement(
+                    "div",
+                    { className: "col center px2" },
+                    _react2["default"].createElement(
+                        "a",
+                        { href: "https://gosuempire.zendesk.com/hc/en-us/sections/203560088-FAQ", className: "h5 white" },
+                        "FAQ"
                     )
                 ),
-                _react2['default'].createElement(
-                    'div',
-                    { className: 'col center px2' },
-                    _react2['default'].createElement(
-                        'a',
-                        { href: 'https://gosuempire.zendesk.com/hc/en-us/categories/202447277-Rules', className: 'h5 white' },
-                        'Rules'
+                _react2["default"].createElement(
+                    "div",
+                    { className: "col center px2" },
+                    _react2["default"].createElement(
+                        "a",
+                        { href: "https://gosuempire.zendesk.com/hc/en-us/categories/202447277-Rules", className: "h5 white" },
+                        "Rules"
                     )
                 ),
-                _react2['default'].createElement(
-                    'div',
-                    { className: 'col center px2' },
-                    _react2['default'].createElement(
-                        'a',
-                        { href: 'https://gosuempire.zendesk.com/hc/en-us/articles/214963648-Terms-of-Service', className: 'h5 white' },
-                        'Terms of Service'
+                _react2["default"].createElement(
+                    "div",
+                    { className: "col center px2" },
+                    _react2["default"].createElement(
+                        "a",
+                        { href: "https://gosuempire.zendesk.com/hc/en-us/articles/214963648-Terms-of-Service", className: "h5 white" },
+                        "Terms of Service"
                     )
                 )
             ),
-            _react2['default'].createElement(
-                'div',
-                { className: 'col col-12 md-col-4 center py3' },
-                _react2['default'].createElement(
-                    'span',
-                    { className: 'h6 white' },
-                    'an ',
-                    _react2['default'].createElement(
-                        'a',
-                        { href: 'http://ambushlabs.com' },
-                        'AmbushLabs'
+            _react2["default"].createElement(
+                "div",
+                { className: "col col-12 md-col-4 center py3" },
+                _react2["default"].createElement(
+                    "span",
+                    { className: "h6 white" },
+                    "an ",
+                    _react2["default"].createElement(
+                        "a",
+                        { href: "http://ambushlabs.com" },
+                        "AmbushLabs"
                     ),
-                    ' production © 2015 '
+                    " production © 2015 "
                 )
             )
         )
     );
 };
 
-exports['default'] = Footer;
-module.exports = exports['default'];
+exports["default"] = Footer;
+module.exports = exports["default"];
 
 },{"react":318}],14:[function(require,module,exports){
 "use strict";
@@ -3954,7 +3953,7 @@ exports['default'] = function (_ref) {
 
     var bgColor = 'gosu-blue-bg';
     var gcuAvatar = '';
-    if (!user.avatar_url || user.avatar_url == '' || user.avatar_url.indexOf('http') < 0) {
+    if (!user || !user.avatar_url || user.avatar_url == '' || user.avatar_url.indexOf('http') < 0) {
         gcuAvatar = _react2['default'].createElement(
             'div',
             { className: 'circle gcu-avatar center bg-white' },
@@ -4845,6 +4844,8 @@ var config = function config() {
 
     switch (action.type) {
         case _actionsActions.INITIALIZE_APP:
+        case _actionsActions.CHECK_EMAIL_ADDRESS:
+        case _actionsActions.ADD_EMAIL_ADDRESS:
             if (!action.isFetching && action.data && action.data.config) {
                 return Object.assign({}, state, action.data.config);
             }
@@ -5034,6 +5035,7 @@ var games = function games() {
             }
             break;
         case _actionsActions.INITIALIZE_APP:
+        case _actionsActions.CHECK_EMAIL_ADDRESS:
         case _actionsActions.ADD_EMAIL_ADDRESS:
             if (action.is_fetching || action.error) {
                 return state;
@@ -5230,6 +5232,7 @@ var gosuCoins = function gosuCoins() {
 
     switch (action.type) {
         case _actionsActions.INITIALIZE_APP:
+        case _actionsActions.CHECK_EMAIL_ADDRESS:
         case _actionsActions.ADD_EMAIL_ADDRESS:
         case _actionsActions.CREATE_GAME:
         case _actionsActions.JOIN_GAME:
@@ -5492,6 +5495,8 @@ var s3 = function s3() {
 
     switch (action.type) {
         case _actionsActions.INITIALIZE_APP:
+        case _actionsActions.CHECK_EMAIL_ADDRESS:
+        case _actionsActions.ADD_EMAIL_ADDRESS:
             if (!action.isFetching && action.data && action.data.s3) {
                 return Object.assign({}, state, action.data.s3);
             }
@@ -5517,6 +5522,7 @@ var user = function user() {
 
     switch (action.type) {
         case _actionsActions.INITIALIZE_APP:
+        case _actionsActions.CHECK_EMAIL_ADDRESS:
         case _actionsActions.ADD_EMAIL_ADDRESS:
             if (!action.isFetching && action.data) {
                 return Object.assign({}, state, action.data.user);

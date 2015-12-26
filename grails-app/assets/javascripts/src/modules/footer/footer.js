@@ -3,10 +3,7 @@
  */
 import React from 'react';
 
-const Footer = ({linka}) => {
-    //code things
-    const a = 'true';
-
+const Footer = ({}) => {
     return (
         <section className="clearfix col col-12 white">
             <div className="col col-12 gosu-blue-bg">

@@ -1,13 +1,6 @@
 import {
-    FETCH_GAMES,
-    FETCH_ALL_GAMES,
-    FETCH_SINGLE_GAME,
     CREATE_GAME,
     JOIN_GAME,
-    CANCEL_GAME,
-    ACCEPT_CHALLENGER,
-    REJECT_CHALLENGER,
-    INITIALIZE_APP,
     CLEAR_ERRORS
 } from './../actions/actions';
 

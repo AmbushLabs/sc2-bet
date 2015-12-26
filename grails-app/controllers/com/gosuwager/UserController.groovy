@@ -10,11 +10,17 @@ class UserController {
 
     def index() { }
 
+    def logout() {
+        session.user_id = null;
+        render 'done';
+    }
+
     def hasEmail() {
         def ret = [:];
         ret['has_loaded'] = true;
         User u = User.findById(session.user_id);
         if (u != null && u.emails.find { it.isActive && it.isPrimary }) {
+            ret = DashboardService.getInitializeData(u);
             ret['has_email'] = true;
             ret['logged_in'] = true;
             ret['status'] = 'success';
