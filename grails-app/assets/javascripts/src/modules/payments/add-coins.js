@@ -12,15 +12,15 @@ export default class AddCoins extends Component {
     render() {
         return (
             <div className="col col-12 clearfix">
-                <div className="col col-3">
-                <AddGosuCoinButton
-                    price="5.00"
-                    priceCents={500}
-                    numCoins={500}
-                    user={this.props.user}
-                    dispatch={this.props.dispatch} />
+                <div className="col col-12 md-col-6 lg-col-3 center">
+                    <AddGosuCoinButton
+                        price="5.00"
+                        priceCents={500}
+                        numCoins={500}
+                        user={this.props.user}
+                        dispatch={this.props.dispatch} />
                 </div>
-                <div className="col col-3">
+                <div className="col col-12 md-col-6 lg-col-3 center">
                 <AddGosuCoinButton
                     price="10.00"
                     priceCents={1000}
@@ -28,7 +28,7 @@ export default class AddCoins extends Component {
                     user={this.props.user}
                     dispatch={this.props.dispatch} />
                 </div>
-                <div className="col col-3">
+                <div className="col col-12 md-col-6 lg-col-3 center">
                 <AddGosuCoinButton
                     price="20.00"
                     priceCents={2000}
@@ -36,7 +36,7 @@ export default class AddCoins extends Component {
                     user={this.props.user}
                     dispatch={this.props.dispatch} />
                 </div>
-                <div className="col col-3">
+                <div className="col col-12 md-col-6 lg-col-3 center">
                 <AddGosuCoinButton
                     price="50.00"
                     priceCents={5000}

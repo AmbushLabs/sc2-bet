@@ -29,21 +29,21 @@ export default class LandingPage extends Component {
             </header>
             <section className=" center p2 bg-cover bg-center" style={bgImageMain}>
                 <div className="flex flex-wrap mxn2">
-                    <div className="sm-col-12 md-col-4">
+                    <div className="col col-12 md-col-4 mx-auto">
                         <div className="p1 m2">
                             <div className="big-symbol ss-icons ss-userprofile mt2"></div>
                             <h2>Signup for Free</h2>
                             <p className="m0">Signup by linking your battle.net account to GosuEmpire.</p>
                         </div>
                     </div>
-                    <div className="sm-col-12 md-col-4">
+                    <div className="col col-12 md-col-4 mx-auto">
                         <div className="p1 m2">
                             <div className="big-symbol ss-icons ss-videogame mt2"></div>
                             <h2>Join a Contest</h2>
                             <p className="m0">Buy some GosuCoin or join a free contest to play against friends or strangers.</p>
                         </div>
                     </div>
-                    <div className="sm-col-12 md-col-4">
+                    <div className="col col-12 md-col-4 mx-auto">
                         <div className="p1 m2">
                             <div className="big-symbol ss-icons ss-moneybag mt2"></div>
                             <h2>Win Real Cash</h2>

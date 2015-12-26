@@ -50,24 +50,24 @@ class WagerPage extends Component {
                     <div className="h4 gray">Current Status: {this.getStatusDisplay(game)}</div>
                 </div>
                 <div className="col col-12">
-                    <div className="col col-2">
+                    <div className="col col-0 lg-col-2">
                         &nbsp;
                     </div>
-                    <div className="col col-4">
+                    <div className="col col-12 lg-col-4">
                         <div className="px1">
                             <GameCardUser
                                 user={game.player1}
                                 game={game} />
                         </div>
                     </div>
-                    <div className="col col-4">
+                    <div className="col col-12 lg-col-4">
                         <div className="px1">
                             <GameCardUser
                                 user={game.player2}
                                 game={game} />
                         </div>
                     </div>
-                    <div className="col col-2">
+                    <div className="col col-0 lg-col-2">
                         &nbsp;
                     </div>
                 </div>

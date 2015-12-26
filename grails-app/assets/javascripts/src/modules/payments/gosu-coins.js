@@ -12,10 +12,10 @@ export default class GosuCoins extends Component {
     render() {
         return (
             <div className="col col-12">
-                <div className="col col-2">
+                <div className="col col-0 lg-col-2">
                     &nbsp;
                 </div>
-                <div className="col col-8">
+                <div className="col col-12 lg-col-8">
                     <p className="h1 center mt3 gosu-blue-text">Buy GosuCoin&nbsp;<span className=" gosu-coins-gold ss-icon ss-coins h2"></span></p>
                     <AddCoins
                         user={this.props.user}
@@ -26,7 +26,7 @@ export default class GosuCoins extends Component {
                         gosuCoins={this.props.gosuCoins}
                         />
                 </div>
-                <div className="col col-2">
+                <div className="col col-0 lg-col-2">
                     &nbsp;
                 </div>
             </div>

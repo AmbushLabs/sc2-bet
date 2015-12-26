@@ -31,7 +31,7 @@ export default class MyGames extends Component {
                        data-list-type="ready">Ready to Play!</a>
                 </div>
                 <GameList
-                    colSize="col-6"
+                    colSize="col-12 lg-col-6"
                     listType="created_or_joined"
                     limit={4}
                     games={this.getGames()}

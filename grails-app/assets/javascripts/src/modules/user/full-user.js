@@ -23,21 +23,21 @@ export default ({ user, userId }) => {
             <div className="col col-12 gosu-light-blue-bg">
                 <div className="gcu-right-container">
                     <div className="col col-12">
-                        <div className="col col-6 p1">
+                        <div className="col col-12 sm-col-6 p1">
                             <div className="h4 gray">PRIMARY RACE</div>
                             <div className="h4">{user.primary_race}</div>
                         </div>
-                        <div className="col col-6 p1">
+                        <div className="col col-12 sm-col-6 p1">
                             <div className="h4 gray">TOP RANK</div>
                             <div className="h4">{user.highest_1v1_rank}</div>
                         </div>
                     </div>
                     <div className="col col-12">
-                        <div className="col col-6 p1">
+                        <div className="col col-12 sm-col-6 p1">
                             <div className="h4 gray">SEASON RECORD</div>
                             <div className="h4">{seasonWins} - {seasonLosses}</div>
                         </div>
-                        <div className="col col-6 p1">
+                        <div className="col col-12 sm-col-6 p1">
                             <div className="h4 gray">CAREER GAMES PLAYED</div>
                             <div className="h4">{user.career_total_games}</div>
                         </div>

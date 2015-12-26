@@ -10,8 +10,8 @@ export default class GosuCoinBalance extends Component {
         if (this.props.gosuCoins) {
             return (
                 <div className="col col-12 clearfix mt3">
-                    <div className="col col-4">&nbsp;</div>
-                    <div className="col col-4 border m2 gosu-light-blue-bg">
+                    <div className="col col-1 md-col-4">&nbsp;</div>
+                    <div className="col col-10 md-col-4 border m2 gosu-light-blue-bg">
                         <div className="col col-12 p2">
                             <p className="h3 gosu-blue-text center">Current GosuCoin Balance</p>
                             <p className="h5 center">
@@ -23,7 +23,7 @@ export default class GosuCoinBalance extends Component {
                             &nbsp;
                         </div>
                     </div>
-                    <div className="col col-4">&nbsp;</div>
+                    <div className="col col-1 md-col-4">&nbsp;</div>
                 </div>
             );
         }

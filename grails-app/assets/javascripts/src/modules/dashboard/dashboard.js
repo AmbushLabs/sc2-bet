@@ -18,14 +18,14 @@ class Dashboard extends Component {
     render() {
         return (
             <section className="bg-darken-1 p2 clearfix">
-                <section className="col col-6 pr2 pb2">
+                <section className="col col-12 md-col-6 pr2 pb2">
                     <div className="mr2 mb2 clearfix">
                         <ProfileCard
                             user={this.props.user}
                             />
                     </div>
                 </section>
-                <section className="col col-6">
+                <section className="col col-12 md-col-6">
                     <div className="bg-white p1 mb2 clearfix my-games">
                         <MyGames
                             games={this.props.games}
@@ -41,7 +41,7 @@ class Dashboard extends Component {
                     <section className="col col-12">
                         <div className="bg-white clearfix">
                             <GameList
-                                colSize="col-3"
+                                colSize="col-12 lg-col-3 sm-col-6"
                                 listType="search"
                                 limit={8}
                                 games={this.getEmptyGames()}
@@ -52,10 +52,10 @@ class Dashboard extends Component {
                 </section>
                 <div className="clearfix"></div>
                 <section className="col col-12 bg-white p1">
-                    <section className="col col-9">
+                    <section className="col col-12 sm-col-9">
                         <p className="h3 ml1 mt1">Filter Contests by Skill Level.</p>
                     </section>
-                    <section className="col col-3 right">
+                    <section className="col col-12 sm-col-3 right">
                         <select className="block col-12 field"
                                 ref="currentRank"
                                 onChange={() => this.onChangeGames()}>
@@ -73,7 +73,7 @@ class Dashboard extends Component {
                     <section className="col col-12">
                         <div className="bg-white clearfix">
                             <GameList
-                                colSize="col-3"
+                                colSize="col-12 lg-col-3 sm-col-6"
                                 listType="search"
                                 limit={8}
                                 games={this.getSearchGames()}

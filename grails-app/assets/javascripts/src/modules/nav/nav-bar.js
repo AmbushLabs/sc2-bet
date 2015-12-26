@@ -6,10 +6,16 @@ import Coins from './coins';
 var NavBar = React.createClass ({
     render: function() {
         if (!this.props.loggedIn) {
+            const sty = {
+                lineHeight: 1,
+                height: 11
+            };
             return (
-                <nav className="clearfix black border-bottom gosu-blue-bg">
+                <nav className="clearfix black border-bottom gosu-blue-bg col col-12">
                     <HomeButton />
-                    <a href="#" className="h6 btn btn-primary right m2 mr4" onClick={this.signUp}>Login with Battle.net</a>
+                    <div className="col col-12 sm-col-6 ">
+                        <a href="#" className="h6 btn btn-primary right m1 mr2" style={sty} onClick={this.signUp}>Login with Battle.net</a>
+                    </div>
                 </nav>
             );
         } else {
