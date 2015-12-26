@@ -44,7 +44,7 @@ class GameMarshaller {
             hmac.init(new SecretKeySpec("LHZ,E=&VM4yC,rx.s,.P*-IGu]TQ".getBytes("UTF-8"), "HmacSHA1"));
             ret['upload_hash'] = (new BASE64Encoder()).encode(
                     hmac.doFinal(ret['link'].getBytes("UTF-8")))
-                    .replaceAll("\n", "");
+                    .replaceAll("\n|\\/", "");
 
             if (g.player1) {
                 def creatorCharacter = g.player1.battleNetAccount.characters.first();

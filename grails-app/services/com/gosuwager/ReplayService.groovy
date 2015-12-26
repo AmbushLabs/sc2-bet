@@ -148,18 +148,13 @@ class ReplayService {
         errorStreamHandler.start();
 
         p.waitFor();
-        //println 'error: ' + getStringFromStream(p.getErrorStream());
-        //println 'input: ' + getStringFromStream(p.getInputStream());
 
         inputStreamHandler.interrupt();
         errorStreamHandler.interrupt();
         inputStreamHandler.join();
         errorStreamHandler.join();
 
-        //println 'error: ' + errorStreamHandler.getOutputBuffer();
-
         String jsonGameData = inputStreamHandler.getOutputBuffer().toString();
-        //println jsonGameData;
         return new JSONObject(jsonGameData);
 
     }
