@@ -81,6 +81,11 @@ class ProcessReplayJob {
                         println replayToProcess.errors;
                     }
                 } catch (Exception ex) {
+                    replayToProcess.isValidForGame = false;
+                    replayToProcess.errorReason = 'exception';
+                    replayToProcess.processing = false;
+                    replayToProcess.processed = true;
+                    replayToProcess.save();
                     println ex;
                     ex.printStackTrace();
                 }

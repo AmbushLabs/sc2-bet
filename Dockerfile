@@ -43,6 +43,12 @@ COPY docker/keys/fullchain.pem /etc/letsencrypt/live/gosuempire.com/fullchain.pe
 COPY docker/keys/privkey.pem /etc/letsencrypt/live/gosuempire.com/privkey.pem
 
 
+##########
+### RANDOM
+##########
+RUN mkdir -p /gosuempire/replays
+RUN pip install jsonpickle
+
 ###############
 ### LETSENCRYPT
 ###############
