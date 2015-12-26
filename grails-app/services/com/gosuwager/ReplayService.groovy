@@ -139,6 +139,7 @@ class ReplayService {
 
     def getJsonFromReplayFile(file) {
         String cmd = System.getProperty("user.dir") + "/parse_replay.py";
+        println 'running ' + cmd;
         Process p = new ProcessBuilder("python", cmd, "-f", file).start();
 
         ThreadedStreamHandler inputStreamHandler = new ThreadedStreamHandler(p.getInputStream());
@@ -148,7 +149,7 @@ class ReplayService {
         errorStreamHandler.start();
 
         p.waitFor();
-
+                                                                     //java.lang.IllegalAccessError: tried to access class com.devdaily.system.ThreadedStreamHandler
         inputStreamHandler.interrupt();
         errorStreamHandler.interrupt();
         inputStreamHandler.join();

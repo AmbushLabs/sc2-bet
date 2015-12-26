@@ -36,7 +36,7 @@ import java.io.*;
  * http://www.gnu.org/licenses/lgpl.txt
  *
  */
-class ThreadedStreamHandler extends Thread
+public class ThreadedStreamHandler extends Thread
 {
     InputStream inputStream;
     String adminPassword;
@@ -53,7 +53,7 @@ class ThreadedStreamHandler extends Thread
      * @param inputStream
      * @param streamType
      */
-    ThreadedStreamHandler(InputStream inputStream)
+    public ThreadedStreamHandler(InputStream inputStream)
     {
         this.inputStream = inputStream;
     }
@@ -69,7 +69,7 @@ class ThreadedStreamHandler extends Thread
      * @param outputStream
      * @param adminPassword
      */
-    ThreadedStreamHandler(InputStream inputStream, OutputStream outputStream, String adminPassword)
+    public ThreadedStreamHandler(InputStream inputStream, OutputStream outputStream, String adminPassword)
     {
         this.inputStream = inputStream;
         this.outputStream = outputStream;
