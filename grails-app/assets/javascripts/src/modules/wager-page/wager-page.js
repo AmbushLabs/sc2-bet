@@ -41,7 +41,7 @@ class WagerPage extends Component {
         if (!game) {
             return (<div></div>);
         }
-        const { dispatch, gameReplay } = this.props;
+        const { dispatch, gameReplay, config } = this.props;
 
         return (
             <div className="col col-12 mb4 clearfix">
@@ -85,12 +85,12 @@ class WagerPage extends Component {
                     </div>
                 </div>
 
-                {this.renderDropZone(game, this.props.dispatch, gameReplay)}
+                {this.renderDropZone(game, this.props.dispatch, gameReplay, config)}
             </div>
         );
     }
 
-    renderDropZone(game, dispatch, gameReplay) {
+    renderDropZone(game, dispatch, gameReplay, config) {
         if (game.has_player1 && game.has_player2 && game.has_player1_accepted) {
             var dropZone = null;
             var errorState = null;
@@ -150,6 +150,7 @@ class WagerPage extends Component {
                         s3={this.props.s3}
                         game={game}
                         dispatch={dispatch}
+                        config={config}
                         />
                 );
             }

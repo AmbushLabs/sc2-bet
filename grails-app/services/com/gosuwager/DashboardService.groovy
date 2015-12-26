@@ -5,6 +5,8 @@ import grails.transaction.Transactional
 @Transactional
 class DashboardService {
 
+    def grailsApplication;
+
     def GosuCoinService;
     def ReplayService;
     def GameService;
@@ -70,6 +72,10 @@ class DashboardService {
             ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
 
             ret['s3'] = ReplayService.s3PolicyAndSignature();
+            ret['config'] = [:];
+            ret['config']['stripe_key'] = grailsApplication.config.getProperty('stripe.key');
+            ret['config']['site_uri'] = grailsApplication.config.getProperty('site_uri');
+
         }
         return ret;
     }

@@ -16,6 +16,7 @@ class BattleNetApiService {
     def getAccountForToken(BattleNetToken bnetToken) {
         BattleNetAccount bnetAccount = null;
         def http = new HTTPBuilder('https://us.api.battle.net/account/user');
+        println bnetToken.accessToken;
         http.request(Method.GET, ContentType.URLENC) {
             uri.query = [
                 access_token: bnetToken.accessToken

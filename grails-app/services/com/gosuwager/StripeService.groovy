@@ -13,10 +13,12 @@ import grails.transaction.Transactional
 @Transactional
 class StripeService {
 
+    def grailsApplication;
+
     def processPayment(String cardToken, String stripeEmail, Integer price, Integer coinAmount, User u) {
         try {
             // Use Stripe's bindings...
-            Stripe.apiKey = "sk_test_uwY5hPyZuwuu4AebSFYkay7G";
+            Stripe.apiKey = grailsApplication.config.getProperty('stripe.secret');
             Stripe.apiVersion = "2015-10-16";
 
             Map<String, Object> chargeParams = new HashMap<String, Object>();

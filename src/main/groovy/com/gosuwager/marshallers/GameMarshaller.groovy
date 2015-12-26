@@ -3,6 +3,7 @@ package com.gosuwager.marshallers
 import com.gosuwager.Game
 import com.gosuwager.bnet.SC2Character
 import grails.converters.JSON
+import grails.util.Holders
 import org.springframework.web.context.request.RequestContextHolder
 import sun.misc.BASE64Encoder
 
@@ -37,7 +38,7 @@ class GameMarshaller {
             ret['rank'] = g.rank;
             ret['rank_display'] = Rank.rankToString(g.rank);
 
-            ret['link'] = 'https://localhost:8443/w/' + g.id;
+            ret['link'] = Holders.config.getProperty('site_uri') + 'w/' + g.id;
 
             Mac hmac = Mac.getInstance("HmacSHA1");
             hmac.init(new SecretKeySpec("LHZ,E=&VM4yC,rx.s,.P*-IGu]TQ".getBytes("UTF-8"), "HmacSHA1"));

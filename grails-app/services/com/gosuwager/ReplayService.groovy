@@ -16,6 +16,8 @@ import javax.crypto.spec.SecretKeySpec
 @Transactional
 class ReplayService {
 
+    def grailsApplication;
+
     def arePlayersValid(GameReplay gr) {
         def char1 = null, char2 = null;
         gr.game.player1.battleNetAccount.characters.each {
@@ -86,12 +88,13 @@ class ReplayService {
     }
 
     def s3PolicyAndSignature() {
-        def policyDocument = "{\"expiration\": \"2016-01-01T00:00:00Z\",\n" +
+        String siteUri = grailsApplication.config.getProperty('site_uri');
+        String policyDocument = "{\"expiration\": \"2016-01-01T00:00:00Z\",\n" +
                 "  \"conditions\": [ \n" +
                 "    {\"bucket\": \"gosuempire\"}, \n" +
                 "    [\"starts-with\", \"\$key\", \"replays/\"],\n" +
                 "    {\"acl\": \"private\"},\n" +
-                "    {\"success_action_redirect\": \"https://localhost:8443/game/completeUpload\"}\n" +
+                "    {\"success_action_redirect\": \"" + siteUri + "game/completeUpload\"}\n" +
                 "  ]\n" +
                 "}";
 

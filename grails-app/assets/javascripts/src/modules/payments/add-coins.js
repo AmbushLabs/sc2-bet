@@ -6,7 +6,6 @@ export default class AddCoins extends Component {
 
     constructor(options) {
         super(options);
-        this.showBuyCoins = this.showBuyCoins.bind(this);
     }
 
     render() {
@@ -18,7 +17,9 @@ export default class AddCoins extends Component {
                         priceCents={500}
                         numCoins={500}
                         user={this.props.user}
-                        dispatch={this.props.dispatch} />
+                        dispatch={this.props.dispatch}
+                        config={this.props.config}
+                        />
                 </div>
                 <div className="col col-12 md-col-6 lg-col-3 center">
                 <AddGosuCoinButton
@@ -26,7 +27,9 @@ export default class AddCoins extends Component {
                     priceCents={1000}
                     numCoins={1025}
                     user={this.props.user}
-                    dispatch={this.props.dispatch} />
+                    dispatch={this.props.dispatch}
+                    config={this.props.config}
+                    />
                 </div>
                 <div className="col col-12 md-col-6 lg-col-3 center">
                 <AddGosuCoinButton
@@ -34,7 +37,9 @@ export default class AddCoins extends Component {
                     priceCents={2000}
                     numCoins={2060}
                     user={this.props.user}
-                    dispatch={this.props.dispatch} />
+                    dispatch={this.props.dispatch}
+                    config={this.props.config}
+                    />
                 </div>
                 <div className="col col-12 md-col-6 lg-col-3 center">
                 <AddGosuCoinButton
@@ -42,32 +47,12 @@ export default class AddCoins extends Component {
                     priceCents={5000}
                     numCoins={5175}
                     user={this.props.user}
-                    dispatch={this.props.dispatch} />
+                    dispatch={this.props.dispatch}
+                    config={this.props.config}
+                    />
                 </div>
             </div>
         );
-    }
-
-    showBuyCoins(e) {
-        var handler = StripeCheckout.configure({
-            key: 'pk_test_qrKMKggClIIYnxYEtCaIPX5q',
-            image: '/img/documentation/checkout/marketplace.png',
-            locale: 'auto',
-            token: function(token) {
-                // Use the token to create the charge with a server-side script.
-                // You can access the token ID with `token.id`
-                console.log(token);
-            }
-        });
-
-        handler.open({
-            name: 'Gosu Wager',
-            description: '2000 coins',
-            amount: 2000,
-            bitcoin: true
-        });
-
-        e.preventDefault();
     }
 
 }

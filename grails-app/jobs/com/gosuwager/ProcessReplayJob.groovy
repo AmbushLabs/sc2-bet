@@ -1,5 +1,6 @@
 package com.gosuwager
 
+import grails.util.Holders
 import org.grails.web.json.JSONObject
 
 
@@ -35,7 +36,7 @@ class ProcessReplayJob {
                         replayToProcess.processed = true;
                         replayToProcess.processing = false;
                         println "processed and updated successfully";
-                        if (1==0 && d.getTime() < replayToProcess.game.challengerAcceptedDate.getTime()) {
+                        if (Holders.config.getProperty('replayTimeCheckEnabled') && d.getTime() < replayToProcess.game.challengerAcceptedDate.getTime()) {
                             //invalid...
                             println 'invalid because of time'
                             replayToProcess.isValidForGame = false;

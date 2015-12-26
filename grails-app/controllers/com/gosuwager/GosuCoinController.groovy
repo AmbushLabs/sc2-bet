@@ -18,11 +18,9 @@ class GosuCoinController {
                 && params.token_email
                 && params.price
                 && session.user_id) {
-            println 'doing thing';
             def intPrice = Integer.valueOf(params.price);
             def numCoins = GosuCoinService.getNumGosuCoinsForPrice(intPrice);
             def user = User.findById(session.user_id);
-            println user;
             def modifiedUser = StripeService.processPayment(
                 params.token_id,
                 params.token_email,

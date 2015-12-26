@@ -13,6 +13,7 @@ import notifications from './notifications';
 import errors from './errors';
 import gosuCoins from './gosuCoins';
 import s3 from './s3';
+import config from './config';
 import profile from './profile';
 import gameReplay from './gameReplay';
 import gamesPlayed from './gamesPlayed';
@@ -29,6 +30,7 @@ const reducer = combineReducers({
     errors: errors,
     gosuCoins: gosuCoins,
     s3: s3,
+    config: config,
     profile: profile,
     gameReplay: gameReplay,
     gamesPlayed: gamesPlayed
