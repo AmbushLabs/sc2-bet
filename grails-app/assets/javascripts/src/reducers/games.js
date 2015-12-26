@@ -57,7 +57,6 @@ const games = (state = {current_my_games_tab:'to_approve'}, action = {}) => {
             switch(action.status) {
                 case 'success':
                     return Object.assign({}, state, action.data.games);
-                    break;
             }
             break;
         case CREATE_GAME:

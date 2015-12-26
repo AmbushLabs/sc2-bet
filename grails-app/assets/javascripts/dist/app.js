@@ -649,6 +649,7 @@ var Dashboard = (function (_Component) {
         _get(Object.getPrototypeOf(_Dashboard.prototype), 'constructor', this).call(this, options);
         this.getSearchGames = this.getSearchGames.bind(this);
         this.getEmptyGames = this.getEmptyGames.bind(this);
+        this.getGamesForRank = this.getGamesForRank.bind(this);
         this.getSelectedText = this.getSelectedText.bind(this);
     }
 
@@ -704,7 +705,7 @@ var Dashboard = (function (_Component) {
                             { className: 'bg-white clearfix' },
                             _react2['default'].createElement(_gamesGameList2['default'], {
                                 colSize: 'col-12 lg-col-3 sm-col-6',
-                                listType: 'search',
+                                listType: 'starting_empty',
                                 limit: 8,
                                 games: this.getEmptyGames(),
                                 dispatch: this.props.dispatch
@@ -812,21 +813,27 @@ var Dashboard = (function (_Component) {
     }, {
         key: 'getSearchGames',
         value: function getSearchGames() {
-            if (this.props && this.props.games && this.props.games.all) {
-                var rank = this.props.games.selected_rank;
-                var tmp = _.values(_.pick(this.props.games.all, this.props.games.search.ids));
-                return tmp.filter(function (element) {
-                    return element.rank == rank;
-                });
-            }
+            return this.getGamesForRank(this.props.games.selected_rank);
         }
     }, {
         key: 'getEmptyGames',
         value: function getEmptyGames() {
+            return this.getGamesForRank(null);
+        }
+    }, {
+        key: 'getGamesForRank',
+        value: function getGamesForRank(rank) {
+            var _this2 = this;
+
             if (this.props && this.props.games && this.props.games.all) {
-                var tmp = _.values(_.pick(this.props.games.all, this.props.games.search.ids));
+                var tmp = [];
+                this.props.games.search.ids.forEach(function (obj, i) {
+                    if (obj in _this2.props.games.all) {
+                        tmp.push(_this2.props.games.all[obj]);
+                    }
+                });
                 return tmp.filter(function (element) {
-                    return element.rank == null;
+                    return element.rank == rank;
                 });
             }
         }
@@ -1995,7 +2002,12 @@ var GameList = (function (_Component) {
         value: function getCleanListName(listType) {
             var defName = "currently";
             if (_.isUndefined(listType) || _.isNull(listType)) return defName;
-            if (listType == "created_or_joined") return "waiting for your approval";
+            if (listType == "created_or_joined") {
+                return "waiting for your approval";
+            }
+            if (listType == 'starting_empty') {
+                return "available that are empty";
+            }
             return listType;
         }
     }]);
@@ -2313,6 +2325,7 @@ var checkEmail = function checkEmail() {
         }).then(function (json) {
             return dispatch({
                 type: _actionsActions.CHECK_EMAIL_ADDRESS,
+                status: 'success',
                 data: json
             });
         });
@@ -5043,7 +5056,6 @@ var games = function games() {
             switch (action.status) {
                 case 'success':
                     return Object.assign({}, state, action.data.games);
-                    break;
             }
             break;
         case _actionsActions.CREATE_GAME:

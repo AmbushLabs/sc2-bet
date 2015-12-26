@@ -111,8 +111,12 @@ class GameList extends Component {
         const defName = "currently";
         if (_.isUndefined(listType) || _.isNull(listType))
             return defName;
-        if(listType == "created_or_joined")
+        if (listType == "created_or_joined") {
             return "waiting for your approval";
+        }
+        if (listType == 'starting_empty') {
+            return "available that are empty";
+        }
         return listType;
 
     }

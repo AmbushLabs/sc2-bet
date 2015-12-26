@@ -12,6 +12,7 @@ class Dashboard extends Component {
         super(options);
         this.getSearchGames = this.getSearchGames.bind(this);
         this.getEmptyGames = this.getEmptyGames.bind(this);
+        this.getGamesForRank = this.getGamesForRank.bind(this);
         this.getSelectedText = this.getSelectedText.bind(this);
     }
 
@@ -42,7 +43,7 @@ class Dashboard extends Component {
                         <div className="bg-white clearfix">
                             <GameList
                                 colSize="col-12 lg-col-3 sm-col-6"
-                                listType="search"
+                                listType="starting_empty"
                                 limit={8}
                                 games={this.getEmptyGames()}
                                 dispatch={this.props.dispatch}
@@ -104,17 +105,22 @@ class Dashboard extends Component {
     }
 
     getSearchGames() {
-        if (this.props && this.props.games && this.props.games.all) {
-            var rank = this.props.games.selected_rank;
-            var tmp = _.values(_.pick(this.props.games.all, this.props.games.search.ids));
-            return tmp.filter((element) => element.rank == rank);
-        }
+        return this.getGamesForRank(this.props.games.selected_rank);
     }
 
     getEmptyGames() {
+        return this.getGamesForRank(null);
+    }
+
+    getGamesForRank(rank) {
         if (this.props && this.props.games && this.props.games.all) {
-            var tmp = _.values(_.pick(this.props.games.all, this.props.games.search.ids));
-            return tmp.filter((element) => element.rank == null);
+            var tmp = [];
+            this.props.games.search.ids.forEach((obj, i) => {
+                if (obj in this.props.games.all) {
+                    tmp.push(this.props.games.all[obj]);
+                }
+            });
+            return tmp.filter((element) => element.rank == rank);
         }
     }
 

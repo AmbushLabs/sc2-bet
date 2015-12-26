@@ -79,6 +79,7 @@ const checkEmail = () => {
             .then(json =>
                 dispatch({
                     type: CHECK_EMAIL_ADDRESS,
+                    status: 'success',
                     data: json
                 })
             );
