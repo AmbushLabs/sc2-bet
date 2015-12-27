@@ -11,6 +11,7 @@ export default class MyGames extends Component {
         this.isSelected = this.isSelected.bind(this);
         this.getGames = this.getGames.bind(this);
         this.setGameState = this.setGameState.bind(this);
+        this.getCount = this.getCount.bind(this);
     }
 
     render () {
@@ -20,15 +21,15 @@ export default class MyGames extends Component {
                     <a href="#"
                        className={"btn btn-narrow " + this.isSelected('to_approve')}
                        onClick={this.setGameState}
-                       data-list-type="to_approve">Needs Approval</a>
+                       data-list-type="to_approve">Needs Approval{this.getCount('to_approve')}</a>
                     <a href="#"
                        className={"btn btn-narrow " + this.isSelected('waiting')}
                        onClick={this.setGameState}
-                       data-list-type="waiting">My Pending Contests</a>
+                       data-list-type="waiting">My Pending Contests{this.getCount('waiting')}</a>
                     <a href="#"
                        className={"btn btn-narrow " + this.isSelected('ready')}
                        onClick={this.setGameState}
-                       data-list-type="ready">Ready to Play!</a>
+                       data-list-type="ready">Ready to Play!{this.getCount('ready')}</a>
                 </div>
                 <GameList
                     colSize="col-12 lg-col-6"
@@ -63,6 +64,17 @@ export default class MyGames extends Component {
         if (this.props && this.props.games && this.props.games.all) {
             var tmp = _.values(_.pick(this.props.games.all, this.props.games[this.props.games.current_my_games_tab].ids));
             return tmp;
+        }
+    }
+
+    getCount(type) {
+        if (this.props && this.props.games && this.props.games.all) {
+            const num = this.props.games[type].ids.length;
+            if (num == 0) {
+                return "";
+            } else {
+                return " (" + num + ")";
+            }
         }
     }
 

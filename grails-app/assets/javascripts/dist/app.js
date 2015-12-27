@@ -2080,6 +2080,7 @@ var MyGames = (function (_Component) {
         this.isSelected = this.isSelected.bind(this);
         this.getGames = this.getGames.bind(this);
         this.setGameState = this.setGameState.bind(this);
+        this.getCount = this.getCount.bind(this);
     }
 
     _createClass(MyGames, [{
@@ -2097,7 +2098,8 @@ var MyGames = (function (_Component) {
                             className: "btn btn-narrow " + this.isSelected('to_approve'),
                             onClick: this.setGameState,
                             'data-list-type': 'to_approve' },
-                        'Needs Approval'
+                        'Needs Approval',
+                        this.getCount('to_approve')
                     ),
                     _react2['default'].createElement(
                         'a',
@@ -2105,7 +2107,8 @@ var MyGames = (function (_Component) {
                             className: "btn btn-narrow " + this.isSelected('waiting'),
                             onClick: this.setGameState,
                             'data-list-type': 'waiting' },
-                        'My Pending Contests'
+                        'My Pending Contests',
+                        this.getCount('waiting')
                     ),
                     _react2['default'].createElement(
                         'a',
@@ -2113,7 +2116,8 @@ var MyGames = (function (_Component) {
                             className: "btn btn-narrow " + this.isSelected('ready'),
                             onClick: this.setGameState,
                             'data-list-type': 'ready' },
-                        'Ready to Play!'
+                        'Ready to Play!',
+                        this.getCount('ready')
                     )
                 ),
                 _react2['default'].createElement(_gamesGameList2['default'], {
@@ -2151,6 +2155,18 @@ var MyGames = (function (_Component) {
             if (this.props && this.props.games && this.props.games.all) {
                 var tmp = _.values(_.pick(this.props.games.all, this.props.games[this.props.games.current_my_games_tab].ids));
                 return tmp;
+            }
+        }
+    }, {
+        key: 'getCount',
+        value: function getCount(type) {
+            if (this.props && this.props.games && this.props.games.all) {
+                var num = this.props.games[type].ids.length;
+                if (num == 0) {
+                    return "";
+                } else {
+                    return " (" + num + ")";
+                }
             }
         }
     }]);
