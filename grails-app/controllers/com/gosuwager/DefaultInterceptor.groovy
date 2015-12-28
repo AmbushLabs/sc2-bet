@@ -8,7 +8,7 @@ class DefaultInterceptor {
     }
 
     boolean before() {
-        println request.method + ' ' + request.getPathInfo();
+        println request.method + ' ' + request.getPathInfo() + ' ' + params + ' ' + session;
         true
     }
 

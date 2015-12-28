@@ -48,6 +48,14 @@ COPY docker/keys/privkey.pem /etc/letsencrypt/live/gosuempire.com/privkey.pem
 ##########
 RUN mkdir -p /gosuempire/replays
 RUN pip install jsonpickle
+RUN mkdir -p /opt/awslogs
+RUN mkdir -p /root/.aws
+COPY docker/aws/credentials /root/.aws/credentials
+COPY docker/aws/awslogs.conf /opt/awslogs/awslogs.conf
+WORKDIR /opt/awslogs
+
+RUN wget https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py
+RUN python ./awslogs-agent-setup.py --region us-east-1 --non-interactive --configfile=/opt/awslogs/awslogs.conf
 
 ###############
 ### LETSENCRYPT
