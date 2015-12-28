@@ -668,7 +668,8 @@ var Dashboard = (function (_Component) {
                         'div',
                         { className: 'mr2 mb2 clearfix' },
                         _react2['default'].createElement(_profileProfileCard2['default'], {
-                            user: this.props.user
+                            user: this.props.user,
+                            dashboard: true
                         })
                     )
                 ),
@@ -3484,10 +3485,13 @@ var _userFullUser2 = _interopRequireDefault(_userFullUser);
 
 exports['default'] = function (_ref) {
     var user = _ref.user;
+    var dashboard = _ref.dashboard;
 
     return _react2['default'].createElement(_userFullUser2['default'], {
         user: user.character,
-        userId: user.id
+        userId: user.id,
+        referral: user.referral,
+        dashboard: dashboard
     });
 };
 
@@ -3680,13 +3684,13 @@ var ShareModal = (function (_Component) {
                     ),
                     _react2['default'].createElement(
                         'div',
-                        { className: 'modal-footer' },
+                        { className: 'modal-footer hide' },
                         _react2['default'].createElement(
                             'div',
-                            { className: 'col col-12' },
+                            { className: 'col col-12 mb3' },
                             _react2['default'].createElement(
                                 'div',
-                                { className: 'col col-12 center' },
+                                { className: 'col col-12 center mb1' },
                                 'Or share on these networks:'
                             ),
                             _react2['default'].createElement(
@@ -3694,11 +3698,11 @@ var ShareModal = (function (_Component) {
                                 { className: 'col col-4 center' },
                                 _react2['default'].createElement(
                                     'span',
-                                    { className: 'ss-icon ss-facebook',
+                                    { className: 'h1 ss-icon btn',
                                         onClick: function () {
                                             return _this.shareFacebook();
                                         } },
-                                    ' '
+                                    ''
                                 )
                             ),
                             _react2['default'].createElement(
@@ -3706,11 +3710,11 @@ var ShareModal = (function (_Component) {
                                 { className: 'col col-4 center' },
                                 _react2['default'].createElement(
                                     'span',
-                                    { className: 'ss-icon ss-twitter',
+                                    { className: 'h1 ss-icon btn',
                                         onClick: function () {
                                             return _this.shareTwitter();
                                         } },
-                                    ' '
+                                    ''
                                 )
                             ),
                             _react2['default'].createElement(
@@ -3718,11 +3722,11 @@ var ShareModal = (function (_Component) {
                                 { className: 'col col-4 center' },
                                 _react2['default'].createElement(
                                     'span',
-                                    { className: 'ss-icon ss-googleplus',
+                                    { className: 'h1 ss-icon btn',
                                         onClick: function () {
                                             return _this.shareGooglePlus();
                                         } },
-                                    ' '
+                                    ''
                                 )
                             )
                         )
@@ -3976,10 +3980,17 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+//stupid this user is really a character :(
+
 exports['default'] = function (_ref) {
     var user = _ref.user;
     var userId = _ref.userId;
+    var dashboard = _ref.dashboard;
+    var referral = _ref.referral;
 
+    if (_.isNull(dashboard) || _.isUndefined(dashboard)) {
+        dashboard = false;
+    }
     var bgColor = 'gosu-blue-bg';
     var gcuAvatar = '';
     if (!user || !user.avatar_url || user.avatar_url == '' || user.avatar_url.indexOf('http') < 0) {
@@ -3993,6 +4004,28 @@ exports['default'] = function (_ref) {
     }
     var seasonWins = user.protoss_wins + user.terran_wins + user.zerg_wins;
     var seasonLosses = user.season_total_games - seasonWins;
+
+    var referralSection = _react2['default'].createElement('span', null);
+    if (dashboard) {
+        referralSection = _react2['default'].createElement(
+            'div',
+            { className: 'col col-12' },
+            _react2['default'].createElement(
+                'div',
+                { className: 'col col-12 sm-col-6 p1' },
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'h4 gray' },
+                    'REFERRAL CODE'
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'h4' },
+                    referral
+                )
+            )
+        );
+    }
 
     return _react2['default'].createElement(
         'div',
@@ -4092,6 +4125,7 @@ exports['default'] = function (_ref) {
                         )
                     )
                 ),
+                referralSection,
                 _react2['default'].createElement(
                     'div',
                     { className: 'col col-12' },
@@ -4545,6 +4579,10 @@ var _gamesGameActions2 = require('./../games/game-actions2');
 
 var _gamesGameActions22 = _interopRequireDefault(_gamesGameActions2);
 
+var _shareModalShare = require('./../share-modal/share');
+
+var _shareModalShare2 = _interopRequireDefault(_shareModalShare);
+
 var _replayUploaderReplayDropZone = require('./../replay-uploader/replay-drop-zone');
 
 var _replayUploaderReplayDropZone2 = _interopRequireDefault(_replayUploaderReplayDropZone);
@@ -4564,6 +4602,7 @@ var WagerPage = (function (_Component) {
         this.getStatusDisplay = this.getStatusDisplay.bind(this);
         this.renderDropZone = this.renderDropZone.bind(this);
         this.getReplayErrorReasonDisplay = this.getReplayErrorReasonDisplay.bind(this);
+        this.getShareModal = this.getShareModal.bind(this);
     }
 
     _createClass(WagerPage, [{
@@ -4670,7 +4709,8 @@ var WagerPage = (function (_Component) {
                         ' '
                     )
                 ),
-                this.renderDropZone(game, this.props.dispatch, gameReplay, config)
+                this.renderDropZone(game, this.props.dispatch, gameReplay, config),
+                this.getShareModal(game, this.props.dispatch)
             );
         }
     }, {
@@ -4795,6 +4835,17 @@ var WagerPage = (function (_Component) {
             return _react2['default'].createElement(_userGameCardUser2['default'], { user: user });
         }
     }, {
+        key: 'getShareModal',
+        value: function getShareModal(game, dispatch) {
+            if (game && game.show_share_modal) {
+                return _react2['default'].createElement(_shareModalShare2['default'], {
+                    game: game,
+                    dispatch: dispatch
+                });
+            }
+            return;
+        }
+    }, {
         key: 'getStatusDisplay',
         value: function getStatusDisplay(game) {
             if (!game) {
@@ -4858,7 +4909,7 @@ var getGame = function getGame(game_id) {
 exports['default'] = WagerPage;
 module.exports = exports['default'];
 
-},{"./../../actions/actions":1,"./../../api/game/replayStatus":9,"./../games/game-actions2":23,"./../replay-uploader/replay-drop-zone":41,"./../user/full-user":45,"./../user/game-card-user":46,"./no-challenger":48,"./replay-info":49,"./wager-amount":50,"react":318,"react-redux":131}],52:[function(require,module,exports){
+},{"./../../actions/actions":1,"./../../api/game/replayStatus":9,"./../games/game-actions2":23,"./../replay-uploader/replay-drop-zone":41,"./../share-modal/share":42,"./../user/full-user":45,"./../user/game-card-user":46,"./no-challenger":48,"./replay-info":49,"./wager-amount":50,"react":318,"react-redux":131}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {

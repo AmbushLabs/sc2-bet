@@ -23,6 +23,7 @@ class Dashboard extends Component {
                     <div className="mr2 mb2 clearfix">
                         <ProfileCard
                             user={this.props.user}
+                            dashboard={true}
                             />
                     </div>
                 </section>

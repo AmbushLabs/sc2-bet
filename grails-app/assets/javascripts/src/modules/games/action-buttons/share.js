@@ -12,7 +12,7 @@ const Join = ({dispatch, gameId, colClass}) => {
                 return {
                     type: SHOW_SHARE_GAME_MODAL,
                     data: {
-                        gameId:gid
+                        gameId: gid
                     }
                 }
             }}

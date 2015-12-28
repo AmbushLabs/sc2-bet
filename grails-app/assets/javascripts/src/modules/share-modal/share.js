@@ -31,20 +31,20 @@ export default class ShareModal extends Component {
                                 {game.link}
                             </div>
                         </div>
-                        <div className="modal-footer">
-                            <div className="col col-12">
-                                <div className="col col-12 center">Or share on these networks:</div>
+                        <div className="modal-footer hide">
+                            <div className="col col-12 mb3">
+                                <div className="col col-12 center mb1">Or share on these networks:</div>
                                 <div className="col col-4 center">
-                                    <span className="ss-icon ss-facebook"
-                                      onClick={() => this.shareFacebook()}>&nbsp;</span>
+                                    <span className="h1 ss-icon btn"
+                                      onClick={() => this.shareFacebook()}>&#xF610;</span>
                                 </div>
                                 <div className="col col-4 center">
-                                    <span className="ss-icon ss-twitter"
-                                      onClick={() => this.shareTwitter()}>&nbsp;</span>
+                                    <span className="h1 ss-icon btn"
+                                      onClick={() => this.shareTwitter()}>&#xF611;</span>
                                 </div>
                                 <div className="col col-4 center">
-                                    <span className="ss-icon ss-googleplus"
-                                        onClick={() => this.shareGooglePlus()}>&nbsp;</span>
+                                    <span className="h1 ss-icon btn"
+                                        onClick={() => this.shareGooglePlus()}>&#xF613;</span>
                                 </div>
                             </div>
                         </div>

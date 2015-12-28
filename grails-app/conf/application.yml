@@ -100,8 +100,8 @@ environments:
             secret: QWmYN2Xq82K4e6DbYG2gmQEeaqkRa8dJ
             redirect_uri: "https://localhost:8443/auth/battlenet"
         stripe:
-            key: pk_test_qrKMKggClIIYnxYEtCaIPX5q
-            secret: sk_test_uwY5hPyZuwuu4AebSFYkay7G
+            key: pk_live_gNGPIvuiA3fXTwr8AimqCMsP
+            secret: sk_live_IqIYVrVYX9pwGULhoe8eTlrA
         site_uri: "https://localhost:8443/"
         replay_time_check_enabled: false
         dataSource:
@@ -113,8 +113,8 @@ environments:
             secret: E4cMG9wbQMqEm3ZcZpb3DhNtNRAGVaR5
             redirect_uri: "https://gosuempire.com/auth/battlenet"
         stripe:
-            key: sk_live_IqIYVrVYX9pwGULhoe8eTlrA
-            secret: pk_live_gNGPIvuiA3fXTwr8AimqCMsP
+            key: pk_live_gNGPIvuiA3fXTwr8AimqCMsP
+            secret: sk_live_IqIYVrVYX9pwGULhoe8eTlrA
         site_uri: "https://gosuempire.com/"
         replay_time_check_enabled: true
         dataSource:

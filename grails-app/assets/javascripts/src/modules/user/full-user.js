@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default ({ user, userId }) => {
+//stupid this user is really a character :(
+export default ({ user, userId, dashboard, referral }) => {
+    if (_.isNull(dashboard) || _.isUndefined(dashboard)) {
+        dashboard = false;
+    }
     var bgColor = 'gosu-blue-bg';
     var gcuAvatar = '';
     if (!user || !user.avatar_url || user.avatar_url == '' || user.avatar_url.indexOf('http') < 0) {
@@ -10,6 +14,18 @@ export default ({ user, userId }) => {
     }
     const seasonWins = user.protoss_wins + user.terran_wins + user.zerg_wins;
     const seasonLosses = user.season_total_games - seasonWins;
+
+    var referralSection = (<span></span>);
+    if (dashboard) {
+        referralSection = (
+            <div className="col col-12">
+                <div className="col col-12 sm-col-6 p1">
+                    <div className="h4 gray">REFERRAL CODE</div>
+                    <div className="h4">{referral}</div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="col col-12 border mb1 game-card-user game-card-full-user gosu-light-blue-bg">
@@ -42,6 +58,7 @@ export default ({ user, userId }) => {
                             <div className="h4">{user.career_total_games}</div>
                         </div>
                     </div>
+                    {referralSection}
                     <div className="col col-12">
                         &nbsp;
                     </div>

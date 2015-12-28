@@ -13,6 +13,8 @@ import ReplayInfo from './replay-info';
 import GameCardUser from './../user/game-card-user';
 import GameActions from './../games/game-actions2';
 
+import ShareModal from './../share-modal/share';
+
 import ReplayDropzone from './../replay-uploader/replay-drop-zone';
 import replayStatus from './../../api/game/replayStatus';
 
@@ -25,6 +27,7 @@ class WagerPage extends Component {
         this.getStatusDisplay = this.getStatusDisplay.bind(this);
         this.renderDropZone = this.renderDropZone.bind(this);
         this.getReplayErrorReasonDisplay = this.getReplayErrorReasonDisplay.bind(this);
+        this.getShareModal = this.getShareModal.bind(this);
     }
 
     componentDidMount() {
@@ -86,6 +89,7 @@ class WagerPage extends Component {
                 </div>
 
                 {this.renderDropZone(game, this.props.dispatch, gameReplay, config)}
+                {this.getShareModal(game, this.props.dispatch)}
             </div>
         );
     }
@@ -179,6 +183,18 @@ class WagerPage extends Component {
         return (
             <GameCardUser user={user} />
         );
+    }
+
+    getShareModal(game, dispatch) {
+        if (game && game.show_share_modal) {
+            return (
+                <ShareModal
+                    game={game}
+                    dispatch={dispatch}
+                    />
+            );
+        }
+        return;
     }
 
     getStatusDisplay(game) {
