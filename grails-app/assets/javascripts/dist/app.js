@@ -3807,7 +3807,7 @@ var EnterEmailModal = (function (_Component) {
                 { className: 'modal', id: 'enter-email-modal' },
                 _react2['default'].createElement(
                     'div',
-                    { className: 'modal-dialog col col-6', onClick: this.preventBubble },
+                    { className: 'modal-dialog col col-12 sm-col-6', onClick: this.preventBubble },
                     _react2['default'].createElement(
                         'form',
                         { className: '', onSubmit: this.onSubmit },
