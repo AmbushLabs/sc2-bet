@@ -45,7 +45,6 @@ class SocialMetaTagService {
         } else {
             ret['ogTitle'] = 'Start winning on GosuEmpire now!';
         }
-        println ret;
         return ret;
     }
 

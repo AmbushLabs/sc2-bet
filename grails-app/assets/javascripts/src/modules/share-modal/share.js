@@ -8,6 +8,7 @@ export default class ShareModal extends Component {
         this.shareFacebook = this.shareFacebook.bind(this);
         this.shareTwitter = this.shareTwitter.bind(this);
         this.shareGooglePlus = this.shareGooglePlus.bind(this);
+        this.openWindow = this.openWindow.bind(this);
     }
 
     render() {
@@ -31,7 +32,7 @@ export default class ShareModal extends Component {
                                 {game.link}
                             </div>
                         </div>
-                        <div className="modal-footer hide">
+                        <div className="modal-footer">
                             <div className="col col-12 mb3">
                                 <div className="col col-12 center mb1">Or share on these networks:</div>
                                 <div className="col col-4 center">
@@ -53,16 +54,25 @@ export default class ShareModal extends Component {
         );
     }
 
+    openWindow(url) {
+        window.open(
+            url,
+            'targetWindow',
+            'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=400'
+        );
+    }
+
     shareFacebook() {
-        alert('share facebook - ' + this.props.game.link);
+        this.openWindow('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(this.props.game.link));
     }
 
     shareTwitter() {
-        alert('share twitter - ' + this.props.game.link);
+        this.openWindow('https://twitter.com/share?url='
+            + encodeURIComponent(this.props.game.link) + '&text=' + encodeURIComponent('Come and challenge me on GosuEmpire') + '&hashtags=gosuempire,sc2')
     }
 
     shareGooglePlus() {
-        alert('share google plus - ' + this.props.game.link);
+        this.openWindow('https://plus.google.com/share?url=' +  encodeURIComponent(this.props.game.link));
     }
 
     preventBubble(ev) {

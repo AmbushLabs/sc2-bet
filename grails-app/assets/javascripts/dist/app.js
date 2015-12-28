@@ -3625,6 +3625,7 @@ var ShareModal = (function (_Component) {
         this.shareFacebook = this.shareFacebook.bind(this);
         this.shareTwitter = this.shareTwitter.bind(this);
         this.shareGooglePlus = this.shareGooglePlus.bind(this);
+        this.openWindow = this.openWindow.bind(this);
     }
 
     _createClass(ShareModal, [{
@@ -3684,7 +3685,7 @@ var ShareModal = (function (_Component) {
                     ),
                     _react2['default'].createElement(
                         'div',
-                        { className: 'modal-footer hide' },
+                        { className: 'modal-footer' },
                         _react2['default'].createElement(
                             'div',
                             { className: 'col col-12 mb3' },
@@ -3735,19 +3736,24 @@ var ShareModal = (function (_Component) {
             );
         }
     }, {
+        key: 'openWindow',
+        value: function openWindow(url) {
+            window.open(url, 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=400');
+        }
+    }, {
         key: 'shareFacebook',
         value: function shareFacebook() {
-            alert('share facebook - ' + this.props.game.link);
+            this.openWindow('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(this.props.game.link));
         }
     }, {
         key: 'shareTwitter',
         value: function shareTwitter() {
-            alert('share twitter - ' + this.props.game.link);
+            this.openWindow('https://twitter.com/share?url=' + encodeURIComponent(this.props.game.link) + '&text=' + encodeURIComponent('Come and challenge me on GosuEmpire') + '&hashtags=gosuempire,sc2');
         }
     }, {
         key: 'shareGooglePlus',
         value: function shareGooglePlus() {
-            alert('share google plus - ' + this.props.game.link);
+            this.openWindow('https://plus.google.com/share?url=' + encodeURIComponent(this.props.game.link));
         }
     }, {
         key: 'preventBubble',

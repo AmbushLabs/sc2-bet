@@ -44,31 +44,34 @@ class UserController {
             if (params.email_address ==~ emailPattern) {
                 User u = User.findById(session.user_id);
                 //sha1 hash
-                def emailAddress = params.email_address.toString();
-                Random r = new Random();
-                def hash = (u.id + '_' + emailAddress + '*' + r.nextInt(250000)).toSHA1('salty-em4il-*gw');
+                def emailAddress = params.email_address.toString().trim().toLowerCase();
+                Email eCheck = Email.findByEmail(emailAddress);
+                if (eCheck == null) {
+                    Random r = new Random();
+                    def hash = (u.id + '_' + emailAddress + '*' + r.nextInt(250000)).toSHA1('salty-em4il-*gw');
 
-                Email e = new Email([
-                    email:emailAddress,
-                    isPrimary: true,
-                    isActive: true,
-                    confirmHash: hash
-                ]);
-                if (e.save(flush:true)) {
-                    u.addToEmails(e);
-                    if (u.save()) {
-                        if (params.referral_code && params.referral_code.trim() != '') {
-                            ReferralCodeService.handleReferralCode(params.referral_code.trim(), u);
+                    Email e = new Email([
+                        email:emailAddress,
+                        isPrimary: true,
+                        isActive: true,
+                        confirmHash: hash
+                    ]);
+                    if (e.save(flush:true)) {
+                        u.addToEmails(e);
+                        if (u.save()) {
+                            if (params.referral_code && params.referral_code.trim() != '') {
+                                ReferralCodeService.handleReferralCode(params.referral_code.trim(), u);
+                            }
+                            isSuccessful = true;
+                            ret = DashboardService.getInitializeData(u);
+                            ret['status'] = 'success';
+                            SendEmailService.send(u, 'confirm-email', e);
+                        } else {
+                            println u.errors;
                         }
-                        isSuccessful = true;
-                        ret = DashboardService.getInitializeData(u);
-                        ret['status'] = 'success';
-                        SendEmailService.send(u, 'confirm-email', e);
                     } else {
-                        println u.errors;
+                        println e.errors;
                     }
-                } else {
-                    println e.errors;
                 }
             }
             if (!isSuccessful) {
