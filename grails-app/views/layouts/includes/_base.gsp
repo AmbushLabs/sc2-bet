@@ -13,6 +13,7 @@
     <asset:javascript src="lib/underscore.js" />
     <asset:javascript src="lib/jquery-2.1.4.min.js"/>
     <g:layoutHead/>
+    <g:render template="/main/meta/facebook" />
     <link href="//cdn.symbolset.com/f3558125ac7afa92f7c800679e8c8ab19e3d003c/symbolset.css" rel="stylesheet">
     <link rel="shortcut icon" href="${createLinkTo(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
     <link rel="apple-touch-icon" sizes="57x57" href="${createLinkTo(dir:'images',file:'apple-icon-57x57.png')}">

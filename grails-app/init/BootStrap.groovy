@@ -30,27 +30,6 @@ class BootStrap {
             new BigInteger(1, messageDigest.digest()).toString(16).padLeft(40, '0')
         }
 
-
-        /*
-        CREATE USERS
-         */
-        createUser('aaronhenshaw@gmail.com', 'cmonson');
-        createUser('joseph.lallouz@gmail.com', 'flyingnome');
-
-        (new ReferralCode([
-            referralCode: 'RADIATOR_GANG',
-            timesUsed: 0,
-            maxTimes: 20,
-            gosuCoinBonus: 2500
-        ])).save();
-
-        (new ReferralCode([
-            referralCode: 'USOCHOBO',
-            timesUsed: 0,
-            maxTimes: 10,
-            gosuCoinBonus: 1000
-        ])).save();
-
     }
 
     def createUser(emailAddress, battleTag) {

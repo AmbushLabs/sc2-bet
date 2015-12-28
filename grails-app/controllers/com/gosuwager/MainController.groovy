@@ -6,6 +6,7 @@ import grails.converters.JSON
 class MainController {
 
     def DashboardService;
+    def SocialMetaTagService;
 
     def index() {
         //session.user_id = 2;
@@ -15,9 +16,13 @@ class MainController {
             SC2Character sc2Char = user.battleNetAccount.characters.getAt(0);
             characterName = sc2Char.displayName;
         }
+        def pageData = SocialMetaTagService.getPageDataForUri(request.requestURI);
         [
-                logged_in: (user != null) ? true : false,
-                character_name: characterName
+            logged_in: (user != null) ? true : false,
+            character_name: characterName,
+            ogUrl: pageData.ogUrl,
+            ogTitle: pageData.ogTitle,
+            ogImage: pageData.ogImage
         ]
     }
 

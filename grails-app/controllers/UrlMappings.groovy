@@ -22,7 +22,7 @@ class UrlMappings {
 
         "/user/profile/$user_id"(controller:"user", action:"profile")
 
-        "/w/$game_id" (controller:"game", action:"permalink")
+        "/w/$game_id" (controller:"main", action:"index")
 
         "/p/$user_id" (controller:"main", action:"index")
 

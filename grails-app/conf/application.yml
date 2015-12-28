@@ -90,6 +90,7 @@ environments:
             key: pk_test_qrKMKggClIIYnxYEtCaIPX5q
             secret: sk_test_uwY5hPyZuwuu4AebSFYkay7G
         site_uri: "https://localhost:8443/"
+        site_uri_no_slash: "https://localhost:8443"
         replay_time_check_enabled: false
         dataSource:
             dbCreate: create-drop
@@ -103,6 +104,7 @@ environments:
             key: pk_live_gNGPIvuiA3fXTwr8AimqCMsP
             secret: sk_live_IqIYVrVYX9pwGULhoe8eTlrA
         site_uri: "https://localhost:8443/"
+        site_uri_no_slash: "https://localhost:8443"
         replay_time_check_enabled: false
         dataSource:
             dbCreate: update
@@ -116,6 +118,7 @@ environments:
             key: pk_live_gNGPIvuiA3fXTwr8AimqCMsP
             secret: sk_live_IqIYVrVYX9pwGULhoe8eTlrA
         site_uri: "https://gosuempire.com/"
+        site_uri_no_slash: "https://gosuempire.com"
         replay_time_check_enabled: true
         dataSource:
             dbCreate: update
