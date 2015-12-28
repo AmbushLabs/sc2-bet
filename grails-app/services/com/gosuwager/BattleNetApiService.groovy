@@ -33,7 +33,10 @@ class BattleNetApiService {
                 if (bnetAccount == null) {
                     bnetAccount = new BattleNetAccount();
                     bnetAccount.battleNetId = bnetId;
-                    bnetAccount.battleTag = jobject.get('battletag').getAsString();
+                    def tmp = jobject.get('battletag');
+                    if (tmp != null) {
+                        bnetAccount.battleTag = tmp.getAsString();
+                    }
                     bnetAccount.save();
                 }
             }
