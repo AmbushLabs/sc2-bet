@@ -8,7 +8,6 @@ class GameInterceptor {
     }
 
     boolean before() {
-        println 'game interceptor'
         header( "Access-Control-Allow-Origin", "null")
         header( "Access-Control-Allow-Credentials", "true")
         header( "Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")

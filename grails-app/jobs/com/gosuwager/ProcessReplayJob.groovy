@@ -94,7 +94,7 @@ class ProcessReplayJob {
                 println replayToProcess.errors;
             }
         } else {
-            println 'no replays to process';
+
         }
     }
 
