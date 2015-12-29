@@ -1,7 +1,7 @@
+import 'fetch-polyfill';
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
-import ReactIntl from 'react-intl';
 
 import {
     ReduxRouter,
@@ -106,6 +106,7 @@ class App extends Component {
 };
 
 function initializeApp() {
+
     return function (dispatch) {
         dispatch({
             type:Actions.INITIALIZE_APP,

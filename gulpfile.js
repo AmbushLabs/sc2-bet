@@ -12,7 +12,7 @@ var filter = require('gulp-filter');
 function compile(watch) {
     var bundler = watchify(browserify('./grails-app/assets/javascripts/src/app.js', { debug: true }).transform(babel, {
         compact: false,
-        optional: ["es7.classProperties", "es7.decorators"]
+        optional: ["es7.classProperties", "es7.decorators", "es7.asyncFunctions"]
     }));
 
     function rebundle() {

@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactIntl from 'react-intl';
 import GameCard from "./game-card";
 
 var GamePage = React.createClass({
-    mixins:[ReactIntl.IntlMixin],
+
     getInitialState: function() {
         return {
 
