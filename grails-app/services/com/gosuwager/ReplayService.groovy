@@ -12,6 +12,7 @@ import grails.transaction.Transactional
 
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
+import java.text.SimpleDateFormat
 
 @Transactional
 class ReplayService {
@@ -89,7 +90,13 @@ class ReplayService {
 
     def s3PolicyAndSignature() {
         String siteUri = grailsApplication.config.getProperty('site_uri');
-        String policyDocument = "{\"expiration\": \"2016-01-01T00:00:00Z\",\n" +
+
+        Date d = new Date() + 1;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
+        String policyDocument =
+                //"{\"expiration\": \"2016-01-01T00:00:00Z\",\n" +
+                "{\"expiration\": \"" + df.format(d) + "\",\n" +
                 "  \"conditions\": [ \n" +
                 "    {\"bucket\": \"gosuempire\"}, \n" +
                 "    [\"starts-with\", \"\$key\", \"replays/\"],\n" +
@@ -98,6 +105,7 @@ class ReplayService {
                 "  ]\n" +
                 "}";
 
+        println policyDocument;
         String policy = (new BASE64Encoder()).encode(
                 policyDocument.getBytes("UTF-8")).replaceAll("\n","").replaceAll("\r","");
 
