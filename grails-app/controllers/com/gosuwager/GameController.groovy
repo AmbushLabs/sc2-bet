@@ -110,7 +110,7 @@ class GameController {
                 } else if (g.player2.id == session.user_id) {
                     g.player2 = null;
                 }
-                if (g.save()) {
+                if (g.save(flush:true)) {
                     def u = User.findById(session.user_id);
                     //SendEmailService.send(u, "player-left-contest", g);
                     ret['game'] = g;
@@ -159,7 +159,7 @@ class GameController {
                             ];
                         }
 
-                        if (g.save()) {
+                        if (g.save(flush:true)) {
                             emailTypes.each {
                                 SendEmailService.send(it.user, it.template, g);
                             }
@@ -201,7 +201,7 @@ class GameController {
             } else {
                 g.challengerAccepted = true;
                 g.challengerAcceptedDate = new Date();
-                if (g.save()) {
+                if (g.save(flush:true)) {
                     SendEmailService.send(g.player2, 'creator-accepted-challenge', g);
                 }
                 ret['game'] = g;
@@ -229,7 +229,7 @@ class GameController {
             } else {
                 g.player2 = null;
                 g.challengerAccepted = false;
-                if (g.save()) {
+                if (g.save(flush:true)) {
                     SendEmailService.send(g.player2, 'creator-rejected-challenger', g);
                 }
                 ret['game'] = g;
