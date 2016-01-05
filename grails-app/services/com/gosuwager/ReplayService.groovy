@@ -92,11 +92,11 @@ class ReplayService {
         String siteUri = grailsApplication.config.getProperty('site_uri');
 
         Date d = new Date() + 1;
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
         String policyDocument =
                 //"{\"expiration\": \"2016-01-01T00:00:00Z\",\n" +
-                "{\"expiration\": \"" + df.format(d) + "\",\n" +
+                "{\"expiration\": \"" + df.format(d) + "Z\",\n" +
                 "  \"conditions\": [ \n" +
                 "    {\"bucket\": \"gosuempire\"}, \n" +
                 "    [\"starts-with\", \"\$key\", \"replays/\"],\n" +
