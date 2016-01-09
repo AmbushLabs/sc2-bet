@@ -223,6 +223,8 @@ class WagerPage extends Component {
                 return ' because the replay started before the GosuEmpire contest was ready';
             case 'invalid_players':
                 return ' because the players from the replay don\'t appear to match';
+            case 'replay_exists':
+                return ' because that replay was already uploaded to another game or by another player.';
             default:
                 return '';
         }

@@ -30,13 +30,27 @@ class ProcessReplayJob {
 
                 try {
                     JSONObject jgd = ReplayService.getJsonFromReplayFile(localFile);
+                    String fileHash = ReplayService.getFileHash(localFile);
+                    def newHashValid = true;
+                    if (fileHash != null && fileHash != "") {
+                        def grcheck = GameReplay.findByFileSha1Hash(fileHash);
+                        if (grcheck != null) {
+                            newHashValid = false;
+                        }
+                    }
                     //first check the thing.
                     Date d = new Date(jgd.getLong("start_time"));
                     if (ReplayService.updateReplayFromJSONReplay(jgd, replayToProcess)) {
                         replayToProcess.processed = true;
                         replayToProcess.processing = false;
+                        replayToProcess.fileSha1Hash = fileHash;
                         println "processed and updated successfully";
-                        if (Holders.config.getProperty('replayTimeCheckEnabled') && d.getTime() < replayToProcess.game.challengerAcceptedDate.getTime()) {
+                        if (!newHashValid) {
+                            //invalid...
+                            println 'invalid because already uploaded this replay'
+                            replayToProcess.isValidForGame = false;
+                            replayToProcess.errorReason = 'replay_exists';
+                        } else if (Holders.config.getProperty('replayTimeCheckEnabled') && d.getTime() < replayToProcess.game.challengerAcceptedDate.getTime()) {
                             //invalid...
                             println 'invalid because of time'
                             replayToProcess.isValidForGame = false;

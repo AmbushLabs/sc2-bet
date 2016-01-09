@@ -12,6 +12,7 @@ import grails.transaction.Transactional
 
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
+import java.security.MessageDigest
 import java.text.SimpleDateFormat
 
 @Transactional
@@ -145,6 +146,24 @@ class ReplayService {
         return true;
     }
 
+    def getFileHash(String filePath) {
+        InputStream fis =  new FileInputStream(filePath);
+        try {
+            byte[] buffer = new byte[1024];
+            MessageDigest complete = MessageDigest.getInstance("SHA-1");
+            int numRead;
+            while ((numRead = fis.read(buffer)) != -1) {
+                if (numRead > 0) {
+                    complete.update(buffer, 0, numRead);
+                }
+            }
+            return new String(complete.digest());
+        } finally {
+            fis.close();
+        }
+        return "";
+    }
+
     def getJsonFromReplayFile(file) {
         String cmd = System.getProperty("user.dir") + "/parse_replay.py";
         println 'running ' + cmd;
@@ -157,7 +176,7 @@ class ReplayService {
         errorStreamHandler.start();
 
         p.waitFor();
-                                                                     //java.lang.IllegalAccessError: tried to access class com.devdaily.system.ThreadedStreamHandler
+
         inputStreamHandler.interrupt();
         errorStreamHandler.interrupt();
         inputStreamHandler.join();
