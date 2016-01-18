@@ -20,18 +20,23 @@ export default class GameCard extends Component {
             if (game.has_player1 && !game.is_player1) {
                 return (
                     <GameCardUser
+                        hasAnyPlayers={true}
                         user={game.player1}
                         />
                 );
             } else if (game.has_player2 && !game.is_player2) {
                 return (
                     <GameCardUser
+                        hasAnyPlayers={true}
                         user={game.player2} />
                 );
             }
         }
         return (
-           <GameCardUser />
+           <GameCardUser
+               game={game}
+               hasAnyPlayers={game.has_player1 || game.has_player2}
+               />
         );
     }
 

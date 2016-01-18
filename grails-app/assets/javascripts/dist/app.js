@@ -1802,14 +1802,19 @@ var GameCard = (function (_Component) {
             if (game) {
                 if (game.has_player1 && !game.is_player1) {
                     return _react2['default'].createElement(_userGameCardUser2['default'], {
+                        hasAnyPlayers: true,
                         user: game.player1
                     });
                 } else if (game.has_player2 && !game.is_player2) {
                     return _react2['default'].createElement(_userGameCardUser2['default'], {
+                        hasAnyPlayers: true,
                         user: game.player2 });
                 }
             }
-            return _react2['default'].createElement(_userGameCardUser2['default'], null);
+            return _react2['default'].createElement(_userGameCardUser2['default'], {
+                game: game,
+                hasAnyPlayers: game.has_player1 || game.has_player2
+            });
         }
     }, {
         key: 'getShareModal',
@@ -4284,10 +4289,13 @@ var _react2 = _interopRequireDefault(_react);
 var GameCardUser = function GameCardUser(_ref) {
     var user = _ref.user;
     var game = _ref.game;
+    var hasAnyPlayers = _ref.hasAnyPlayers;
 
+    console.log(game, user, hasAnyPlayers);
     var bgColor = 'gosu-blue-bg';
     var challenger = 'CHALLENGER';
     var gcuAvatar = '';
+    var displayNameJsx = '';
     if (_.isUndefined(user) || _.isNull(user)) {
         user = {
             display_name: '...',
@@ -4301,7 +4309,29 @@ var GameCardUser = function GameCardUser(_ref) {
             { className: 'circle gcu-avatar center bg-white' },
             _react2['default'].createElement('div', { className: 'ss-icons ss-crown h1 mt2' })
         );
+        if (hasAnyPlayers) {
+            displayNameJsx = _react2['default'].createElement(
+                'div',
+                { className: 'h6 white' },
+                'Waiting on challenger'
+            );
+        } else {
+            displayNameJsx = _react2['default'].createElement(
+                'div',
+                { className: 'h6 white' },
+                'Join to play!'
+            );
+        }
     } else {
+        displayNameJsx = _react2['default'].createElement(
+            'div',
+            { className: 'h4 white' },
+            _react2['default'].createElement(
+                'a',
+                { href: "/p/" + user.user_id },
+                user.display_name
+            )
+        );
         if (!user.avatar_url || user.avatar_url == '' || user.avatar_url.indexOf('http') < 0) {
             gcuAvatar = _react2['default'].createElement(
                 'div',
@@ -4349,15 +4379,7 @@ var GameCardUser = function GameCardUser(_ref) {
                         { className: "h6 silver " + winnerTextClass },
                         challenger
                     ),
-                    _react2['default'].createElement(
-                        'div',
-                        { className: 'h4 white' },
-                        _react2['default'].createElement(
-                            'a',
-                            { href: "/p/" + user.user_id },
-                            user.display_name
-                        )
-                    )
+                    displayNameJsx
                 ),
                 isWinner
             )

@@ -1,9 +1,11 @@
 import React from 'react';
 
-const GameCardUser = ({ user, game }) => {
+const GameCardUser = ({ user, game, hasAnyPlayers }) => {
+    console.log(game, user, hasAnyPlayers);
     var bgColor = 'gosu-blue-bg';
     var challenger = 'CHALLENGER';
     var gcuAvatar = '';
+    var displayNameJsx = '';
     if (_.isUndefined(user) || _.isNull(user)) {
         user = {
             display_name: '...',
@@ -17,7 +19,13 @@ const GameCardUser = ({ user, game }) => {
                 <div className="ss-icons ss-crown h1 mt2"></div>
             </div>
         );
+        if (hasAnyPlayers) {
+            displayNameJsx = (<div className="h6 white">Waiting on challenger</div>);
+        } else {
+            displayNameJsx = (<div className="h6 white">Join to play!</div>);
+        }
     } else {
+        displayNameJsx = (<div className="h4 white"><a href={"/p/" + user.user_id}>{user.display_name}</a></div>);
         if (!user.avatar_url || user.avatar_url == '' || user.avatar_url.indexOf('http') < 0) {
             gcuAvatar = (<div className="circle gcu-avatar center bg-white"><div className="ss-icons ss-user h1 mt2"></div></div>);
         } else {
@@ -39,6 +47,8 @@ const GameCardUser = ({ user, game }) => {
         );
     }
 
+
+
     return (
         <div className={"col col-12 border mb1 game-card-user " + winnerOuterClass}>
             {gcuAvatar}
@@ -46,7 +56,7 @@ const GameCardUser = ({ user, game }) => {
                 <div className="gcu-right-container">
                     <div className="col col-10">
                         <div className={"h6 silver " + winnerTextClass}>{challenger}</div>
-                        <div className="h4 white"><a href={"/p/" + user.user_id}>{user.display_name}</a></div>
+                        {displayNameJsx}
                     </div>
                     {isWinner}
                 </div>
