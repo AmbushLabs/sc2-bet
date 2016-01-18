@@ -51,6 +51,10 @@ class GameMarshaller {
                 ret['player1'] = getCharacterMap(creatorCharacter);
                 ret['player1']['user_id'] = g.player1.id;
                 ret['player1']['winner'] = (g.completed && g.winner == 'player1');
+                if (isPlayer1 || isPlayer2) {
+                    ret['player1']['battle_tag'] = g.player1.battleNetAccount.battleTag;
+                }
+
             }
 
             if (g.player2) {
@@ -58,6 +62,9 @@ class GameMarshaller {
                 ret['player2'] = getCharacterMap(challengerCharacter);
                 ret['player2']['user_id'] = g.player2.id;
                 ret['player2']['winner'] = (g.completed && g.winner == 'player2');
+                if (isPlayer1 || isPlayer2) {
+                    ret['player2']['battle_tag'] = g.player2.battleNetAccount.battleTag;
+                }
             }
 
             return ret;

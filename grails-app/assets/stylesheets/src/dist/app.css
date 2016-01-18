@@ -105,14 +105,16 @@
 .game-card-full-user {
   min-height: 285px; }
 
-.game-card-user .gcu-avatar {
-  position: absolute;
-  margin: 20px 0px 0px 10px;
-  height: 80px;
-  width: 80px; }
-
-.game-card-user .gcu-right-container {
-  padding-left: 110px; }
+.game-card-user {
+  min-height: 110px; }
+  .game-card-user .gcu-avatar {
+    position: absolute;
+    margin: 20px 0px 0px 10px;
+    height: 80px;
+    width: 80px; }
+  .game-card-user .gcu-right-container {
+    padding-left: 110px;
+    min-height: 42px; }
 
 .my-games {
   min-height: 269px; }

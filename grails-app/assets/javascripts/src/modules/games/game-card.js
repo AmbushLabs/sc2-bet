@@ -82,7 +82,9 @@ export default class GameCard extends Component {
                         <div className="col col-12">
                             <GameActions
                                 game={this.props.game}
-                                dispatch={this.props.dispatch} />
+                                dispatch={this.props.dispatch}
+                                loggedIn={this.props.loggedIn}
+                                />
 
                         </div>
                     </div>

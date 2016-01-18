@@ -79,7 +79,7 @@ class App extends Component {
     }
 
     getChildren() {
-        if (!this.props.loggedIn || !this.props.hasEmail) {
+        if ((!this.props.loggedIn || !this.props.hasEmail) && document.location.href.indexOf("/w/") == -1) {
             return (
                 <LandingPage
                     dispatch={this.props.dispatch} />

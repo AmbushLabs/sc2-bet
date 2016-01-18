@@ -15,8 +15,11 @@ import GameActions from './../games/game-actions2';
 
 import ShareModal from './../share-modal/share';
 
+import BattleNetTag from './battle-net-tag';
+
 import ReplayDropzone from './../replay-uploader/replay-drop-zone';
 import replayStatus from './../../api/game/replayStatus';
+
 
 @connect(state => (state))
 class WagerPage extends Component {
@@ -28,6 +31,8 @@ class WagerPage extends Component {
         this.renderDropZone = this.renderDropZone.bind(this);
         this.getReplayErrorReasonDisplay = this.getReplayErrorReasonDisplay.bind(this);
         this.getShareModal = this.getShareModal.bind(this);
+        this.getBattleNetTag = this.getBattleNetTag.bind(this);
+        this.getLoggedOutStatusDisplay = this.getLoggedOutStatusDisplay.bind(this);
     }
 
     componentDidMount() {
@@ -52,6 +57,7 @@ class WagerPage extends Component {
                     <div className="h1 gosu-blue-text">Winner Takes <span className="gosu-coins-gold"><span className="ss-icon ss-coins h2"></span>&nbsp;{game.wager}</span></div>
                     <div className="h4 gray">Current Status: {this.getStatusDisplay(game)}</div>
                 </div>
+                {this.getBattleNetTag(game)}
                 <div className="col col-12">
                     <div className="col col-0 lg-col-2">
                         &nbsp;
@@ -75,15 +81,18 @@ class WagerPage extends Component {
                     </div>
                 </div>
                 <div className="col col-12">
-                    <div className="col col-2">
+                    <div className="col col-0 lg-col-2">
                         &nbsp;
                     </div>
-                    <div className="col col-8">
+                    <div className="col col-12 lg-col-8 px1">
                         <GameActions
                             game={game}
-                            dispatch={this.props.dispatch} />
+                            dispatch={this.props.dispatch}
+                            loggedIn={this.props.loggedIn}
+                            wagerPage={true}
+                            />
                     </div>
-                    <div className="col col-2">
+                    <div className="col col-0 lg-col-2  ">
                         &nbsp;
                     </div>
                 </div>
@@ -94,8 +103,21 @@ class WagerPage extends Component {
         );
     }
 
+    getBattleNetTag(game) {
+        if (game.has_player1 && game.has_player2 && game.has_player1_accepted && (game.is_player1 || game.is_player2)) {
+            const battleNetTag = (game.is_player1) ? game.player2.battle_tag : game.player1.battle_tag;
+            return (
+                <BattleNetTag
+                    battleNetTag={battleNetTag}
+                    />
+            );
+        } else {
+            return '';
+        }
+    }
+
     renderDropZone(game, dispatch, gameReplay, config) {
-        if (game.has_player1 && game.has_player2 && game.has_player1_accepted) {
+        if (game.has_player1 && game.has_player2 && game.has_player1_accepted && (game.is_player1 || game.is_player2)) {
             var dropZone = null;
             var errorState = null;
             if (gameReplay && gameReplay.uploading) {
@@ -201,6 +223,9 @@ class WagerPage extends Component {
         if (!game) {
             return '';
         }
+        if (!game.is_player1 && !game.is_player2) {
+            return this.getLoggedOutStatusDisplay(game);
+        }
         if (game.completed) {
             return 'Completed!';
         } else if (game.has_player1 && game.has_player2 && game.has_player1_accepted) {
@@ -211,6 +236,20 @@ class WagerPage extends Component {
             return 'Waiting for a challenger';
         } else {
             return 'Waiting for someone to join';
+        }
+    }
+
+    getLoggedOutStatusDisplay(game) {
+        if (game.completed) {
+            return 'Completed!';
+        } else if (game.has_player1 && game.has_player2 && game.has_player1_accepted) {
+            return 'Ready to play!';
+        } else if (game.has_player1 && game.has_player2) {
+            return 'Waiting for challenger to be accepted.';
+        } else if (game.has_player1) {
+            return 'Waiting for a challenger. Signup or login to join this game.';
+        } else {
+            return 'Waiting for someone to join. Signup or login to join this game.';
         }
     }
 

@@ -32,6 +32,7 @@ class Dashboard extends Component {
                         <MyGames
                             games={this.props.games}
                             dispatch={this.props.dispatch}
+                            loggedIn={this.props.loggedIn}
                             />
                     </div>
                 </section>
@@ -48,6 +49,7 @@ class Dashboard extends Component {
                                 limit={8}
                                 games={this.getEmptyGames()}
                                 dispatch={this.props.dispatch}
+                                loggedIn={this.props.loggedIn}
                                 />
                         </div>
                     </section>
@@ -80,6 +82,7 @@ class Dashboard extends Component {
                                 limit={8}
                                 games={this.getSearchGames()}
                                 dispatch={this.props.dispatch}
+                                loggedIn={this.props.loggedIn}
                                 />
                         </div>
                     </section>

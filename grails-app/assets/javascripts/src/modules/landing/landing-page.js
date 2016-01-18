@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { CHECK_EMAIL_ADDRESS } from './../../actions/actions';
-import checkEmail from './../../api/user/checkEmail';
+import signupWindow from './../user/signup-window';
 
 export default class LandingPage extends Component {
 
@@ -58,18 +58,7 @@ export default class LandingPage extends Component {
     }
 
     signUp() {
-        var loginWindow = window.open(
-            '/auth/bnet_start_auth',
-            'targetWindow',
-            'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=400'
-        );
-        const { dispatch } = this.props;
-        var windowChecker = setInterval(function() {
-            if (loginWindow.closed) {
-                clearInterval(windowChecker);
-                dispatch(checkEmail());
-            }
-        }.bind(this), 50);
+        signupWindow(this.props.dispatch);
     }
 }
 

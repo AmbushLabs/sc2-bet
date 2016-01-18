@@ -1,7 +1,6 @@
 import React from 'react';
 
 const GameCardUser = ({ user, game, hasAnyPlayers }) => {
-    console.log(game, user, hasAnyPlayers);
     var bgColor = 'gosu-blue-bg';
     var challenger = 'CHALLENGER';
     var gcuAvatar = '';

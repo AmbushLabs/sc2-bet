@@ -37,6 +37,7 @@ export default class MyGames extends Component {
                     limit={4}
                     games={this.getGames()}
                     dispatch={this.props.dispatch}
+                    loggedIn={this.props.loggedIn}
                     />
             </section>
         );

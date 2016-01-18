@@ -19,13 +19,15 @@ class GameList extends Component {
                 </div>
             );
         }
-        const { colSize, games, dispatch } = this.props;
+        const { colSize, games, dispatch, loggedIn } = this.props;
         var gameNodes = games.filter((game) => game.is_active).map((game) => {
             return (
                 <GameCard
                     game={game}
                     colSize={colSize}
-                    dispatch={dispatch} />
+                    dispatch={dispatch}
+                    loggedIn={loggedIn}
+                    />
             );
         });
         return (

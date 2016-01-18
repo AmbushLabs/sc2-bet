@@ -7,21 +7,47 @@ import AcceptButton from './action-buttons/accept';
 import RejectButton from './action-buttons/reject';
 import JoinChatButton from './action-buttons/join-chat';
 
+import signupWindow from './../user/signup-window';
 
-const GameActions = ({game, dispatch}) => {
+
+const GameActions = ({game, dispatch, loggedIn, wagerPage}) => {
+
+    if (_.isUndefined(wagerPage) || _.isNull(wagerPage)) {
+        wagerPage = false;
+    }
 
     if (!game.is_active) {
 
     }
 
+    if (!loggedIn) {
+        return (
+            <button
+                className={"btn btn-outline blue col col-12"}
+                onClick={() => signupWindow(dispatch)}
+                >
+                <span className="tiny-symbol ss-icons ss-swords"></span>&nbsp;
+                Signup or Login
+            </button>
+        );
+    }
+
     if (game.has_player1 && game.has_player2) {
         if (game.has_player1_accepted) {
             //play time!
-            return (
-                <div className="col col-12">
-
-                </div>
-            );
+            if (!wagerPage) {
+                return (
+                    <div className="col col-12">
+                        <a
+                            href={"/w/" + game.id}
+                            className="btn btn-outline black col col-12 center"
+                            >
+                            <span className="tiny-symbol ss-icons ss-swords"></span>&nbsp;
+                            Go Play!
+                        </a>
+                    </div>
+                );
+            }
         } else if (game.is_player1) {
             return (
                 <div className="col col-12">
@@ -85,7 +111,7 @@ const GameActions = ({game, dispatch}) => {
     if (game.has_player1 && game.is_player1 && !game.has_player2) {
         return (
             <div className="col col-12">
-                <div className="col col-5">
+                <div className="col col-6 px1">
                     <ShareButton
                         dispatch={dispatch}
                         gameId={game.id}
@@ -93,8 +119,7 @@ const GameActions = ({game, dispatch}) => {
                         colClass="col-12"
                         />
                 </div>
-                <div className="col col-2">&nbsp;</div>
-                <div className="col col-5">
+                <div className="col col-6 px1">
                     <LeaveButton
                         dispatch={dispatch}
                         gameId={game.id}
