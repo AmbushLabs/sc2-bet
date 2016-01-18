@@ -960,6 +960,13 @@ var _default = (function (_Component) {
         value: function componentDidUpdate() {
             $('html,body').animate({ scrollTop: 0 }, 'fast');
         }
+    }, {
+        key: 'shouldComponentUpdate',
+        value: function shouldComponentUpdate(nextProps, nextState) {
+            var errors = this.props.errors;
+
+            return errors.length != nextProps.errors.length;
+        }
     }]);
 
     return _default;
@@ -2711,6 +2718,15 @@ var _default = (function (_Component) {
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
             $('html,body').animate({ scrollTop: 0 }, 'fast');
+        }
+    }, {
+        key: 'shouldComponentUpdate',
+        value: function shouldComponentUpdate(nextProps, nextState) {
+            var _props = this.props;
+            var show = _props.show;
+            var text = _props.text;
+
+            return show != nextProps.show || text != nextProps.text;
         }
     }]);
 

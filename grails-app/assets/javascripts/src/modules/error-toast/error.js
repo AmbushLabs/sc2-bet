@@ -30,4 +30,9 @@ export default class extends Component {
         $('html,body').animate({ scrollTop: 0 }, 'fast');
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        const { errors } = this.props;
+        return errors.length != nextProps.errors.length;
+    }
+
 };

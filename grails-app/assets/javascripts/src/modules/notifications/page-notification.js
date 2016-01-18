@@ -27,4 +27,9 @@ export default class extends Component {
         $('html,body').animate({ scrollTop: 0 }, 'fast');
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        const { show, text } = this.props;
+        return show != nextProps.show || text != nextProps.text;
+    }
+
 }
