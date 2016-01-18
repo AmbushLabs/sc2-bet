@@ -39,7 +39,7 @@ class BootStrap {
             ])).save();
         }
 
-        createUser('joseph.lallouz@gmail.com', 'homeslice');
+        //createUser('joseph.lallouz@gmail.com', 'homeslice');
 
 
     }
