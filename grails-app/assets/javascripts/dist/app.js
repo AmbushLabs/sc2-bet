@@ -1748,12 +1748,7 @@ var GameCard = (function (_Component) {
                 return _react2['default'].createElement(
                     'span',
                     null,
-                    ' ',
-                    _react2['default'].createElement(
-                        'span',
-                        { className: 'ss-icon ss-swords tiny-symbol' },
-                        ' '
-                    )
+                    ' '
                 );
             }
             return _react2['default'].createElement(
