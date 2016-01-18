@@ -43,7 +43,7 @@ export default ({ game, userId }) => {
                 </div>
                 <div className="col col-4 p1">
                     <div className={"h6 silver"}>DATE</div>
-                    <div className="h4 white">{dateformatted}</div>
+                    <div className="h4 white">{dateformatted}</div> 
                 </div>
             </a>
             </div>
