@@ -6,7 +6,9 @@ const cancel = (game_id) => {
     return (dispatch) => {
         dispatch({
             type: CANCEL_GAME,
-            is_fetching: true
+            is_fetching: true,
+            game_id: game_id
+
         });
         return fetch('/game/g/' + game_id, {
             method:'delete',

@@ -105,11 +105,21 @@ class GameController {
                 (g.player2 && g.player2.id == session.user_id)
             ) {
                 if (g.player1.id == session.user_id) {
-                    g.player1 = g.player2;
-                    g.player2 = null;
+                    if (g.player2) {
+                        g.player1 = g.player2;
+                        g.player2 = null;
+                    } else {
+                        g.player1 = null;
+                    }
                 } else if (g.player2.id == session.user_id) {
                     g.player2 = null;
                 }
+                if (g.player1 == null && g.player2 == null) {
+                    //need to kill this things
+                    g.active = false;
+                    g.rank = null;
+                }
+
                 if (g.save(flush:true)) {
                     def u = User.findById(session.user_id);
                     //SendEmailService.send(u, "player-left-contest", g);
@@ -284,6 +294,7 @@ class GameController {
                 ret['game_replay'] = replayQuery.find(sort: "createDate", order: "desc");
                 ret['game'] = g;
                 ret['status'] = 'success';
+                ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
                 render ret as JSON;
             } else {
                 ret['error'] = true;

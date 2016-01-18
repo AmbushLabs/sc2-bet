@@ -82,6 +82,12 @@ const games = (state = {current_my_games_tab:'to_approve'}, action = {}) => {
             } else if (!action.is_fetching) {
                 switch (action.status) {
                     case 'success':
+                        var newSearch = Object.assign({}, state.search);
+                        if (action.data.game.has_player1 && action.data.game.has_player2) {
+                            newSearch.ids.splice(newSearch.ids.indexOf(action.data.game.id), 1);
+                            newSearch.count--;
+                        }
+
                         let newArr = state.waiting.ids.slice(0);
                         newArr.push(action.data.game.id);
                         return Object.assign({}, state, {
@@ -90,7 +96,16 @@ const games = (state = {current_my_games_tab:'to_approve'}, action = {}) => {
                                 count: ++state.waiting.count,
                                 ids: newArr
                             },
+                            search: newSearch,
                             current_my_games_tab: 'waiting'
+                        });
+                        break;
+                    case 'error':
+                        return Object.assign({}, state, {
+                            all: cloneGamesAndUpdate(state.all, {
+                                id: action.game_id,
+                                is_active: false
+                            })
                         });
                         break;
                 }
@@ -119,7 +134,6 @@ const games = (state = {current_my_games_tab:'to_approve'}, action = {}) => {
             break;
             break;
         case CANCEL_GAME:
-        case ACCEPT_CHALLENGER:
         case REJECT_CHALLENGER:
             if (action.is_fetching && action.game_id) {
                 return Object.assign({}, state, {
@@ -136,6 +150,34 @@ const games = (state = {current_my_games_tab:'to_approve'}, action = {}) => {
                                 count: --state.to_approve.count,
                                 ids: newArr
                             }
+                        });
+                        break;
+                }
+            }
+            break;
+        case ACCEPT_CHALLENGER:
+            if (action.is_fetching && action.game_id) {
+                return Object.assign({}, state, {
+                    all: setGameFetching(state.all, action.game_id, getFetchTypeFromType(action.type))
+                });
+            } else if (!action.is_fetching) {
+                switch (action.status) {
+                    case 'success':
+                        let newArr = state.to_approve.ids.slice(0);
+                        newArr.splice(newArr.indexOf(action.data.game.id), 1);
+                        let newReadyArr = state.ready.ids.slice(0);
+                        newReadyArr.push(action.data.game.id);
+                        return Object.assign({}, state, {
+                            all: cloneGamesAndUpdate(state.all, action.data.game),
+                            to_approve: {
+                                count: --state.to_approve.count,
+                                ids: newArr
+                            },
+                            ready: {
+                                count: ++state.ready.count,
+                                ids: newReadyArr
+                            },
+                            current_my_games_tab: 'ready'
                         });
                         break;
                 }

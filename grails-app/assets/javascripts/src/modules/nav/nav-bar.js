@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import HomeButton from './home-button';
 import Coins from './coins';
+import checkEmail from './../../api/user/checkEmail';
 
 
-var NavBar = React.createClass ({
-    render: function() {
+export default class extends Component {
+
+    initialize() {
+        this.signUp = this.signUp.bind(this);
+    }
+
+    render() {
         if (!this.props.loggedIn) {
             const sty = {
                 lineHeight: 1,
@@ -14,7 +20,7 @@ var NavBar = React.createClass ({
                 <nav className="clearfix black border-bottom gosu-blue-bg col col-12">
                     <HomeButton />
                     <div className="col col-12 sm-col-6 ">
-                        <a href="#" className="h6 btn btn-primary right m1 mr2" style={sty} onClick={this.signUp}>Login with Battle.net</a>
+                        <a href="#" className="h6 btn btn-primary right m1 mr2" style={sty} onClick={() => this.signUp()}>Login with Battle.net</a>
                     </div>
                 </nav>
             );
@@ -26,14 +32,16 @@ var NavBar = React.createClass ({
                 </div>
             );
         }
-    },
-    signUp: function() {
+    }
+
+    signUp() {
+        const { dispatch } = this.props;
         var loginWindow = window.open(
             '/auth/bnet_start_auth',
             'targetWindow',
             'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=400'
         );
-        const { dispatch } = this.props;
+
         var windowChecker = setInterval(function() {
             if (loginWindow.closed) {
                 clearInterval(windowChecker);
@@ -41,6 +49,4 @@ var NavBar = React.createClass ({
             }
         }.bind(this), 50);
     }
-});
-
-export default NavBar;
+};

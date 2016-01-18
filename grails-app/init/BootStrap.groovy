@@ -30,12 +30,16 @@ class BootStrap {
             new BigInteger(1, messageDigest.digest()).toString(16).padLeft(40, '0')
         }
 
-        (new ReferralCode([
-            referralCode: 'RADIATOR_GANG',
-            timesUsed: 0,
-            maxTimes: 20,
-            gosuCoinBonus: 2500
-        ])).save();
+        if (!ReferralCode.findByReferralCode('RADIATOR_GANG')) {
+            (new ReferralCode([
+                referralCode: 'RADIATOR_GANG',
+                timesUsed: 0,
+                maxTimes: 20,
+                gosuCoinBonus: 2500
+            ])).save();
+        }
+
+        createUser('joseph.lallouz@gmail.com', 'homeslice');
 
 
     }

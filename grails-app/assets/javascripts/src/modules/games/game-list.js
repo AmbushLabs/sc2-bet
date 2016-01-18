@@ -20,7 +20,7 @@ class GameList extends Component {
             );
         }
         const { colSize, games, dispatch } = this.props;
-        var gameNodes = games.map((game) => {
+        var gameNodes = games.filter((game) => game.is_active).map((game) => {
             return (
                 <GameCard
                     game={game}

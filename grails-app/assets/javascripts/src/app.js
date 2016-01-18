@@ -59,6 +59,7 @@ class App extends Component {
                 <NavBar
                     loggedIn={this.props.loggedIn}
                     remainingTokens={this.props.gosuCoins.remaining}
+                    dispatch={dispatch}
                     />
                 <PageNotification
                     text={this.props.notifications.message}
@@ -71,7 +72,7 @@ class App extends Component {
                 {this.getChildren()}
                 {this.buildEmailModal()}
                 <Footer
-                    linka="something"
+                    loggedIn={this.props.loggedIn}
                     />
             </section>
         );

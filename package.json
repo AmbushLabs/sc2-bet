@@ -11,6 +11,7 @@
     "babel-polyfill": "^6.3.14",
     "babelify": "^6.3.0",
     "browserify": "^11.1.0",
+    "casperjs": "^1.1.0-beta3",
     "gulp": "^3.9.0",
     "gulp-filter": "^3.0.1",
     "gulp-notify": "^2.2.0",
@@ -28,6 +29,7 @@
     "redux-devtools": "^2.1.5",
     "redux-react-router": "^1.0.0-beta3",
     "redux-router": "^1.0.0-beta3",
+    "request": "^2.67.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.4.0"

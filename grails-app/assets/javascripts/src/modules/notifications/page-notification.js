@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { CLEAR_NOTIFICATION } from './../../actions/actions';
 
 
-export default class PageNotification extends Component {
+export default class extends Component {
 
     render() {
         if (this.props.show) {
@@ -20,4 +21,10 @@ export default class PageNotification extends Component {
         }
         return (<div className="is_hidden"></div>);
     }
+
+
+    componentDidUpdate() {
+        $('html,body').animate({ scrollTop: 0 }, 'fast');
+    }
+
 }

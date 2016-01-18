@@ -6,7 +6,8 @@ const join = (game_id) => {
     return (dispatch) => {
         dispatch({
             type: JOIN_GAME,
-            is_fetching: true
+            is_fetching: true,
+            game_id: game_id
         });
         return fetch('/game/' + game_id + '/join', {
             method:'post',
@@ -18,7 +19,8 @@ const join = (game_id) => {
                     type: JOIN_GAME,
                     is_fetching: false,
                     status: (json && json.error) ? 'error' : 'success',
-                    data: json
+                    data: json,
+                    game_id: game_id
                 });
                 if (!(json && json.error)) {
                     dispatch({

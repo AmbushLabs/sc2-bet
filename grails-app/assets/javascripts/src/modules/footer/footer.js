@@ -3,7 +3,16 @@
  */
 import React from 'react';
 
-const Footer = ({}) => {
+const Footer = ({loggedIn}) => {
+    var logoutlnk = '';
+    if (loggedIn) {
+        logoutlnk = (
+            <div className="col center px2">
+                <a href="/user/logout" className="h5 white">Logout</a>
+            </div>
+        );
+    }
+
     return (
         <section className="clearfix col col-12 white">
             <div className="col col-12 gosu-blue-bg">
@@ -20,6 +29,7 @@ const Footer = ({}) => {
                     <div className="col center px2">
                         <a href="https://gosuempire.zendesk.com/hc/en-us/articles/214963648-Terms-of-Service" className="h5 white">Terms of Service</a>
                     </div>
+                    {logoutlnk}
                 </div>
                 <div className="col col-12 md-col-4 center py3">
                     <span className="h6 white">an <a href="http://ambushlabs.com">AmbushLabs</a> production &copy;&nbsp;2015 </span>

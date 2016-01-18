@@ -57,7 +57,7 @@ export default class GameCard extends Component {
 
     render() {
         return (
-            <div className={"col " + this.props.colSize}>
+            <div className={"animated fadeIn col " + this.props.colSize}>
                 <div className="m1 p1 clearfix black border">
                     <div className="col col-8">
                         <p className="h3">

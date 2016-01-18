@@ -9,7 +9,7 @@ class MainController {
     def SocialMetaTagService;
 
     def index() {
-        //session.user_id = 2;
+        //session.user_id = 1;
         def user = User.findById(session.user_id?:0);
         def characterName = '';
         if (user) {

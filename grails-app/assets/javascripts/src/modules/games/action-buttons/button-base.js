@@ -4,7 +4,7 @@ const ButtonBase = ({buttonText, buttonClass, dispatch, crudAction, gameId, load
     if (loading) {
         return (
             <button className={"btn btn-outline " + buttonClass}>
-                <div className="loader">&nbsp;</div>
+                <div className="spinner">&nbsp;</div>
             </button>
         );
     }

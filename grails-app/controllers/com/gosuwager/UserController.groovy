@@ -12,7 +12,7 @@ class UserController {
 
     def logout() {
         session.user_id = null;
-        render 'done';
+        redirect(url:'/')
     }
 
     def hasEmail() {
