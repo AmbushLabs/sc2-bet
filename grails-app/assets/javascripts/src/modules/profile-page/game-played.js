@@ -26,10 +26,13 @@ export default ({ game, userId }) => {
 
     return (
         <div className="col col-12 border mb1 game-played">
-            <div className="circle gcu-avatar center bg-white">
-                <div className={"ss-icons h1 mt2 " + iconClass}></div>
-            </div>
+            <a href={"/w/" + game.id}>
+                <div className="circle gcu-avatar center bg-white">
+                    <div className={"ss-icons h1 mt2 " + iconClass}></div>
+                </div>
+            </a>
             <div className="col col-12 gosu-blue-bg">
+            <a href={"/w/" + game.id}>
                 <div className="col col-4 p1 gcu-right-container">
                     <div className={"h6 silver"}>RESULT</div>
                     <div className={"h4 " + resultTextColor}>{resultText}</div>
@@ -42,7 +45,7 @@ export default ({ game, userId }) => {
                     <div className={"h6 silver"}>DATE</div>
                     <div className="h4 white">{dateformatted}</div>
                 </div>
-
+            </a>
             </div>
             <div className="col col-12 gosu-light-blue-bg">
                 <div className="col col-4 p1 gcu-right-container">
