@@ -9,6 +9,7 @@ class UrlMappings {
 
         "/"(controller:"main", action:"index")
         "/gosucoins"(controller:"main", action:"index")
+        "/admin"(controller:"main", action:"index")
 
         "/login"(controller:"main", action:"login")
 

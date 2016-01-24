@@ -5,6 +5,8 @@ import AddCoins from './add-coins';
 import AddBankAccount from './add-bank-account';
 import GosuCoinBalance from './gosu-coin-balance';
 
+import getWithdrawlsList from './../../api/coins/getWithdrawlList'
+
 
 @connect(state => (state))
 export default class GosuCoins extends Component {
@@ -25,6 +27,8 @@ export default class GosuCoins extends Component {
                     <div className="col col-12 border-top mt3">&nbsp;</div>
                     <GosuCoinBalance
                         gosuCoins={this.props.gosuCoins}
+                        withdrawls={this.props.withdrawls}
+                        dispatch={this.props.dispatch}
                         />
                 </div>
                 <div className="col col-0 lg-col-2">
@@ -32,6 +36,10 @@ export default class GosuCoins extends Component {
                 </div>
             </div>
         );
+    }
+
+    componentDidMount() {
+        this.props.dispatch(getWithdrawlsList());
     }
 
 }

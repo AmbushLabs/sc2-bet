@@ -1,4 +1,6 @@
 import com.gosuwager.marshallers.GameReplayMarshaller
+import com.gosuwager.marshallers.GosuCoinTransactionMarshaller
+import com.gosuwager.marshallers.GosuCoinWithrawlRequestMarshaller
 import com.gosuwager.marshallers.ObjectMarshallers
 import com.gosuwager.marshallers.GameMarshaller
 import com.gosuwager.marshallers.UserMarshaller
@@ -9,7 +11,9 @@ beans = {
         marshallers = [
             new GameMarshaller(),
             new UserMarshaller(),
-            new GameReplayMarshaller()
+            new GameReplayMarshaller(),
+            new GosuCoinWithrawlRequestMarshaller(),
+            new GosuCoinTransactionMarshaller()
         ]
     }
 

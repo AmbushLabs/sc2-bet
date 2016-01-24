@@ -6,9 +6,11 @@ class GosuCoinTransaction {
 
     Date createDate = NULL_DATE;
 
-    String transactionType = "game"; //game, purchase
+    String transactionType = "game"; //game, withdrawl, purchase, gosu_empire_fee
 
     Integer coinAmount;
+    Float bitCoinAmount;
+    GosuCoinWithdrawlRequest withdrawlRequest;
 
     User owner;
     User originalOwner;
@@ -25,11 +27,11 @@ class GosuCoinTransaction {
     static constraints = {
         transactionType (nullable: false)
         coinAmount (nullable: false)
-        owner (nullable: false)
+        owner (nullable: true)
         originalOwner (nullable: true)
         game (nullable: true)
         stripeCharge (nullable: true)
-
-
+        bitCoinAmount (nullable: true)
+        withdrawlRequest (nullable: true)
     }
 }

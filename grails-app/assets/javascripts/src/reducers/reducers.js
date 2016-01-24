@@ -17,6 +17,8 @@ import config from './config';
 import profile from './profile';
 import gameReplay from './gameReplay';
 import gamesPlayed from './gamesPlayed';
+import withdrawls from './withdrawls';
+import admin from './admin';
 
 const reducer = combineReducers({
     router: routerStateReducer,
@@ -33,7 +35,9 @@ const reducer = combineReducers({
     config: config,
     profile: profile,
     gameReplay: gameReplay,
-    gamesPlayed: gamesPlayed
+    gamesPlayed: gamesPlayed,
+    withdrawls: withdrawls,
+    admin: admin
 });
 
 export default reducer;

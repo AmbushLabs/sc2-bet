@@ -47,7 +47,8 @@ class AuthController {
                 def usr = new User([
                     battleNetAccount: account,
                     gosuCoins: 0,
-                    referralCode: referralCode
+                    referralCode: referralCode,
+                    isAdmin: false
                 ]);
 
                 if (usr.save(flush:true) && account.save(flush:true)) {

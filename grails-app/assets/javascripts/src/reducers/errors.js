@@ -1,15 +1,17 @@
 import {
     CREATE_GAME,
     JOIN_GAME,
-    CLEAR_ERRORS
+    CLEAR_ERRORS,
+    CREATE_WITHDRAWL
 } from './../actions/actions';
 
 import errorMessages from './errors/errors-messages';
 
-const errors = function(state = [], action = {}) {
+export default (state = [], action = {}) => {
     switch(action.type) {
         case CREATE_GAME:
         case JOIN_GAME:
+        case CREATE_WITHDRAWL:
             if (action && action.data && action.data.error) {
                 return [{
                     error: true,
@@ -25,5 +27,3 @@ const errors = function(state = [], action = {}) {
 
     return state;
 };
-
-export default errors;

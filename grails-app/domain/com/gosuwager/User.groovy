@@ -16,6 +16,8 @@ class User {
     String referralCodeUsed;
     String referralCodeUsedType;
 
+    Boolean isAdmin = false;
+
     static hasOne = [
         battleNetAccount:BattleNetAccount
     ];
@@ -43,5 +45,7 @@ class User {
 
         referralCodeUsed nullable: true;
         referralCodeUsedType nullable: true;
+
+        isAdmin nullable: false;
     }
 }

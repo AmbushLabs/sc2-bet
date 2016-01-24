@@ -7,9 +7,9 @@ class GosuCoinController {
     def StripeService;
     def GosuCoinService;
     def NotificationMessageService;
+    def BitCoinService;
 
     def purchase() {
-        println params;
         def ret = [:]
         println session.user_id
         println request.method
@@ -35,4 +35,71 @@ class GosuCoinController {
         render ret as JSON;
 
     }
+
+    def bitCoinRate() {
+        def ret = [:];
+        ret['bit_coin'] = BitCoinService.getCurrentPriceUSD();
+        render ret as JSON;
+    }
+
+
+    def withdrawlRequest() {
+        def ret = [:];
+        ret['withdrawls'] = [:];
+        ret['success'] = false;
+        if (request.method == 'POST' && params.gosu_coin_withdrawl_amount && params.bit_coin_wallet_id) {
+            User u = User.findById(session.user_id);
+            Integer amount = Integer.valueOf(params.gosu_coin_withdrawl_amount);
+            def gosuCoins = GosuCoinService.getGosuCoinReturnMap(u);
+            def bitCoinRate = BitCoinService.getCurrentPriceUSD();
+            if (amount <= gosuCoins.remaining) {
+                GosuCoinWithdrawlRequest gcwr = new GosuCoinWithdrawlRequest([
+                    user: u,
+                    amount: -Math.abs(amount),
+                    bitCoinRate: Float.valueOf(bitCoinRate.rate),
+                    processed: false,
+                    bitCoinWalletId: params.bit_coin_wallet_id
+                ]);
+                if (gcwr.save(flush:true)) {
+                    u.gosuCoins -= amount;
+                    if (u.save()) {
+                        //cool
+                        ret['success'] = true;
+                    } else {
+                        println u.errors;
+                    }
+                } else {
+                    println gcwr.errors;
+                }
+            } else {
+                ret['error'] = true;
+                ret['error_reason'] = 'not_enough_coins_for_withdrawl';
+            }
+            ret['withdrawls']['pending'] = GosuCoinWithdrawlRequest.findAllByUserAndProcessed(u, false);
+            ret['withdrawls']['completed'] = GosuCoinWithdrawlRequest.findAllByUserAndProcessed(u, true);
+            ret['withdrawls']['bit_coin'] = bitCoinRate;
+            ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
+
+
+        } else if (request.method == 'GET') {
+
+        }
+        render ret as JSON;
+    }
+
+        def withdrawlsList() {
+        def ret = [:];
+        ret['withdrawls'] = [:];
+        User u = User.findById(session.user_id);
+        if (u) {
+            ret['withdrawls']['bit_coin'] = BitCoinService.getCurrentPriceUSD();
+            ret['withdrawls']['pending'] = GosuCoinWithdrawlRequest.findAllByUserAndProcessed(u, false);
+            ret['withdrawls']['completed'] = GosuCoinWithdrawlRequest.findAllByUserAndProcessed(u, true);
+        }
+
+        render ret as JSON;
+    }
+
+
+
 }

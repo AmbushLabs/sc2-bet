@@ -13,7 +13,7 @@ export default class EnterEmailModal extends Component {
     render() {
         return (
             <div className="modal" id="enter-email-modal">
-                <div className="modal-dialog col col-12 sm-col-6" onClick={this.preventBubble}>
+                <div className="modal-dialog col col-12 sm-col-6 animated slideInDown" onClick={this.preventBubble}>
                     <form className="" onSubmit={this.onSubmit}>
                         <div className="modal-header clearfix">
                             <h2 className="col col-11 mt1 mb1">Please Enter Your Email Address</h2>

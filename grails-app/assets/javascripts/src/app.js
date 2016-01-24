@@ -29,6 +29,7 @@ import LandingPage from './modules/landing/landing-page';
 import PageNotification from './modules/notifications/page-notification';
 import Footer from './modules/footer/footer';
 import ProfilePage from './modules/profile-page/profile-page';
+import Admin from './modules/admin/admin';
 
 
 @connect(state => (state))
@@ -148,6 +149,7 @@ class Root extends Component {
                             <Route path="/w/:id" component={WagerPage} />
                             <Route path="/p/:id" component={ProfilePage} />
                             <Route path="/gosucoins" component={GosuCoins} />
+                            <Route path="/admin" component={Admin} />
                         </Route>
                     </ReduxRouter>
                 </Provider>
