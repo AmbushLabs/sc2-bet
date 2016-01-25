@@ -55,4 +55,17 @@ class GosuCoinService {
         ];
     }
 
+    def createGosuCoinTransaction(coinAmount, transactionType, newOwner, originalOwner, game) {
+        GosuCoinTransaction gct = new GosuCoinTransaction([
+            coinAmount: coinAmount,
+            transactionTyp: transactionType,
+            owner: newOwner,
+            originalOwner: originalOwner,
+            game: game
+        ]);
+        if (!gct.save()) {
+            println gct.errors;
+        }
+    }
+
 }

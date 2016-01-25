@@ -6,7 +6,11 @@ import org.grails.web.json.JSONObject
 
 class ProcessReplayJob {
 
+    final Float GOSU_EMPIRE_TAKE = 0.15;
+
     def ReplayService;
+    def GosuCoinService;
+    def SendEmailService;
 
     static triggers = {
       simple repeatInterval: 15000l // execute job once in 5 seconds
@@ -78,12 +82,24 @@ class ProcessReplayJob {
                     if (replayToProcess.save()) {
                         //lets update the players now?
                         def g = replayToProcess.game;
+                        //take time
+                        Integer gEmpireTake = Math.floor(GOSU_EMPIRE_TAKE*g.gosuCoin).intValue();
+                        def winnerTake = g.gosuCoin - gEmpireTake;
+
                         if (g.winner == 'player1') {
-                            g.player1.gosuCoins += g.gosuCoin;
+                            g.player1.gosuCoins += winnerTake;
                             g.player2.gosuCoins -= g.gosuCoin;
+                            GosuCoinService.createGosuCoinTransaction(-g.gosuCoin, 'game', null, g.player2, g);
+                            GosuCoinService.createGosuCoinTransaction(winnerTake, 'game', g.player1, g.player2, g);
+                            GosuCoinService.createGosuCoinTransaction(gEmpireTake, 'gosu_empire_fee', null, g.player2, g);
+                            SendEmailService.send(g.player1, 'challenge-won', [gosu_coin_amount: winnerTake]);
                         } else if (replayToProcess.game.winner == 'player2') {
-                            g.player2.gosuCoins += g.gosuCoin;
+                            g.player2.gosuCoins += winnerTake;
                             g.player1.gosuCoins -= g.gosuCoin;
+                            GosuCoinService.createGosuCoinTransaction(-g.gosuCoin, 'game', null, g.player1, g);
+                            GosuCoinService.createGosuCoinTransaction(winnerTake, 'game', g.player2, g.player1, g);
+                            GosuCoinService.createGosuCoinTransaction(gEmpireTake, 'gosu_empire_fee', null, g.player1, g);
+                            SendEmailService.send(g.player2, 'challenge-won', [gosu_coin_amount: winnerTake]);
                         }
                         if (g.player1.save() && g.player2.save()) {
 

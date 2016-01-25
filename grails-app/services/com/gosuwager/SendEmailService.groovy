@@ -40,6 +40,12 @@ class SendEmailService {
             case 'confirm-email':
                 mergeVars.add(new MandrillMessage.MergeVar("confirm_email_link", siteUri + 'email/confirm?confirm=' + data.confirmHash));
                 break;
+            case 'purchase-gosu-coin':
+            case 'gosu-coin-withdrawl-requested':
+            case 'gosu-coin-withdrawl-complete':
+            case 'challenge-won':
+                mergeVars.add(new MandrillMessage.MergeVar("gosu_coin_amount", data.gosu_coin_amount));
+                break;
         }
         //add in additional mergevars
         mergeVars.add(new MandrillMessage.MergeVar("facebookurl","https://facebook.com/gosuempire"));

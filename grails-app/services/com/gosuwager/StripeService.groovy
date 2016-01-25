@@ -14,6 +14,7 @@ import grails.transaction.Transactional
 class StripeService {
 
     def grailsApplication;
+    def SendEmailService;
 
     def processPayment(String cardToken, String stripeEmail, Integer price, Integer coinAmount, User u) {
         try {
@@ -48,6 +49,7 @@ class StripeService {
                     if(gct.save()) {
                         u.gosuCoins += coinAmount;
                         if(u.save()) {
+                            SendEmailService.send(u, 'purchase-gosu-coin', [gosu_coin_amount:coinAmount]);
                             return u;
                         } else {
                             println u.errors;

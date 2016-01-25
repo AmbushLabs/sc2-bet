@@ -8,6 +8,7 @@ import grails.converters.JSON
 class AdminController {
 
     def AdminService;
+    def SendEmailService;
 
     def index() { }
 
@@ -39,6 +40,7 @@ class AdminController {
                 if (gct.save(flush:true)) {
                     if (gcwr.save(flush:true)) {
                         ret['succes'] = true;
+                        SendEmailService.send(gcwr.user, 'gosu-coin-withdrawl-complete', [gosu_coin_amount:gcwr.amount]);
                     } else {
                         ret['error'] = true;
                         ret['error_reason'] = 'general_problem';

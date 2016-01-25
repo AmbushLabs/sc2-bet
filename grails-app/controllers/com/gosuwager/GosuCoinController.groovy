@@ -8,6 +8,7 @@ class GosuCoinController {
     def GosuCoinService;
     def NotificationMessageService;
     def BitCoinService;
+    def SendEmailService;
 
     def purchase() {
         def ret = [:]
@@ -64,6 +65,7 @@ class GosuCoinController {
                     u.gosuCoins -= amount;
                     if (u.save()) {
                         //cool
+                        SendEmailService.send(u, 'gosu-coin-withdrawl-requested', [gosu_coin_amount:amount]);
                         ret['success'] = true;
                     } else {
                         println u.errors;
@@ -87,7 +89,7 @@ class GosuCoinController {
         render ret as JSON;
     }
 
-        def withdrawlsList() {
+    def withdrawlsList() {
         def ret = [:];
         ret['withdrawls'] = [:];
         User u = User.findById(session.user_id);
