@@ -30,6 +30,28 @@ class AuthController {
 
             if (account.user != null) {
                 session.user_id = account.user.id;
+                def character = battleNetApiService.getCharacterForToken(bnetToken);
+                account.characters.each {
+                    if (it.characterId == character.characterId) {
+                        it.avatarHeight = character.avatarHeight;
+                        it.name = character.name;
+                        it.displayName = character.displayName;
+                        it.clanName = character.clanName;
+                        it.clanTag = character.clanTag;
+                        it.profilePath = character.profilePath;
+                        it.portraitUrl = character.portraitUrl;
+                        it.avatarUrl = character.avatarUrl;
+                        it.primaryRace = character.primaryRace;
+                        it.protossWins = character.protossWins;
+                        it.terranWins = character.terranWins;
+                        it.zergWins = character.zergWins;
+                        it.highest1v1Rank = character.highest1v1Rank;
+                        it.highestTeamRank = character.highestTeamRank;
+                        it.seasonTotalGames = character.seasonTotalGames;
+                        it.careerTotalGames = character.careerTotalGames;
+                        it.save();
+                    }
+                }
             } else {
                 //TODO: handle multiple characters, if thats a thing
                 def character = battleNetApiService.getCharacterForToken(bnetToken);

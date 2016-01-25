@@ -29,8 +29,6 @@ class ProcessReplayJob {
                 def localFile = "/gosuempire/replays/" + replayToProcess.replayName;
                 ReplayService.downloadReplayFromS3ToLocal(localFile, replayToProcess);
 
-                println "got object from s3"
-                println "running python script";
 
                 try {
                     JSONObject jgd = ReplayService.getJsonFromReplayFile(localFile);
