@@ -159,7 +159,12 @@ class GameController {
                         def emailTypes = [];
                         if (!g.player1) {
                             g.player1 = u;
-                            g.rank = Rank.rankToInteger(u.battleNetAccount.characters.first().highest1v1Rank);
+                            def character = u.battleNetAccount.characters;
+                            if (character.currentSeason) {
+                                g.rank = Rank.rankToInteger(character.currentSeason.league);
+                            } else {
+                                g.rank = Rank.rankToInteger(character.highest1v1Rank);
+                            }
                             emailTypes = [[template: 'player-1-joined-empty-conest', user: g.player1]];
                         } else if (!g.player2) {
                             g.player2 = u;

@@ -12,8 +12,18 @@ export default ({ user, userId, dashboard, referral }) => {
     } else {
         gcuAvatar = (<img className="circle gcu-avatar" src={user.avatar_url} />);
     }
-    const seasonWins = user.protoss_wins + user.terran_wins + user.zerg_wins;
-    const seasonLosses = user.season_total_games - seasonWins;
+
+    var seasonWins = user.protoss_wins + user.terran_wins + user.zerg_wins;
+    var seasonLosses = user.season_total_games - seasonWins;
+    var rankText = 'TOP RANK';
+    var rankInfo = user.highest_1v1_rank;
+
+    if (user.current_1v1_losses) {
+        seasonWins = user.current_1v1_wins;
+        seasonLosses = user.current_1v1_losses;
+        rankText = 'CURRENT SEASON RANK';
+        rankInfo = user.current_1v1_rank;
+    }
 
     var referralSection = (<span></span>);
     if (dashboard) {
@@ -44,8 +54,8 @@ export default ({ user, userId, dashboard, referral }) => {
                             <div className="h4">{user.primary_race}</div>
                         </div>
                         <div className="col col-12 sm-col-6 p1">
-                            <div className="h4 gray">TOP RANK</div>
-                            <div className="h4">{user.highest_1v1_rank}</div>
+                            <div className="h4 gray">{rankText}</div>
+                            <div className="h4">{rankInfo}</div>
                         </div>
                     </div>
                     <div className="col col-12">

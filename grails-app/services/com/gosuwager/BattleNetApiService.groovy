@@ -5,18 +5,21 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.gosuwager.bnet.SC2Character
+import com.gosuwager.bnet.SC2Season
 import grails.transaction.Transactional
 import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
+import org.grails.web.json.JSONElement
 
 @Transactional
 class BattleNetApiService {
 
+    def grailsApplication;
+
     def getAccountForToken(BattleNetToken bnetToken) {
         BattleNetAccount bnetAccount = null;
         def http = new HTTPBuilder('https://us.api.battle.net/account/user');
-        println bnetToken.accessToken;
         http.request(Method.GET, ContentType.URLENC) {
             uri.query = [
                 access_token: bnetToken.accessToken
@@ -103,5 +106,66 @@ class BattleNetApiService {
         }
 
         return character;
+    }
+
+    def getCurrentAndPreviousSeasonForCharacter(SC2Character sc2Character) {
+        def ret = [:];
+        ret['current_season'] = null;
+        ret['previous_season'] = null;
+        def bnetKey = grailsApplication.config.getProperty('battlenet.key');
+        def urlString = String.format("https://us.api.battle.net/sc2/profile/%s/%s/%s/ladders", sc2Character.getCharacterId().toString(), sc2Character.getRealm().toString(), sc2Character.getDisplayName());
+        def http = new HTTPBuilder(urlString);
+        http.request(Method.GET, ContentType.URLENC) {
+            uri.query = [
+                apikey: bnetKey,
+                locale: 'en_US'
+            ]
+            headers.'User-Agent' = "GosuEmpire 0.1"
+            headers.Accept = 'application/json'
+
+            response.success = { resp, reader ->
+                JsonElement jelement = new JsonParser().parse(reader.keySet()[0]);
+                JsonObject jobject = jelement.getAsJsonObject();
+                JsonArray currentSeasonInfo = jobject.getAsJsonArray('currentSeason');
+                currentSeasonInfo.each { JsonElement je ->
+                    JsonArray theseLadders = je.getAsJsonArray('ladder');
+                    def tmp = getSoloSeasonFromLadderSet(theseLadders);
+                    if (tmp != null) {
+                        ret['current_season'] = tmp;
+                    }
+                }
+                JsonArray previousSeasonInfo = jobject.getAsJsonArray('previousSeason');
+                previousSeasonInfo.each { JsonElement je ->
+                    JsonArray otherLadders = je.getAsJsonArray('ladder');
+                    def tmp = getSoloSeasonFromLadderSet(otherLadders);
+                    if (tmp != null) {
+                        ret['previous_season'] = tmp;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
+    def getSoloSeasonFromLadderSet(JsonArray theseLadders) {
+        def sc2season = null;
+        theseLadders.each { JsonElement tl ->
+            def thisLadder = tl.getAsJsonObject();
+            def matchmakingType = thisLadder.get('matchMakingQueue').getAsString();
+            if (matchmakingType.toLowerCase().contains("solo")) {
+                sc2season = new SC2Season([
+                    ladderName: thisLadder.get('ladderName').getAsString(),
+                    ladderId: thisLadder.get('ladderId').getAsInt(),
+                    division: thisLadder.get('division').getAsInt(),
+                    rank: thisLadder.get('rank').getAsInt(),
+                    league: thisLadder.get('league').getAsString(),
+                    matchMakingQueue: thisLadder.get('matchMakingQueue').getAsString(),
+                    wins: thisLadder.get('wins').getAsInt(),
+                    losses: thisLadder.get('losses').getAsInt(),
+                    showcase: thisLadder.get('showcase').getAsBoolean()
+                ]);
+            }
+        }
+        return sc2season;
     }
 }

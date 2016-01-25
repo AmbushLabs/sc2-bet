@@ -33,6 +33,9 @@ class SC2Character {
     Integer seasonTotalGames;
     Integer careerTotalGames;
 
+    SC2Season currentSeason;
+    SC2Season previousSeason;
+
     static constraints = {
         characterId nullable: false;
         realm nullable: false;
@@ -65,5 +68,7 @@ class SC2Character {
         seasonTotalGames nullable: false;
         careerTotalGames nullable: false;
 
+        currentSeason nullable: true;
+        previousSeason nullable: true;
     }
 }

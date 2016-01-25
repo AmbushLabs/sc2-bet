@@ -45,6 +45,21 @@ class UserMarshaller {
         mp['highest_1v1_rank'] = character.highest1v1Rank;
         mp['highest_1v1_rank_int'] = Rank.rankToInteger(character.highest1v1Rank);
         mp['highest_team_rank'] = character.highestTeamRank;
+
+        if (character.currentSeason) {
+            mp['current_1v1_rank'] = character.currentSeason.league;
+            mp['current_1v1_rank_int'] = Rank.rankToInteger(character.currentSeason.league);
+            mp['current_1v1_wins'] = character.currentSeason.wins;
+            mp['current_1v1_losses'] = character.currentSeason.losses;
+        }
+
+        if (character.previousSeason) {
+            mp['previous_1v1_rank'] = character.previousSeason.league;
+            mp['previous_1v1_rank_int'] = Rank.rankToInteger(character.previousSeason.league);
+            mp['previous_1v1_wins'] = character.previousSeason.wins;
+            mp['previous_1v1_losses'] = character.previousSeason.losses;
+        }
+
         mp['season_total_games'] = character.seasonTotalGames;
         mp['career_total_games'] = character.careerTotalGames;
         if (character.primaryRace.toLowerCase().equals("protoss")) {

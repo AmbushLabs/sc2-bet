@@ -5110,8 +5110,18 @@ exports['default'] = function (_ref) {
     } else {
         gcuAvatar = _react2['default'].createElement('img', { className: 'circle gcu-avatar', src: user.avatar_url });
     }
+
     var seasonWins = user.protoss_wins + user.terran_wins + user.zerg_wins;
     var seasonLosses = user.season_total_games - seasonWins;
+    var rankText = 'TOP RANK';
+    var rankInfo = user.highest_1v1_rank;
+
+    if (user.current_1v1_losses) {
+        seasonWins = user.current_1v1_wins;
+        seasonLosses = user.current_1v1_losses;
+        rankText = 'CURRENT SEASON RANK';
+        rankInfo = user.current_1v1_rank;
+    }
 
     var referralSection = _react2['default'].createElement('span', null);
     if (dashboard) {
@@ -5190,12 +5200,12 @@ exports['default'] = function (_ref) {
                         _react2['default'].createElement(
                             'div',
                             { className: 'h4 gray' },
-                            'TOP RANK'
+                            rankText
                         ),
                         _react2['default'].createElement(
                             'div',
                             { className: 'h4' },
-                            user.highest_1v1_rank
+                            rankInfo
                         )
                     )
                 ),
