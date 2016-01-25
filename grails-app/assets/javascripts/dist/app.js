@@ -5343,6 +5343,11 @@ var GameCardUser = function GameCardUser(_ref) {
         );
     }
 
+    var rankInfo = user.highest_1v1_rank;
+    if (user.current_1v1_rank) {
+        rankInfo = user.current_1v1_rank;
+    }
+
     return _react2['default'].createElement(
         'div',
         { className: "col col-12 border mb1 game-card-user " + winnerOuterClass },
@@ -5397,7 +5402,7 @@ var GameCardUser = function GameCardUser(_ref) {
                     _react2['default'].createElement(
                         'div',
                         { className: 'h6' },
-                        user.highest_1v1_rank
+                        rankInfo
                     )
                 )
             )

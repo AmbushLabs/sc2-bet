@@ -46,7 +46,10 @@ const GameCardUser = ({ user, game, hasAnyPlayers }) => {
         );
     }
 
-
+    var rankInfo = user.highest_1v1_rank;
+    if (user.current_1v1_rank) {
+        rankInfo = user.current_1v1_rank;
+    }
 
     return (
         <div className={"col col-12 border mb1 game-card-user " + winnerOuterClass}>
@@ -68,7 +71,7 @@ const GameCardUser = ({ user, game, hasAnyPlayers }) => {
                     </div>
                     <div className="col col-6 p1">
                         <div className="h6 gray">RANK</div>
-                        <div className="h6">{user.highest_1v1_rank}</div>
+                        <div className="h6">{rankInfo}</div>
                     </div>
                 </div>
             </div>
