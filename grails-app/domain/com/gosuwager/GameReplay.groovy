@@ -12,6 +12,8 @@ class GameReplay {
     String etag;
 
     String fileSha1Hash;
+    String identifierHash1;
+    String identifierHash2;
 
     Game game;
     User user;
@@ -57,6 +59,8 @@ class GameReplay {
         bucket nullable: false
         etag nullable: false
         fileSha1Hash nullable: true
+        identifierHash1 nullable: true
+        identifierHash2 nullable: true
         game nullable: false
         user nullable: true
         processed nullable: false

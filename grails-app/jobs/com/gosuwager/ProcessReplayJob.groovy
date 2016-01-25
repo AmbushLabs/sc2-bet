@@ -49,6 +49,18 @@ class ProcessReplayJob {
                         replayToProcess.processing = false;
                         replayToProcess.fileSha1Hash = fileHash;
                         println "processed and updated successfully";
+                        def hashes = ReplayService.getUniqueGameHashes(
+                                replayToProcess.player1Uid,
+                                replayToProcess.player2Uid,
+                                replayToProcess.mapName,
+                                replayToProcess.gameStartTime
+                        );
+                        replayToProcess.identifierHash1 = hashes["1"];
+                        replayToProcess.identifierHash2 = hashes["2"];
+                        if (GameReplay.findByIdentifierHash1(hashes["1"]) != null || GameReplay.findByIdentifierHash1(hashes["2"]) != null) {
+                            newHashValid = false;
+                        }
+
                         if (!newHashValid) {
                             //invalid...
                             println 'invalid because already uploaded this replay'

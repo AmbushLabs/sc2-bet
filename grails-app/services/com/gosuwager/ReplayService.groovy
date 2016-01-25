@@ -164,6 +164,14 @@ class ReplayService {
         return "";
     }
 
+    def getUniqueGameHashes(uid1, uid2, map, Date startTime) {
+        def hashes = [:];
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        hashes['1'] = String.format("%s-%s-%s-%s", uid1.toString(), uid2.toString(), map, sdf.format(startTime));
+        hashes['2'] = String.format("%s-%s-%s-%s", uid2.toString(), uid1.toString(), map, sdf.format(startTime));
+        return hashes;
+    }
+
     def getJsonFromReplayFile(file) {
         String cmd = System.getProperty("user.dir") + "/parse_replay.py";
         println 'running ' + cmd;
