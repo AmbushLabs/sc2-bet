@@ -25,7 +25,7 @@ export default class GosuCoinBalance extends Component {
                             <p className="h3 gosu-blue-text center">Current GosuCoin Balance</p>
                             <p className="h5 center">
                                 You have <span className="bold gosu-blue-text">{this.props.gosuCoins.remaining} GC</span><br />
-                                valued at <span className="bold gosu-blue-text">{this.getBCValueForAllCoins()} BC</span>.
+                                valued at <span className="bold gosu-blue-text">{this.getBCValueForAllCoins()} BTC</span>.
                             </p>
                         </div>
                         <div className="col col-12 gosu-blue-bg center white p2">
@@ -33,7 +33,7 @@ export default class GosuCoinBalance extends Component {
                             <input type="number" className="block col-12 mb1 field" ref="gosuCoinWithdrawlAmt" onKeyUp={() => this.gosuCoinWithdrawlAmtKeyup()} />
                             <label>Destination Wallet Address</label>
                             <input type="text" className="block col-12 mb1 field" ref="bcWalletId" />
-                            <div className="h5">{this.state.bcTransferAmount} BC*</div>
+                            <div className="h5">{this.state.bcTransferAmount} BTC*</div>
                             <button className="btn btn-outline white col col-12 mt2 h5"
                                 onClick={() => this.createWithdrawlClick()}
                                 >{this.getCreateWithdrawlTextOrLoading()}</button>
