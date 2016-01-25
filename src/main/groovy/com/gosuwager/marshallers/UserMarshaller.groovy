@@ -21,6 +21,7 @@ class UserMarshaller {
             }
 
             ret['referral'] = u.referralCode;
+            ret['is_admin'] = u.isAdmin;
             ret['wins'] = u.contestWins;
             ret['losses'] = u.contestLosses;
             ret['character'] = getCharacterMap(u.battleNetAccount.characters.first());
@@ -46,7 +47,6 @@ class UserMarshaller {
         mp['highest_team_rank'] = character.highestTeamRank;
         mp['season_total_games'] = character.seasonTotalGames;
         mp['career_total_games'] = character.careerTotalGames;
-        mp['a'] = character.characterId;
         if (character.primaryRace.toLowerCase().equals("protoss")) {
             mp['primary_race_wins'] = character.protossWins;
         } else if (character.primaryRace.toLowerCase().equals("terran")) {
