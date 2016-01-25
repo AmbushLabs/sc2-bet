@@ -17,6 +17,8 @@ class StripeService {
     def SendEmailService;
 
     def processPayment(String cardToken, String stripeEmail, Integer price, Integer coinAmount, User u) {
+        def ret = [:]
+        ret['success'] = false;
         try {
             // Use Stripe's bindings...
             Stripe.apiKey = grailsApplication.config.getProperty('stripe.secret');
@@ -50,45 +52,65 @@ class StripeService {
                         u.gosuCoins += coinAmount;
                         if(u.save()) {
                             SendEmailService.send(u, 'purchase-gosu-coin', [gosu_coin_amount:coinAmount]);
-                            return u;
+                            ret['success'] = true;
+                            ret['user'] = u;
                         } else {
+                            ret['error'] = true;
+                            ret['error_reason'] = 'general_problem';
                             println u.errors;
                         }
                     } else {
+                        ret['error'] = true;
+                        ret['error_reason'] = 'general_problem';
                         println gct.errors;
                     }
                 } else {
+                    ret['error'] = true;
+                    ret['error_reason'] = 'general_problem';
                     println sc.errors;
                 }
-
-
             }
 
         } catch (CardException e) {
             // Since it's a decline, CardException will be caught
             println "Status is: " + e.getCode();
             println "Message is: " + e.getMessage();
+            ret['error'] = true;
+            ret['error_reason'] = 'card_exception';
         } catch (RateLimitException e) {
             // Too many requests made to the API too quickly
-            println 'rate limit';
+            ret['error'] = true;
+            ret['error_reason'] = 'stripe_rate_limit';
+            println 'stripe rate limit error';
         } catch (InvalidRequestException e) {
             // Invalid parameters were supplied to Stripe's API
             println 'invalid request';
+            ret['error'] = true;
+            ret['error_reason'] = 'stripe_invalid_request';
         } catch (AuthenticationException e) {
             // Authentication with Stripe's API failed
             // (maybe you changed API keys recently)
             println 'auth bad';
+            ret['error'] = true;
+            ret['error_reason'] = 'stripe_auth_invalid';
         } catch (APIConnectionException e) {
             // Network communication with Stripe failed
             println 'api connection failed';
+            ret['error'] = true;
+            ret['error_reason'] = 'stripe_network_failed';
         } catch (StripeException e) {
             // Display a very generic error to the user, and maybe send
             // yourself an email
             println 'generic stripe exception';
+            ret['error'] = true;
+            ret['error_reason'] = 'general_problem';
         } catch (Exception e) {
             // Something else happened, completely unrelated to Stripe
+            ret['error'] = true;
+            ret['error_reason'] = 'general_problem';
             println e;
         }
+        return ret;
     }
 
 

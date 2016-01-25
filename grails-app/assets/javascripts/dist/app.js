@@ -256,12 +256,18 @@ var purchase = function purchase(token_id, token_email, price) {
         }).then(function (response) {
             return response.json();
         }).then(function (json) {
-            return dispatch({
+            dispatch({
                 type: _actionsActions.PURCHASE_GOSU_COINS,
                 isFetching: false,
                 status: 'success',
                 data: json
             });
+            if (json.success) {
+                dispatch({
+                    type: _actionsActions.SET_NOTIFICATION,
+                    message: 'Gosu Coin purchase successful!'
+                });
+            }
         });
     };
 };
@@ -6317,6 +6323,21 @@ var errors = {
     },
     'not_enough_coins_for_withdrawl': {
         message: 'You don\'t have enough Gosu Coins for that withdrawl.'
+    },
+    'card_exception': {
+        message: 'There was a problem with your card. Please re-enter your information and try again!'
+    },
+    'stripe_rate_limit': {
+        message: 'There was a problem with processing your card. Please try again.'
+    },
+    'stripe_invalid_request': {
+        message: 'There was a problem with communicating with our payment processor. Please try again.'
+    },
+    'stripe_auth_invalid': {
+        message: 'There was a problem with contacting our payment processor. Please try again.'
+    },
+    'stripe_network_failed': {
+        message: 'There was a problem with contacting our payment processor. Please try again.'
     },
     'general_problem': {
         message: 'There was a problem.'

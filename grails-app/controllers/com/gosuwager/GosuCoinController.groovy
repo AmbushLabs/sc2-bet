@@ -22,16 +22,23 @@ class GosuCoinController {
             def intPrice = Integer.valueOf(params.price);
             def numCoins = GosuCoinService.getNumGosuCoinsForPrice(intPrice);
             def user = User.findById(session.user_id);
-            def modifiedUser = StripeService.processPayment(
+            def stripeRet = StripeService.processPayment(
                 params.token_id,
                 params.token_email,
                 intPrice,
                 numCoins,
                 user
             );
-
-            ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(modifiedUser);
-            ret['message'] = NotificationMessageService.getPurchasedGosuCoinsMessage(numCoins);
+            if (stripeRet.success) {
+            def modifiedUser = stripeRet.user;
+                ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(modifiedUser);
+                ret['message'] = NotificationMessageService.getPurchasedGosuCoinsMessage(numCoins);
+                ret['success'] = true;
+            } else {
+                ret['success'] = false;
+                ret['error'] = true;
+                ret['error_reason'] = stripeRet.error_reason;
+            }
         }
         render ret as JSON;
 
