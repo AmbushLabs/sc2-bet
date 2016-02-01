@@ -158,7 +158,7 @@ class Dashboard extends Component {
     }
 
     hasGamesAwaitingChallenger() {
-        return this.props && this.props.games && this.props.games.all && this.props.games.awaiting_challenger && this.props.games.awaiting_challenger.length > 0;
+        return this.props && this.props.games && this.props.games.all && this.props.games.awaiting_challenger && this.props.games.awaiting_challenger.ids.length > 0;
     }
 
     getGamesAwaitingChallengerContainerClass() {

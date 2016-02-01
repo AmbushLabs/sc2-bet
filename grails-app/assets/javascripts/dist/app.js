@@ -1771,7 +1771,7 @@ var Dashboard = (function (_Component) {
     }, {
         key: 'hasGamesAwaitingChallenger',
         value: function hasGamesAwaitingChallenger() {
-            return this.props && this.props.games && this.props.games.all && this.props.games.awaiting_challenger && this.props.games.awaiting_challenger.length > 0;
+            return this.props && this.props.games && this.props.games.all && this.props.games.awaiting_challenger && this.props.games.awaiting_challenger.ids.length > 0;
         }
     }, {
         key: 'getGamesAwaitingChallengerContainerClass',
