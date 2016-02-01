@@ -102,10 +102,7 @@ const games = (state = {current_my_games_tab:'to_approve'}, action = {}) => {
                         break;
                     case 'error':
                         return Object.assign({}, state, {
-                            all: cloneGamesAndUpdate(state.all, {
-                                id: action.game_id,
-                                is_active: false
-                            })
+                            all: setGameCompleteFetching(state.all, action.game_id, getFetchTypeFromType(action.type))
                         });
                         break;
                 }
@@ -217,6 +214,15 @@ const setGameFetching = (games_in = {}, game_id = {}, second_prop = null) => {
     games[game_id]['is_fetching'] = true;
     if (!_.isNull(second_prop) && !_.isUndefined(second_prop)) {
         games[game_id][second_prop] = true;
+    }
+    return games;
+};
+
+const setGameCompleteFetching = (games_in = {}, game_id = {}, second_prop = null) => {
+    let games = Object.assign({}, games_in);
+    games[game_id]['is_fetching'] = false;
+    if (!_.isNull(second_prop) && !_.isUndefined(second_prop)) {
+        games[game_id][second_prop] = false;
     }
     return games;
 };

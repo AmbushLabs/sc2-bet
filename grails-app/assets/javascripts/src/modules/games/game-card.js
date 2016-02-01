@@ -61,9 +61,12 @@ export default class GameCard extends Component {
     }
 
     render() {
+
+        const innerClass = (this.props.innerClass != null && this.props.innerClass != '') ? this.props.innerClass : "m1 p1 clearfix black border bg-white";
+
         return (
             <div className={"animated fadeIn col " + this.props.colSize}>
-                <div className="m1 p1 clearfix black border">
+                <div className={innerClass}>
                     <div className="col col-8">
                         <p className="h3">
                             <a className="gosu-coins-gold" href={"/w/" + this.props.game.id}><span className="ss-icon ss-coins h5"></span>&nbsp;{this.props.game.wager}&nbsp;</a>

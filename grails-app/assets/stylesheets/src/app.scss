@@ -31,6 +31,10 @@ $gosu-coins-color: #f4d840; //FFD700
     color: $gosu-coins-color;
 }
 
+.hover-cursor {
+    cursor: pointer;
+}
+
 @import "modal";
 @import "errors";
 @import "page_notifications";

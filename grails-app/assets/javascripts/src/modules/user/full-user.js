@@ -46,7 +46,7 @@ export default ({ user, userId, dashboard, referral }) => {
                     <div className="h4 white"><a href={"/p/" + userId}>{user.display_name}</a></div>
                 </div>
             </div>
-            <div className="col col-12 gosu-light-blue-bg">
+            <div className="col col-12 gosu-light-blue-bg game-card-user-body">
                 <div className="gcu-right-container">
                     <div className="col col-12">
                         <div className="col col-12 sm-col-6 p1">

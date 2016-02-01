@@ -1,6 +1,7 @@
 package com.gosuwager
 
 import com.gosuwager.bnet.SC2Character
+import com.gosuwager.marshallers.Rank
 
 class BattleNetAccount {
 
@@ -9,6 +10,22 @@ class BattleNetAccount {
     BigInteger battleNetId;
     String battleTag;
     Date createDate = NULL_DATE;
+
+
+    def getMostRecentRank() {
+        if (characters && characters.size() > 0) {
+            def character = characters.first();
+            if (character.currentSeason != null && character.currentSeason.league != null) {
+                return Rank.rankToInteger(character.currentSeason.league);
+            } else if (character.previousSeason != null && character.previousSeason.league != null) {
+                return Rank.rankToInteger(character.previousSeason.league);
+            } else if (character.highest1v1Rank && character.highest1v1Rank != '') {
+                return Rank.rankToInteger(character.highest1v1Rank);
+            }
+        }
+        return 0;
+    }
+
 
     static belongsTo = [user:User]
 

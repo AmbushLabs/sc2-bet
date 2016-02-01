@@ -37,9 +37,8 @@ class BootStrap {
                 maxTimes: 20,
                 gosuCoinBonus: 2500
             ])).save();
+            createUser('joseph.lallouz@gmail.com', 'homeslice');
         }
-
-        //createUser('joseph.lallouz@gmail.com', 'homeslice');
 
 
     }

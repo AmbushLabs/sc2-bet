@@ -1477,6 +1477,9 @@ var Dashboard = (function (_Component) {
         this.getEmptyGames = this.getEmptyGames.bind(this);
         this.getGamesForRank = this.getGamesForRank.bind(this);
         this.getSelectedText = this.getSelectedText.bind(this);
+        this.getGamesAwaitingChallenger = this.getGamesAwaitingChallenger.bind(this);
+        this.hasGamesAwaitingChallenger = this.hasGamesAwaitingChallenger.bind(this);
+        this.getGamesAwaitingChallengerContainerClass = this.getGamesAwaitingChallengerContainerClass.bind(this);
     }
 
     _createClass(Dashboard, [{
@@ -1515,14 +1518,49 @@ var Dashboard = (function (_Component) {
                 _react2['default'].createElement('div', { className: 'clearfix' }),
                 _react2['default'].createElement(
                     'section',
-                    { className: 'col col-12 bg-white p1 mb2' },
+                    { className: "col col-12 " + this.getGamesAwaitingChallengerContainerClass() },
                     _react2['default'].createElement(
                         'section',
                         { className: 'col col-12' },
                         _react2['default'].createElement(
                             'p',
-                            { className: 'h3 ml1 mt1' },
-                            'Join a contest, then get a friend to join it.'
+                            { className: 'h3 ml2 mt1' },
+                            'We found a few contests, based on your skill level, that are ready for you to join.'
+                        )
+                    ),
+                    _react2['default'].createElement(
+                        'section',
+                        { className: 'col col-12 mb3' },
+                        _react2['default'].createElement(
+                            'div',
+                            { className: 'clearfix' },
+                            _react2['default'].createElement(_gamesGameList2['default'], {
+                                colSize: 'col-12 lg-col-6 sm-col-6',
+                                innerClassA: 'p1 clearfix black border bg-white mr2',
+                                innerClassB: 'p1 clearfix black border bg-white',
+                                innerClassDelegate: function (classNum) {
+                                    return classNum % 2 == 0;
+                                },
+                                listType: 'starting_empty',
+                                limit: 2,
+                                games: this.getGamesAwaitingChallenger(),
+                                dispatch: this.props.dispatch,
+                                loggedIn: this.props.loggedIn
+                            })
+                        )
+                    )
+                ),
+                _react2['default'].createElement('div', { className: 'clearfix' }),
+                _react2['default'].createElement(
+                    'section',
+                    { className: 'col col-12 mb4' },
+                    _react2['default'].createElement(
+                        'section',
+                        { className: 'col col-12' },
+                        _react2['default'].createElement(
+                            'p',
+                            { className: 'h3 ml2 mt1' },
+                            'Join a new contest, then get a friend to join it.'
                         )
                     ),
                     _react2['default'].createElement(
@@ -1530,9 +1568,14 @@ var Dashboard = (function (_Component) {
                         { className: 'col col-12' },
                         _react2['default'].createElement(
                             'div',
-                            { className: 'bg-white clearfix' },
+                            { className: 'clearfix' },
                             _react2['default'].createElement(_gamesGameList2['default'], {
                                 colSize: 'col-12 lg-col-3 sm-col-6',
+                                innerClassA: 'p1 clearfix black border bg-white',
+                                innerClassB: 'p1 clearfix black border bg-white mr1',
+                                innerClassDelegate: function (classNum) {
+                                    return (classNum + 1) % 4 == 0;
+                                },
                                 listType: 'starting_empty',
                                 limit: 8,
                                 games: this.getEmptyGames(),
@@ -1545,58 +1588,62 @@ var Dashboard = (function (_Component) {
                 _react2['default'].createElement('div', { className: 'clearfix' }),
                 _react2['default'].createElement(
                     'section',
-                    { className: 'col col-12 bg-white p1' },
+                    { className: 'col col-12 bg-white mb4' },
                     _react2['default'].createElement(
                         'section',
-                        { className: 'col col-12 sm-col-9' },
+                        { className: 'col col-12 p1 gosu-blue-bg white' },
                         _react2['default'].createElement(
-                            'p',
-                            { className: 'h3 ml1 mt1' },
-                            'Filter Contests by Skill Level.'
-                        )
-                    ),
-                    _react2['default'].createElement(
-                        'section',
-                        { className: 'col col-12 sm-col-3 right' },
-                        _react2['default'].createElement(
-                            'select',
-                            { className: 'block col-12 field',
-                                ref: 'currentRank',
-                                onChange: function () {
-                                    return _this.onChangeGames();
-                                } },
+                            'section',
+                            { className: 'col col-12 sm-col-9' },
                             _react2['default'].createElement(
-                                'optgroup',
-                                { label: 'Select a Rank' },
+                                'p',
+                                { className: 'h3 ml1 mt1' },
+                                'Find Contests by Skill Level.'
+                            )
+                        ),
+                        _react2['default'].createElement(
+                            'section',
+                            { className: 'col col-12 sm-col-3 right p1 gosu-blue-bg white' },
+                            _react2['default'].createElement(
+                                'select',
+                                { className: 'block col-12 field',
+                                    ref: 'currentRank',
+                                    onChange: function () {
+                                        return _this.onChangeGames();
+                                    } },
                                 _react2['default'].createElement(
-                                    'option',
-                                    { value: '1', selected: this.getSelectedText(1) },
-                                    'Master'
-                                ),
-                                _react2['default'].createElement(
-                                    'option',
-                                    { value: '2', selected: this.getSelectedText(2) },
-                                    'Diamond'
-                                ),
-                                _react2['default'].createElement(
-                                    'option',
-                                    { value: '3', selected: this.getSelectedText(3) },
-                                    'Platinum'
-                                ),
-                                _react2['default'].createElement(
-                                    'option',
-                                    { value: '4', selected: this.getSelectedText(4) },
-                                    'Gold'
-                                ),
-                                _react2['default'].createElement(
-                                    'option',
-                                    { value: '5', selected: this.getSelectedText(5) },
-                                    'Silver'
-                                ),
-                                _react2['default'].createElement(
-                                    'option',
-                                    { value: '6', selected: this.getSelectedText(6) },
-                                    'Bronze'
+                                    'optgroup',
+                                    { label: 'Select a Rank' },
+                                    _react2['default'].createElement(
+                                        'option',
+                                        { value: '1', selected: this.getSelectedText(1) },
+                                        'Master'
+                                    ),
+                                    _react2['default'].createElement(
+                                        'option',
+                                        { value: '2', selected: this.getSelectedText(2) },
+                                        'Diamond'
+                                    ),
+                                    _react2['default'].createElement(
+                                        'option',
+                                        { value: '3', selected: this.getSelectedText(3) },
+                                        'Platinum'
+                                    ),
+                                    _react2['default'].createElement(
+                                        'option',
+                                        { value: '4', selected: this.getSelectedText(4) },
+                                        'Gold'
+                                    ),
+                                    _react2['default'].createElement(
+                                        'option',
+                                        { value: '5', selected: this.getSelectedText(5) },
+                                        'Silver'
+                                    ),
+                                    _react2['default'].createElement(
+                                        'option',
+                                        { value: '6', selected: this.getSelectedText(6) },
+                                        'Bronze'
+                                    )
                                 )
                             )
                         )
@@ -1606,14 +1653,15 @@ var Dashboard = (function (_Component) {
                         { className: 'col col-12' },
                         _react2['default'].createElement(
                             'div',
-                            { className: 'bg-white clearfix' },
+                            { className: 'bg-white clearfix p1' },
                             _react2['default'].createElement(_gamesGameList2['default'], {
                                 colSize: 'col-12 lg-col-3 sm-col-6',
                                 listType: 'search',
                                 limit: 8,
                                 games: this.getSearchGames(),
                                 dispatch: this.props.dispatch,
-                                loggedIn: this.props.loggedIn
+                                loggedIn: this.props.loggedIn,
+                                showPaging: true
                             })
                         )
                     )
@@ -1651,15 +1699,43 @@ var Dashboard = (function (_Component) {
             return this.getGamesForRank(null);
         }
     }, {
-        key: 'getGamesForRank',
-        value: function getGamesForRank(rank) {
+        key: 'getGamesAwaitingChallenger',
+        value: function getGamesAwaitingChallenger() {
             var _this2 = this;
 
             if (this.props && this.props.games && this.props.games.all) {
                 var tmp = [];
-                this.props.games.search.ids.forEach(function (obj, i) {
+                this.props.games.awaiting_challenger.ids.forEach(function (obj, i) {
                     if (obj in _this2.props.games.all) {
                         tmp.push(_this2.props.games.all[obj]);
+                    }
+                });
+                return tmp;
+            }
+        }
+    }, {
+        key: 'hasGamesAwaitingChallenger',
+        value: function hasGamesAwaitingChallenger() {
+            return this.props && this.props.games && this.props.games.all && this.props.games.awaiting_challenger && this.props.games.awaiting_challenger.length > 0;
+        }
+    }, {
+        key: 'getGamesAwaitingChallengerContainerClass',
+        value: function getGamesAwaitingChallengerContainerClass() {
+            if (this.hasGamesAwaitingChallenger()) {
+                return " animated fadeIn";
+            }
+            return "hidden";
+        }
+    }, {
+        key: 'getGamesForRank',
+        value: function getGamesForRank(rank) {
+            var _this3 = this;
+
+            if (this.props && this.props.games && this.props.games.all) {
+                var tmp = [];
+                this.props.games.search.ids.forEach(function (obj, i) {
+                    if (obj in _this3.props.games.all) {
+                        tmp.push(_this3.props.games.all[obj]);
                     }
                 });
                 return tmp.filter(function (element) {
@@ -2681,12 +2757,15 @@ var GameCard = (function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+
+            var innerClass = this.props.innerClass != null && this.props.innerClass != '' ? this.props.innerClass : "m1 p1 clearfix black border bg-white";
+
             return _react2['default'].createElement(
                 'div',
                 { className: "animated fadeIn col " + this.props.colSize },
                 _react2['default'].createElement(
                     'div',
-                    { className: 'm1 p1 clearfix black border' },
+                    { className: innerClass },
                     _react2['default'].createElement(
                         'div',
                         { className: 'col col-8' },
@@ -2783,6 +2862,14 @@ var GameList = (function (_Component) {
 
         _get(Object.getPrototypeOf(GameList.prototype), 'constructor', this).call(this, options);
         this.getPaginationControls = this.getPaginationControls.bind(this);
+        this.nextPage = this.nextPage.bind(this);
+        this.previousPage = this.previousPage.bind(this);
+        this.getPrevClassName = this.getPrevClassName.bind(this);
+        this.getNextClassName = this.getNextClassName.bind(this);
+        this.getCleanListName = this.getCleanListName.bind(this);
+        this.state = {
+            page: 1
+        };
     }
 
     _createClass(GameList, [{
@@ -2808,15 +2895,34 @@ var GameList = (function (_Component) {
             var games = _props.games;
             var dispatch = _props.dispatch;
             var loggedIn = _props.loggedIn;
+            var innerClassA = _props.innerClassA;
+            var innerClassB = _props.innerClassB;
+            var innerClassDelegate = _props.innerClassDelegate;
+            var limit = _props.limit;
 
+            var page = this.state.page;
+            var minIndex = limit * (page - 1);
+            console.log(games, page, limit, minIndex);
             var gameNodes = games.filter(function (game) {
                 return game.is_active;
-            }).map(function (game) {
+            }).filter(function (game, index) {
+                return index < minIndex + limit && index >= minIndex;
+            }).map(function (game, index) {
+                var innerClass = null;
+                if (innerClassA && innerClassB && innerClassDelegate) {
+                    if (innerClassDelegate(index)) {
+                        innerClass = innerClassA;
+                    } else {
+                        innerClass = innerClassB;
+                    }
+                }
+
                 return _react2['default'].createElement(_gameCard2['default'], {
                     game: game,
                     colSize: colSize,
                     dispatch: dispatch,
-                    loggedIn: loggedIn
+                    loggedIn: loggedIn,
+                    innerClass: innerClass
                 });
             });
             return _react2['default'].createElement(
@@ -2826,22 +2932,30 @@ var GameList = (function (_Component) {
                     'div',
                     { className: 'clearfix' },
                     gameNodes
-                )
+                ),
+                this.getPaginationControls()
             );
         }
     }, {
         key: 'getPaginationControls',
         value: function getPaginationControls() {
-            if (!_.isUndefined(this.props.gameData.count) && !_.isNull(this.props.gameData.count) && this.props.gameData.count > this.props.limit) {
-                var pages = Math.ceil(this.props.gameData.count / this.props.limit);
+            var _this = this;
+
+            if (_.isUndefined(this.props.showPaging) && _.isNull(this.props.showPaging) || !this.props.showPaging) {
+                return '';
+            }
+            if (!_.isUndefined(this.props.games) && !_.isNull(this.props.games) && this.props.games.length > this.props.limit) {
+                var pages = Math.ceil(this.props.games.length / this.props.limit);
                 //heh super simple, one page at a time :)
                 return _react2['default'].createElement(
                     'div',
-                    { className: 'h6 clearfix' },
+                    { className: 'h6 clearfix col col-12 px1' },
                     _react2['default'].createElement(
                         'a',
-                        { href: '#', className: "ss-icon ss-navigateleft " + this.getPrevClassName(), onClick: this.previousPage },
-                        ' '
+                        { href: '#', className: "ss-icons ss-navigateleft " + this.getPrevClassName(), onClick: function () {
+                                return _this.previousPage();
+                            } },
+                        '<<'
                     ),
                     ' ',
                     _react2['default'].createElement(
@@ -2855,14 +2969,16 @@ var GameList = (function (_Component) {
                     ' ',
                     _react2['default'].createElement(
                         'a',
-                        { href: '#', className: "ss-icon ss-navigateright " + this.getNextClassName(), onClick: this.nextPage },
-                        ' '
+                        { href: '#', className: "ss-icons ss-navigateright " + this.getNextClassName(), onClick: function () {
+                                return _this.nextPage();
+                            } },
+                        '>>'
                     )
                 );
             } else {
                 return _react2['default'].createElement(
                     'div',
-                    { className: 'h6 clearfix' },
+                    { className: 'h6 clearfix col col-12 px1' },
                     'Page 1 of 1'
                 );
             }
@@ -2878,7 +2994,7 @@ var GameList = (function (_Component) {
     }, {
         key: 'getNextClassName',
         value: function getNextClassName() {
-            if (this.state.page + 1 > Math.ceil(this.props.gameData.count / this.props.limit)) {
+            if (this.state.page + 1 > Math.ceil(this.props.games.length / this.props.limit)) {
                 return "gray";
             }
             return "blue;";
@@ -2889,10 +3005,10 @@ var GameList = (function (_Component) {
     }, {
         key: 'nextPage',
         value: function nextPage() {
-            if (this.state.page + 1 > Math.ceil(this.props.gameData.count / this.props.limit)) {
+            if (this.state.page + 1 > Math.ceil(this.props.games.length / this.props.limit)) {
                 return;
             }
-            this.getList(this.state.page + 1);
+            this.setState({ page: this.state.page + 1 });
         }
     }, {
         key: 'previousPage',
@@ -2900,25 +3016,7 @@ var GameList = (function (_Component) {
             if (this.state.page == 1) {
                 return;
             }
-            this.getList(this.state.page - 1);
-        }
-    }, {
-        key: 'getList',
-        value: function getList(page) {
-            if (_.isUndefined(page) || _.isNull(page)) {
-                page = this.state.page;
-            }
-            $.ajax({
-                url: '/game/list/' + this.props.listType,
-                data: {
-                    page: page,
-                    limit: this.props.limit
-                },
-                success: $.proxy(function (resp) {
-                    this.props.gameDispatcher.dispatch(resp);
-                    this.setState({ page: page });
-                }, this)
-            });
+            this.setState({ page: this.state.page - 1 });
         }
     }, {
         key: 'getCleanListName',
@@ -2940,31 +3038,8 @@ var GameList = (function (_Component) {
 
 ;
 
-function fetchGames(listType, page, limit) {
-    return function (dispatch) {
-        dispatch({
-            type: 'FETCH_GAMES',
-            isFetching: true
-        });
-
-        return fetch('/game/list/' + listType + '?limit=' + limit + '&page=' + page, {
-            credentials: 'include'
-        }).then(function (response) {
-            return response.json();
-        }).then(function (json) {
-            return dispatch({
-                type: 'FETCH_GAMES',
-                is_fetching: false,
-                status: 'success',
-                gameData: json
-            });
-        });
-    };
-}
-
 exports['default'] = GameList;
 module.exports = exports['default'];
-/*this.getPaginationControls() */
 
 },{"./game-card":35,"react":304,"react-redux":117}],37:[function(require,module,exports){
 'use strict';
@@ -3016,40 +3091,56 @@ var MyGames = (function (_Component) {
                     'div',
                     { className: 'my1 mxn1 h6' },
                     _react2['default'].createElement(
-                        'a',
+                        'div',
                         { href: '#',
                             className: "btn btn-narrow " + this.isSelected('to_approve'),
                             onClick: this.setGameState,
                             'data-list-type': 'to_approve' },
-                        'Needs Approval',
-                        this.getCount('to_approve')
+                        _react2['default'].createElement(
+                            'div',
+                            null,
+                            'Needs Approval',
+                            this.getCount('to_approve')
+                        ),
+                        _react2['default'].createElement('div', { className: 'my-game-selected-state' })
                     ),
                     _react2['default'].createElement(
-                        'a',
+                        'div',
                         { href: '#',
                             className: "btn btn-narrow " + this.isSelected('waiting'),
                             onClick: this.setGameState,
                             'data-list-type': 'waiting' },
-                        'My Pending Contests',
-                        this.getCount('waiting')
+                        _react2['default'].createElement(
+                            'div',
+                            null,
+                            'My Pending Contests',
+                            this.getCount('waiting')
+                        ),
+                        _react2['default'].createElement('div', { className: 'my-game-selected-state' })
                     ),
                     _react2['default'].createElement(
-                        'a',
+                        'div',
                         { href: '#',
                             className: "btn btn-narrow " + this.isSelected('ready'),
                             onClick: this.setGameState,
                             'data-list-type': 'ready' },
-                        'Ready to Play!',
-                        this.getCount('ready')
+                        _react2['default'].createElement(
+                            'div',
+                            null,
+                            'Ready to Play!',
+                            this.getCount('ready')
+                        ),
+                        _react2['default'].createElement('div', { className: 'my-game-selected-state' })
                     )
                 ),
                 _react2['default'].createElement(_gamesGameList2['default'], {
                     colSize: 'col-12 lg-col-6',
                     listType: 'created_or_joined',
-                    limit: 4,
+                    limit: 2,
                     games: this.getGames(),
                     dispatch: this.props.dispatch,
-                    loggedIn: this.props.loggedIn
+                    loggedIn: this.props.loggedIn,
+                    showPaging: true
                 })
             );
         }
@@ -3057,7 +3148,7 @@ var MyGames = (function (_Component) {
         key: 'isSelected',
         value: function isSelected(type) {
             if (type == this.props.games.current_my_games_tab) {
-                return 'blue';
+                return 'blue my-games-type-selected';
             }
             return '';
         }
@@ -3733,7 +3824,7 @@ var AddCoins = (function (_Component) {
                     _react2['default'].createElement(_addGosuCoinButton2['default'], {
                         price: '10.00',
                         priceCents: 1000,
-                        numCoins: 1025,
+                        numCoins: 1000,
                         user: this.props.user,
                         dispatch: this.props.dispatch,
                         config: this.props.config
@@ -3745,7 +3836,7 @@ var AddCoins = (function (_Component) {
                     _react2['default'].createElement(_addGosuCoinButton2['default'], {
                         price: '20.00',
                         priceCents: 2000,
-                        numCoins: 2060,
+                        numCoins: 2000,
                         user: this.props.user,
                         dispatch: this.props.dispatch,
                         config: this.props.config
@@ -3757,7 +3848,7 @@ var AddCoins = (function (_Component) {
                     _react2['default'].createElement(_addGosuCoinButton2['default'], {
                         price: '50.00',
                         priceCents: 5000,
-                        numCoins: 5175,
+                        numCoins: 5000,
                         user: this.props.user,
                         dispatch: this.props.dispatch,
                         config: this.props.config
@@ -3943,7 +4034,7 @@ var GosuCoinBalance = (function (_Component) {
                                     'span',
                                     { className: 'bold gosu-blue-text' },
                                     this.getBCValueForAllCoins(),
-                                    ' BC'
+                                    ' BTC'
                                 ),
                                 '.'
                             )
@@ -3969,7 +4060,7 @@ var GosuCoinBalance = (function (_Component) {
                                 'div',
                                 { className: 'h5' },
                                 this.state.bcTransferAmount,
-                                ' BC*'
+                                ' BTC*'
                             ),
                             _react2['default'].createElement(
                                 'button',
@@ -5173,7 +5264,7 @@ exports['default'] = function (_ref) {
         ),
         _react2['default'].createElement(
             'div',
-            { className: 'col col-12 gosu-light-blue-bg' },
+            { className: 'col col-12 gosu-light-blue-bg game-card-user-body' },
             _react2['default'].createElement(
                 'div',
                 { className: 'gcu-right-container' },
@@ -6503,10 +6594,7 @@ var games = function games() {
                         break;
                     case 'error':
                         return Object.assign({}, state, {
-                            all: cloneGamesAndUpdate(state.all, {
-                                id: action.game_id,
-                                is_active: false
-                            })
+                            all: setGameCompleteFetching(state.all, action.game_id, getFetchTypeFromType(action.type))
                         });
                         break;
                 }
@@ -6628,6 +6716,19 @@ var setGameFetching = function setGameFetching() {
     games[game_id]['is_fetching'] = true;
     if (!_.isNull(second_prop) && !_.isUndefined(second_prop)) {
         games[game_id][second_prop] = true;
+    }
+    return games;
+};
+
+var setGameCompleteFetching = function setGameCompleteFetching() {
+    var games_in = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var game_id = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+    var second_prop = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+
+    var games = Object.assign({}, games_in);
+    games[game_id]['is_fetching'] = false;
+    if (!_.isNull(second_prop) && !_.isUndefined(second_prop)) {
+        games[game_id][second_prop] = false;
     }
     return games;
 };

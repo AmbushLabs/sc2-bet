@@ -18,26 +18,36 @@ export default class MyGames extends Component {
         return (
             <section>
                 <div className="my1 mxn1 h6">
-                    <a href="#"
+                    <div href="#"
                        className={"btn btn-narrow " + this.isSelected('to_approve')}
                        onClick={this.setGameState}
-                       data-list-type="to_approve">Needs Approval{this.getCount('to_approve')}</a>
-                    <a href="#"
+                       data-list-type="to_approve">
+                        <div>Needs Approval{this.getCount('to_approve')}</div>
+                        <div className="my-game-selected-state"></div>
+                    </div>
+                    <div href="#"
                        className={"btn btn-narrow " + this.isSelected('waiting')}
                        onClick={this.setGameState}
-                       data-list-type="waiting">My Pending Contests{this.getCount('waiting')}</a>
-                    <a href="#"
+                       data-list-type="waiting">
+                        <div>My Pending Contests{this.getCount('waiting')}</div>
+                        <div className="my-game-selected-state"></div>
+                    </div>
+                    <div href="#"
                        className={"btn btn-narrow " + this.isSelected('ready')}
                        onClick={this.setGameState}
-                       data-list-type="ready">Ready to Play!{this.getCount('ready')}</a>
+                       data-list-type="ready">
+                        <div>Ready to Play!{this.getCount('ready')}</div>
+                        <div className="my-game-selected-state"></div>
+                    </div>
                 </div>
                 <GameList
                     colSize="col-12 lg-col-6"
                     listType="created_or_joined"
-                    limit={4}
+                    limit={2}
                     games={this.getGames()}
                     dispatch={this.props.dispatch}
                     loggedIn={this.props.loggedIn}
+                    showPaging={true}
                     />
             </section>
         );
@@ -45,7 +55,7 @@ export default class MyGames extends Component {
 
     isSelected(type) {
         if (type == this.props.games.current_my_games_tab) {
-            return 'blue';
+            return 'blue my-games-type-selected';
         }
         return '';
     }

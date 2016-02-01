@@ -25,7 +25,7 @@ export default class AddCoins extends Component {
                 <AddGosuCoinButton
                     price="10.00"
                     priceCents={1000}
-                    numCoins={1025}
+                    numCoins={1000}
                     user={this.props.user}
                     dispatch={this.props.dispatch}
                     config={this.props.config}
@@ -35,7 +35,7 @@ export default class AddCoins extends Component {
                 <AddGosuCoinButton
                     price="20.00"
                     priceCents={2000}
-                    numCoins={2060}
+                    numCoins={2000}
                     user={this.props.user}
                     dispatch={this.props.dispatch}
                     config={this.props.config}
@@ -45,7 +45,7 @@ export default class AddCoins extends Component {
                 <AddGosuCoinButton
                     price="50.00"
                     priceCents={5000}
-                    numCoins={5175}
+                    numCoins={5000}
                     user={this.props.user}
                     dispatch={this.props.dispatch}
                     config={this.props.config}

@@ -41,14 +41,17 @@ class DashboardService {
             def search = Game.findAllByActiveAndChallengerAcceptedAndIsPrivateAndCompletedAndPlayer2IsNull(true, false, false, false, [sort:"gosuCoin", order:"asc"]);
             def search_count = Game.countByActiveAndChallengerAcceptedAndIsPrivateAndCompletedAndPlayer2IsNull(true, false, false, false);
 
+            def awaitingChallenger = findGamesWithOnePlayerNearSkillLevel(u, u.battleNetAccount.getMostRecentRank(), true, true);
+            def lengthOrTwo = awaitingChallenger.size() > 1 ? 1 : 0;
+            def awaitingTrimmed = awaitingChallenger[0..lengthOrTwo];
+
             def waitingQuery = Game.where {
                 completed == false && active == true && isPrivate == false && ((player1 == u && player2 == null) || (player2 == u && challengerAccepted == false))
             }
             def waiting = waitingQuery.list(sort:"gosuCoin", order:"asc");
-            //Game.findAllByActiveAndPlayer1AndIsPrivateAndPlayer2IsNull(true, u, false, [sort:"createDate", order:"desc"]);
             def waiting_count = waitingQuery.count();
 
-            (ready + to_approve + search + waiting).each { g ->
+            (ready + to_approve + search + waiting + awaitingTrimmed).each { g ->
                 ret['games']['all'][g.id] = g;
             }
 
@@ -69,6 +72,9 @@ class DashboardService {
             ret['games']['search']['count'] = search_count;
             ret['games']['selected_rank'] = 4;
 
+            ret['games']['awaiting_challenger'] = [:]
+            ret['games']['awaiting_challenger']['ids'] = awaitingTrimmed.collect { it.id };
+
             ret['gosu_coins'] = GosuCoinService.getGosuCoinReturnMap(u);
 
             ret['s3'] = ReplayService.s3PolicyAndSignature();
@@ -79,4 +85,17 @@ class DashboardService {
         }
         return ret;
     }
+    
+    
+    def findGamesWithOnePlayerNearSkillLevel(User u, Integer rank, Boolean allowDown, Boolean allowUp) {
+        if (rank > 6 || rank <= 0) {
+            return [];
+        }
+        def games = Game.findAllByActiveAndIsPrivateAndPlayer1NotEqualAndRankAndPlayer1IsNotNullAndPlayer2IsNull(true, false, u, rank, [sort:"gosuCoin", order: "asc", limit: 5]);
+        if (games.size() > 2) {
+            return games;
+        }
+        return games + (allowDown ? findGamesWithOnePlayerNearSkillLevel(u, --rank, true, false) : []) + (allowUp ? findGamesWithOnePlayerNearSkillLevel(u, ++rank, false, true) : []);
+    }
+    
 }
