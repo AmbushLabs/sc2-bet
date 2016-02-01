@@ -43,7 +43,7 @@ class DashboardService {
 
             def awaitingChallenger = findGamesWithOnePlayerNearSkillLevel(u, u.battleNetAccount.getMostRecentRank(), true, true);
             def lengthOrTwo = awaitingChallenger.size() > 1 ? 1 : 0;
-            def awaitingTrimmed = awaitingChallenger[0..lengthOrTwo];
+            def awaitingTrimmed = (awaitingChallenger.size() > 0) ? awaitingChallenger[0..lengthOrTwo] : awaitingChallenger;
 
             def waitingQuery = Game.where {
                 completed == false && active == true && isPrivate == false && ((player1 == u && player2 == null) || (player2 == u && challengerAccepted == false))
@@ -81,6 +81,9 @@ class DashboardService {
             ret['config'] = [:];
             ret['config']['stripe_key'] = grailsApplication.config.getProperty('stripe.key');
             ret['config']['site_uri'] = grailsApplication.config.getProperty('site_uri');
+
+            ret['invitational'] = [:];
+            ret['invitational']['joined'] = (TournamentSignUp.findByUserAndActive(u, true) != null);
 
         }
         return ret;

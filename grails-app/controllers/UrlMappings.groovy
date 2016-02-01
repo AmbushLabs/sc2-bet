@@ -27,6 +27,8 @@ class UrlMappings {
 
         "/p/$user_id" (controller:"main", action:"index")
 
+        "/invitational" (controller:"main", action:"index")
+
         "/game/list/$list_type"(controller:"game", action:"list")
 
         "/player/$player_id"(controller:"player", action:"index")

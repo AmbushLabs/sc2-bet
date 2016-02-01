@@ -3,14 +3,22 @@
  */
 import React from 'react';
 
-const Footer = ({loggedIn}) => {
+const Footer = ({loggedIn, user}) => {
     var logoutlnk = '';
+    var adminLnk = '';
     if (loggedIn) {
         logoutlnk = (
             <div className="col center px2">
                 <a href="/user/logout" className="h5 white">Logout</a>
             </div>
         );
+        if (user && user.is_admin) {
+            adminLnk = (
+                <div className="col center px2">
+                    <a href="/admin" className="h5 white">Admin</a>
+                </div>
+            );
+        }
     }
 
     return (
@@ -29,6 +37,7 @@ const Footer = ({loggedIn}) => {
                     <div className="col center px2">
                         <a href="https://gosuempire.zendesk.com/hc/en-us/articles/214963648-Terms-of-Service" className="h5 white">Terms of Service</a>
                     </div>
+                    {adminLnk}
                     {logoutlnk}
                 </div>
                 <div className="col col-12 md-col-4 center py3">

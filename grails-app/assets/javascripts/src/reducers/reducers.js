@@ -18,6 +18,7 @@ import profile from './profile';
 import gameReplay from './gameReplay';
 import gamesPlayed from './gamesPlayed';
 import withdrawls from './withdrawls';
+import invitational from './invitational';
 import admin from './admin';
 
 const reducer = combineReducers({
@@ -37,6 +38,7 @@ const reducer = combineReducers({
     gameReplay: gameReplay,
     gamesPlayed: gamesPlayed,
     withdrawls: withdrawls,
+    invitational: invitational,
     admin: admin
 });
 

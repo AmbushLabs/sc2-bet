@@ -99,4 +99,28 @@ class UserController {
         render ret as JSON;
     }
 
+    def invitational() {
+        def ret = [:];
+        ret['success'] = false;
+        if (request.method == 'POST' && session.user_id) {
+            User u = User.findById(session.user_id);
+            TournamentSignUp signup = TournamentSignUp.findByUserAndActive(u, true);
+            if (signup == null) {
+                signup = new TournamentSignUp([
+                    user: u,
+                    active: true,
+                    tournamentName: 'invitationalFebruary2016'
+                ]);
+                if (signup.save()) {
+                    ret['success'] = true;
+                    ret['invitational'] = [:];
+                    ret['invitational']['joined'] = true;
+                } else {
+                    println signup.errors;
+                }
+            }
+        }
+        render ret as JSON;
+    }
+
 }

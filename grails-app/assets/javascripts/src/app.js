@@ -30,6 +30,7 @@ import PageNotification from './modules/notifications/page-notification';
 import Footer from './modules/footer/footer';
 import ProfilePage from './modules/profile-page/profile-page';
 import Admin from './modules/admin/admin';
+import InvitationalJoinPage from './modules/invitational/join-page';
 
 
 @connect(state => (state))
@@ -39,6 +40,7 @@ class App extends Component {
         super(options);
         this.getChildren = this.getChildren.bind(this);
         this.buildEmailModal = this.buildEmailModal.bind(this);
+        this.requiresLoggedIn = this.requiresLoggedIn.bind(this);
     }
 
     componentDidMount() {
@@ -74,13 +76,14 @@ class App extends Component {
                 {this.buildEmailModal()}
                 <Footer
                     loggedIn={this.props.loggedIn}
+                    user={this.props.user}
                     />
             </section>
         );
     }
 
     getChildren() {
-        if ((!this.props.loggedIn || !this.props.hasEmail) && document.location.href.indexOf("/w/") == -1) {
+        if ((!this.props.loggedIn || !this.props.hasEmail) && this.requiresLoggedIn()) {
             return (
                 <LandingPage
                     dispatch={this.props.dispatch} />
@@ -92,6 +95,11 @@ class App extends Component {
             var { children, ...extraProps } = this.props;
             return React.cloneElement(children, extraProps);
         }
+    }
+
+    requiresLoggedIn() {
+        return document.location.href.indexOf("/w/") == -1
+        && document.location.href.indexOf('/invitational') == -1;
     }
 
     buildEmailModal() {
@@ -150,6 +158,7 @@ class Root extends Component {
                             <Route path="/p/:id" component={ProfilePage} />
                             <Route path="/gosucoins" component={GosuCoins} />
                             <Route path="/admin" component={Admin} />
+                            <Route path="/invitational" component={InvitationalJoinPage} />
                         </Route>
                     </ReduxRouter>
                 </Provider>
