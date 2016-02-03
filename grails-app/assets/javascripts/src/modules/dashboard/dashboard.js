@@ -165,7 +165,7 @@ class Dashboard extends Component {
         if (this.hasGamesAwaitingChallenger()) {
             return " animated fadeIn";
         }
-        return "is_hidden";
+        return " is_hidden";
     }
 
 

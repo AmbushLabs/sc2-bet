@@ -160,8 +160,10 @@ class GameController {
                         if (!g.player1) {
                             g.player1 = u;
                             def character = u.battleNetAccount.characters.first();
-                            if (character.currentSeason) {
+                            if (character.currentSeason && character.currentSeason.league != null) {
                                 g.rank = Rank.rankToInteger(character.currentSeason.league);
+                            } else if (character.previousSeason && character.previousSeason.league != null) {
+                                g.rank = Rank.rankToInteger(character.previousSeason.league);
                             } else {
                                 g.rank = Rank.rankToInteger(character.highest1v1Rank);
                             }
@@ -291,6 +293,7 @@ class GameController {
         def ret = [:]
         if (request.method == 'GET' && params.game_id) {
             //either get a specific game
+            User u = User.findById(session.user_id);
             Game g = Game.findById(params.game_id);
             if (g != null) {
                 def replayQuery = GameReplay.where {
