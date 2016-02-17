@@ -14,6 +14,7 @@ class DefaultInterceptor {
 
     boolean before() {
         if (!(controllerName == 'main' && actionName == 'index') &&
+            !(controllerName == 'game' && actionName == 'completeUpload') &&
             !(controllerName == 'auth')) {
             if (!params.csrf || params.csrf != session.csrf) {
                 return false;
