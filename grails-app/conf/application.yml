@@ -115,8 +115,8 @@ environments:
             secret: E4cMG9wbQMqEm3ZcZpb3DhNtNRAGVaR5
             redirect_uri: "https://gosuempire.com/auth/battlenet"
         stripe:
-            key: pk_live_gNGPIvuiA3fXTwr8AimqCMsP
-            secret: sk_live_IqIYVrVYX9pwGULhoe8eTlrA
+            key: pk_live_0hN7LDFA1dWfeLcrWm1owjin
+            secret: sk_live_N9pVkatAP9Tq53xM2IY8ADNk
         site_uri: "https://gosuempire.com/"
         site_uri_no_slash: "https://gosuempire.com"
         replay_time_check_enabled: true
