@@ -25,6 +25,7 @@ class UserMarshaller {
             ret['wins'] = u.contestWins;
             ret['losses'] = u.contestLosses;
             ret['character'] = getCharacterMap(u.battleNetAccount.characters.first());
+            ret['created'] = u.createDate.getTime();
             return ret;
         }
     }

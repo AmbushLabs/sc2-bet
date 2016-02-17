@@ -8,6 +8,7 @@ class UrlMappings {
         }
 
         "/"(controller:"main", action:"index")
+        "/r/$referral_code" (controller:"main", action:"index")
         "/gosucoins"(controller:"main", action:"index")
         "/admin"(controller:"main", action:"index")
 
@@ -24,6 +25,7 @@ class UrlMappings {
         "/user/profile/$user_id"(controller:"user", action:"profile")
 
         "/w/$game_id" (controller:"main", action:"index")
+        "/w/$game_id/r/$referral_code" (controller:"main", action:"index")
 
         "/p/$user_id" (controller:"main", action:"index")
 

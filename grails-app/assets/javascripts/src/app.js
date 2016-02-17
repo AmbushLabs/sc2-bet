@@ -106,10 +106,11 @@ class App extends Component {
         if (this.props.hasEmail || !this.props.loggedIn) {
             return;
         }
-        const { dispatch } = this.props;
+        const { dispatch, referral } = this.props;
         return (
             <EnterEmailModal
                 dispatch={dispatch}
+                referral={referral}
                 />
         );
     }
@@ -154,7 +155,9 @@ class Root extends Component {
                     <ReduxRouter>
                         <Route path="/" component={App}>
                             <IndexRoute component={Dashboard} />
+                            <Route path="/r/:code" component={Dashboard} />
                             <Route path="/w/:id" component={WagerPage} />
+                            <Route path="/w/:id/r/:code" component={WagerPage} />
                             <Route path="/p/:id" component={ProfilePage} />
                             <Route path="/gosucoins" component={GosuCoins} />
                             <Route path="/admin" component={Admin} />

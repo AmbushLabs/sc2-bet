@@ -16,6 +16,11 @@ class MainController {
             SC2Character sc2Char = user.battleNetAccount.characters.getAt(0);
             characterName = sc2Char.displayName;
         }
+
+        if (params.referral_code && params.referral_code != '') {
+            session.referral_code = params.referral_code;
+        }
+
         def pageData = SocialMetaTagService.getPageDataForUri(request.requestURI);
         [
             logged_in: (user != null) ? true : false,

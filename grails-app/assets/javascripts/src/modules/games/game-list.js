@@ -30,7 +30,6 @@ class GameList extends Component {
         const { colSize, games, dispatch, loggedIn, innerClassA, innerClassB, innerClassDelegate, limit } = this.props;
         const page = this.state.page;
         const minIndex = limit*(page-1);
-        console.log(games, page, limit, minIndex);
         var gameNodes = games.filter((game) => game.is_active).filter((game, index) => index < (minIndex + limit) && index >= minIndex).map((game, index) => {
             var innerClass = null;
             if (innerClassA && innerClassB && innerClassDelegate) {
@@ -70,9 +69,9 @@ class GameList extends Component {
             //heh super simple, one page at a time :)
             return (
                 <div className="h6 clearfix col col-12 px1">
-                    <a href="#" className={"ss-icons ss-navigateleft " + this.getPrevClassName()} onClick={() => this.previousPage()}>&lt;&lt;</a>&nbsp;
+                    <a href="#" className={"ss-icons ss-navigateleft " + this.getPrevClassName()} onClick={() => this.previousPage()}></a>&nbsp;
                     <span className="black">Page {this.state.page} of {pages}</span>&nbsp;
-                    <a href="#" className={"ss-icons ss-navigateright " + this.getNextClassName()} onClick={() => this.nextPage()}>&gt;&gt;</a>
+                    <a href="#" className={"ss-icons ss-navigateright " + this.getNextClassName()} onClick={() => this.nextPage()}></a>
                 </div>
             );
         } else {

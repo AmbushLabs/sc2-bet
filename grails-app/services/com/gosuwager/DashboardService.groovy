@@ -1,6 +1,7 @@
 package com.gosuwager
 
 import grails.transaction.Transactional
+import org.springframework.web.context.request.RequestContextHolder
 
 @Transactional
 class DashboardService {
@@ -14,6 +15,13 @@ class DashboardService {
     def getInitializeData(u) {
         def ret = [:];
         ret['has_loaded'] = true;
+
+        def sesh = RequestContextHolder.currentRequestAttributes().getSession();
+        ret['referral'] = [:];
+        if (sesh.referral_code) {
+            ret['referral']['code'] = sesh.referral_code;
+        }
+
         if (u == null) {
             ret['logged_in'] = false;
         } else {
@@ -84,6 +92,8 @@ class DashboardService {
 
             ret['invitational'] = [:];
             ret['invitational']['joined'] = (TournamentSignUp.findByUserAndActive(u, true) != null);
+
+
 
         }
         return ret;

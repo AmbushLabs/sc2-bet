@@ -6,6 +6,8 @@ import WithdrawlRequestModal from './withdrawl-requests/process-withdrawl-reques
 
 import GosuCoinTransactionList from './gosu-coin-transactions/gosu-coin-transaction-list';
 
+import UserList from './users/user-list';
+
 import initializeAdmin from './../../api/admin/initialize';
 
 @connect(state => (state))
@@ -17,7 +19,7 @@ class Admin extends Component {
 
     render() {
         const { dispatch } = this.props;
-        const { withdrawl_requests, recent_transactions, withdrawl_request_modal, authorized } = this.props.admin;
+        const { withdrawl_requests, recent_transactions, withdrawl_request_modal, recent_users, authorized } = this.props.admin;
         if (!authorized) {
             return (<div className="p2">404</div>);
         }
@@ -42,6 +44,18 @@ class Admin extends Component {
                     <section className="col col-12 m1">
                         <GosuCoinTransactionList
                             recent_transactions={recent_transactions}
+                            dispatch={dispatch}
+                            />
+                    </section>
+                </section>
+                <div className="clearfix"></div>
+                <section className="col col-12 bg-white p1">
+                    <div className="col col-12">
+                        <p className="h3 ml1 mt1">Recent Users</p>
+                    </div>
+                    <section className="col col-12 m1">
+                        <UserList
+                            users={recent_users}
                             dispatch={dispatch}
                             />
                     </section>

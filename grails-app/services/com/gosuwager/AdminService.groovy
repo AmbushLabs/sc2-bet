@@ -12,6 +12,7 @@ class AdminService {
             ret['admin']['authorized'] = true;
             ret['admin']['withdrawl_requests'] = GosuCoinWithdrawlRequest.findAllByProcessed(false);
             ret['admin']['recent_transactions'] = GosuCoinTransaction.findAll([limit: 30, order: 'DESC', sortBy: 'createDate']);
+            ret['admin']['recent_users'] = User.findAll([order:'desc', sort: 'id', max:20]);
         } else {
             ret['admin']['authorized'] = false;
         }

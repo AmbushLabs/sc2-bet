@@ -11,6 +11,8 @@ export default class EnterEmailModal extends Component {
     }
 
     render() {
+        const { referral } = this.props;
+
         return (
             <div className="modal" id="enter-email-modal">
                 <div className="modal-dialog col col-12 sm-col-6 animated slideInDown" onClick={this.preventBubble}>
@@ -19,7 +21,7 @@ export default class EnterEmailModal extends Component {
                             <h2 className="col col-11 mt1 mb1">Please Enter Your Email Address</h2>
                         </div>
                         <div className="modal-body">
-                            <EmailAddressForm ref="emailForm" />
+                            <EmailAddressForm ref="emailForm" referral={referral} />
                         </div>
                         <div className="modal-footer">
                             <input type="submit" className="btn btn-primary mr2" value="Finish" />

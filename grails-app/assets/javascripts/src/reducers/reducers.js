@@ -19,6 +19,8 @@ import gameReplay from './gameReplay';
 import gamesPlayed from './gamesPlayed';
 import withdrawls from './withdrawls';
 import invitational from './invitational';
+import csrf from './csrf';
+import referral from './referral';
 import admin from './admin';
 
 const reducer = combineReducers({
@@ -39,6 +41,8 @@ const reducer = combineReducers({
     gamesPlayed: gamesPlayed,
     withdrawls: withdrawls,
     invitational: invitational,
+    csrf: csrf,
+    referral: referral,
     admin: admin
 });
 
