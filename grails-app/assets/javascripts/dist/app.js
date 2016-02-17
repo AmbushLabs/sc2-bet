@@ -4944,7 +4944,7 @@ var ProfilePage = (function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             if (this.props.router.params.id) {
-                this.props.dispatch(getProfile(this.props.router.params.id));
+                this.props.dispatch(getProfile(this.props.router.params.id, this.props.csrf.value));
             }
         }
     }, {
@@ -5018,9 +5018,9 @@ var ProfilePage = (function (_Component) {
 
 ;
 
-var getProfile = function getProfile(user_id) {
+var getProfile = function getProfile(user_id, csrf) {
     return function (dispatch) {
-        fetch('/user/profile/' + user_id, {
+        fetch('/user/profile/' + user_id + '?csrf=' + csrf, {
             method: 'get',
             credentials: 'include'
         }).then(function (response) {

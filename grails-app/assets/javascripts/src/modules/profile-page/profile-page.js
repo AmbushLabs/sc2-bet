@@ -17,7 +17,7 @@ class ProfilePage extends Component {
 
     componentDidMount() {
         if (this.props.router.params.id) {
-            this.props.dispatch(getProfile(this.props.router.params.id));
+            this.props.dispatch(getProfile(this.props.router.params.id, this.props.csrf.value));
         }
     }
 
@@ -57,9 +57,9 @@ class ProfilePage extends Component {
 };
 
 
-const getProfile = (user_id) => {
+const getProfile = (user_id, csrf) => {
     return (dispatch) => {
-        fetch('/user/profile/' + user_id, {
+        fetch('/user/profile/' + user_id + '?csrf=' + csrf, {
             method:'get',
             credentials:'include'
         })
