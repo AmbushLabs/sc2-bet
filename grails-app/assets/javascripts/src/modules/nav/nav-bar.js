@@ -35,7 +35,7 @@ export default class extends Component {
     }
 
     signUp() {
-        const { dispatch } = this.props;
+        const { dispatch, csrf } = this.props;
         var loginWindow = window.open(
             '/auth/bnet_start_auth',
             'targetWindow',
@@ -45,7 +45,7 @@ export default class extends Component {
         var windowChecker = setInterval(function() {
             if (loginWindow.closed) {
                 clearInterval(windowChecker);
-                dispatch(checkEmail());
+                dispatch(checkEmail(csrf.value));
             }
         }.bind(this), 50);
     }

@@ -37,7 +37,7 @@ class WagerPage extends Component {
 
     componentDidMount() {
         if (this.props.router.params.id) {
-            this.props.dispatch(getGame(this.props.router.params.id));
+            this.props.dispatch(getGame(this.props.router.params.id, this.props.csrf.value));
         }
     }
 
@@ -90,6 +90,7 @@ class WagerPage extends Component {
                             dispatch={this.props.dispatch}
                             loggedIn={this.props.loggedIn}
                             wagerPage={true}
+                            csrf={this.props.csrf}
                             />
                     </div>
                     <div className="col col-0 lg-col-2  ">
@@ -97,8 +98,8 @@ class WagerPage extends Component {
                     </div>
                 </div>
 
-                {this.renderDropZone(game, this.props.dispatch, gameReplay, config)}
-                {this.getShareModal(game, this.props.dispatch)}
+                {this.renderDropZone(game, this.props.dispatch, gameReplay, config, this.props.csrf)}
+                {this.getShareModal(game, this.props.dispatch, this.props.csrf)}
             </div>
         );
     }
@@ -116,7 +117,7 @@ class WagerPage extends Component {
         }
     }
 
-    renderDropZone(game, dispatch, gameReplay, config) {
+    renderDropZone(game, dispatch, gameReplay, config, csrf) {
         if (game.has_player1 && game.has_player2 && game.has_player1_accepted && (game.is_player1 || game.is_player2)) {
             var dropZone = null;
             var errorState = null;
@@ -177,6 +178,7 @@ class WagerPage extends Component {
                         game={game}
                         dispatch={dispatch}
                         config={config}
+                        csrf={this.props.csrf}
                         />
                 );
             }
@@ -207,12 +209,13 @@ class WagerPage extends Component {
         );
     }
 
-    getShareModal(game, dispatch) {
+    getShareModal(game, dispatch, csrf) {
         if (game && game.show_share_modal) {
             return (
                 <ShareModal
                     game={game}
                     dispatch={dispatch}
+                    csrf={csrf}
                     />
             );
         }
@@ -272,9 +275,9 @@ class WagerPage extends Component {
 };
 
 
-const getGame = (game_id) => {
+const getGame = (game_id, csrf) => {
     return (dispatch) => {
-        fetch('/game/g/' + game_id, {
+        fetch('/game/g/' + game_id + '?csrf=' + csrf, {
             method:'get',
             credentials:'include'
         })

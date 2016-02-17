@@ -19,7 +19,12 @@ class MainController {
 
         if (params.referral_code && params.referral_code != '') {
             session.referral_code = params.referral_code;
+        } else {
+            session.referral_code = null;
         }
+
+        def csrf = DashboardService.generateCsrf(user);
+        session.csrf = csrf;
 
         def pageData = SocialMetaTagService.getPageDataForUri(request.requestURI);
         [
@@ -27,7 +32,8 @@ class MainController {
             character_name: characterName,
             ogUrl: pageData.ogUrl,
             ogTitle: pageData.ogTitle,
-            ogImage: pageData.ogImage
+            ogImage: pageData.ogImage,
+            csrf: csrf
         ]
     }
 

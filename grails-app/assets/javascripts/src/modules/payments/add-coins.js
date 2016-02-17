@@ -19,6 +19,7 @@ export default class AddCoins extends Component {
                         user={this.props.user}
                         dispatch={this.props.dispatch}
                         config={this.props.config}
+                        csrf={this.props.csrf}
                         />
                 </div>
                 <div className="col col-12 md-col-6 lg-col-3 center">
@@ -29,6 +30,7 @@ export default class AddCoins extends Component {
                     user={this.props.user}
                     dispatch={this.props.dispatch}
                     config={this.props.config}
+                    csrf={this.props.csrf}
                     />
                 </div>
                 <div className="col col-12 md-col-6 lg-col-3 center">
@@ -39,6 +41,7 @@ export default class AddCoins extends Component {
                     user={this.props.user}
                     dispatch={this.props.dispatch}
                     config={this.props.config}
+                    csrf={this.props.csrf}
                     />
                 </div>
                 <div className="col col-12 md-col-6 lg-col-3 center">
@@ -49,6 +52,7 @@ export default class AddCoins extends Component {
                     user={this.props.user}
                     dispatch={this.props.dispatch}
                     config={this.props.config}
+                    csrf={this.props.csrf}
                     />
                 </div>
             </div>

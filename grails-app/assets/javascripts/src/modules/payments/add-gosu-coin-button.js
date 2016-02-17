@@ -15,7 +15,7 @@ export default class AddGosuCoinButton extends Component {
     }
 
     showBuyCoins(e) {
-        const { dispatch, priceCents } = this.props;
+        const { dispatch, priceCents, csrf } = this.props;
         var handler = StripeCheckout.configure({
             key: this.props.config.stripe_key,
             image: 'https://s3-us-west-2.amazonaws.com/gosuempire/assets/logo-inverse-transparent-lg.png',
@@ -23,7 +23,7 @@ export default class AddGosuCoinButton extends Component {
             token: function(token) {
                 // Use the token to create the charge with a server-side script.
                 // You can access the token ID with `token.id`
-                dispatch(purchase(token.id, token.email, priceCents));
+                dispatch(purchase(token.id, token.email, priceCents, csrf.value));
             }
         });
 

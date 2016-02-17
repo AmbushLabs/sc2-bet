@@ -88,13 +88,13 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../../actions/actions');
 
-exports['default'] = function () {
+exports['default'] = function (csrf) {
     return function (dispatch) {
         dispatch({
             type: _actionsActions.ADMIN_INITIALIZE,
             isFetching: true
         });
-        return fetch('/admin/initialize', {
+        return fetch('/admin/initialize?csrf=' + csrf, {
             method: 'get',
             credentials: 'include'
         }).then(function (response) {
@@ -121,7 +121,7 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../../actions/actions');
 
-exports['default'] = function (gcWithdrawlAmount, bcWalletId) {
+exports['default'] = function (gcWithdrawlAmount, bcWalletId, csrf) {
     return function (dispatch) {
         dispatch({
             type: _actionsActions.CREATE_WITHDRAWL,
@@ -130,6 +130,7 @@ exports['default'] = function (gcWithdrawlAmount, bcWalletId) {
         var fd = new FormData();
         fd.append('gosu_coin_withdrawl_amount', gcWithdrawlAmount);
         fd.append('bit_coin_wallet_id', bcWalletId);
+        fd.append('csrf', csrf);
 
         return fetch('/gosuCoin/withdrawlRequest', {
             method: 'post',
@@ -165,13 +166,13 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../../actions/actions');
 
-exports['default'] = function () {
+exports['default'] = function (csrf) {
     return function (dispatch) {
         dispatch({
             type: _actionsActions.GET_WITHRDAWLS,
             isFetching: true
         });
-        return fetch('/gosuCoin/withdrawlsList', {
+        return fetch('/gosuCoin/withdrawlsList?csrf=' + csrf, {
             method: 'get',
             credentials: 'include'
         }).then(function (response) {
@@ -198,7 +199,7 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../../actions/actions');
 
-exports['default'] = function (gosuCoinWithdrawlRequestId, bitCoinAmount) {
+exports['default'] = function (gosuCoinWithdrawlRequestId, bitCoinAmount, csrf) {
     return function (dispatch) {
         dispatch({
             type: _actionsActions.PROCESS_WITHDRAWL,
@@ -207,6 +208,7 @@ exports['default'] = function (gosuCoinWithdrawlRequestId, bitCoinAmount) {
         var fd = new FormData();
         fd.append('gosu_coin_withdrawl_request_id', gosuCoinWithdrawlRequestId);
         fd.append('bit_coin_amount', bitCoinAmount);
+        fd.append('csrf', csrf);
 
         return fetch('/admin/processWithdrawlRequest', {
             method: 'post',
@@ -242,7 +244,7 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../../actions/actions');
 
-var purchase = function purchase(token_id, token_email, price) {
+var purchase = function purchase(token_id, token_email, price, csrf) {
     return function (dispatch) {
         dispatch({
             type: _actionsActions.PURCHASE_GOSU_COINS,
@@ -252,6 +254,7 @@ var purchase = function purchase(token_id, token_email, price) {
         fd.append('token_id', token_id);
         fd.append('token_email', token_email);
         fd.append('price', price);
+        fd.append('csrf', csrf);
         return fetch('/gosuCoin/purchase', {
             method: 'post',
             credentials: 'include',
@@ -287,14 +290,14 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../../actions/actions');
 
-var accept = function accept(game_id) {
+var accept = function accept(game_id, csrf) {
     return function (dispatch) {
         dispatch({
             type: _actionsActions.ACCEPT_CHALLENGER,
             is_fetching: true,
             game_id: game_id
         });
-        return fetch('/game/' + game_id + '/accept', {
+        return fetch('/game/' + game_id + '/accept?csrf=' + csrf, {
             method: 'post',
             credentials: 'include'
         }).then(function (response) {
@@ -322,7 +325,7 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../../actions/actions');
 
-var cancel = function cancel(game_id) {
+var cancel = function cancel(game_id, csrf) {
     return function (dispatch) {
         dispatch({
             type: _actionsActions.CANCEL_GAME,
@@ -330,7 +333,7 @@ var cancel = function cancel(game_id) {
             game_id: game_id
 
         });
-        return fetch('/game/g/' + game_id, {
+        return fetch('/game/g/' + game_id + '?csrf=' + csrf, {
             method: 'delete',
             credentials: 'include'
         }).then(function (response) {
@@ -398,14 +401,14 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../../actions/actions');
 
-var join = function join(game_id) {
+var join = function join(game_id, csrf) {
     return function (dispatch) {
         dispatch({
             type: _actionsActions.JOIN_GAME,
             is_fetching: true,
             game_id: game_id
         });
-        return fetch('/game/' + game_id + '/join', {
+        return fetch('/game/' + game_id + '/join?csrf=' + csrf, {
             method: 'post',
             credentials: 'include'
         }).then(function (response) {
@@ -440,14 +443,14 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../../actions/actions');
 
-var leave = function leave(game_id) {
+var leave = function leave(game_id, csrf) {
     return function (dispatch) {
         dispatch({
             type: _actionsActions.LEAVE_GAME,
             is_fetching: true,
             game_id: game_id
         });
-        return fetch('/game/' + game_id + '/leave', {
+        return fetch('/game/' + game_id + '/leave?csrf=' + csrf, {
             method: 'post',
             credentials: 'include'
         }).then(function (response) {
@@ -475,14 +478,14 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../../actions/actions');
 
-var reject = function reject(game_id) {
+var reject = function reject(game_id, csrf) {
     return function (dispatch) {
         dispatch({
             type: _actionsActions.REJECT_CHALLENGER,
             is_fetching: true,
             game_id: game_id
         });
-        return fetch('/game/' + game_id + '/reject', {
+        return fetch('/game/' + game_id + '/reject?csrf=' + csrf, {
             method: 'post',
             credentials: 'include'
         }).then(function (response) {
@@ -510,9 +513,9 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../../actions/actions');
 
-var replayStatus = function replayStatus(game_id) {
+var replayStatus = function replayStatus(game_id, csrf) {
     return function (dispatch) {
-        fetch('/game/replay/' + game_id, {
+        fetch('/game/replay/' + game_id + '?csrf=' + csrf, {
             method: 'get',
             credentials: 'include'
         }).then(function (response) {
@@ -546,9 +549,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _actionsActions = require('./../../actions/actions');
 
-exports['default'] = function () {
+exports['default'] = function (csrf) {
     return function (dispatch) {
-        return fetch('/user/hasEmail', { credentials: 'include' }).then(function (response) {
+        return fetch('/user/hasEmail?csrf=' + csrf, { credentials: 'include' }).then(function (response) {
             return response.json();
         }).then(function (json) {
             return dispatch({
@@ -571,13 +574,13 @@ Object.defineProperty(exports, '__esModule', {
 
 var _actionsActions = require('./../../actions/actions');
 
-var join = function join(game_id) {
+var join = function join(game_id, csrf) {
     return function (dispatch) {
         dispatch({
             type: _actionsActions.JOIN_TOURNAMENT,
             is_fetching: true
         });
-        return fetch('/user/invitational', {
+        return fetch('/user/invitational?csrf=' + csrf, {
             method: 'post',
             credentials: 'include'
         }).then(function (response) {
@@ -721,12 +724,24 @@ var App = (function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             var self = this;
-            this.props.dispatch(initializeApp()).then(function () {});
+            var _props = this.props;
+            var csrf = _props.csrf;
+            var dispatch = _props.dispatch;
+
+            var csrfVal = null;
+            if (csrf == null || !csrf.value) {
+                csrfVal = document.getElementById('csrf').value;
+            } else {
+                csrfVal = csrf.value;
+            }
+            dispatch(initializeApp(csrfVal)).then(function () {});
         }
     }, {
         key: 'render',
         value: function render() {
-            var dispatch = this.props.dispatch;
+            var _props2 = this.props;
+            var dispatch = _props2.dispatch;
+            var csrf = _props2.csrf;
 
             if (!this.props.hasLoaded) {
                 return _react2['default'].createElement(
@@ -741,7 +756,8 @@ var App = (function (_Component) {
                 _react2['default'].createElement(_modulesNavNavBar2['default'], {
                     loggedIn: this.props.loggedIn,
                     remainingTokens: this.props.gosuCoins.remaining,
-                    dispatch: dispatch
+                    dispatch: dispatch,
+                    csrf: csrf
                 }),
                 _react2['default'].createElement(_modulesNotificationsPageNotification2['default'], {
                     text: this.props.notifications.message,
@@ -764,15 +780,17 @@ var App = (function (_Component) {
         value: function getChildren() {
             if ((!this.props.loggedIn || !this.props.hasEmail) && this.requiresLoggedIn()) {
                 return _react2['default'].createElement(_modulesLandingLandingPage2['default'], {
-                    dispatch: this.props.dispatch });
+                    dispatch: this.props.dispatch,
+                    csrf: this.props.csrf
+                });
             } else {
                 if (_.isUndefined(this.props.children) || _.isNull(this.props.children)) {
                     return;
                 }
-                var _props = this.props;
-                var children = _props.children;
+                var _props3 = this.props;
+                var children = _props3.children;
 
-                var extraProps = _objectWithoutProperties(_props, ['children']);
+                var extraProps = _objectWithoutProperties(_props3, ['children']);
 
                 return _react2['default'].cloneElement(children, extraProps);
             }
@@ -788,13 +806,15 @@ var App = (function (_Component) {
             if (this.props.hasEmail || !this.props.loggedIn) {
                 return;
             }
-            var _props2 = this.props;
-            var dispatch = _props2.dispatch;
-            var referral = _props2.referral;
+            var _props4 = this.props;
+            var dispatch = _props4.dispatch;
+            var referral = _props4.referral;
+            var csrf = _props4.csrf;
 
             return _react2['default'].createElement(_modulesSignUpEnterEmailModal2['default'], {
                 dispatch: dispatch,
-                referral: referral
+                referral: referral,
+                csrf: csrf
             });
         }
     }]);
@@ -808,7 +828,7 @@ var App = (function (_Component) {
 
 ;
 
-function initializeApp() {
+function initializeApp(csrf) {
 
     return function (dispatch) {
         dispatch({
@@ -816,7 +836,7 @@ function initializeApp() {
             is_fetching: true
         });
 
-        return fetch('/main/initialize', {
+        return fetch('/main/initialize?csrf=' + csrf, {
             credentials: 'include'
         }).then(function (response) {
             return response.json();
@@ -934,7 +954,9 @@ var Admin = (function (_Component) {
     _createClass(Admin, [{
         key: 'render',
         value: function render() {
-            var dispatch = this.props.dispatch;
+            var _props = this.props;
+            var dispatch = _props.dispatch;
+            var csrf = _props.csrf;
             var _props$admin = this.props.admin;
             var withdrawl_requests = _props$admin.withdrawl_requests;
             var recent_transactions = _props$admin.recent_transactions;
@@ -969,7 +991,8 @@ var Admin = (function (_Component) {
                         { className: 'col col-12 m1' },
                         _react2['default'].createElement(_withdrawlRequestsWithdrawlRequestList2['default'], {
                             withdrawl_requests: withdrawl_requests,
-                            dispatch: dispatch
+                            dispatch: dispatch,
+                            csrf: csrf
                         })
                     )
                 ),
@@ -991,7 +1014,8 @@ var Admin = (function (_Component) {
                         { className: 'col col-12 m1' },
                         _react2['default'].createElement(_gosuCoinTransactionsGosuCoinTransactionList2['default'], {
                             recent_transactions: recent_transactions,
-                            dispatch: dispatch
+                            dispatch: dispatch,
+                            csrf: csrf
                         })
                     )
                 ),
@@ -1013,25 +1037,27 @@ var Admin = (function (_Component) {
                         { className: 'col col-12 m1' },
                         _react2['default'].createElement(_usersUserList2['default'], {
                             users: recent_users,
-                            dispatch: dispatch
+                            dispatch: dispatch,
+                            csrf: csrf
                         })
                     )
                 ),
-                this.getProcessWithdrawlRequestModal(withdrawl_request_modal, dispatch)
+                this.getProcessWithdrawlRequestModal(withdrawl_request_modal, dispatch, csrf)
             );
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.props.dispatch((0, _apiAdminInitialize2['default'])());
+            this.props.dispatch((0, _apiAdminInitialize2['default'])(this.props.csrf.value));
         }
     }, {
         key: 'getProcessWithdrawlRequestModal',
-        value: function getProcessWithdrawlRequestModal(withdrawlRequestModal, dispatch) {
+        value: function getProcessWithdrawlRequestModal(withdrawlRequestModal, dispatch, csrf) {
             if (withdrawlRequestModal.show) {
                 return _react2['default'].createElement(_withdrawlRequestsProcessWithdrawlRequestModal2['default'], {
                     dispatch: dispatch,
-                    withdrawl_request: withdrawlRequestModal.withdrawl_request
+                    withdrawl_request: withdrawlRequestModal.withdrawl_request,
+                    csrf: csrf
                 });
             }
         }
@@ -1304,7 +1330,9 @@ var _default = (function (_Component) {
         value: function render() {
             var _this = this;
 
-            var withdrawl_request = this.props.withdrawl_request;
+            var _props = this.props;
+            var withdrawl_request = _props.withdrawl_request;
+            var csrf = _props.csrf;
 
             var dollarAmount = parseFloat(withdrawl_request.coin_amount / 100).toFixed(2);
             var dateStr = (0, _moment2['default'])(withdrawl_request.create_date).format("M/D/YYYY H:mm");
@@ -1444,14 +1472,15 @@ var _default = (function (_Component) {
     }, {
         key: 'onSubmit',
         value: function onSubmit(ev) {
-            var _props = this.props;
-            var dispatch = _props.dispatch;
-            var withdrawl_request = _props.withdrawl_request;
+            var _props2 = this.props;
+            var dispatch = _props2.dispatch;
+            var withdrawl_request = _props2.withdrawl_request;
+            var csrf = _props2.csrf;
 
             var gosuCoinWithdrawlRequestId = withdrawl_request.id;
             var bcAmount = this.refs.bcAmount.value;
 
-            dispatch((0, _apiCoinsProcessWithdrawl2['default'])(gosuCoinWithdrawlRequestId, bcAmount)).then(function () {
+            dispatch((0, _apiCoinsProcessWithdrawl2['default'])(gosuCoinWithdrawlRequestId, bcAmount, csrf.value)).then(function () {
                 return dispatch({
                     type: _actionsActions.HIDE_PROCESS_WITHDRAWL_MODAL
                 });
@@ -1693,7 +1722,8 @@ var Dashboard = (function (_Component) {
                         _react2['default'].createElement(_gamesMyGames2['default'], {
                             games: this.props.games,
                             dispatch: this.props.dispatch,
-                            loggedIn: this.props.loggedIn
+                            loggedIn: this.props.loggedIn,
+                            csrf: this.props.csrf
                         })
                     )
                 ),
@@ -1727,7 +1757,8 @@ var Dashboard = (function (_Component) {
                                 limit: 2,
                                 games: this.getGamesAwaitingChallenger(),
                                 dispatch: this.props.dispatch,
-                                loggedIn: this.props.loggedIn
+                                loggedIn: this.props.loggedIn,
+                                csrf: this.props.csrf
                             })
                         )
                     )
@@ -1762,7 +1793,8 @@ var Dashboard = (function (_Component) {
                                 limit: 8,
                                 games: this.getEmptyGames(),
                                 dispatch: this.props.dispatch,
-                                loggedIn: this.props.loggedIn
+                                loggedIn: this.props.loggedIn,
+                                csrf: this.props.csrf
                             })
                         )
                     )
@@ -1843,7 +1875,8 @@ var Dashboard = (function (_Component) {
                                 games: this.getSearchGames(),
                                 dispatch: this.props.dispatch,
                                 loggedIn: this.props.loggedIn,
-                                showPaging: true
+                                showPaging: true,
+                                csrf: this.props.csrf
                             })
                         )
                     )
@@ -2234,6 +2267,7 @@ var Accept = function Accept(_ref) {
     var gameId = _ref.gameId;
     var loading = _ref.loading;
     var colClass = _ref.colClass;
+    var csrf = _ref.csrf;
 
     return _react2['default'].createElement(_buttonBase2['default'], {
         buttonClass: "green col " + colClass,
@@ -2242,7 +2276,8 @@ var Accept = function Accept(_ref) {
         crudAction: _apiGameCrud.accept,
         gameId: gameId,
         loading: loading,
-        iconVal: "tiny-symbol ss-icons ss-check"
+        iconVal: "tiny-symbol ss-icons ss-check",
+        csrf: csrf
     });
 };
 
@@ -2270,6 +2305,7 @@ var ButtonBase = function ButtonBase(_ref) {
     var gameId = _ref.gameId;
     var loading = _ref.loading;
     var iconVal = _ref.iconVal;
+    var csrf = _ref.csrf;
 
     if (loading) {
         return _react2["default"].createElement(
@@ -2287,7 +2323,7 @@ var ButtonBase = function ButtonBase(_ref) {
         {
             className: "btn btn-outline " + buttonClass,
             onClick: function () {
-                return dispatch(crudAction(gameId));
+                return dispatch(crudAction(gameId, csrf.value));
             }
         },
         _react2["default"].createElement("span", { className: iconVal }),
@@ -2323,13 +2359,15 @@ var Leave = function Leave(_ref) {
     var gameId = _ref.gameId;
     var loading = _ref.loading;
     var colClass = _ref.colClass;
+    var csrf = _ref.csrf;
 
     return _react2['default'].createElement(_buttonBase2['default'], {
         buttonClass: "green col " + colClass,
         buttonText: 'Chat and Start Playing!',
         dispatch: dispatch,
         gameId: gameId,
-        loading: loading
+        loading: loading,
+        csrf: csrf
     });
 };
 
@@ -2360,6 +2398,7 @@ var Join = function Join(_ref) {
     var gameId = _ref.gameId;
     var loading = _ref.loading;
     var colClass = _ref.colClass;
+    var csrf = _ref.csrf;
 
     return _react2['default'].createElement(_buttonBase2['default'], {
         buttonClass: "blue col " + colClass,
@@ -2368,7 +2407,8 @@ var Join = function Join(_ref) {
         crudAction: _apiGameCrud.join,
         gameId: gameId,
         loading: loading,
-        iconVal: "tiny-symbol ss-icons ss-swords"
+        iconVal: "tiny-symbol ss-icons ss-swords",
+        csrf: csrf
     });
 };
 
@@ -2399,6 +2439,7 @@ var Leave = function Leave(_ref) {
     var gameId = _ref.gameId;
     var loading = _ref.loading;
     var colClass = _ref.colClass;
+    var csrf = _ref.csrf;
 
     return _react2['default'].createElement(_buttonBase2['default'], {
         buttonClass: "orange col " + colClass,
@@ -2407,7 +2448,8 @@ var Leave = function Leave(_ref) {
         crudAction: _apiGameCrud.leave,
         gameId: gameId,
         loading: loading,
-        iconVal: "tiny-symbol ss-icons ss-skullandcrossbones"
+        iconVal: "tiny-symbol ss-icons ss-skullandcrossbones",
+        csrf: csrf
     });
 };
 
@@ -2438,6 +2480,7 @@ var Leave = function Leave(_ref) {
     var gameId = _ref.gameId;
     var loading = _ref.loading;
     var colClass = _ref.colClass;
+    var csrf = _ref.csrf;
 
     return _react2['default'].createElement(_buttonBase2['default'], {
         buttonClass: "red col " + colClass,
@@ -2446,7 +2489,8 @@ var Leave = function Leave(_ref) {
         crudAction: _apiGameCrud.reject,
         gameId: gameId,
         loading: loading,
-        iconVal: "tiny-symbol ss-icons ss-ban"
+        iconVal: "tiny-symbol ss-icons ss-ban",
+        csrf: csrf
     });
 };
 
@@ -2476,6 +2520,7 @@ var Join = function Join(_ref) {
     var dispatch = _ref.dispatch;
     var gameId = _ref.gameId;
     var colClass = _ref.colClass;
+    var csrf = _ref.csrf;
 
     return _react2['default'].createElement(_buttonBase2['default'], {
         buttonClass: "blue col " + colClass,
@@ -2490,7 +2535,8 @@ var Join = function Join(_ref) {
             };
         },
         gameId: gameId,
-        iconVal: "tiny-symbol ss-icons ss-share"
+        iconVal: "tiny-symbol ss-icons ss-share",
+        csrf: csrf
     });
 };
 
@@ -2713,6 +2759,7 @@ var GameActions = function GameActions(_ref) {
     var dispatch = _ref.dispatch;
     var loggedIn = _ref.loggedIn;
     var wagerPage = _ref.wagerPage;
+    var csrf = _ref.csrf;
 
     if (_.isUndefined(wagerPage) || _.isNull(wagerPage)) {
         wagerPage = false;
@@ -2726,7 +2773,7 @@ var GameActions = function GameActions(_ref) {
             {
                 className: "btn btn-outline blue col col-12",
                 onClick: function () {
-                    return (0, _userSignupWindow2['default'])(dispatch);
+                    return (0, _userSignupWindow2['default'])(dispatch, csrf);
                 }
             },
             _react2['default'].createElement('span', { className: 'tiny-symbol ss-icons ss-swords' }),
@@ -2763,7 +2810,8 @@ var GameActions = function GameActions(_ref) {
                         dispatch: dispatch,
                         gameId: game.id,
                         loading: game.is_accepting,
-                        colClass: 'col-12 h6'
+                        colClass: 'col-12 h6',
+                        csrf: csrf
                     })
                 ),
                 _react2['default'].createElement(
@@ -2773,7 +2821,8 @@ var GameActions = function GameActions(_ref) {
                         dispatch: dispatch,
                         gameId: game.id,
                         loading: game.is_rejecting,
-                        colClass: 'col-12 h6'
+                        colClass: 'col-12 h6',
+                        csrf: csrf
                     })
                 ),
                 _react2['default'].createElement(
@@ -2783,7 +2832,8 @@ var GameActions = function GameActions(_ref) {
                         dispatch: dispatch,
                         gameId: game.id,
                         loading: game.is_leaving,
-                        colClass: 'col-12 h6'
+                        colClass: 'col-12 h6',
+                        csrf: csrf
                     })
                 )
             );
@@ -2796,7 +2846,8 @@ var GameActions = function GameActions(_ref) {
                     dispatch: dispatch,
                     gameId: game.id,
                     loading: game.is_leaving,
-                    colClass: 'col-12'
+                    colClass: 'col-12',
+                    csrf: csrf
                 })
             );
         } else {
@@ -2811,7 +2862,8 @@ var GameActions = function GameActions(_ref) {
             dispatch: dispatch,
             gameId: game.id,
             loading: game.is_joining,
-            colClass: 'col-12'
+            colClass: 'col-12',
+            csrf: csrf
         });
     }
 
@@ -2826,7 +2878,8 @@ var GameActions = function GameActions(_ref) {
                     dispatch: dispatch,
                     gameId: game.id,
                     loading: false,
-                    colClass: 'col-12'
+                    colClass: 'col-12',
+                    csrf: csrf
                 })
             ),
             _react2['default'].createElement(
@@ -2836,7 +2889,8 @@ var GameActions = function GameActions(_ref) {
                     dispatch: dispatch,
                     gameId: game.id,
                     loading: game.is_joining,
-                    colClass: 'col-12'
+                    colClass: 'col-12',
+                    csrf: csrf
                 })
             )
         );
@@ -3006,7 +3060,8 @@ var GameCard = (function (_Component) {
                             _react2['default'].createElement(_gameActions22['default'], {
                                 game: this.props.game,
                                 dispatch: this.props.dispatch,
-                                loggedIn: this.props.loggedIn
+                                loggedIn: this.props.loggedIn,
+                                csrf: this.props.csrf
                             })
                         )
                     )
@@ -3095,6 +3150,7 @@ var GameList = (function (_Component) {
             var innerClassB = _props.innerClassB;
             var innerClassDelegate = _props.innerClassDelegate;
             var limit = _props.limit;
+            var csrf = _props.csrf;
 
             var page = this.state.page;
             var minIndex = limit * (page - 1);
@@ -3117,7 +3173,8 @@ var GameList = (function (_Component) {
                     colSize: colSize,
                     dispatch: dispatch,
                     loggedIn: loggedIn,
-                    innerClass: innerClass
+                    innerClass: innerClass,
+                    csrf: csrf
                 });
             });
             return _react2['default'].createElement(
@@ -3327,7 +3384,8 @@ var MyGames = (function (_Component) {
                     games: this.getGames(),
                     dispatch: this.props.dispatch,
                     loggedIn: this.props.loggedIn,
-                    showPaging: true
+                    showPaging: true,
+                    csrf: this.props.csrf
                 })
             );
         }
@@ -3459,11 +3517,12 @@ var Invitational = (function (_Component) {
             var _props = this.props;
             var loggedIn = _props.loggedIn;
             var dispatch = _props.dispatch;
+            var csrf = _props.csrf;
 
             if (!loggedIn) {
-                (0, _userSignupWindow2['default'])(dispatch);
+                (0, _userSignupWindow2['default'])(dispatch, csrf);
             } else {
-                dispatch((0, _apiUserJoinTournament2['default'])());
+                dispatch((0, _apiUserJoinTournament2['default'])(csrf.value));
             }
         }
     }, {
@@ -3471,7 +3530,9 @@ var Invitational = (function (_Component) {
         value: function getJoinButton() {
             var _this = this;
 
-            var invitational = this.props.invitational;
+            var _props2 = this.props;
+            var invitational = _props2.invitational;
+            var csrf = _props2.csrf;
 
             if (invitational && invitational.joined) {
                 return _react2['default'].createElement(
@@ -3645,7 +3706,7 @@ var LandingPage = (function (_Component) {
     }, {
         key: 'signUp',
         value: function signUp() {
-            (0, _userSignupWindow2['default'])(this.props.dispatch);
+            (0, _userSignupWindow2['default'])(this.props.dispatch, this.props.csrf);
         }
     }]);
 
@@ -3819,14 +3880,16 @@ var _default = (function (_Component) {
     }, {
         key: 'signUp',
         value: function signUp() {
-            var dispatch = this.props.dispatch;
+            var _props = this.props;
+            var dispatch = _props.dispatch;
+            var csrf = _props.csrf;
 
             var loginWindow = window.open('/auth/bnet_start_auth', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=400');
 
             var windowChecker = setInterval((function () {
                 if (loginWindow.closed) {
                     clearInterval(windowChecker);
-                    dispatch((0, _apiUserCheckEmail2['default'])());
+                    dispatch((0, _apiUserCheckEmail2['default'])(csrf.value));
                 }
             }).bind(this), 50);
         }
@@ -4124,7 +4187,8 @@ var AddCoins = (function (_Component) {
                         numCoins: 500,
                         user: this.props.user,
                         dispatch: this.props.dispatch,
-                        config: this.props.config
+                        config: this.props.config,
+                        csrf: this.props.csrf
                     })
                 ),
                 _react2['default'].createElement(
@@ -4136,7 +4200,8 @@ var AddCoins = (function (_Component) {
                         numCoins: 1000,
                         user: this.props.user,
                         dispatch: this.props.dispatch,
-                        config: this.props.config
+                        config: this.props.config,
+                        csrf: this.props.csrf
                     })
                 ),
                 _react2['default'].createElement(
@@ -4148,7 +4213,8 @@ var AddCoins = (function (_Component) {
                         numCoins: 2000,
                         user: this.props.user,
                         dispatch: this.props.dispatch,
-                        config: this.props.config
+                        config: this.props.config,
+                        csrf: this.props.csrf
                     })
                 ),
                 _react2['default'].createElement(
@@ -4160,7 +4226,8 @@ var AddCoins = (function (_Component) {
                         numCoins: 5000,
                         user: this.props.user,
                         dispatch: this.props.dispatch,
-                        config: this.props.config
+                        config: this.props.config,
+                        csrf: this.props.csrf
                     })
                 )
             );
@@ -4228,6 +4295,7 @@ var AddGosuCoinButton = (function (_Component) {
             var _props = this.props;
             var dispatch = _props.dispatch;
             var priceCents = _props.priceCents;
+            var csrf = _props.csrf;
 
             var handler = StripeCheckout.configure({
                 key: this.props.config.stripe_key,
@@ -4236,7 +4304,7 @@ var AddGosuCoinButton = (function (_Component) {
                 token: function token(_token) {
                     // Use the token to create the charge with a server-side script.
                     // You can access the token ID with `token.id`
-                    dispatch((0, _apiCoinsPurchase2['default'])(_token.id, _token.email, priceCents));
+                    dispatch((0, _apiCoinsPurchase2['default'])(_token.id, _token.email, priceCents, csrf.value));
                 }
             });
 
@@ -4449,7 +4517,7 @@ var GosuCoinBalance = (function (_Component) {
             var gcNumStr = this.refs.gosuCoinWithdrawlAmt.value.trim();
             var rgx = new RegExp(/^\d+$/);
             if (gcNumStr != '' && rgx.test(gcNumStr) && this.refs.bcWalletId.value != '') {
-                this.props.dispatch((0, _apiCoinsCreateWithdrawl2['default'])(gcNumStr, this.refs.bcWalletId.value));
+                this.props.dispatch((0, _apiCoinsCreateWithdrawl2['default'])(gcNumStr, this.refs.bcWalletId.value, this.props.csrf.value));
                 setTimeout(function () {
                     _this2.refs.gosuCoinWithdrawlAmt.value = 0;
                     _this2.refs.bcWalletId.value = '';
@@ -4551,7 +4619,8 @@ var GosuCoins = (function (_Component) {
                     _react2['default'].createElement(_addCoins2['default'], {
                         user: this.props.user,
                         config: this.props.config,
-                        dispatch: this.props.dispatch
+                        dispatch: this.props.dispatch,
+                        csrf: this.props.csrf
                     }),
                     _react2['default'].createElement(
                         'div',
@@ -4561,7 +4630,8 @@ var GosuCoins = (function (_Component) {
                     _react2['default'].createElement(_gosuCoinBalance2['default'], {
                         gosuCoins: this.props.gosuCoins,
                         withdrawls: this.props.withdrawls,
-                        dispatch: this.props.dispatch
+                        dispatch: this.props.dispatch,
+                        csrf: this.props.csrf
                     })
                 ),
                 _react2['default'].createElement(
@@ -4574,7 +4644,7 @@ var GosuCoins = (function (_Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.props.dispatch((0, _apiCoinsGetWithdrawlList2['default'])());
+            this.props.dispatch((0, _apiCoinsGetWithdrawlList2['default'])(this.props.csrf.value));
         }
     }]);
 
@@ -5061,6 +5131,7 @@ var ReplayDropzone = (function (_Component) {
             var dispatch = _props.dispatch;
             var game = _props.game;
             var s3 = _props.s3;
+            var csrf = _props.csrf;
             var id = game.id;
             var upload_hash = game.upload_hash;
             var policy = s3.policy;
@@ -5082,7 +5153,7 @@ var ReplayDropzone = (function (_Component) {
                 method: 'post',
                 body: data
             }).then(function () {
-                dispatch((0, _apiGameReplayStatus2['default'])(game.id));
+                dispatch((0, _apiGameReplayStatus2['default'])(game.id, csrf.value));
             });
         }
     }]);
@@ -5366,9 +5437,11 @@ var EnterEmailModal = (function (_Component) {
                 ev.preventDefault();
                 return false;
             }
-            var dispatch = this.props.dispatch;
+            var _props = this.props;
+            var dispatch = _props.dispatch;
+            var csrf = _props.csrf;
 
-            dispatch(linkEmailAddress(emailAddress, referralCode)).then(function () {
+            dispatch(linkEmailAddress(emailAddress, referralCode, csrf.value)).then(function () {
                 return dispatch({
                     type: 'HIDE_CREATE_GAME_MODAL'
                 });
@@ -5390,18 +5463,21 @@ var EnterEmailModal = (function (_Component) {
 exports['default'] = EnterEmailModal;
 ;
 
-function linkEmailAddress(emailAddress, referralCode) {
+function linkEmailAddress(emailAddress, referralCode, csrf) {
     return function (dispatch) {
         dispatch({
             type: 'ADD_EMAIL_ADDRESS',
             isFetching: true
         });
+
+        var fd = new FormData();
+        fd.append('email_address', emailAddress);
+        fd.append('referral_code', referralCode);
+        fd.append('csrf', csrf);
+
         return fetch('/user/email', {
             method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: "email_address=" + emailAddress + '&referral_code=' + referralCode,
+            body: fd,
             credentials: 'include'
         }).then(function (response) {
             return response.json();
@@ -5418,21 +5494,21 @@ function linkEmailAddress(emailAddress, referralCode) {
 module.exports = exports['default'];
 
 },{"./form":59,"react":311}],59:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _react = require('react');
 
@@ -5444,30 +5520,31 @@ var EnterEmailForm = (function (_Component) {
     function EnterEmailForm() {
         _classCallCheck(this, EnterEmailForm);
 
-        _get(Object.getPrototypeOf(EnterEmailForm.prototype), "constructor", this).apply(this, arguments);
+        _get(Object.getPrototypeOf(EnterEmailForm.prototype), 'constructor', this).apply(this, arguments);
     }
 
     _createClass(EnterEmailForm, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             var referral = this.props.referral;
 
-            return _react2["default"].createElement(
-                "div",
+            var refCodeInput = referral && referral.code && referral.code != '' ? _react2['default'].createElement('input', { type: 'text', className: 'block col-12 mb1 field', ref: 'referralCode', value: referral.code, placeholder: 'optional' }) : _react2['default'].createElement('input', { type: 'text', className: 'block col-12 mb1 field', ref: 'referralCode', placeholder: 'optional' });
+            return _react2['default'].createElement(
+                'div',
                 null,
-                _react2["default"].createElement(
-                    "h5",
-                    { className: "mb1 gray" },
-                    "We use email to communicate when you are sent a challenge or you win a contest. We will not spam your account or share your info."
+                _react2['default'].createElement(
+                    'h5',
+                    { className: 'mb1 gray' },
+                    'We use email to communicate when you are sent a challenge or you win a contest. We will not spam your account or share your info.'
                 ),
-                _react2["default"].createElement("input", { type: "email", className: "block col-12 mb1 field", ref: "emailAddress", placeholder: "glhf@example.com" }),
-                _react2["default"].createElement("h5", null),
-                _react2["default"].createElement(
-                    "label",
-                    { className: "gray h5" },
-                    "Referral Code"
+                _react2['default'].createElement('input', { type: 'email', className: 'block col-12 mb1 field', ref: 'emailAddress', placeholder: 'glhf@example.com' }),
+                _react2['default'].createElement('h5', null),
+                _react2['default'].createElement(
+                    'label',
+                    { className: 'gray h5' },
+                    'Referral Code'
                 ),
-                _react2["default"].createElement("input", { type: "text", className: "block col-12 mb1 field", ref: "referralCode", value: referral.code, placeholder: "optional" })
+                refCodeInput
             );
         }
     }]);
@@ -5475,9 +5552,9 @@ var EnterEmailForm = (function (_Component) {
     return EnterEmailForm;
 })(_react.Component);
 
-exports["default"] = EnterEmailForm;
+exports['default'] = EnterEmailForm;
 ;
-module.exports = exports["default"];
+module.exports = exports['default'];
 
 },{"react":311}],60:[function(require,module,exports){
 'use strict';
@@ -5830,12 +5907,12 @@ var _apiUserCheckEmail = require('./../../api/user/checkEmail');
 
 var _apiUserCheckEmail2 = _interopRequireDefault(_apiUserCheckEmail);
 
-exports['default'] = function (dispatch) {
+exports['default'] = function (dispatch, csrf) {
     var loginWindow = window.open('/auth/bnet_start_auth', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=400');
     var windowChecker = setInterval((function () {
         if (loginWindow.closed) {
             clearInterval(windowChecker);
-            dispatch((0, _apiUserCheckEmail2['default'])());
+            dispatch((0, _apiUserCheckEmail2['default'])(csrf.value));
         }
     }).bind(undefined), 50);
 };
@@ -6240,7 +6317,7 @@ var WagerPage = (function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             if (this.props.router.params.id) {
-                this.props.dispatch(getGame(this.props.router.params.id));
+                this.props.dispatch(getGame(this.props.router.params.id, this.props.csrf.value));
             }
         }
     }, {
@@ -6335,7 +6412,8 @@ var WagerPage = (function (_Component) {
                             game: game,
                             dispatch: this.props.dispatch,
                             loggedIn: this.props.loggedIn,
-                            wagerPage: true
+                            wagerPage: true,
+                            csrf: this.props.csrf
                         })
                     ),
                     _react2['default'].createElement(
@@ -6344,8 +6422,8 @@ var WagerPage = (function (_Component) {
                         ' '
                     )
                 ),
-                this.renderDropZone(game, this.props.dispatch, gameReplay, config),
-                this.getShareModal(game, this.props.dispatch)
+                this.renderDropZone(game, this.props.dispatch, gameReplay, config, this.props.csrf),
+                this.getShareModal(game, this.props.dispatch, this.props.csrf)
             );
         }
     }, {
@@ -6362,7 +6440,7 @@ var WagerPage = (function (_Component) {
         }
     }, {
         key: 'renderDropZone',
-        value: function renderDropZone(game, dispatch, gameReplay, config) {
+        value: function renderDropZone(game, dispatch, gameReplay, config, csrf) {
             if (game.has_player1 && game.has_player2 && game.has_player1_accepted && (game.is_player1 || game.is_player2)) {
                 var dropZone = null;
                 var errorState = null;
@@ -6445,7 +6523,8 @@ var WagerPage = (function (_Component) {
                         s3: this.props.s3,
                         game: game,
                         dispatch: dispatch,
-                        config: config
+                        config: config,
+                        csrf: this.props.csrf
                     });
                 }
                 return _react2['default'].createElement(
@@ -6483,11 +6562,12 @@ var WagerPage = (function (_Component) {
         }
     }, {
         key: 'getShareModal',
-        value: function getShareModal(game, dispatch) {
+        value: function getShareModal(game, dispatch, csrf) {
             if (game && game.show_share_modal) {
                 return _react2['default'].createElement(_shareModalShare2['default'], {
                     game: game,
-                    dispatch: dispatch
+                    dispatch: dispatch,
+                    csrf: csrf
                 });
             }
             return;
@@ -6556,9 +6636,9 @@ var WagerPage = (function (_Component) {
 
 ;
 
-var getGame = function getGame(game_id) {
+var getGame = function getGame(game_id, csrf) {
     return function (dispatch) {
-        fetch('/game/g/' + game_id, {
+        fetch('/game/g/' + game_id + '?csrf=' + csrf, {
             method: 'get',
             credentials: 'include'
         }).then(function (response) {

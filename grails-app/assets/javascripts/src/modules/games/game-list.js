@@ -27,7 +27,7 @@ class GameList extends Component {
                 </div>
             );
         }
-        const { colSize, games, dispatch, loggedIn, innerClassA, innerClassB, innerClassDelegate, limit } = this.props;
+        const { colSize, games, dispatch, loggedIn, innerClassA, innerClassB, innerClassDelegate, limit, csrf } = this.props;
         const page = this.state.page;
         const minIndex = limit*(page-1);
         var gameNodes = games.filter((game) => game.is_active).filter((game, index) => index < (minIndex + limit) && index >= minIndex).map((game, index) => {
@@ -47,6 +47,7 @@ class GameList extends Component {
                     dispatch={dispatch}
                     loggedIn={loggedIn}
                     innerClass={innerClass}
+                    csrf={csrf}
                     />
             );
         });

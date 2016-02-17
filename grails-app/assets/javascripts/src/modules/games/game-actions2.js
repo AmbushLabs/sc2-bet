@@ -10,7 +10,7 @@ import JoinChatButton from './action-buttons/join-chat';
 import signupWindow from './../user/signup-window';
 
 
-const GameActions = ({game, dispatch, loggedIn, wagerPage}) => {
+const GameActions = ({game, dispatch, loggedIn, wagerPage, csrf}) => {
 
     if (_.isUndefined(wagerPage) || _.isNull(wagerPage)) {
         wagerPage = false;
@@ -24,7 +24,7 @@ const GameActions = ({game, dispatch, loggedIn, wagerPage}) => {
         return (
             <button
                 className={"btn btn-outline blue col col-12"}
-                onClick={() => signupWindow(dispatch)}
+                onClick={() => signupWindow(dispatch, csrf)}
                 >
                 <span className="tiny-symbol ss-icons ss-swords"></span>&nbsp;
                 Signup or Login
@@ -57,6 +57,7 @@ const GameActions = ({game, dispatch, loggedIn, wagerPage}) => {
                             gameId={game.id}
                             loading={game.is_accepting}
                             colClass="col-12 h6"
+                            csrf={csrf}
                             />
                     </div>
                     <div className="col col-4 px1">
@@ -65,6 +66,7 @@ const GameActions = ({game, dispatch, loggedIn, wagerPage}) => {
                             gameId={game.id}
                             loading={game.is_rejecting}
                             colClass="col-12 h6"
+                            csrf={csrf}
                             />
                     </div>
                     <div className="col col-4 px1">
@@ -73,6 +75,7 @@ const GameActions = ({game, dispatch, loggedIn, wagerPage}) => {
                             gameId={game.id}
                             loading={game.is_leaving}
                             colClass="col-12 h6"
+                            csrf={csrf}
                             />
                     </div>
                 </div>
@@ -86,6 +89,7 @@ const GameActions = ({game, dispatch, loggedIn, wagerPage}) => {
                         gameId={game.id}
                         loading={game.is_leaving}
                         colClass="col-12"
+                        csrf={csrf}
                         />
                 </div>
             );
@@ -104,6 +108,7 @@ const GameActions = ({game, dispatch, loggedIn, wagerPage}) => {
                 gameId={game.id}
                 loading={game.is_joining}
                 colClass="col-12"
+                csrf={csrf}
                 />
         );
     }
@@ -117,6 +122,7 @@ const GameActions = ({game, dispatch, loggedIn, wagerPage}) => {
                         gameId={game.id}
                         loading={false}
                         colClass="col-12"
+                        csrf={csrf}
                         />
                 </div>
                 <div className="col col-6 px1">
@@ -125,6 +131,7 @@ const GameActions = ({game, dispatch, loggedIn, wagerPage}) => {
                         gameId={game.id}
                         loading={game.is_joining}
                         colClass="col-12"
+                        csrf={csrf}
                         />
                 </div>
             </div>

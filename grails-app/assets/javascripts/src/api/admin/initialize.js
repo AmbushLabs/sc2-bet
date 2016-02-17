@@ -2,13 +2,13 @@ import {
     ADMIN_INITIALIZE
 } from './../../actions/actions';
 
-export default () => {
+export default (csrf) => {
     return (dispatch) => {
         dispatch({
             type: ADMIN_INITIALIZE,
             isFetching: true
         });
-        return fetch('/admin/initialize', {
+        return fetch('/admin/initialize?csrf=' + csrf, {
             method: 'get',
             credentials: 'include'
         })

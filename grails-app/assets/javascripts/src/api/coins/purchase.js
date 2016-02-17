@@ -3,7 +3,7 @@ import {
     SET_NOTIFICATION
 } from './../../actions/actions';
 
-const purchase = (token_id, token_email, price) => {
+const purchase = (token_id, token_email, price, csrf) => {
     return (dispatch) => {
         dispatch({
             type: PURCHASE_GOSU_COINS,
@@ -13,6 +13,7 @@ const purchase = (token_id, token_email, price) => {
         fd.append('token_id', token_id);
         fd.append('token_email', token_email);
         fd.append('price', price);
+        fd.append('csrf', csrf);
         return fetch('/gosuCoin/purchase', {
             method: 'post',
             credentials: 'include',

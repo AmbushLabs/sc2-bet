@@ -23,12 +23,14 @@ export default class GosuCoins extends Component {
                         user={this.props.user}
                         config={this.props.config}
                         dispatch={this.props.dispatch}
+                        csrf={this.props.csrf}
                         />
                     <div className="col col-12 border-top mt3">&nbsp;</div>
                     <GosuCoinBalance
                         gosuCoins={this.props.gosuCoins}
                         withdrawls={this.props.withdrawls}
                         dispatch={this.props.dispatch}
+                        csrf={this.props.csrf}
                         />
                 </div>
                 <div className="col col-0 lg-col-2">
@@ -39,7 +41,7 @@ export default class GosuCoins extends Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(getWithdrawlsList());
+        this.props.dispatch(getWithdrawlsList(this.props.csrf.value));
     }
 
 }

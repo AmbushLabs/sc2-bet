@@ -1,5 +1,7 @@
 package com.gosuwager
 
+import grails.converters.JSON
+
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -11,6 +13,14 @@ class DefaultInterceptor {
     }
 
     boolean before() {
+        if (!(controllerName == 'main' && actionName == 'index') &&
+            !(controllerName == 'auth')) {
+            println 'checking ' + controllerName + ' for ' + actionName;
+            if (!params.csrf || params.csrf != session.csrf) {
+                return false;
+            }
+        }
+
 
         def ipAddress = request.getRemoteAddr();
         if (ipAddress == null || ipAddress == '') {

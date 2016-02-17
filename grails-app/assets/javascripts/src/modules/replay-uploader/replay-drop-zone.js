@@ -24,7 +24,7 @@ export default class ReplayDropzone extends Component {
     }
 
     onDrop(files) {
-        const { dispatch, game, s3 } = this.props;
+        const { dispatch, game, s3, csrf } = this.props;
         const { id, upload_hash } = game;
         const { policy, signature} = s3;
         var data = new FormData();
@@ -43,7 +43,7 @@ export default class ReplayDropzone extends Component {
             method: 'post',
             body: data
         }).then(() => {
-            dispatch(replayStatus(game.id))
+            dispatch(replayStatus(game.id, csrf.value))
         });
     }
 

@@ -33,16 +33,16 @@ class Invitational extends Component {
     }
 
     performJoinAction() {
-        const { loggedIn, dispatch } = this.props;
+        const { loggedIn, dispatch, csrf } = this.props;
         if (!loggedIn) {
-            signupWindow(dispatch);
+            signupWindow(dispatch, csrf);
         } else {
-            dispatch(joinTournament());
+            dispatch(joinTournament(csrf.value));
         }
     }
 
     getJoinButton() {
-        const { invitational } = this.props;
+        const { invitational, csrf } = this.props;
         if (invitational && invitational.joined) {
             return (<div>Joined!</div>);
         }

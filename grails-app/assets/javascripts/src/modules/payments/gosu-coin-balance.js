@@ -86,7 +86,7 @@ export default class GosuCoinBalance extends Component {
         const gcNumStr = this.refs.gosuCoinWithdrawlAmt.value.trim();
         const rgx = new RegExp(/^\d+$/);
         if (gcNumStr != '' && rgx.test(gcNumStr) && this.refs.bcWalletId.value != '') {
-            this.props.dispatch(createWithdrawl(gcNumStr, this.refs.bcWalletId.value));
+            this.props.dispatch(createWithdrawl(gcNumStr, this.refs.bcWalletId.value, this.props.csrf.value));
             setTimeout(() => {
                 this.refs.gosuCoinWithdrawlAmt.value = 0;
                 this.refs.bcWalletId.value = '';

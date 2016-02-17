@@ -18,7 +18,7 @@ class Admin extends Component {
     }
 
     render() {
-        const { dispatch } = this.props;
+        const { dispatch, csrf } = this.props;
         const { withdrawl_requests, recent_transactions, withdrawl_request_modal, recent_users, authorized } = this.props.admin;
         if (!authorized) {
             return (<div className="p2">404</div>);
@@ -33,6 +33,7 @@ class Admin extends Component {
                         <WithdrawlRequestList
                             withdrawl_requests={withdrawl_requests}
                             dispatch={dispatch}
+                            csrf={csrf}
                             />
                     </section>
                 </section>
@@ -45,6 +46,7 @@ class Admin extends Component {
                         <GosuCoinTransactionList
                             recent_transactions={recent_transactions}
                             dispatch={dispatch}
+                            csrf={csrf}
                             />
                     </section>
                 </section>
@@ -57,24 +59,26 @@ class Admin extends Component {
                         <UserList
                             users={recent_users}
                             dispatch={dispatch}
+                            csrf={csrf}
                             />
                     </section>
                 </section>
-                {this.getProcessWithdrawlRequestModal(withdrawl_request_modal, dispatch)}
+                {this.getProcessWithdrawlRequestModal(withdrawl_request_modal, dispatch, csrf)}
             </section>
         );
     }
 
     componentDidMount() {
-        this.props.dispatch(initializeAdmin());
+        this.props.dispatch(initializeAdmin(this.props.csrf.value));
     }
 
-    getProcessWithdrawlRequestModal(withdrawlRequestModal, dispatch) {
+    getProcessWithdrawlRequestModal(withdrawlRequestModal, dispatch, csrf) {
         if (withdrawlRequestModal.show) {
             return (
                 <WithdrawlRequestModal
                     dispatch={dispatch}
                     withdrawl_request={withdrawlRequestModal.withdrawl_request}
+                    csrf={csrf}
                     />
             );
         }

@@ -87,6 +87,7 @@ export default class GameCard extends Component {
                                 game={this.props.game}
                                 dispatch={this.props.dispatch}
                                 loggedIn={this.props.loggedIn}
+                                csrf={this.props.csrf}
                                 />
 
                         </div>

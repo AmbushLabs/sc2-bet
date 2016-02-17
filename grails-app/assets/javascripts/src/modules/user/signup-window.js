@@ -1,6 +1,6 @@
 import checkEmail from './../../api/user/checkEmail';
 
-export default (dispatch) => {
+export default (dispatch, csrf) => {
     var loginWindow = window.open(
         '/auth/bnet_start_auth',
         'targetWindow',
@@ -9,7 +9,7 @@ export default (dispatch) => {
     var windowChecker = setInterval(function() {
         if (loginWindow.closed) {
             clearInterval(windowChecker);
-            dispatch(checkEmail());
+            dispatch(checkEmail(csrf.value));
         }
     }.bind(this), 50);
 }

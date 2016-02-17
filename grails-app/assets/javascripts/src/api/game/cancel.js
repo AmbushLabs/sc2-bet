@@ -2,7 +2,7 @@ import {
     CANCEL_GAME
 } from './../../actions/actions';
 
-const cancel = (game_id) => {
+const cancel = (game_id, csrf) => {
     return (dispatch) => {
         dispatch({
             type: CANCEL_GAME,
@@ -10,7 +10,7 @@ const cancel = (game_id) => {
             game_id: game_id
 
         });
-        return fetch('/game/g/' + game_id, {
+        return fetch('/game/g/' + game_id + '?csrf=' + csrf, {
             method:'delete',
             credentials:'include'
         })

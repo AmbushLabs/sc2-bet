@@ -16,7 +16,12 @@ class DashboardService {
         def ret = [:];
         ret['has_loaded'] = true;
 
+        def csrf = generateCsrf(u);
+
         def sesh = RequestContextHolder.currentRequestAttributes().getSession();
+        sesh.csrf = csrf;
+        ret['csrf'] = [:];
+        ret['csrf']['value'] = csrf;
         ret['referral'] = [:];
         if (sesh.referral_code) {
             ret['referral']['code'] = sesh.referral_code;
@@ -109,6 +114,18 @@ class DashboardService {
             return games;
         }
         return games + (allowDown ? findGamesWithOnePlayerNearSkillLevel(u, --rank, true, false) : []) + (allowUp ? findGamesWithOnePlayerNearSkillLevel(u, ++rank, false, true) : []);
+    }
+
+    def generateCsrf(user) {
+        String d = "" + (new Date()).getTime();
+        Random r = new Random(999999);
+        def nextInt = r.nextInt();
+        if (user) {
+            return String.format("%s-%s-%s-%s-%s", "" + user.id, "-fieah24r1h0r9i13tf0e", user.referralCode, d, "" + nextInt).toSHA1("IamThe-SHAZZZRzerrrrr~~~)@32hirt4^");
+        } else {
+
+            return String.format("%s-%s-%s", "-fDGW42y62e", d, "" + nextInt).toSHA1("IamThe-SHAZZZRzer!!rrrr~~~)@32hirt4^");
+        }
     }
     
 }

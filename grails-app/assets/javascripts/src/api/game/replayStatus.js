@@ -2,9 +2,9 @@ import {
     FETCH_REPLAY_STATUS
 } from './../../actions/actions';
 
-const replayStatus = (game_id) => {
+const replayStatus = (game_id, csrf) => {
     return (dispatch) => {
-        fetch('/game/replay/' + game_id, {
+        fetch('/game/replay/' + game_id + '?csrf=' + csrf, {
             method:'get',
             credentials:'include'
         })

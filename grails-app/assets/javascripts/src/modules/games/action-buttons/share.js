@@ -2,7 +2,7 @@ import React from 'react';
 import ButtonBase from './button-base';
 import { SHOW_SHARE_GAME_MODAL } from './../../../actions/actions';
 
-const Join = ({dispatch, gameId, colClass}) => {
+const Join = ({dispatch, gameId, colClass, csrf}) => {
     return (
         <ButtonBase
             buttonClass={"blue col " + colClass}
@@ -18,6 +18,7 @@ const Join = ({dispatch, gameId, colClass}) => {
             }}
             gameId={gameId}
             iconVal={"tiny-symbol ss-icons ss-share"}
+            csrf={csrf}
             />
     )
 };

@@ -2,14 +2,14 @@ import {
     JOIN_GAME, SET_NOTIFICATION
 } from './../../actions/actions';
 
-const join = (game_id) => {
+const join = (game_id, csrf) => {
     return (dispatch) => {
         dispatch({
             type: JOIN_GAME,
             is_fetching: true,
             game_id: game_id
         });
-        return fetch('/game/' + game_id + '/join', {
+        return fetch('/game/' + game_id + '/join?csrf=' + csrf, {
             method:'post',
             credentials:'include'
         })

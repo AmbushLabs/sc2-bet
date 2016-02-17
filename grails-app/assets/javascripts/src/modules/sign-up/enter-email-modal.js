@@ -50,8 +50,8 @@ export default class EnterEmailModal extends Component {
             ev.preventDefault();
             return false;
         }
-        const { dispatch } = this.props;
-        dispatch(linkEmailAddress(emailAddress, referralCode))
+        const { dispatch, csrf } = this.props;
+        dispatch(linkEmailAddress(emailAddress, referralCode, csrf.value))
             .then(() =>
                 dispatch({
                     type:'HIDE_CREATE_GAME_MODAL'
@@ -67,18 +67,21 @@ export default class EnterEmailModal extends Component {
     }
 };
 
-function linkEmailAddress(emailAddress, referralCode) {
+function linkEmailAddress(emailAddress, referralCode, csrf) {
     return function(dispatch) {
         dispatch({
             type: 'ADD_EMAIL_ADDRESS',
             isFetching: true
         });
+
+        var fd = new FormData();
+        fd.append('email_address', emailAddress);
+        fd.append('referral_code', referralCode);
+        fd.append('csrf', csrf);
+
         return fetch('/user/email' , {
             method:'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: "email_address=" + emailAddress + '&referral_code=' + referralCode,
+            body: fd,
             credentials: 'include'
         })
             .then(response => response.json())

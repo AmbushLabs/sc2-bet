@@ -13,7 +13,7 @@ export default class extends Component {
     }
 
     render() {
-        const { withdrawl_request } = this.props;
+        const { withdrawl_request, csrf } = this.props;
         const dollarAmount = parseFloat(withdrawl_request.coin_amount/100).toFixed(2);
         const dateStr = moment(withdrawl_request.create_date).format("M/D/YYYY H:mm");
 
@@ -66,11 +66,11 @@ export default class extends Component {
 
 
     onSubmit(ev) {
-        const { dispatch, withdrawl_request } = this.props;
+        const { dispatch, withdrawl_request, csrf } = this.props;
         const gosuCoinWithdrawlRequestId = withdrawl_request.id;
         const bcAmount = this.refs.bcAmount.value;
 
-        dispatch(processWithdrawl(gosuCoinWithdrawlRequestId, bcAmount))
+        dispatch(processWithdrawl(gosuCoinWithdrawlRequestId, bcAmount, csrf.value))
             .then(() =>
                 dispatch({
                     type: HIDE_PROCESS_WITHDRAWL_MODAL

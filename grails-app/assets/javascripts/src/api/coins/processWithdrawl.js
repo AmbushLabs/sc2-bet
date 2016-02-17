@@ -3,7 +3,7 @@ import {
     SET_NOTIFICATION
 } from './../../actions/actions';
 
-export default (gosuCoinWithdrawlRequestId, bitCoinAmount) => {
+export default (gosuCoinWithdrawlRequestId, bitCoinAmount, csrf) => {
     return (dispatch) => {
         dispatch({
             type: PROCESS_WITHDRAWL,
@@ -12,6 +12,7 @@ export default (gosuCoinWithdrawlRequestId, bitCoinAmount) => {
         var fd = new FormData();
         fd.append('gosu_coin_withdrawl_request_id', gosuCoinWithdrawlRequestId);
         fd.append('bit_coin_amount', bitCoinAmount);
+        fd.append('csrf', csrf);
 
         return fetch('/admin/processWithdrawlRequest', {
             method: 'post',

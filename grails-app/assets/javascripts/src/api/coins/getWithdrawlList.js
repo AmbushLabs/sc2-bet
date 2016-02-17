@@ -2,13 +2,13 @@ import {
     GET_WITHRDAWLS
 } from './../../actions/actions';
 
-export default () => {
+export default (csrf) => {
     return (dispatch) => {
         dispatch({
             type: GET_WITHRDAWLS,
             isFetching: true
         });
-        return fetch('/gosuCoin/withdrawlsList', {
+        return fetch('/gosuCoin/withdrawlsList?csrf=' + csrf, {
             method: 'get',
             credentials: 'include'
         })

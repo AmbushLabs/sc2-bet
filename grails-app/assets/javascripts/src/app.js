@@ -45,7 +45,14 @@ class App extends Component {
 
     componentDidMount() {
         var self = this;
-        this.props.dispatch(initializeApp())
+        const { csrf, dispatch } = this.props;
+        var csrfVal = null;
+        if (csrf == null || !csrf.value) {
+            csrfVal = document.getElementById('csrf').value;
+        } else {
+            csrfVal = csrf.value;
+        }
+        dispatch(initializeApp(csrfVal))
             .then(() =>
                 {}
         );
@@ -53,7 +60,7 @@ class App extends Component {
     }
 
     render() {
-        const { dispatch } = this.props;
+        const { dispatch, csrf } = this.props;
         if (!this.props.hasLoaded) {
             return (<div>&nbsp;</div>); //TODO: LOADING
         }
@@ -63,6 +70,7 @@ class App extends Component {
                     loggedIn={this.props.loggedIn}
                     remainingTokens={this.props.gosuCoins.remaining}
                     dispatch={dispatch}
+                    csrf={csrf}
                     />
                 <PageNotification
                     text={this.props.notifications.message}
@@ -86,7 +94,9 @@ class App extends Component {
         if ((!this.props.loggedIn || !this.props.hasEmail) && this.requiresLoggedIn()) {
             return (
                 <LandingPage
-                    dispatch={this.props.dispatch} />
+                    dispatch={this.props.dispatch}
+                    csrf={this.props.csrf}
+                    />
             );
         } else {
             if (_.isUndefined(this.props.children) || _.isNull(this.props.children)) {
@@ -106,17 +116,18 @@ class App extends Component {
         if (this.props.hasEmail || !this.props.loggedIn) {
             return;
         }
-        const { dispatch, referral } = this.props;
+        const { dispatch, referral, csrf } = this.props;
         return (
             <EnterEmailModal
                 dispatch={dispatch}
                 referral={referral}
+                csrf={csrf}
                 />
         );
     }
 };
 
-function initializeApp() {
+function initializeApp(csrf) {
 
     return function (dispatch) {
         dispatch({
@@ -124,7 +135,7 @@ function initializeApp() {
             is_fetching: true
         });
 
-        return fetch('/main/initialize', {
+        return fetch('/main/initialize?csrf=' + csrf, {
             credentials: 'include'
         })
             .then(response => response.json())

@@ -2,13 +2,13 @@ import {
     JOIN_TOURNAMENT, SET_NOTIFICATION
 } from './../../actions/actions';
 
-const join = (game_id) => {
+const join = (game_id, csrf) => {
     return (dispatch) => {
         dispatch({
             type: JOIN_TOURNAMENT,
             is_fetching: true
         });
-        return fetch('/user/invitational', {
+        return fetch('/user/invitational?csrf=' + csrf, {
             method:'post',
             credentials:'include'
         })

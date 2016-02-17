@@ -36,6 +36,7 @@ class Dashboard extends Component {
                             games={this.props.games}
                             dispatch={this.props.dispatch}
                             loggedIn={this.props.loggedIn}
+                            csrf={this.props.csrf}
                             />
                     </div>
                 </section>
@@ -56,6 +57,7 @@ class Dashboard extends Component {
                                 games={this.getGamesAwaitingChallenger()}
                                 dispatch={this.props.dispatch}
                                 loggedIn={this.props.loggedIn}
+                                csrf={this.props.csrf}
                                 />
                         </div>
                     </section>
@@ -77,6 +79,7 @@ class Dashboard extends Component {
                                 games={this.getEmptyGames()}
                                 dispatch={this.props.dispatch}
                                 loggedIn={this.props.loggedIn}
+                                csrf={this.props.csrf}
                                 />
                         </div>
                     </section>
@@ -112,6 +115,7 @@ class Dashboard extends Component {
                                 dispatch={this.props.dispatch}
                                 loggedIn={this.props.loggedIn}
                                 showPaging={true}
+                                csrf={this.props.csrf}
                                 />
                         </div>
                     </section>

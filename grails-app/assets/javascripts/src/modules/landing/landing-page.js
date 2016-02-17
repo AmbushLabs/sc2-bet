@@ -58,7 +58,7 @@ export default class LandingPage extends Component {
     }
 
     signUp() {
-        signupWindow(this.props.dispatch);
+        signupWindow(this.props.dispatch, this.props.csrf);
     }
 }
 

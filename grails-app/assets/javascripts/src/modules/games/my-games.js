@@ -48,6 +48,7 @@ export default class MyGames extends Component {
                     dispatch={this.props.dispatch}
                     loggedIn={this.props.loggedIn}
                     showPaging={true}
+                    csrf={this.props.csrf}
                     />
             </section>
         );
