@@ -31,7 +31,7 @@ export default class ReplayDropzone extends Component {
         data.append('key', 'replays/' + id + '/' + upload_hash + '.SC2Replay');
         data.append('AWSAccessKeyId', 'AKIAJ3N46OA77EEOEHZA');
         data.append('acl', 'private');
-        data.append('success_action_redirect', this.props.config.site_uri + 'game/completeUpload');
+        data.append('success_action_redirect', this.props.config.site_uri + 'game/completeUpload?csrf=' + csrf.value);
         data.append('policy', policy);
         data.append('signature', signature);
         data.append('file', files[0]);

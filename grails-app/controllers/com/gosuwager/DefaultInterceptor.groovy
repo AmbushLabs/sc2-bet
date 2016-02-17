@@ -15,7 +15,6 @@ class DefaultInterceptor {
     boolean before() {
         if (!(controllerName == 'main' && actionName == 'index') &&
             !(controllerName == 'auth')) {
-            println 'checking ' + controllerName + ' for ' + actionName;
             if (!params.csrf || params.csrf != session.csrf) {
                 return false;
             }

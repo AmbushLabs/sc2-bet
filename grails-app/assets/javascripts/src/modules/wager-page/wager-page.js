@@ -144,7 +144,7 @@ class WagerPage extends Component {
                         </div>
                     </div>
                 );
-                setTimeout(() => dispatch(replayStatus(game.id)), 10000);
+                setTimeout(() => dispatch(replayStatus(game.id, csrf.value)), 10000);
             } else if (gameReplay && gameReplay.uploaded && gameReplay.processed && gameReplay.valid) {
                 dropZone = (
                     <ReplayInfo

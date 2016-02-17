@@ -5141,7 +5141,7 @@ var ReplayDropzone = (function (_Component) {
             data.append('key', 'replays/' + id + '/' + upload_hash + '.SC2Replay');
             data.append('AWSAccessKeyId', 'AKIAJ3N46OA77EEOEHZA');
             data.append('acl', 'private');
-            data.append('success_action_redirect', this.props.config.site_uri + 'game/completeUpload');
+            data.append('success_action_redirect', this.props.config.site_uri + 'game/completeUpload?csrf=' + csrf.value);
             data.append('policy', policy);
             data.append('signature', signature);
             data.append('file', files[0]);
@@ -6475,7 +6475,7 @@ var WagerPage = (function (_Component) {
                         )
                     );
                     setTimeout(function () {
-                        return dispatch((0, _apiGameReplayStatus2['default'])(game.id));
+                        return dispatch((0, _apiGameReplayStatus2['default'])(game.id, csrf.value));
                     }, 10000);
                 } else if (gameReplay && gameReplay.uploaded && gameReplay.processed && gameReplay.valid) {
                     dropZone = _react2['default'].createElement(_replayInfo2['default'], {
