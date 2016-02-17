@@ -30,8 +30,9 @@ export default ({ user, userId, dashboard, referral }) => {
         referralSection = (
             <div className="col col-12">
                 <div className="col col-12 sm-col-6 p1">
-                    <div className="h4 gray">REFERRAL CODE</div>
-                    <div className="h4">{referral}</div>
+                    <div className="h4 gray">REFERRAL LINK</div>
+                    <div className="h6 gray">Get 100 GC, give 100 GC for each person invited.</div>
+                    <div className="h4">https://gosuempire.com/r/{referral}</div>
                 </div>
             </div>
         );

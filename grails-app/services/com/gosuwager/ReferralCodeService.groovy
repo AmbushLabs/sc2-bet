@@ -7,9 +7,9 @@ import java.security.SecureRandom
 @Transactional
 class ReferralCodeService {
 
-    private static final Integer MAX_USER_REFERRALS = 3;
+    private static final Integer MAX_USER_REFERRALS = 5;
     private static final Integer REFERRAL_SIGNUP_GOSU_COIN_BONUS = 100;
-    private static final Integer REFERRER_GOSU_COIN_BONUS = 50;
+    private static final Integer REFERRER_GOSU_COIN_BONUS = 100;
 
     private static char[] VALID_CHARACTERS =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456879".toCharArray();

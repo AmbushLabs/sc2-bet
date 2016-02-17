@@ -5615,11 +5615,17 @@ exports['default'] = function (_ref) {
                 _react2['default'].createElement(
                     'div',
                     { className: 'h4 gray' },
-                    'REFERRAL CODE'
+                    'REFERRAL LINK'
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'h6 gray' },
+                    'Get 100 GC, give 100 GC for each person invited.'
                 ),
                 _react2['default'].createElement(
                     'div',
                     { className: 'h4' },
+                    'https://gosuempire.com/r/',
                     referral
                 )
             )
