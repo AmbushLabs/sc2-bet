@@ -106,7 +106,6 @@ class ReplayService {
                 "  ]\n" +
                 "}";
 
-        println policyDocument;
         String policy = (new BASE64Encoder()).encode(
                 policyDocument.getBytes("UTF-8")).replaceAll("\n","").replaceAll("\r","");
 
