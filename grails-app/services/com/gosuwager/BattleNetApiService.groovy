@@ -94,8 +94,12 @@ class BattleNetApiService {
                     character.protossWins = career.get('protossWins').getAsInt();
                     character.terranWins = career.get('terranWins').getAsInt();
                     character.zergWins = career.get('zergWins').getAsInt();
-                    character.highest1v1Rank = career.get('highest1v1Rank').getAsString();
-                    character.highestTeamRank = career.get('highestTeamRank').getAsString();
+                    if (career.has('highest1v1Rank') && career.get('highest1v1Rank') != null) {
+                        character.highest1v1Rank = career.get('highest1v1Rank').getAsString();
+                    }
+                    if (career.has('highestTeamRank') && career.get('highestTeamRank') != null) {
+                        character.highestTeamRank = career.get('highestTeamRank').getAsString();
+                    }
                     character.seasonTotalGames = career.get('seasonTotalGames').getAsInt();
                     character.careerTotalGames = career.get('careerTotalGames').getAsInt();
 
