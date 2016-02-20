@@ -96,9 +96,13 @@ class BattleNetApiService {
                     character.zergWins = career.get('zergWins').getAsInt();
                     if (career.has('highest1v1Rank') && career.get('highest1v1Rank') != null) {
                         character.highest1v1Rank = career.get('highest1v1Rank').getAsString();
+                    } else {
+                        character.highest1v1Rank = "";
                     }
                     if (career.has('highestTeamRank') && career.get('highestTeamRank') != null) {
                         character.highestTeamRank = career.get('highestTeamRank').getAsString();
+                    } else {
+                        character.highestTeamRank = "";
                     }
                     character.seasonTotalGames = career.get('seasonTotalGames').getAsInt();
                     character.careerTotalGames = career.get('careerTotalGames').getAsInt();
